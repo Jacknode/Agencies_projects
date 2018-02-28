@@ -27,7 +27,7 @@
               <span>{{ props.row.agentInfo.sm_ai_Sex | getSex }}</span>
             </el-form-item>
             <el-form-item label="固定电话:">
-              <span>{{ props.row.agentInfo.sm_ai_FixPhoneAreaCode+"-" +props.row.agentInfo.sm_ai_FixPhoneContryCode}}</span>
+              <span>{{ props.row.agentInfo.sm_ai_FixPhoneAreaCode + "-" + props.row.agentInfo.sm_ai_FixPhoneContryCode}}</span>
             </el-form-item>
             <el-form-item label="QQ:">
               <span>{{ props.row.agentInfo.sm_ai_QQ }}</span>
@@ -131,14 +131,49 @@
     <!--修改-->
     <el-dialog title="收货地址" :visible.sync="updateDialog">
       <el-form :model="userInfoObj">
-        <el-form-item label="活动名称" :label-width="formLabelWidth">
-          <el-input v-model="userInfoObj.name" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="活动区域" :label-width="formLabelWidth">
-          <el-select v-model="userInfoObj.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+        <el-form-item label="是否三证合一:" :label-width="formLabelWidth">
+          <el-select v-model="userInfoObj.agentInfo.sm_ai_IncludeCert" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="营业执照号:" :label-width="formLabelWidth">
+          <el-input v-model="userInfoObj.agentInfo.sm_ai_CertNo" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="证件有效期从:" :label-width="formLabelWidth">
+          <div class="block">
+            <el-date-picker
+              v-model="userInfoObj.agentInfo.sm_ai_CertExpireFrom"
+              type="date">
+            </el-date-picker>
+          </div>
+        </el-form-item>
+        <el-form-item label="证件有效期到:" :label-width="formLabelWidth">
+          <div class="block">
+            <el-date-picker
+              v-model="userInfoObj.agentInfo.sm_ai_CertExpireTo"
+              type="date">
+            </el-date-picker>
+          </div>
+        </el-form-item>
+        <el-form-item label="营业执照扫描件 :" :label-width="formLabelWidth">
+          <el-input v-model="userInfoObj.agentInfo.sm_ai_CertImage" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="税务登记号 :" :label-width="formLabelWidth">
+          <el-input v-model="userInfoObj.agentInfo.sm_ai_FeeNo" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="税务登记证扫描件 :" :label-width="formLabelWidth">
+          <el-input v-model="userInfoObj.agentInfo.sm_ai_FeeImage" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="其他证件号 :" :label-width="formLabelWidth">
+          <el-input v-model="userInfoObj.agentInfo.sm_ai_OtherCert" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="其他证件扫描件 :" :label-width="formLabelWidth">
+          <el-input v-model="userInfoObj.agentInfo.sm_ai_OtherImage" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -151,45 +186,56 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
-  export default{
+
+  export default {
     name: '',
-    data(){
+    data() {
       return {
-        formLabelWidth:'120px',
-        isLoading:false,
-        userInfo:[],
-        userInfoObj:{},
-        updateDialog:false,//修改弹窗
+        formLabelWidth: '150px',
+        isLoading: false,
+        userInfo: [],
+        userInfoObj: {},
+        updateDialog: false,//修改弹窗
+        options: [
+          {
+            value: 0,
+            label: '否'
+          },
+          {
+            value: 1,
+            label: '是'
+          }
+        ],//是否三证合一
       }
     },
-    created(){
+    created() {
       let userInfo = JSON.parse(sessionStorage.getItem('admin'))
       let options = {
         "loginUserID": "huileyou",
         "loginUserPass": "123",
         "operateUserID": "",
         "operateUserName": "",
-        sm_ai_Name:'',
+        sm_ai_Name: '',
         "sm_ai_ID": userInfo.sm_ai_ID,
         "page": 1,
         "rows": 5,
       };
-      this.$store.dispatch('initAdminSupplier',options)
-      .then(userInfo=>{
-        this.userInfo = userInfo
-        this.userInfoObj = userInfo[0]
-      },err=>{
-        this.$notify({
-          message: err,
-          type: 'error'
-        });
-      })
+      this.$store.dispatch('initAdminSupplier', options)
+        .then(userInfo => {
+          this.userInfo = userInfo
+          this.userInfoObj = userInfo[0]
+        }, err => {
+          this.$notify({
+            message: err,
+            type: 'error'
+          });
+        })
     },
     computed: mapGetters([]),
     methods: {
       //修改
-      updateAdminUserInfo(id){
-        console.log(this.userInfo)
+      updateAdminUserInfo(id) {
+        console.log(this.userInfoObj)
         this.updateDialog = true;
         this.$store.commit('setTranstionFalse');
       },
