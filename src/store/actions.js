@@ -1692,6 +1692,7 @@ export default {
               resulte[i].agentInfo.sm_ai_FeeImage = []
             }
           }
+          commit('initAdminSupplier',data.data)
           relove(data.data)
         }else{
           reject(data.resultcontent)

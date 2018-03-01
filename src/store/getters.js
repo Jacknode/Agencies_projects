@@ -51,6 +51,8 @@ export default {
   cityList: state => state.cityList,
   adminRouteDepartureCity: state => state.adminRouteDepartureCity,
   updateAdminRouteDepartureCityObj: state => state.updateAdminRouteDepartureCityObj,
+  adminSupplierList: state => state.adminSupplierList,
+  adminSupplierListObj: state => state.adminSupplierListObj,
 
   //参数
   adminMerchantProductsId: state => state.adminMerchantProductsId,

@@ -58,6 +58,9 @@ const state = {
   cityList:[],//城市
   adminRouteDepartureCity:[],//管理员出发城市
   updateAdminRouteDepartureCityObj:{},//修改出发城市obj
+  adminSupplierList:[],//供应商信息
+  adminSupplierListObj:{},
+
 
 
   //参数
@@ -388,7 +391,12 @@ const mutations = {
       }
       return false;
     })[0]
-  }
+  },
+  initAdminSupplier(state,data){
+    state.adminSupplierList = data;
+    state.adminSupplierListObj = data[0]
+  },
+
 };
 
 export default {

@@ -4,7 +4,7 @@
 
     <!--数据展示-->
     <el-table
-      :data="userInfo"
+      :data="adminSupplierList"
       highlight-current-row
       v-loading="isLoading"
       style="width: 100%;padding-top: 50px">
@@ -62,6 +62,7 @@
             <el-form-item label="合作类型:">
               <span v-for="item in props.row.agentInfoTypeList" style="margin-right: 10px">{{item.sm_cp_PartnerTypeName}}</span>
             </el-form-item>
+
             <el-form-item label="优势产品说明:">
               <span>{{ props.row.agentInfo.sm_ai_GoodIntroduce}}</span>
             </el-form-item>
@@ -98,6 +99,9 @@
             <el-form-item label="审核状态 :">
               <span>{{ props.row.agentInfo.sm_ai_IsPass | getPass}}</span>
             </el-form-item>
+            <el-form-item label="审核失败原因:">
+              <span>{{ props.row.agentInfo.sm_ai_FailReason}}</span>
+            </el-form-item>
             <el-form-item label="创建时间 :">
               <span>{{ props.row.agentInfo.sm_ai_CreateTime}}</span>
             </el-form-item>
@@ -129,17 +133,17 @@
     </el-table>
 
     <!--修改-->
-    <el-dialog title="收货地址" :visible.sync="updateDialog">
-      <el-form :model="userInfoObj">
-        <el-form-item label="活动名称" :label-width="formLabelWidth">
-          <el-input v-model="userInfoObj.name" auto-complete="off"></el-input>
+    <el-dialog title="修改信息" :visible.sync="updateDialog">
+      <el-form :model="obj">
+        <el-form-item label="编号" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_ID" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="活动区域" :label-width="formLabelWidth">
-          <el-select v-model="userInfoObj.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
+        <!--<el-form-item label="活动区域" :label-width="formLabelWidth">-->
+        <!--<el-select v-model="adminSupplierListObj.region" placeholder="请选择活动区域">-->
+        <!--<el-option label="区域一" value="shanghai"></el-option>-->
+        <!--<el-option label="区域二" value="beijing"></el-option>-->
+        <!--</el-select>-->
+        <!--</el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="updateDialog = false">取 消</el-button>
@@ -155,11 +159,69 @@
     name: '',
     data(){
       return {
-        formLabelWidth:'120px',
-        isLoading:false,
-        userInfo:[],
-        userInfoObj:{},
-        updateDialog:false,//修改弹窗
+        obj: {
+          "agentInfo": {
+            "sm_ai_ID": '',
+            "sm_bc_ID": '',
+            "sm_ai_BalanceCurrencyName": "",
+            "sm_cs_ID": '',
+            "sm_ai_CompanyPersons": "",
+            "sm_ai_Name": "",
+            "sm_ai_Sex": '',
+            "sm_ai_Telephone": "",
+            "sm_ai_FailReason": '',
+            "sm_ai_SinglePay": '',
+            "sm_ai_FixPhoneAreaCode": "",
+            "sm_ai_FixPhoneContryCode": "",
+            "sm_ai_FaxNo": "",
+            "sm_ai_QQ": "",
+            "sm_ai_Email": "",
+            "sm_ai_GoodName": "",
+            "sm_ai_Contry": "",
+            "sm_ai_Provice": "",
+            "sm_ai_City": "",
+            "sm_ai_County": "",
+            "sm_ai_Address": "",
+            "sm_ai_RegTime": "",
+            "sm_ai_RegMoney": '',
+            "sm_ai_GoodIntroduce": "",
+            "sm_ai_PartnerWay": "",
+            "sm_ai_IncludeCert": '',
+            "sm_ai_CertNo": "",
+            "sm_ai_CertExpireFrom": "",
+            "sm_ai_CertExpireTo": "",
+            "sm_ai_CertImage": [],
+            "sm_ai_FeeNo": "",
+            "sm_ai_FeeImage": [],
+            "sm_ai_OtherCert": "",
+            "sm_ai_OtherImage": [],
+            "sm_ai_IsPass": 0,
+            "sm_ai_AgentID": "",
+            "sm_ai_Password": "",
+            "sm_ai_CreateTime": "",
+            "sm_ai_IsDelete": 0,
+            "sm_ai_ParentID": "",
+            "sm_al_ID": '',
+            "ts_to_IsBalance": null
+          },
+          "agentInfoTypeList": [{
+            "sm_at_ID": '',
+            "sm_cp_ID": '',
+            "sm_cp_PartnerTypeName": "",
+            "sm_ai_ID": '',
+            "sm_ai_AgentName": ""
+          }],
+          "agentInfoScopeList": [{
+            "sm_as_ID": '',
+            "sm_ts_ID": '',
+            "sm_ts_Name": "",
+            "sm_ai_ID": '',
+            "sm_ai_Name": ""
+          }, {"sm_as_ID": '', "sm_ts_ID": '', "sm_ts_Name": "", "sm_ai_ID": '', "sm_ai_Name": ""}]
+        },
+        formLabelWidth: '120px',
+        isLoading: false,
+        updateDialog: false,//修改弹窗
       }
     },
     created(){
@@ -169,27 +231,30 @@
         "loginUserPass": "123",
         "operateUserID": "",
         "operateUserName": "",
-        sm_ai_Name:'',
+        sm_ai_Name: '',
         "sm_ai_ID": userInfo.sm_ai_ID,
         "page": 1,
         "rows": 5,
       };
-      this.$store.dispatch('initAdminSupplier',options)
-      .then(userInfo=>{
-        this.userInfo = userInfo
-        this.userInfoObj = userInfo[0]
-      },err=>{
+      this.$store.dispatch('initAdminSupplier', options)
+      .then(userInfo => {
+//        this.userInfo = userInfo
+
+      }, err => {
         this.$notify({
           message: err,
           type: 'error'
         });
       })
     },
-    computed: mapGetters([]),
+    computed: mapGetters([
+      'adminSupplierList',
+      'adminSupplierListObj'
+    ]),
     methods: {
       //修改
       updateAdminUserInfo(id){
-        console.log(this.userInfo)
+        this.obj = this.adminSupplierListObj
         this.updateDialog = true;
         this.$store.commit('setTranstionFalse');
       },
