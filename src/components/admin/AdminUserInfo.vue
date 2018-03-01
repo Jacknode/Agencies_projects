@@ -27,7 +27,7 @@
               <span>{{ props.row.agentInfo.sm_ai_Sex | getSex }}</span>
             </el-form-item>
             <el-form-item label="固定电话:">
-              <span>{{ props.row.agentInfo.sm_ai_FixPhoneAreaCode+"-" +props.row.agentInfo.sm_ai_FixPhoneContryCode}}</span>
+              <span>{{ props.row.agentInfo.sm_ai_FixPhoneAreaCode + "-" + props.row.agentInfo.sm_ai_FixPhoneContryCode}}</span>
             </el-form-item>
             <el-form-item label="QQ:">
               <span>{{ props.row.agentInfo.sm_ai_QQ }}</span>
@@ -150,14 +150,15 @@
         <el-button type="primary" @click="updateDialog = false">确 定</el-button>
       </div>
     </el-dialog>
-
+daddada
   </div>
 </template>
 <script>
   import {mapGetters} from 'vuex'
-  export default{
+
+  export default {
     name: '',
-    data(){
+    data() {
       return {
         obj: {
           "agentInfo": {
@@ -222,9 +223,19 @@
         formLabelWidth: '120px',
         isLoading: false,
         updateDialog: false,//修改弹窗
+        options: [
+          {
+            value: 0,
+            label: '否'
+          },
+          {
+            value: 1,
+            label: '是'
+          }
+        ],//是否三证合一
       }
     },
-    created(){
+    created() {
       let userInfo = JSON.parse(sessionStorage.getItem('admin'))
       let options = {
         "loginUserID": "huileyou",
