@@ -62,7 +62,6 @@
             <el-form-item label="合作类型:">
               <span v-for="item in props.row.agentInfoTypeList" style="margin-right: 10px">{{item.sm_cp_PartnerTypeName}}</span>
             </el-form-item>
-
             <el-form-item label="优势产品说明:">
               <span>{{ props.row.agentInfo.sm_ai_GoodIntroduce}}</span>
             </el-form-item>
@@ -92,7 +91,7 @@
             <el-form-item label="其他证件号 :">
               <span>{{ props.row.agentInfo.sm_ai_OtherCert}}</span>
             </el-form-item>
-            <el-form-item label="其他证件扫描件 :">
+            <el-form-item label="其他证件扫描件:">
               <img :src="item" alt="" v-for="item in props.row.agentInfo.sm_ai_OtherImage"
                    style="width: 100px;height: 100px" v-show="props.row.agentInfo.sm_ai_OtherImage.length">
             </el-form-item>
@@ -133,24 +132,189 @@
     </el-table>
 
     <!--修改-->
-    <el-dialog title="修改信息" :visible.sync="updateDialog">
+    <el-dialog title="修改活动景点" :visible.sync="updateDialog">
       <el-form :model="obj">
-        <el-form-item label="编号" :label-width="formLabelWidth">
-          <el-input v-model="obj.agentInfo.sm_ai_ID" auto-complete="off"></el-input>
+        <el-form-item label="供应商编号:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_ID" :disabled="isDisabled"></el-input>
         </el-form-item>
-        <!--<el-form-item label="活动区域" :label-width="formLabelWidth">-->
-        <!--<el-select v-model="adminSupplierListObj.region" placeholder="请选择活动区域">-->
-        <!--<el-option label="区域一" value="shanghai"></el-option>-->
-        <!--<el-option label="区域二" value="beijing"></el-option>-->
-        <!--</el-select>-->
-        <!--</el-form-item>-->
+        <el-form-item label="供应商商户号:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_AgentID"></el-input>
+        </el-form-item>
+        <el-form-item label="供应商名称:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_Name"></el-input>
+        </el-form-item>
+        <el-form-item label="供应商手机号码:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_Telephone"></el-input>
+        </el-form-item>
+        <el-form-item label="性别:" :label-width="formLabelWidth">
+          <el-radio v-model="obj.agentInfo.sm_ai_Sex" label="0">男</el-radio>
+          <el-radio v-model="obj.agentInfo.sm_ai_Sex" label="1">女</el-radio>
+        </el-form-item>
+        <el-form-item label="固定电话国际区号:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_FixPhoneAreaCode"></el-input>
+        </el-form-item>
+        <el-form-item label="固定电话:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_FixPhoneContryCode"></el-input>
+        </el-form-item>
+        <el-form-item label="传真号:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_FaxNo"></el-input>
+        </el-form-item>
+        <el-form-item label="电子邮箱:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_Email"></el-input>
+        </el-form-item>
+        <el-form-item label="公司名称:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_GoodName"></el-input>
+        </el-form-item>
+        <el-form-item label="获许经营范围:" :label-width="formLabelWidth">
+          <el-checkbox-group v-model="obj.agentInfoScopeList">
+            <el-checkbox v-for="item,index in changeScopeOfOperationList" :label="item.sm_ts_Name"></el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+        <el-form-item label="公司地址:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_Address"></el-input>
+        </el-form-item>
+        <el-form-item label="注册成立时间:" :label-width="formLabelWidth">
+          <div class="block">
+            <el-date-picker
+              v-model="obj.agentInfo.sm_ai_RegTime"
+              type="date">
+            </el-date-picker>
+          </div>
+        </el-form-item>
+        <el-form-item label="注册资金:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_RegMoney" style="width:200px;"></el-input>
+          万元
+        </el-form-item>
+        <el-form-item label="公司规模:" :label-width="formLabelWidth">
+          <el-select v-model="obj.agentInfo.sm_ai_CompanyPersons"
+                     @focus="changeCompanyType">
+            <el-option
+              v-for="item in changeCompanyTypeList"
+              :key="item.sm_cs_ID "
+              :label="item.sm_cs_Persons"
+              :value="item.sm_cs_Persons ">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="结算币种:" :label-width="formLabelWidth">
+          <el-select v-model="obj.agentInfo.sm_ai_BalanceCurrencyName"
+                     @focus="changeMoneyType">
+            <el-option
+              v-for="item in changeMineyTypeList"
+              :key="item.sm_bc_ID"
+              :label="item.sm_bc_Name"
+              :value="item.sm_bc_Name">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="合作类型:" :label-width="formLabelWidth">
+          <el-select v-model="obj.agentInfo.agentInfoTypeList" @focus="changeCooperationTypeL">
+            <el-option
+              v-for="item in changeCooperationTypecList"
+              :key="item.sm_cp_ID"
+              :label="item.sm_cp_Name"
+              :value="item.sm_cp_Name"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="产品优势说明:" :label-width="formLabelWidth">
+          <el-input type="textarea" v-model="obj.agentInfo.sm_ai_GoodIntroduce"></el-input>
+        </el-form-item>
+        <el-form-item label="已合作的网销渠道:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_PartnerWay"></el-input>
+        </el-form-item>
+        <el-form-item label="是否三证合一:" :label-width="formLabelWidth">
+          <el-select v-model="obj.agentInfo.sm_ai_IncludeCert" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="营业执照号:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_CertNo"></el-input>
+        </el-form-item>
+        <el-form-item label="证件有效期从:" :label-width="formLabelWidth">
+          <div class="block">
+            <el-date-picker
+              v-model="obj.agentInfo.sm_ai_CertExpireFrom"
+              type="date">
+            </el-date-picker>
+          </div>
+        </el-form-item>
+        <el-form-item label="证件有效期到:" :label-width="formLabelWidth">
+          <div class="block">
+            <el-date-picker
+              v-model="obj.agentInfo.sm_ai_CertExpireTo"
+              type="date">
+            </el-date-picker>
+          </div>
+        </el-form-item>
+
+
+        <el-form-item label="营业执照扫描件:" :label-width="formLabelWidth">
+          <a href="javascript:;" class="file">上传文件
+            <input type="file" name="" ref="upload" accept="image/*" multiple>
+          </a>
+          <img
+            style="display: block"
+            v-for="item in ImageURL1"
+            width="280"
+            height="125"
+            :src="item"
+            v-show="ImageURL1.length"
+          >
+          <div v-show="obj.agentInfo.sm_ai_CertImage.length" v-for="item,index in obj.agentInfo.sm_ai_CertImage">
+            <img :src="item">
+          </div>
+        </el-form-item>
+        <el-form-item label="税务登记号:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_FeeNo"></el-input>
+        </el-form-item>
+        <el-form-item label="税务登记证扫描件:" :label-width="formLabelWidth">
+          <a href="javascript:;" class="file">上传文件
+            <input type="file" name="" ref="upload2" accept="image/*" multiple>
+          </a>
+          <img
+            style="display: block"
+            v-for="item in ImageURL2"
+            width="280"
+            height="125"
+            :src="item"
+            v-show="ImageURL2.length"
+          >
+          <div v-show="obj.agentInfo.sm_ai_FeeImage.length" v-for="item,index in obj.agentInfo.sm_ai_FeeImage">
+            <img :src="item">
+          </div>
+        </el-form-item>
+        <el-form-item label="其他证件号:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_OtherCert"></el-input>
+        </el-form-item>
+        <el-form-item label="其他证件扫描件:" :label-width="formLabelWidth">
+          <a href="javascript:;" class="file">上传文件
+            <input type="file" name="" ref="upload3" accept="image/*" multiple>
+          </a>
+          <img
+            style="display: block"
+            v-for="item in ImageURL3"
+            width="280"
+            height="125"
+            :src="item"
+            v-show="ImageURL3.length"
+          >
+          <div v-show="obj.agentInfo.sm_ai_OtherImage.length" v-for="item,index in obj.agentInfo.sm_ai_OtherImage">
+            <img :src="item">
+          </div>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="updateDialog = false">取 消</el-button>
-        <el-button type="primary" @click="updateDialog = false">确 定</el-button>
+        <el-button type="primary" @click="updateAdminUserInfoSubmit">确 定</el-button>
       </div>
     </el-dialog>
-daddada
   </div>
 </template>
 <script>
@@ -158,6 +322,14 @@ daddada
 
   export default {
     name: '',
+    computed: mapGetters([
+      'adminSupplierList',
+      'adminSupplierListObj',
+      'changeScopeOfOperationList',
+      'changeCompanyTypeList',
+      'changeMineyTypeList',
+      'changeCooperationTypecList'
+    ]),
     data() {
       return {
         obj: {
@@ -168,7 +340,7 @@ daddada
             "sm_cs_ID": '',
             "sm_ai_CompanyPersons": "",
             "sm_ai_Name": "",
-            "sm_ai_Sex": '',
+            "sm_ai_Sex": "",
             "sm_ai_Telephone": "",
             "sm_ai_FailReason": '',
             "sm_ai_SinglePay": '',
@@ -191,37 +363,26 @@ daddada
             "sm_ai_CertNo": "",
             "sm_ai_CertExpireFrom": "",
             "sm_ai_CertExpireTo": "",
-            "sm_ai_CertImage": [],
+            "sm_ai_CertImage": '',
             "sm_ai_FeeNo": "",
-            "sm_ai_FeeImage": [],
+            "sm_ai_FeeImage": '',
             "sm_ai_OtherCert": "",
-            "sm_ai_OtherImage": [],
-            "sm_ai_IsPass": 0,
+            "sm_ai_OtherImage": '',
+            "sm_ai_IsPass": '',
             "sm_ai_AgentID": "",
             "sm_ai_Password": "",
             "sm_ai_CreateTime": "",
-            "sm_ai_IsDelete": 0,
+            "sm_ai_IsDelete": '',
             "sm_ai_ParentID": "",
             "sm_al_ID": '',
-            "ts_to_IsBalance": null
+            "ts_to_IsBalance": ''
           },
-          "agentInfoTypeList": [{
-            "sm_at_ID": '',
-            "sm_cp_ID": '',
-            "sm_cp_PartnerTypeName": "",
-            "sm_ai_ID": '',
-            "sm_ai_AgentName": ""
-          }],
-          "agentInfoScopeList": [{
-            "sm_as_ID": '',
-            "sm_ts_ID": '',
-            "sm_ts_Name": "",
-            "sm_ai_ID": '',
-            "sm_ai_Name": ""
-          }, {"sm_as_ID": '', "sm_ts_ID": '', "sm_ts_Name": "", "sm_ai_ID": '', "sm_ai_Name": ""}]
+          "agentInfoTypeList": [],
+          "agentInfoScopeList": []
         },
-        formLabelWidth: '120px',
+        formLabelWidth: '140px',
         isLoading: false,
+        userInfo: [],
         updateDialog: false,//修改弹窗
         options: [
           {
@@ -233,46 +394,279 @@ daddada
             label: '是'
           }
         ],//是否三证合一
+        ImageURL1: [],
+        ImageURL2: [],
+        ImageURL3: [],
+        isDisabled: true,
+        ScopeOfOperationType: [],
+        sm_cp_ID: '',
       }
     },
     created() {
-      let userInfo = JSON.parse(sessionStorage.getItem('admin'))
-      let options = {
-        "loginUserID": "huileyou",
-        "loginUserPass": "123",
-        "operateUserID": "",
-        "operateUserName": "",
-        sm_ai_Name: '',
-        "sm_ai_ID": userInfo.sm_ai_ID,
-        "page": 1,
-        "rows": 5,
-      };
-      this.$store.dispatch('initAdminSupplier', options)
-      .then(userInfo => {
-//        this.userInfo = userInfo
-
-      }, err => {
-        this.$notify({
-          message: err,
-          type: 'error'
-        });
-      })
+      this.initData()
     },
-    computed: mapGetters([
-      'adminSupplierList',
-      'adminSupplierListObj'
-    ]),
+
     methods: {
+      initData() {
+        let userInfo = JSON.parse(sessionStorage.getItem('admin'))
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          sm_ai_Name: '',
+          "sm_ai_ID": userInfo.sm_ai_ID,
+          "page": 1,
+          "rows": 5,
+        };
+        this.$store.dispatch('initAdminSupplier', options)
+          .then(userInfo => {
+          }, err => {
+            this.$notify({
+              message: err,
+              type: 'error'
+            });
+          })
+      },
+      //图片转二进制
+      uploadImg(file) {
+        return new Promise(function (relove, reject) {
+          lrz(file)
+            .then(data => {
+              relove(data.base64.split(',')[1])
+            })
+        })
+      },
+
+      //添加图片
+      uploaNode() {
+        setTimeout(() => {
+          if (this.$refs.upload) {
+            this.$refs.upload.addEventListener('change', data => {
+              for (var i = 0; i < this.$refs.upload.files.length; i++) {
+                this.uploadImg(this.$refs.upload.files[i])
+                  .then(data => {
+                    this.$store.dispatch('uploadAdminImgs', {
+                      imageData: data
+                    })
+                      .then(data => {
+                        if (data) {
+                          this.ImageURL1.push(data.data);
+                        } else {
+                          this.$notify({
+                            message: '图片地址不存在!',
+                            type: 'error'
+                          });
+                        }
+                      })
+                  })
+              }
+            })
+          }
+          if (this.$refs.upload2) {
+            this.$refs.upload2.addEventListener('change', data => {
+              for (var i = 0; i < this.$refs.upload2.files.length; i++) {
+                this.uploadImg(this.$refs.upload2.files[i])
+                  .then(data => {
+                    this.$store.dispatch('uploadAdminImgs', {
+                      imageData: data
+                    })
+                      .then(data => {
+                        if (data) {
+                          this.ImageURL2.push(data.data);
+                        } else {
+                          this.$notify({
+                            message: '图片地址不存在!',
+                            type: 'error'
+                          });
+                        }
+                      })
+                  })
+              }
+            })
+          }
+          if (this.$refs.upload3) {
+            this.$refs.upload3.addEventListener('change', data => {
+              for (var i = 0; i < this.$refs.upload3.files.length; i++) {
+                this.uploadImg(this.$refs.upload3.files[i])
+                  .then(data => {
+                    this.$store.dispatch('uploadAdminImgs', {
+                      imageData: data
+                    })
+                      .then(data => {
+                        if (data) {
+                          this.ImageURL3.push(data.data);
+                        } else {
+                          this.$notify({
+                            message: '图片地址不存在!',
+                            type: 'error'
+                          });
+                        }
+                      })
+                  })
+              }
+            })
+          }
+        }, 30)
+      },
+
+
+      //经营范围
+      changeScopeOfOperation() {
+        var selectTradeScope = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "sm_ts_ID": "",
+          "sm_ts_Name": "",
+          "sm_ts_IsDelete": 0
+        };
+        this.$store.dispatch('initChangeScopeOfOperation', selectTradeScope)
+      },
+      //选择经营范围
+      changeBox() {
+        this.ScopeOfOperationType = [];
+        let arr = this.changeScopeOfOperationList;
+        let typeArr = this.ScopeOfOperationType;
+        for (var i = 0; i < arr.length; i++) {
+          for (var j = 0; j < typeArr.length; j++) {
+            if (arr[i].sm_ts_Name == typeArr[j]) {
+              this.ScopeOfOperationType.push({
+                sm_ts_ID: arr[i].sm_ts_ID,
+                sm_ts_Name: typeArr[j]
+              })
+            }
+          }
+        }
+      },
+      //公司规模
+      changeCompanyType() {
+        var selectCompanySize = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "sm_cs_ID": "",
+          "sm_cs_Persons": "",
+          "sm_cs_IsDelete": 0
+        };
+        return this.$store.dispatch('initChangeCompanyType', selectCompanySize)
+      },
+      //查询结算币种
+      changeMoneyType() {
+        var selectBalanceCurrency = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "sm_bc_ID": "",
+          "sm_bc_Name": "",
+          "sm_bc_IsDelete": 0
+        }
+        return this.$store.dispatch('initChangeMineyType', selectBalanceCurrency)
+      },
+      //合作类型
+      changeCooperationTypeL() {
+        var selectCooperationType = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "sm_cp_ID": "",
+          "sm_cp_Name": "",
+          "sm_cp_IsDelete": 0
+        };
+        return this.$store.dispatch('initChangeCooperationType', selectCooperationType)
+      },
       //修改
-      updateAdminUserInfo(id){
-        this.obj = this.adminSupplierListObj
+      updateAdminUserInfo(id) {
+        this.uploaNode()
+        this.changeScopeOfOperation()
+        this.adminSupplierListObj.agentInfo.sm_ai_Sex = this.adminSupplierListObj.agentInfo.sm_ai_Sex + ''
+        this.adminSupplierListObj.agentInfoScopeList = []
+        this.obj = this.adminSupplierListObj;
         this.updateDialog = true;
         this.$store.commit('setTranstionFalse');
+
+        //
       },
-      //
-    },
+//      修改提交
+      updateAdminUserInfoSubmit() {
+
+        //合作类型数据
+        let TypeOfCooperationArr = [];
+        for (var i = 0; i < this.obj.agentInfoScopeList.length; i++) {
+          let a = this.changeScopeOfOperationList.filter(item => {
+            if (this.obj.agentInfoScopeList[i] == item.sm_ts_Name) {
+              return true;
+            }
+            return false;
+          })
+          TypeOfCooperationArr.push(...a)
+        }
+
+
+        this.obj.agentInfo.sm_ai_CertImage = this.ImageURL1;
+        this.obj.agentInfo.sm_ai_FeeImage = this.ImageURL2;
+        this.obj.agentInfo.sm_ai_OtherImage = this.ImageURL3;
+        let updateAgentInfo = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          data: {
+            "sm_ai_ID": this.obj.agentInfo.sm_ai_ID,
+            "sm_bc_ID": this.obj.agentInfo.sm_bc_ID,
+            "sm_ai_BalanceCurrencyName": this.obj.agentInfo.sm_ai_BalanceCurrencyName,
+            "sm_cs_ID": this.obj.agentInfo.sm_cs_ID,
+            "sm_ai_CompanyPersons": this.obj.agentInfo.sm_ai_CompanyPersons,
+            "sm_ai_Name": this.obj.agentInfo.sm_ai_Name,
+            "sm_ai_Sex": this.obj.agentInfo.sm_ai_Sex,
+            "sm_ai_Telephone": this.obj.agentInfo.sm_ai_Telephone,
+            "sm_ai_FixPhoneAreaCode": this.obj.agentInfo.sm_ai_FixPhoneAreaCode,
+            "sm_ai_FixPhoneContryCode": this.obj.agentInfo.sm_ai_FixPhoneContryCode,
+            "sm_ai_FixPhone": '',
+            "sm_ai_FaxAreaCode": '',
+            "sm_ai_FaxContryCode": '',
+            "sm_ai_FaxNo": this.obj.agentInfo.sm_ai_FaxNo,
+            "sm_ai_QQ": this.obj.agentInfo.sm_ai_QQ,
+            "sm_ai_Email": this.obj.agentInfo.sm_ai_Email,
+            "sm_ai_GoodName": this.obj.agentInfo.sm_ai_GoodName,
+            "sm_ai_Contry": "中国",
+            "sm_ai_Provice": this.obj.agentInfo.sm_ai_Provice,
+            "sm_ai_City": this.obj.agentInfo.sm_ai_City,
+            "sm_ai_County": this.obj.agentInfo.sm_ai_County,
+            "sm_ai_Address": this.obj.agentInfo.sm_ai_Address,
+            "sm_ai_RegTime": this.obj.agentInfo.sm_ai_RegTime,
+            "sm_ai_RegMoney": this.obj.agentInfo.sm_ai_RegMoney,
+            "sm_ai_GoodIntroduce": this.obj.agentInfo.sm_ai_GoodIntroduce,
+            "sm_ai_PartnerWay": this.obj.agentInfo.sm_ai_PartnerWay,
+            "sm_ai_IncludeCert": this.obj.agentInfo.sm_ai_IncludeCert,
+            "sm_ai_CertNo": this.obj.agentInfo.sm_ai_CertNo,
+            "sm_ai_CertExpireFrom": this.obj.agentInfo.sm_ai_CertExpireFrom,
+            "sm_ai_CertExpireTo": this.obj.agentInfo.sm_ai_CertExpireTo,
+            "sm_ai_CertImage": this.obj.agentInfo.sm_ai_CertImage,
+            "sm_ai_FeeNo": this.obj.agentInfo.sm_ai_FeeNo,
+            "sm_ai_FeeImage": this.obj.agentInfo.sm_ai_FeeImage,
+            "sm_ai_OtherCert": this.obj.agentInfo.sm_ai_OtherCert,
+            "sm_ai_OtherImage": this.obj.agentInfo.sm_ai_OtherImage,
+            "sm_ai_IsPass": this.obj.agentInfo.sm_ai_IsPass,
+            "sm_ai_IsDelete": this.obj.agentInfo.sm_ai_IsDelete
+          },
+          agentinfotype: this.obj.agentInfoTypeList,
+          agentinfoscope: TypeOfCooperationArr
+        }
+        this.$store.dispatch('updateAdminUserInfoSubmit', updateAgentInfo)
+          .then(suc => {
+            this.$notify({
+              message: suc,
+              type: 'success'
+            });
+            this.initData()
+          }, err => {
+            this.$notify({
+              message: err,
+              type: 'error'
+            });
+          })
+        this.updateDialog = false;
+      }
+    }
+    ,
+    mounted() {
+    }
   }
 </script>
 <style scoped>
-
 </style>

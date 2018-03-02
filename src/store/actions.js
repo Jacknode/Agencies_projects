@@ -1456,7 +1456,7 @@ export default {
     })
   },
   //查询评论类型
-  initAdminCommentsType(store,data){
+  initAdminCommentsType(store, data) {
     return new Promise(function (relove, reject) {
       axios.post('http://hly.lxs.1000da.com.cn/CommentType/Select', JSON.stringify(data), {
         headers: {
@@ -1466,7 +1466,7 @@ export default {
         .then(data => {
           var data = data.data;
           if (Number(data.resultcode) == 200) {
-            commit('initAdminCommentsType',data.data);
+            commit('initAdminCommentsType', data.data);
             relove(data.resultcontent)
           } else {
             reject(data.resultcontent)
@@ -1475,122 +1475,122 @@ export default {
     })
   },
   //根据产品线路查询出发城市
-  initDepartureCity({commit},data){
+  initDepartureCity({commit}, data) {
     return new Promise((relove, reject) => {
       axios.post('http://hly.lxs.1000da.com.cn/ProductPrice/GetLineCity', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-      .then(data => {
-        var data = data.data;
-        if (Number(data.resultcode) == 200) {
-          commit('initDepartureCity',data.data);
-          relove(data.resultcontent)
-        } else {
-          reject(data.resultcontent)
-        }
-      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            commit('initDepartureCity', data.data);
+            relove(data.resultcontent)
+          } else {
+            reject(data.resultcontent)
+          }
+        })
     })
 
   },
   //初始化产品线路价格
-  initAdminLinePrice({commit},data){
+  initAdminLinePrice({commit}, data) {
     return new Promise((relove, reject) => {
       axios.post('http://hly.lxs.1000da.com.cn/ProductPrice/GetProductPrice', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-      .then(data => {
-        var data = data.data;
-        if (Number(data.resultcode) == 200) {
-          commit('initAdminLinePrice',data.data)
-          relove(data.resultcontent)
-        } else {
-          reject(data.resultcontent)
-        }
-      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            commit('initAdminLinePrice', data.data)
+            relove(data.resultcontent)
+          } else {
+            reject(data.resultcontent)
+          }
+        })
     })
 
   },
   //初始化省
-  initProvice({commit},data){
+  initProvice({commit}, data) {
     return new Promise((relove, reject) => {
       axios.post('http://hly.lxs.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-      .then(data => {
-        var data = data.data;
-        if (Number(data.resultcode) == 200) {
-          commit('initProvice',data.data)
-          relove(data.resultcontent)
-        } else {
-          reject(data.resultcontent)
-        }
-      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            commit('initProvice', data.data)
+            relove(data.resultcontent)
+          } else {
+            reject(data.resultcontent)
+          }
+        })
     })
   },
   //初始化城市
-  initCityList({commit},data){
+  initCityList({commit}, data) {
     return new Promise((relove, reject) => {
       axios.post('http://hly.lxs.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-      .then(data => {
-        var data = data.data;
-        if (Number(data.resultcode) == 200) {
-          commit('initCityList',data.data)
-          relove(data.resultcontent)
-        } else {
-          reject(data.resultcontent)
-        }
-      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            commit('initCityList', data.data)
+            relove(data.resultcontent)
+          } else {
+            reject(data.resultcontent)
+          }
+        })
     })
   },
   //添加产品线路价格
-  AddAdminLinePriceSubmit(store,data){
+  AddAdminLinePriceSubmit(store, data) {
     return new Promise((relove, reject) => {
       axios.post('http://hly.lxs.1000da.com.cn/ProductPrice/Insert', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-      .then(data => {
-        var data = data.data;
-        if (Number(data.resultcode) == 200) {
-          relove(data.resultcontent)
-        } else {
-          reject(data.resultcontent)
-        }
-      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          } else {
+            reject(data.resultcontent)
+          }
+        })
     })
   },
   //生成座位
-  initBuildSeat(store,data){
+  initBuildSeat(store, data) {
     return new Promise((relove, reject) => {
       axios.post('http://hly.lxs.1000da.com.cn/ProductPrice/MakeSeatNo', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-      .then(data => {
-        var data = data.data;
-        if (Number(data.resultcode) == 200) {
-          relove(data.resultcontent)
-        } else {
-          reject(data.resultcontent)
-        }
-      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          } else {
+            reject(data.resultcontent)
+          }
+        })
     })
 
   },
   //查询出发城市
-  initAdminRouteDepartureCity({commit},data){
+  initAdminRouteDepartureCity({commit}, data) {
     return new Promise((relove, reject) => {
       axios.post('http://hly.lxs.1000da.com.cn/LineCity/Select', JSON.stringify(data), {
         headers: {
@@ -1600,7 +1600,7 @@ export default {
         .then(data => {
           var data = data.data;
           if (Number(data.resultcode) == 200) {
-            commit('initAdminRouteDepartureCity',data.data)
+            commit('initAdminRouteDepartureCity', data.data)
             relove(Number(data.totalrows))
           } else {
             reject(data.resultcontent)
@@ -1609,95 +1609,182 @@ export default {
     })
   },
   //添加产品线路城市
-  AddAdminRouteDepartureCity(store,data){
+  AddAdminRouteDepartureCity(store, data) {
     return new Promise((relove, reject) => {
       axios.post('http://hly.lxs.1000da.com.cn/LineCity/Insert', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-      .then(data => {
-        var data = data.data;
-        if (Number(data.resultcode) == 200) {
-          relove(Number(data.totalrows))
-        } else {
-          reject(data.resultcontent)
-        }
-      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(Number(data.totalrows))
+          } else {
+            reject(data.resultcontent)
+          }
+        })
     })
 
   },
   //修改出发城市
-  UpdateAdminRouteDepartureCity(store,data){
+  UpdateAdminRouteDepartureCity(store, data) {
     return new Promise((relove, reject) => {
       axios.post('http://hly.lxs.1000da.com.cn/LineCity/Update', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-      .then(data => {
-        var data = data.data;
-        if (Number(data.resultcode) == 200) {
-          relove(data.resultcontent)
-        } else {
-          reject(data.resultcontent)
-        }
-      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          } else {
+            reject(data.resultcontent)
+          }
+        })
     })
   },
   //删除出发城市
-  DeleteAdminRouteDepartureCity(store,data){
+  DeleteAdminRouteDepartureCity(store, data) {
     return new Promise((relove, reject) => {
       axios.post('http://hly.lxs.1000da.com.cn/LineCity/Delete', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-      .then(data => {
-        var data = data.data;
-        if (Number(data.resultcode) == 200) {
-          relove(data.resultcontent)
-        } else {
-          reject(data.resultcontent)
-        }
-      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          } else {
+            reject(data.resultcontent)
+          }
+        })
     })
   },
   //初始化供应商信息
-  initAdminSupplier({commit},data){
+  initAdminSupplier({commit}, data) {
     return new Promise(function (relove, reject) {
       axios.post('http://hly.lxs.1000da.com.cn/AgentInfo/Select', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-      .then(data=>{
-        var data = data.data;
-        if(Number(data.resultcode)==200){
-          let resulte = data.data
-          for (var i = 0; i < resulte.length; i++) {
-            if (resulte[i].agentInfo.sm_ai_CertImage) {
-              resulte[i].agentInfo.sm_ai_CertImage = resulte[i].agentInfo.sm_ai_CertImage.split(',')
-            } else {
-              resulte[i].agentInfo.sm_ai_CertImage = []
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            let resulte = data.data
+            for (var i = 0; i < resulte.length; i++) {
+              if (resulte[i].agentInfo.sm_ai_CertImage) {
+                resulte[i].agentInfo.sm_ai_CertImage = resulte[i].agentInfo.sm_ai_CertImage.split(',')
+              } else {
+                resulte[i].agentInfo.sm_ai_CertImage = []
+              }
+              if (data.data[i].agentInfo.sm_ai_OtherImage) {
+                resulte[i].agentInfo.sm_ai_OtherImage = resulte[i].agentInfo.sm_ai_OtherImage.split(',')
+              } else {
+                resulte[i].agentInfo.sm_ai_OtherImage = []
+              }
+              if (data.data[i].agentInfo.sm_ai_FeeImage) {
+                resulte[i].agentInfo.sm_ai_FeeImage = resulte[i].agentInfo.sm_ai_FeeImage.split(',')
+              } else {
+                resulte[i].agentInfo.sm_ai_FeeImage = []
+              }
             }
-            if (data.data[i].agentInfo.sm_ai_OtherImage) {
-              resulte[i].agentInfo.sm_ai_OtherImage = resulte[i].agentInfo.sm_ai_OtherImage.split(',')
-            } else {
-              resulte[i].agentInfo.sm_ai_OtherImage = []
-            }
-            if (data.data[i].agentInfo.sm_ai_FeeImage) {
-              resulte[i].agentInfo.sm_ai_FeeImage = resulte[i].agentInfo.sm_ai_FeeImage.split(',')
-            } else {
-              resulte[i].agentInfo.sm_ai_FeeImage = []
-            }
+            commit('initAdminSupplier', data.data)
+
+            relove(data.data)
+          } else {
+            reject(data.resultcontent)
           }
-          commit('initAdminSupplier',data.data)
-          relove(data.data)
-        }else{
-          reject(data.resultcontent)
-        }
-      })
+        })
     })
   },
+  //经营范围
+  initChangeScopeOfOperation({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://hly.lxs.1000da.com.cn/TradeScope/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            commit('initChangeScopeOfOperation', data.data)
+            relove()
+          }
+        })
+    })
+  },
+  //公司规模
+  initChangeCompanyType({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://hly.lxs.1000da.com.cn/CompanySize/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            commit('initChangeCompanyType', data.data)
+            relove()
+          }
+        })
+    })
+  },
+  //查询结算币种
+  initChangeMineyType({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://hly.lxs.1000da.com.cn/BalanceCurrency/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            commit('initChangeMineyType', data.data)
+            relove(data.data)
+          }
+        })
+    })
+  },
+  //类型
+  initChangeCooperationType({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://hly.lxs.1000da.com.cn/CooperationType/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            commit('initChangeCooperationType', data.data)
+            relove()
+          }
+        })
+    })
+  },
+  //修改供应商信息
+  updateAdminUserInfoSubmit({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://hly.lxs.1000da.com.cn/AgentInfo/Update',JSON.stringify(data),{
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if( Number(data.resultcode) == 200 ){
+            relove(data.resultcontent)
+          }else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  }
 }

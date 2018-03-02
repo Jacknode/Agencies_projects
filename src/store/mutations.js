@@ -61,6 +61,12 @@ const state = {
   adminSupplierList:[],//供应商信息
   adminSupplierListObj:{},
 
+  changeScopeOfOperationList:[],//经营范围
+  changeCompanyTypeList:[],//公司规模
+  changeMineyTypeList:[],//结算币种
+  changeCooperationTypecList:[],//合作类型
+
+
 
 
   //参数
@@ -97,6 +103,9 @@ const mutations = {
 
 
   //----------------管理员-----------------
+  initChangeScopeOfOperation(state,data){
+    state.changeScopeOfOperationList = data;
+  },
 
   initAdminActivitySite(state, data) {
     state.adminActivitySiteList = data;
@@ -396,6 +405,15 @@ const mutations = {
     state.adminSupplierList = data;
     state.adminSupplierListObj = data[0]
   },
+  initChangeCompanyType(state,data){
+    state.changeCompanyTypeList = data;
+  },
+  initChangeMineyType(state,data){
+    state.changeMineyTypeList = data;
+  },
+  initChangeCooperationType(sstate,data){
+    state.changeCooperationTypecList = data;
+  }
 
 };
 
