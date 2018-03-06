@@ -589,8 +589,6 @@
       },
       //添加提交
       addAdminMerchantProductsSubmit(){
-        console.log(this.addOptions.data)
-        return
         this.addOptions.data.ta_tg_ShowImage = this.ImageURL.join(',');
         this.addOptions.data.ta_tg_TradeID = this.productsID
         this.addOptions.data.ta_tg_TradeName = this.userObj.sm_ai_GoodName
