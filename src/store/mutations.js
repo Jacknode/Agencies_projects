@@ -60,11 +60,13 @@ const state = {
   updateAdminRouteDepartureCityObj:{},//修改出发城市obj
   adminSupplierList:[],//供应商信息
   adminSupplierListObj:{},
+  adminPersonalBenefitsList:[],//供应商收益
 
   changeScopeOfOperationList:[],//经营范围
   changeCompanyTypeList:[],//公司规模
   changeMineyTypeList:[],//结算币种
   changeCooperationTypecList:[],//合作类型
+  lookList:[],//供应商审核流程
 
 
 
@@ -413,6 +415,12 @@ const mutations = {
   },
   initChangeCooperationType(sstate,data){
     state.changeCooperationTypecList = data;
+  },
+  initAdminPersonalBenefits(state,data){
+    state.adminPersonalBenefitsList = data;
+  },
+  initLookList(state,data){
+    state.lookList = data;
   }
 
 };

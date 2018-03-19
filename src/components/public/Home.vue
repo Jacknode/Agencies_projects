@@ -74,7 +74,7 @@
 
                 <ul class="navigation navigation-main navigation-accordion">
                   <!-- Main -->
-                  <li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
+                  <li class="navigation-header"><span>旅行社</span> <i class="icon-menu" title="Main pages"></i></li>
                   <!--境外查询-->
 
                   <li>
@@ -86,21 +86,24 @@
                       <li v-show="userInfo.sm_ai_IsPass==1">
                         <router-link to="/home/adminAllFunction2">产品信息</router-link>
                       </li>
-                      <!--<li>-->
-                        <!--<router-link to="/home/adminGroupTour">跟团游栏目管理</router-link>-->
-                      <!--</li>-->
-                      <!--<li>-->
-                        <!--<router-link to="/home/adminBusinessLicense">商户营业执照管理</router-link>-->
-                      <!--</li>-->
-                      <!--<li>-->
-                        <!--<router-link to="/home/adminProductMenu">产品线路总菜单</router-link>-->
-                      <!--</li>-->
-                      <!--<li>-->
-                        <!--<router-link to="/home/adminSystemMenu">系统菜单管理</router-link>-->
-                      <!--</li>-->
-                      <!--<li>-->
-                        <!--<router-link to="/home/adminCommentsType">评论类型管理</router-link>-->
-                      <!--</li>-->
+                      <li  v-show="userInfo.sm_ai_IsPass==1">
+                        <router-link to="/home/adminPersonalBenefits">供应商收益</router-link>
+                      </li>
+                    </ul>
+                  </li>
+                  <!-- /main -->
+                </ul>
+                <ul class="navigation navigation-main navigation-accordion">
+                  <!-- Main -->
+                  <li class="navigation-header"><span>酒店</span> <i class="icon-menu" title="Main pages"></i></li>
+                  <!--境外查询-->
+
+                  <li>
+                    <a href="javascript:;"><i class=" icon-home"></i> <span>酒店后台管理</span></a>
+                    <ul>
+                      <li>
+                        <router-link to="/home/adminUserInfo">酒店</router-link>
+                      </li>
                     </ul>
                   </li>
                   <!-- /main -->
@@ -188,16 +191,6 @@
       if (!sessionStorage.getItem('index')) {
         sessionStorage.setItem('index', '0')
       }
-
-      let options = {
-        "loginUserID": "huileyou",
-        "loginUserPass": "123",
-        "operateUserID": "",
-        "operateUserName": "",
-        "pcName": "",
-      };
-//      //初始化跟团游栏目
-//      this.$store.dispatch('initGroupTour',options)
     },
     mounted(){
       let user = JSON.parse(sessionStorage.getItem('admin'));

@@ -1,138 +1,155 @@
 <template>
-  <div id="wrap" class="clearfix">
-    <h1 class="userClass">供应商信息</h1>
+  <div>
+    <div id="wrap" class="clearfix">
+      <!--<el-tabs v-model="activeIndex" style="padding: 20px">-->
+        <!--<el-tab-pane :label="item" :name="index+''" v-for="item,index in menus" :key="index">-->
+          <h1 class="userClass">供应商信息</h1>
+          <!--数据展示-->
+          <el-table
+            :data="adminSupplierList"
+            highlight-current-row
+            v-loading="isLoading"
+            style="width: 100%;padding-top: 50px">
+            <el-table-column type="expand">
+              <template slot-scope="props">
+                <el-form label-position="left" inline class="demo-table-expand">
+                  <el-form-item label="供应商编号:">
+                    <span>{{ props.row.agentInfo.sm_ai_ID }}</span>
+                  </el-form-item>
+                  <el-form-item label="供应商商户号:">
+                    <span>{{ props.row.agentInfo.sm_ai_AgentID }}</span>
+                  </el-form-item>
+                  <el-form-item label="供应商名称:">
+                    <span>{{ props.row.agentInfo.sm_ai_Name }}</span>
+                  </el-form-item>
+                  <el-form-item label="供应商手机号码:">
+                    <span>{{ props.row.agentInfo.sm_ai_Telephone }}</span>
+                  </el-form-item>
+                  <el-form-item label="性别:">
+                    <span>{{ props.row.agentInfo.sm_ai_Sex | getSex }}</span>
+                  </el-form-item>
+                  <el-form-item label="固定电话:">
+                    <span>{{ props.row.agentInfo.sm_ai_FixPhoneAreaCode + "-" + props.row.agentInfo.sm_ai_FixPhoneContryCode}}</span>
+                  </el-form-item>
+                  <el-form-item label="QQ:">
+                    <span>{{ props.row.agentInfo.sm_ai_QQ }}</span>
+                  </el-form-item>
+                  <el-form-item label="传真:">
+                    <span>{{ props.row.agentInfo.sm_ai_FaxNo}}</span>
+                  </el-form-item>
+                  <el-form-item label="电子邮箱:">
+                    <span>{{ props.row.agentInfo.sm_ai_Email}}</span>
+                  </el-form-item>
+                  <el-form-item label="公司名称:">
+                    <span>{{ props.row.agentInfo.sm_ai_GoodName}}</span>
+                  </el-form-item>
+                  <el-form-item label="获许经营范围:">
+                    <span v-for="item in props.row.agentInfoScopeList" style="margin-right: 10px">{{item.sm_ts_Name}}</span>
+                  </el-form-item>
+                  <el-form-item label="公司地址:">
+                    <span>{{ props.row.agentInfo.sm_ai_Address}}</span>
+                  </el-form-item>
+                  <el-form-item label="注册成立时间:">
+                    <span>{{ props.row.agentInfo.sm_ai_RegTime}}</span>
+                  </el-form-item>
+                  <el-form-item label="注册资金:">
+                    <span>{{ props.row.agentInfo.sm_ai_RegMoney}}万元</span>
+                  </el-form-item>
+                  <el-form-item label="公司规模:">
+                    <span>{{ props.row.agentInfo.sm_ai_CompanyPersons}}</span>
+                  </el-form-item>
+                  <el-form-item label="结算币种:">
+                    <span>{{ props.row.agentInfo.sm_ai_BalanceCurrencyName}}</span>
+                  </el-form-item>
+                  <el-form-item label="合作类型:">
+                    <span v-for="item in props.row.agentInfoTypeList" style="margin-right: 10px">{{item.sm_cp_PartnerTypeName}}</span>
+                  </el-form-item>
 
-    <!--数据展示-->
-    <el-table
-      :data="adminSupplierList"
-      highlight-current-row
-      v-loading="isLoading"
-      style="width: 100%;padding-top: 50px">
-      <el-table-column type="expand">
-        <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="供应商编号:">
-              <span>{{ props.row.agentInfo.sm_ai_ID }}</span>
-            </el-form-item>
-            <el-form-item label="供应商商户号:">
-              <span>{{ props.row.agentInfo.sm_ai_AgentID }}</span>
-            </el-form-item>
-            <el-form-item label="供应商名称:">
-              <span>{{ props.row.agentInfo.sm_ai_Name }}</span>
-            </el-form-item>
-            <el-form-item label="供应商手机号码:">
-              <span>{{ props.row.agentInfo.sm_ai_Telephone }}</span>
-            </el-form-item>
-            <el-form-item label="性别:">
-              <span>{{ props.row.agentInfo.sm_ai_Sex | getSex }}</span>
-            </el-form-item>
-            <el-form-item label="固定电话:">
-              <span>{{ props.row.agentInfo.sm_ai_FixPhoneAreaCode + "-" + props.row.agentInfo.sm_ai_FixPhoneContryCode}}</span>
-            </el-form-item>
-            <el-form-item label="QQ:">
-              <span>{{ props.row.agentInfo.sm_ai_QQ }}</span>
-            </el-form-item>
-            <el-form-item label="传真:">
-              <span>{{ props.row.agentInfo.sm_ai_FaxNo}}</span>
-            </el-form-item>
-            <el-form-item label="电子邮箱:">
-              <span>{{ props.row.agentInfo.sm_ai_Email}}</span>
-            </el-form-item>
-            <el-form-item label="公司名称:">
-              <span>{{ props.row.agentInfo.sm_ai_GoodName}}</span>
-            </el-form-item>
-            <el-form-item label="获许经营范围:">
-              <span v-for="item in props.row.agentInfoScopeList" style="margin-right: 10px">{{item.sm_ts_Name}}</span>
-            </el-form-item>
-            <el-form-item label="公司地址:">
-              <span>{{ props.row.agentInfo.sm_ai_Address}}</span>
-            </el-form-item>
-            <el-form-item label="注册成立时间:">
-              <span>{{ props.row.agentInfo.sm_ai_RegTime}}</span>
-            </el-form-item>
-            <el-form-item label="注册资金:">
-              <span>{{ props.row.agentInfo.sm_ai_RegMoney}}万元</span>
-            </el-form-item>
-            <el-form-item label="公司规模:">
-              <span>{{ props.row.agentInfo.sm_ai_CompanyPersons}}</span>
-            </el-form-item>
-            <el-form-item label="结算币种:">
-              <span>{{ props.row.agentInfo.sm_ai_BalanceCurrencyName}}</span>
-            </el-form-item>
-            <el-form-item label="合作类型:">
-              <span v-for="item in props.row.agentInfoTypeList" style="margin-right: 10px">{{item.sm_cp_PartnerTypeName}}</span>
-            </el-form-item>
-            <el-form-item label="优势产品说明:">
-              <span>{{ props.row.agentInfo.sm_ai_GoodIntroduce}}</span>
-            </el-form-item>
-            <el-form-item label="已合作的网销渠道:">
-              <span>{{ props.row.agentInfo.sm_ai_PartnerWay}}</span>
-            </el-form-item>
-            <el-form-item label="是否三证合一:">
-              <span>{{ props.row.agentInfo.sm_ai_IncludeCert | getIncludeCert}}</span>
-            </el-form-item>
-            <el-form-item label="营业执照号:">
-              <span>{{ props.row.agentInfo.sm_ai_CertNo}}</span>
-            </el-form-item>
-            <el-form-item label="证件有效期 :">
-              <span>{{ props.row.agentInfo.sm_ai_CertExpireTo}}</span>
-            </el-form-item>
-            <el-form-item label="营业执照扫描件 :">
-              <img :src="item" alt="" v-for="item in props.row.agentInfo.sm_ai_CertImage"
-                   style="width: 100px;height: 100px" v-show="props.row.agentInfo.sm_ai_CertImage.length">
-            </el-form-item>
-            <el-form-item label="税务登记号 :">
-              <span>{{ props.row.agentInfo.sm_ai_FeeNo}}</span>
-            </el-form-item>
-            <el-form-item label="税务登记证扫描件 :">
-              <img :src="item" alt="" v-for="item in props.row.agentInfo.sm_ai_FeeImage"
-                   style="width: 100px;height: 100px" v-show="props.row.agentInfo.sm_ai_FeeImage.length">
-            </el-form-item>
-            <el-form-item label="其他证件号 :">
-              <span>{{ props.row.agentInfo.sm_ai_OtherCert}}</span>
-            </el-form-item>
-            <el-form-item label="其他证件扫描件:">
-              <img :src="item" alt="" v-for="item in props.row.agentInfo.sm_ai_OtherImage"
-                   style="width: 100px;height: 100px" v-show="props.row.agentInfo.sm_ai_OtherImage.length">
-            </el-form-item>
-            <el-form-item label="审核状态 :">
-              <span>{{ props.row.agentInfo.sm_ai_IsPass | getPass}}</span>
-            </el-form-item>
-            <el-form-item label="审核失败原因:">
-              <span>{{ props.row.agentInfo.sm_ai_FailReason}}</span>
-            </el-form-item>
-            <el-form-item label="创建时间 :">
-              <span>{{ props.row.agentInfo.sm_ai_CreateTime}}</span>
-            </el-form-item>
-          </el-form>
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="供应商编号"
-        prop="agentInfo.sm_ai_ID">
-      </el-table-column>
-      <el-table-column
-        label="供应商名称"
-        prop="agentInfo.sm_ai_Name">
-      </el-table-column>
-      <el-table-column
-        label="供应商手机号码"
-        prop="agentInfo.sm_ai_Telephone">
-      </el-table-column>
-      <el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="primary"
-            v-show="scope.row.agentInfo.sm_ai_IsPass!=1"
-            @click="updateAdminUserInfo(scope.row.agentInfo.sm_ai_ID)">修改
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
+                  <el-form-item label="优势产品说明:">
+                    <span>{{ props.row.agentInfo.sm_ai_GoodIntroduce}}</span>
+                  </el-form-item>
+                  <el-form-item label="已合作的网销渠道:">
+                    <span>{{ props.row.agentInfo.sm_ai_PartnerWay}}</span>
+                  </el-form-item>
+                  <el-form-item label="是否三证合一:">
+                    <span>{{ props.row.agentInfo.sm_ai_IncludeCert | getIncludeCert}}</span>
+                  </el-form-item>
+                  <el-form-item label="营业执照号:">
+                    <span>{{ props.row.agentInfo.sm_ai_CertNo}}</span>
+                  </el-form-item>
+                  <el-form-item label="证件有效期 :">
+                    <span>{{ props.row.agentInfo.sm_ai_CertExpireTo}}</span>
+                  </el-form-item>
+                  <el-form-item label="营业执照扫描件 :">
+                    <img :src="item" alt="" v-for="item in props.row.agentInfo.sm_ai_CertImage"
+                         style="width: 100px;height: 100px" v-show="props.row.agentInfo.sm_ai_CertImage.length">
+                  </el-form-item>
+                  <el-form-item label="税务登记号 :">
+                    <span>{{ props.row.agentInfo.sm_ai_FeeNo}}</span>
+                  </el-form-item>
+                  <el-form-item label="税务登记证扫描件 :">
+                    <img :src="item" alt="" v-for="item in props.row.agentInfo.sm_ai_FeeImage"
+                         style="width: 100px;height: 100px" v-show="props.row.agentInfo.sm_ai_FeeImage.length">
+                  </el-form-item>
+                  <el-form-item label="其他证件号 :">
+                    <span>{{ props.row.agentInfo.sm_ai_OtherCert}}</span>
+                  </el-form-item>
+                  <el-form-item label="其他证件扫描件 :">
+                    <img :src="item" alt="" v-for="item in props.row.agentInfo.sm_ai_OtherImage"
+                         style="width: 100px;height: 100px" v-show="props.row.agentInfo.sm_ai_OtherImage.length">
+                  </el-form-item>
+                  <el-form-item label="审核状态 :">
+                    <span>{{ props.row.agentInfo.sm_ai_IsPass | getPass}}</span>
+                  </el-form-item>
+                  <el-form-item label="审核失败原因:">
+                    <span>{{ props.row.agentInfo.sm_ai_FailReason}}</span>
+                  </el-form-item>
+                  <el-form-item label="创建时间 :">
+                    <span>{{ props.row.agentInfo.sm_ai_CreateTime}}</span>
+                  </el-form-item>
+                </el-form>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="供应商编号"
+              prop="agentInfo.sm_ai_ID">
+            </el-table-column>
+            <el-table-column
+              label="供应商名称"
+              prop="agentInfo.sm_ai_Name">
+            </el-table-column>
+            <el-table-column
+              label="审核状态"
+            >
+              <template slot-scope="scope">
+                <span>{{scope.row.agentInfo.sm_ai_IsPass | getPass}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="供应商手机号码"
+              prop="agentInfo.sm_ai_Telephone">
+            </el-table-column>
+            <el-table-column label="操作"  align="center">
+              <template slot-scope="scope">
+                <el-button
+                  size="mini"
+                  type="primary"
+                  v-show="scope.row.agentInfo.sm_ai_IsPass!=1"
+                  @click="updateAdminUserInfo(scope.row.agentInfo.sm_ai_ID)">修改
+                </el-button>
+                <el-button
+                  size="mini"
+                  type="primary"
+                  @click="viewLook(scope.row.agentInfo.sm_ai_AgentID)">查看
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        <!--</el-tab-pane>-->
+      <!--</el-tabs>-->
+    </div>
     <!--修改-->
-    <el-dialog title="修改活动景点" :visible.sync="updateDialog">
+    <el-dialog title="修改供应商信息" :visible.sync="updateDialog">
       <el-form :model="obj">
         <el-form-item label="供应商编号:" :label-width="formLabelWidth">
           <el-input v-model="obj.agentInfo.sm_ai_ID" :disabled="isDisabled"></el-input>
@@ -167,7 +184,7 @@
         </el-form-item>
         <el-form-item label="获许经营范围:" :label-width="formLabelWidth">
           <el-checkbox-group v-model="obj.agentInfoScopeList">
-            <el-checkbox v-for="item,index in changeScopeOfOperationList" :label="item.sm_ts_Name"></el-checkbox>
+            <el-checkbox v-for="item,index in changeScopeOfOperationList" :label="item.sm_ts_Name" :key="index"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="公司地址:" :label-width="formLabelWidth">
@@ -315,7 +332,59 @@
         <el-button type="primary" @click="updateAdminUserInfoSubmit">确 定</el-button>
       </div>
     </el-dialog>
+    <!--查看-->
+    <el-dialog title="审核流程详情" :visible.sync="lookDialog" center width="70%">
+      <el-table :data="lookList">
+        <el-table-column
+          align="center"
+          prop="sm_cf_ID"
+          label="序号"
+        >
+        </el-table-column>
+        <el-table-column
+          align="center"
+          prop="sm_cf_ID"
+          label="办理人"
+        >
+          <template slot-scope="scope">
+            <span>{{scope.row.sm_cf_DoMan}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          align="center"
+          prop="sm_cf_ID"
+          label="办理状态"
+        >
+          <template slot-scope="scope">
+            <span>{{scope.row.sm_cf_DoStatus | getDoStatus}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          align="center"
+          prop="sm_cf_ID"
+          label="办理意见"
+        >
+          <template slot-scope="scope">
+            <span>{{scope.row.sm_cf_Introduce}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          align="center"
+          prop="sm_cf_ID"
+          label="办理时间"
+        >
+          <template slot-scope="scope">
+            <span>{{scope.row.sm_cf_CreateTime | getUseTime}}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="lookDialog = false">取 消</el-button>
+        <el-button type="primary" @click="lookDialog = false">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
+
 </template>
 <script>
   import {mapGetters} from 'vuex'
@@ -328,10 +397,14 @@
       'changeScopeOfOperationList',
       'changeCompanyTypeList',
       'changeMineyTypeList',
-      'changeCooperationTypecList'
+      'changeCooperationTypecList',
+      'lookList'
     ]),
     data() {
       return {
+        lookDialog:false,
+        menus: ['待审核', '已通过', '未通过'],
+        activeIndex: '0',
         obj: {
           "agentInfo": {
             "sm_ai_ID": '',
@@ -384,6 +457,7 @@
         isLoading: false,
         userInfo: [],
         updateDialog: false,//修改弹窗
+        isPass: '',
         options: [
           {
             value: 0,
@@ -404,9 +478,33 @@
     },
     created() {
       this.initData()
+      let userInfo = JSON.parse(sessionStorage.getItem('admin'))
+      this.isPass = userInfo.sm_ai_IsPass;
+      this.activeIndex = userInfo.sm_ai_IsPass + '';
     },
 
     methods: {
+      //查看
+      viewLook(id){
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "proxyCode": id,//代理商编码/供应商编码
+          "proxyType": 0,//0供应商 1代理商
+        };
+        this.$store.dispatch('initLookList',options)
+        .then(()=>{
+          this.lookDialog = true;
+        },err=>{
+          this.$notify({
+            message: err,
+            type: 'error'
+          });
+        })
+      },
       initData() {
         let userInfo = JSON.parse(sessionStorage.getItem('admin'))
         let options = {

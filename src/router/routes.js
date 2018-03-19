@@ -33,6 +33,8 @@ import AdminCommentsType from '@/components/admin/AdminCommentsType'
 
 //供应商信息
 import AdminUserInfo from '@/components/admin/AdminUserInfo'
+//个人收益
+import AdminPersonalBenefits from '@/components/admin/AdminPersonalBenefits'
 
 export default [
   {
@@ -132,6 +134,15 @@ export default [
           User: AdminUserInfo
         },
         name: 'AdminUserInfo'
+      },
+      //个人收益
+      {
+        path: 'adminPersonalBenefits',
+        components: {
+          default: Home,
+          User: AdminPersonalBenefits
+        },
+        name: 'AdminPersonalBenefits'
       },
 
       //跟团游栏目

@@ -308,7 +308,7 @@
 
       //选中产品
       handleSelect(item) {
-        this.addOptions.data.ts_pt_Product_LineID = item.id;
+//        this.addOptions.data.ts_pt_Product_LineID = item.id;
         this.updateAdminLinePrepareObj.ts_pt_Product_LineID = item.id;
         this.userName = item.value;
         let options = {
@@ -401,6 +401,7 @@
       },
       //添加
       addAdminLinePrepare(){
+//        addOptions.data.ts_pt_Product_LineID
         this.$store.commit('setTranstionFalse');
         this.addAdminLinePrepareDialog = true;
         this.uploaNode()

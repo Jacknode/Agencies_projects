@@ -57,6 +57,9 @@ export default {
   changeCompanyTypeList: state => state.changeCompanyTypeList,
   changeMineyTypeList: state => state.changeMineyTypeList,
   changeCooperationTypecList: state => state.changeCooperationTypecList,
+  adminPersonalBenefitsList: state => state.adminPersonalBenefitsList,
+  lookList: state => state.lookList,
+
 
   //参数
   adminMerchantProductsId: state => state.adminMerchantProductsId,

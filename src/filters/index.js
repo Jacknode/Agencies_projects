@@ -166,4 +166,34 @@ export const getPass = val=>{
     default:
       return '未知';
   }
+};
+function getNum(num) {
+  return num<10?'0'+num:''+num
+}
+//时间
+export const getUseTime = val=>{
+  let date = new Date()
+  if(!val){
+    return date.getFullYear()+'-'+getNum((date.getMonth()+1))+'-'+getNum(date.getDate())+' '+getNum(date.getHours())+':'+getNum(date.getMinutes())+':'+getNum(date.getSeconds())
+  }else{
+    if(!val.includes('.')){
+      return val.replace(/T/,' ')
+    }else{
+      return val.substring(0,val.indexOf('.')).replace(/T/,' ')
+    }
+  }
+};
+
+//办理状态
+export const getDoStatus = val=>{
+  switch (Number(val)) {
+    case 1:
+      return '待审核';
+    case 2:
+      return '已通过';
+    case 3:
+      return '未通过';
+    default:
+      return '未知';
+  }
 }
