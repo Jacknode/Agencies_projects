@@ -163,6 +163,9 @@
         <el-form-item label="供应商手机号码:" :label-width="formLabelWidth">
           <el-input v-model="obj.agentInfo.sm_ai_Telephone"></el-input>
         </el-form-item>
+        <el-form-item label="QQ:" :label-width="formLabelWidth">
+          <el-input v-model="obj.agentInfo.sm_ai_QQ"></el-input>
+        </el-form-item>
         <el-form-item label="性别:" :label-width="formLabelWidth">
           <el-radio v-model="obj.agentInfo.sm_ai_Sex" label="0">男</el-radio>
           <el-radio v-model="obj.agentInfo.sm_ai_Sex" label="1">女</el-radio>
@@ -185,6 +188,8 @@
         <el-form-item label="获许经营范围:" :label-width="formLabelWidth">
           <el-checkbox-group v-model="obj.agentInfoScopeList">
             <el-checkbox v-for="item,index in changeScopeOfOperationList" :label="item.sm_ts_Name" :key="index"></el-checkbox>
+            <el-checkbox v-for="item,index in changeScopeOfOperationList" :label="item.sm_ts_Name"
+                         :key="index"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="公司地址:" :label-width="formLabelWidth">
@@ -224,8 +229,41 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="选择省:" :label-width="formLabelWidth">
+          <el-select v-model="obj.agentInfo.sm_ai_Provice"
+                     @focus="changeProvince">
+            <el-option
+              v-for="item in provinceDataList"
+              :key="item.sm_af_AreaID"
+              :label="item.sm_af_AreaName"
+              :value="item.sm_af_AreaID">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="选择市:" :label-width="formLabelWidth">
+          <el-select v-model="obj.agentInfo.sm_ai_City"
+                     @focus="changeCity">
+            <el-option
+              v-for="item in cityDataList"
+              :key="item.sm_af_AreaID"
+              :label="item.sm_af_AreaName"
+              :value="item.sm_af_AreaID">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="选择县:" :label-width="formLabelWidth">
+          <el-select v-model="obj.agentInfo.sm_ai_County"
+                     @focus="changeCounty">
+            <el-option
+              v-for="item in countyDataList"
+              :key="item.sm_af_AreaID"
+              :label="item.sm_af_AreaName"
+              :value="item.sm_af_AreaID">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="合作类型:" :label-width="formLabelWidth">
-          <el-select v-model="obj.agentInfo.agentInfoTypeList" @focus="changeCooperationTypeL">
+          <el-select v-model="agentInfoTypeName" @focus="changeCooperationTypeL">
             <el-option
               v-for="item in changeCooperationTypecList"
               :key="item.sm_cp_ID"
@@ -270,8 +308,6 @@
             </el-date-picker>
           </div>
         </el-form-item>
-
-
         <el-form-item label="营业执照扫描件:" :label-width="formLabelWidth">
           <a href="javascript:;" class="file">上传文件
             <input type="file" name="" ref="upload" accept="image/*" multiple>
@@ -398,7 +434,10 @@
       'changeCompanyTypeList',
       'changeMineyTypeList',
       'changeCooperationTypecList',
-      'lookList'
+      'lookList',
+      'provinceDataList',
+      'cityDataList',
+      'countyDataList',
     ]),
     data() {
       return {
@@ -408,7 +447,6 @@
         obj: {
           "agentInfo": {
             "sm_ai_ID": '',
-            "sm_bc_ID": '',
             "sm_ai_BalanceCurrencyName": "",
             "sm_cs_ID": '',
             "sm_ai_CompanyPersons": "",
@@ -474,6 +512,7 @@
         isDisabled: true,
         ScopeOfOperationType: [],
         sm_cp_ID: '',
+        agentInfoTypeName: '',
       }
     },
     created() {
@@ -481,6 +520,11 @@
       let userInfo = JSON.parse(sessionStorage.getItem('admin'))
       this.isPass = userInfo.sm_ai_IsPass;
       this.activeIndex = userInfo.sm_ai_IsPass + '';
+      this.initData();
+      this.changeScopeOfOperation();
+      this.changeCompanyType();
+      this.changeMoneyType();
+      this.changeCooperationTypeL();
     },
 
     methods: {
@@ -608,6 +652,43 @@
         }, 30)
       },
 
+//选择省
+      changeProvince(v) {
+        let getAreaProvice = {
+          "areaPid": 0
+        }
+        this.$store.dispatch('initProvinceData', getAreaProvice)
+      },
+
+      //选择市
+      changeCity() {
+        if (!this.obj.agentInfo.sm_ai_Provice) {
+          this.$notify({
+            message: '请先选择省!!',
+            type: 'error'
+          });
+          return
+        }
+        let getCity = {
+          "areaPid": this.obj.agentInfo.sm_ai_Provice ? this.obj.agentInfo.sm_ai_Provice : ''
+        }
+        this.$store.dispatch('initCityData', getCity)
+      },
+
+      //选择县
+      changeCounty() {
+        if (!this.obj.agentInfo.sm_ai_Provice && !this.obj.agentInfo.sm_ai_City) {
+          this.$notify({
+            message: '请先选择省和市!!',
+            type: 'error'
+          });
+          return
+        }
+        let getCounty = {
+          "areaPid": this.obj.agentInfo.sm_ai_City ? this.obj.agentInfo.sm_ai_City : ''
+        }
+        this.$store.dispatch('initCountyData', getCounty)
+      },
 
       //经营范围
       changeScopeOfOperation() {
@@ -678,17 +759,47 @@
         this.obj = this.adminSupplierListObj;
         this.updateDialog = true;
         this.$store.commit('setTranstionFalse');
+        console.log(this.adminSupplierList)
 
         //
       },
 //      修改提交
       updateAdminUserInfoSubmit() {
 
-        //合作类型数据
+        //币种编号
+        let sm_bc_ID = this.changeMineyTypeList.filter(item => {
+          if (item.sm_bc_Name == this.obj.agentInfo.sm_ai_BalanceCurrencyName) {
+            return true;
+          }
+          return false;
+        })[0].sm_bc_ID;
+        //公司规模编号
+        let sm_cs_ID = this.changeCompanyTypeList.filter(item => {
+          if (item.sm_cs_Persons == this.obj.agentInfo.sm_ai_CompanyPersons) {
+            return true;
+          }
+          return false;
+        })[0].sm_cs_ID
+
+//        合作类型
+        let agentinfotype = [];
+        let agentinfotypeObj = this.changeCooperationTypecList.filter(item => {
+          if (item.sm_cp_Name == this.agentInfoTypeName) {
+            return true;
+          }
+          return false;
+        })[0];
+        agentinfotype.push({
+          "sm_cp_ID": agentinfotypeObj.sm_cp_ID,
+          "sm_cp_PartnerTypeName": agentinfotypeObj.sm_cp_Name,
+        })
+
+        //经营范围
         let TypeOfCooperationArr = [];
         for (var i = 0; i < this.obj.agentInfoScopeList.length; i++) {
           let a = this.changeScopeOfOperationList.filter(item => {
             if (this.obj.agentInfoScopeList[i] == item.sm_ts_Name) {
+              delete item.sm_ts_IsDelete
               return true;
             }
             return false;
@@ -696,27 +807,30 @@
           TypeOfCooperationArr.push(...a)
         }
 
-
         this.obj.agentInfo.sm_ai_CertImage = this.ImageURL1;
         this.obj.agentInfo.sm_ai_FeeImage = this.ImageURL2;
         this.obj.agentInfo.sm_ai_OtherImage = this.ImageURL3;
         let updateAgentInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
-          data: {
+          "data": {
             "sm_ai_ID": this.obj.agentInfo.sm_ai_ID,
-            "sm_bc_ID": this.obj.agentInfo.sm_bc_ID,
+            "sm_bc_ID": sm_bc_ID,
             "sm_ai_BalanceCurrencyName": this.obj.agentInfo.sm_ai_BalanceCurrencyName,
-            "sm_cs_ID": this.obj.agentInfo.sm_cs_ID,
+            "sm_cs_ID": sm_cs_ID,
             "sm_ai_CompanyPersons": this.obj.agentInfo.sm_ai_CompanyPersons,
+            "sm_cp_ID": "",
+            "sm_ai_CooperationTypeName": "",
+            "sm_ts_ID": "",
+            "sm_ai_TradeScopeName": "",
             "sm_ai_Name": this.obj.agentInfo.sm_ai_Name,
             "sm_ai_Sex": this.obj.agentInfo.sm_ai_Sex,
             "sm_ai_Telephone": this.obj.agentInfo.sm_ai_Telephone,
             "sm_ai_FixPhoneAreaCode": this.obj.agentInfo.sm_ai_FixPhoneAreaCode,
             "sm_ai_FixPhoneContryCode": this.obj.agentInfo.sm_ai_FixPhoneContryCode,
-            "sm_ai_FixPhone": '',
-            "sm_ai_FaxAreaCode": '',
-            "sm_ai_FaxContryCode": '',
+            "sm_ai_FixPhone": this.obj.agentInfo.sm_ai_FixPhoneAreaCode + '-' + this.obj.agentInfo.sm_ai_FixPhoneContryCode,
+            "sm_ai_FaxAreaCode": "",
+            "sm_ai_FaxContryCode": "",
             "sm_ai_FaxNo": this.obj.agentInfo.sm_ai_FaxNo,
             "sm_ai_QQ": this.obj.agentInfo.sm_ai_QQ,
             "sm_ai_Email": this.obj.agentInfo.sm_ai_Email,
@@ -734,16 +848,16 @@
             "sm_ai_CertNo": this.obj.agentInfo.sm_ai_CertNo,
             "sm_ai_CertExpireFrom": this.obj.agentInfo.sm_ai_CertExpireFrom,
             "sm_ai_CertExpireTo": this.obj.agentInfo.sm_ai_CertExpireTo,
-            "sm_ai_CertImage": this.obj.agentInfo.sm_ai_CertImage,
+            "sm_ai_CertImage": this.obj.agentInfo.sm_ai_CertImage[0],
             "sm_ai_FeeNo": this.obj.agentInfo.sm_ai_FeeNo,
-            "sm_ai_FeeImage": this.obj.agentInfo.sm_ai_FeeImage,
+            "sm_ai_FeeImage": this.obj.agentInfo.sm_ai_FeeImage[0],
             "sm_ai_OtherCert": this.obj.agentInfo.sm_ai_OtherCert,
-            "sm_ai_OtherImage": this.obj.agentInfo.sm_ai_OtherImage,
-            "sm_ai_IsPass": this.obj.agentInfo.sm_ai_IsPass,
-            "sm_ai_IsDelete": this.obj.agentInfo.sm_ai_IsDelete
+            "sm_ai_OtherImage": this.obj.agentInfo.sm_ai_OtherImage[0],
+            "sm_ai_IsPass": 0,
+            "sm_ai_IsDelete": 0
           },
-          agentinfotype: this.obj.agentInfoTypeList,
-          agentinfoscope: TypeOfCooperationArr
+          "agentinfotype": agentinfotype,
+          "agentinfoscope": TypeOfCooperationArr
         }
         this.$store.dispatch('updateAdminUserInfoSubmit', updateAgentInfo)
           .then(suc => {
@@ -760,9 +874,9 @@
           })
         this.updateDialog = false;
       }
-    }
-    ,
+    },
     mounted() {
+
     }
   }
 </script>

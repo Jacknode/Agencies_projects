@@ -19,7 +19,6 @@
           <adminActiveReminder></adminActiveReminder>
         </el-tab-pane>
         <el-tab-pane label="活动交通" name="Six">
-          <!--<adminActiveReminder></adminActiveReminder>-->
           <adminActiveTraffic></adminActiveTraffic>
         </el-tab-pane>
       </el-tabs>
@@ -56,11 +55,6 @@
       }
     },
     methods: {
-      initData() {
-      },
-      search() {
-        this.initData()
-      }
     },
   }
 </script>

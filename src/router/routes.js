@@ -36,6 +36,19 @@ import AdminUserInfo from '@/components/admin/AdminUserInfo'
 //个人收益
 import AdminPersonalBenefits from '@/components/admin/AdminPersonalBenefits'
 
+
+//酒店管理系统
+
+import MyHotel from '@/components/hotel/MyHotel'
+
+//酒店详情页
+import HotelDetilsInformation from '@/components/hotel/HotelDetilsInformation'
+//酒店推荐
+import HotelQueryRecommend from '@/components/hotel/HotelQueryRecommend'
+//酒店详情内容
+import HotelDteilsContnet from '@/components/hotel/HotelDteilsContnet'
+
+
 export default [
   {
     path: '/',
@@ -191,8 +204,48 @@ export default [
         },
         name: 'AdminCommentsType'
       },
-    ]
+      //酒店
+      {
+        path:'myHotel',
+        components: {
+          default: Home,
+          User: MyHotel
+        },
+        name: 'MyHotel',
+        children:[
+          {
+            path: 'hotelDetilsInformation',
+            components: {
+              default: MyHotel,
+              Hotel: HotelDetilsInformation
+            },
+            name: 'HotelDetilsInformation'
+          },
+          {
+            path: 'hotelDteilsContnet',
+            components: {
+              default: MyHotel,
+              Hotel: HotelDteilsContnet
+            },
+            name: 'HotelDteilsContnet',
+            children:[
+              {
+                path:'hotelQueryRecommend',
+                components: {
+                  default: HotelDteilsContnet,
+                  Hotel: HotelQueryRecommend
+                },
+                name: 'HotelQueryRecommend'
+              }
+            ]
+          },
+
+        ]
+      },
+    ],
   },
+
+
   {
     path: '*',
     hidden: true,

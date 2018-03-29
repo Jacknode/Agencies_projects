@@ -1726,32 +1726,32 @@ export default {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-      .then(data => {
-        var data = data.data;
-        if (Number(data.resultcode) == 200) {
-          commit('initChangeCompanyType', data.data)
-          relove()
-        }
-      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            commit('initChangeCompanyType', data.data)
+            relove()
+          }
+        })
     })
   },
   //供应商收益
-  initAdminPersonalBenefits({commit},data){
+  initAdminPersonalBenefits({commit}, data) {
     return new Promise((relove, reject) => {
       axios.post('http://webservice.1000da.com.cn/AgentInfo/Income', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-      .then(data => {
-        var data = data.data;
-        if (Number(data.resultcode) == 200) {
-          commit('initAdminPersonalBenefits',data.data);
-          relove(Number(data.totalrows))
-        } else {
-          reject(data.resultcontent)
-        }
-      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            commit('initAdminPersonalBenefits', data.data);
+            relove(Number(data.totalrows))
+          } else {
+            reject(data.resultcontent)
+          }
+        })
 
     })
   },
@@ -1792,38 +1792,89 @@ export default {
   //修改供应商信息
   updateAdminUserInfoSubmit({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/AgentInfo/Update',JSON.stringify(data),{
+      axios.post('http://webservice.1000da.com.cn/AgentInfo/Update', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
         .then(data => {
           var data = data.data;
-          if( Number(data.resultcode) == 200 ){
+          if (Number(data.resultcode) == 200) {
             relove(data.resultcontent)
-          }else {
+          } else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //获取省
+  initProvinceData({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://hly.lxs.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            commit('initLookList', data.checkFlowList)
+            relove(data.resultcontent)
+          } else {
             reject(data.resultcontent)
           }
         })
     })
   },
   //供应商查看审核流程
-  initLookList({commit},data){
+  initLookList({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/ProxyInfo/GetCheckInfo',JSON.stringify(data),{
+        axios.post('http://webservice.1000da.com.cn/ProxyInfo/GetCheckInfo', JSON.stringify(data), {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+            .then(data => {
+              var data = data.data;
+              if (Number(data.resultcode) == 200) {
+                commit('initProvinceData', data.data)
+                relove()
+              }
+            })
+        })
+      })
+  },
+  initCityData({commit}, data){
+    return new Promise(function (relove, reject) {
+      axios.post('http://hly.lxs.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-      .then(data => {
-        var data = data.data;
-        if( Number(data.resultcode) == 200 ){
-          commit('initLookList',data.checkFlowList)
-          relove(data.resultcontent)
-        }else {
-          reject(data.resultcontent)
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            commit('initCityData', data.data)
+            relove();
+          }
+        })
+    })
+  },
+  //获取县
+  initCountyData({commit}, data){
+    return new Promise(function (relove, reject) {
+      axios.post('http://hly.lxs.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            commit('initCountyData', data.data)
+            relove()
+          }
+        })
     })
-  }
+  },
+
 }

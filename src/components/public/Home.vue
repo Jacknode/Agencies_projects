@@ -97,12 +97,11 @@
                   <!-- Main -->
                   <li class="navigation-header"><span>酒店</span> <i class="icon-menu" title="Main pages"></i></li>
                   <!--境外查询-->
-
                   <li>
-                    <a href="javascript:;"><i class=" icon-home"></i> <span>酒店后台管理</span></a>
+                    <a href="javascript:;"><i class="icon-office"></i> <span>酒店后台管理</span></a>
                     <ul>
                       <li>
-                        <router-link to="/home/adminUserInfo">酒店</router-link>
+                        <router-link to="/home/myHotel/hotelDetilsInformation">酒店</router-link>
                       </li>
                     </ul>
                   </li>
