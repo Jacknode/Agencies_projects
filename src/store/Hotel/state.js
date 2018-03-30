@@ -4,8 +4,9 @@ export default {
   cityHotelDataList: [],//获取市
   countyHotelDataList: [],//获取县
   updateHotelDetilsObj: {},//修改酒店信息
-  recommendTypeList:[],//酒店推荐类型列表
+  recommendTypeList: [],//酒店推荐类型列表
   hotelQueryRecommendList: [],//酒店推荐类型
-  updateRecommendObj:{},//修改酒店推荐类型
-
+  updateRecommendObj: {},//修改酒店推荐类型
+  hotelPictureList: [],//酒店图片列表
+  hotelRoomList: [],//酒店房间列表
 }

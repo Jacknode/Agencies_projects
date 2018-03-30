@@ -111,7 +111,7 @@
         let selectHotelIntroduceInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
-          "ht_ht_hotelID": sessionStorage.getItem('hotelId')
+          "ht_ht_hotelID": sessionStorage.getItem('hotelId')?sessionStorage.getItem('hotelId'):''
         }
         this.$store.dispatch('initHotelQueryRecommend', selectHotelIntroduceInfo)
           .then(() => {
