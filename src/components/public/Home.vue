@@ -74,11 +74,11 @@
 
                 <ul class="navigation navigation-main navigation-accordion">
                   <!-- Main -->
-                  <li class="navigation-header"><span>旅行社</span> <i class="icon-menu" title="Main pages"></i></li>
+                  <li class="navigation-header"><span>main</span> <i class="icon-menu" title="Main pages"></i></li>
                   <!--境外查询-->
 
                   <li>
-                    <a href="javascript:;"><i class=" icon-home"></i> <span>供应商后台管理</span></a>
+                    <a href="javascript:;"><i class=" icon-home"></i> <span>旅行社后台管理</span></a>
                     <ul>
                       <li>
                         <router-link to="/home/adminUserInfo">供应商信息</router-link>
@@ -94,14 +94,24 @@
                   <!-- /main -->
                 </ul>
                 <ul class="navigation navigation-main navigation-accordion">
-                  <!-- Main -->
-                  <li class="navigation-header"><span>酒店</span> <i class="icon-menu" title="Main pages"></i></li>
                   <!--境外查询-->
                   <li>
                     <a href="javascript:;"><i class="icon-office"></i> <span>酒店后台管理</span></a>
                     <ul>
                       <li>
                         <router-link to="/home/myHotel/hotelDetilsInformation">酒店</router-link>
+                      </li>
+                    </ul>
+                  </li>
+                  <!-- /main -->
+                </ul>
+                <ul class="navigation navigation-main navigation-accordion">
+                  <!--境外查询-->
+                  <li>
+                    <a href="javascript:;"><i class="icon-ticket"></i> <span>门票后台管理</span></a>
+                    <ul>
+                      <li>
+                        <router-link to="/home/ticketAttractions">景点管理</router-link>
                       </li>
                     </ul>
                   </li>
@@ -270,6 +280,16 @@
     margin-right: 0;
     margin-bottom: 0;
     width: 50%;
+  }
+  #allmap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 9900;
+    margin-top: -50px;
+    font-family: "微软雅黑";
   }
 
   #wrap {

@@ -36,7 +36,7 @@ import AdminUserInfo from '@/components/admin/AdminUserInfo'
 //个人收益
 import AdminPersonalBenefits from '@/components/admin/AdminPersonalBenefits'
 
-
+/*------------------------------------酒店----------------------------------------*/
 //酒店管理系统
 
 import MyHotel from '@/components/hotel/MyHotel'
@@ -47,6 +47,11 @@ import HotelDetilsInformation from '@/components/hotel/HotelDetilsInformation'
 import HotelQueryRecommend from '@/components/hotel/HotelQueryRecommend'
 //酒店详情内容
 import HotelDteilsContnet from '@/components/hotel/HotelDteilsContnet'
+
+
+/*------------------------------------门票----------------------------------------*/
+//门票景点
+import TicketAttractions from '@/components/ticket/TicketAttractions'
 
 
 export default [
@@ -242,6 +247,15 @@ export default [
 
         ]
       },
+      //门票景点
+      {
+        path: 'ticketAttractions',
+        components: {
+          default: Home,
+          User: TicketAttractions
+        },
+        name: 'TicketAttractions',
+      }
     ],
   },
 
