@@ -8,15 +8,12 @@
           <HotelQueryRecommend></HotelQueryRecommend>
         </el-tab-pane>
 
-
-
-
-
-
-
-
-
-
+        <!--<el-tab-pane label="酒店图片信息" name="second">-->
+        <!--<HotelPicture></HotelPicture>-->
+        <!--</el-tab-pane>-->
+        <el-tab-pane label="酒店房间信息" name="second">
+          <HotelRoomInformation></HotelRoomInformation>
+        </el-tab-pane>
 
 
       </el-tabs>
@@ -26,9 +23,15 @@
 <script>
   import {mapGetters} from 'vuex'
   import HotelQueryRecommend from './HotelQueryRecommend'
+  import HotelPicture from './HotelPicture'
+  import HotelRoomInformation from './HotelRoomInformation'
+
+
   export default {
-    components:{
-      HotelQueryRecommend
+    components: {
+      HotelQueryRecommend,
+      HotelPicture,
+      HotelRoomInformation
     },
     computed: mapGetters([]),
     data() {
@@ -37,10 +40,8 @@
         isLoading: false,
       }
     },
-    methods: {
-
-    },
-    created(){
+    methods: {},
+    created() {
 
     }
   }

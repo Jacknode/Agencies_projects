@@ -7,4 +7,6 @@ export default {
   recommendTypeList: state => state.recommendTypeList,
   hotelQueryRecommendList: state => state.hotelQueryRecommendList,
   updateRecommendObj: state => state.updateRecommendObj,
+  hotelPictureList: state => state.hotelPictureList,
+  hotelRoomList: state => state.hotelRoomList,
 }

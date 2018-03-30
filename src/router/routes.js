@@ -47,6 +47,10 @@ import HotelDetilsInformation from '@/components/hotel/HotelDetilsInformation'
 import HotelQueryRecommend from '@/components/hotel/HotelQueryRecommend'
 //酒店详情内容
 import HotelDteilsContnet from '@/components/hotel/HotelDteilsContnet'
+//酒店图片
+import HotelPicture from '@/components/hotel/HotelPicture'
+//酒店房间
+import HotelRoomInformation from '@/components/hotel/HotelRoomInformation'
 
 
 /*------------------------------------门票----------------------------------------*/
@@ -241,7 +245,23 @@ export default [
                   Hotel: HotelQueryRecommend
                 },
                 name: 'HotelQueryRecommend'
-              }
+              },
+              {
+                path:'hotelPicture',
+                components: {
+                  default: HotelDteilsContnet,
+                  Hotel: HotelPicture
+                },
+                name: 'HotelPicture'
+              },
+              {
+                path:'hotelRoomInformation',
+                components: {
+                  default: HotelDteilsContnet,
+                  Hotel: HotelRoomInformation
+                },
+                name: 'HotelRoomInformation'
+              },
             ]
           },
 

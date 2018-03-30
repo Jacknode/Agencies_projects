@@ -34,5 +34,13 @@ export default {
       }
       return false;
     })[0];
+  },
+  //酒店图片列表
+  initHotelPicture(state,data){
+    state.hotelPictureList = data;
+  },
+  //酒店房间列表
+  initHotelRoom(state,data){
+    state.hotelRoomList = data;
   }
 }

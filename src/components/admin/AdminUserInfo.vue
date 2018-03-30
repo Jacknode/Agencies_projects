@@ -188,8 +188,6 @@
         <el-form-item label="获许经营范围:" :label-width="formLabelWidth">
           <el-checkbox-group v-model="obj.agentInfoScopeList">
             <el-checkbox v-for="item,index in changeScopeOfOperationList" :label="item.sm_ts_Name" :key="index"></el-checkbox>
-            <el-checkbox v-for="item,index in changeScopeOfOperationList" :label="item.sm_ts_Name"
-                         :key="index"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="公司地址:" :label-width="formLabelWidth">

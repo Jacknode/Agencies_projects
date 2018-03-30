@@ -1,6 +1,19 @@
 import axios from 'axios';
 
 export default {
+  //图片上传
+  uploadAdminImgs(store, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://image.1000da.com.cn/PostImage/PostToService', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          relove(data.data)
+        })
+    })
+  },
   //酒店数据
   initMyHotelDetails({commit}, data) {
     return new Promise(function (relove, reject) {
@@ -195,6 +208,44 @@ export default {
             relove(data.resultcontent);
           } else {
             reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //酒店图片数据
+  initHotelPicture({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/HotelImage/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove();
+            commit('initHotelPicture', data.data);
+          } else {
+            reject(data.resultcontent);
+          }
+        })
+    })
+  },
+  //初始化房间列表
+  initHotelRoom({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/HotelWebPage/SearchHotelRoom', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(Number(data.totalrows));
+            commit('initHotelRoom', data.data);
+          } else {
+            reject(data.resultcontent);
           }
         })
     })
