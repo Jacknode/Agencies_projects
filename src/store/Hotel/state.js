@@ -6,7 +6,6 @@ export default {
   updateHotelDetilsObj: {},//修改酒店信息
   recommendTypeList: [],//酒店推荐类型列表
   hotelQueryRecommendList: [],//酒店推荐类型
-  updateRecommendObj: {},//修改酒店推荐类型
-  hotelPictureList: [],//酒店图片列表
-  hotelRoomList: [],//酒店房间列表
+  updateRecommendObj:{},//修改酒店推荐类型obj
+  hotelIntroduceTypeList:[],//惠乐游酒店推荐类型
 }

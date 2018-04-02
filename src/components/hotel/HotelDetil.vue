@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="wrap" class="clearfix">
-      <div class="title clearfix">
+      <div class="title clearfix" style="padding: 20px">
         <h1>酒店基本信息</h1>
         <el-button type="primary" v-show="isShow" @click="addButton">添加</el-button>
       </div>
@@ -77,26 +77,20 @@
         </el-table-column>
         <el-table-column
           label="酒店地址"
+          align="center"
           prop="ht_ht_HotelAddress">
         </el-table-column>
         <el-table-column
           label="酒店星级"
+          align="center"
           prop="ht_ht_Stars">
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button
               size="mini"
+              type="primary"
               @click="updateHotelDetils">修改
-            </el-button>
-            <!--<el-button-->
-            <!--size="mini"-->
-            <!--type="danger"-->
-            <!--@click="deleteAdminActiveFood(scope.row.ts_af_ID)">删除-->
-            <!--</el-button>-->
-            <el-button
-              size="mini"
-              @click="goHotelRecommend">前往酒店详细信息
             </el-button>
           </template>
         </el-table-column>
@@ -363,15 +357,16 @@
           "sm_ai_AgentInfoID": sm_ai_AgentID,
         }
         this.$store.dispatch('initMyHotelDetails', HotelDetailInfo)
-          .then(AgentID => {
-            if (AgentID == null) {
-              this.isShow = true;
-            } else {
-              this.isShow = false
-            }
-          }, err => {
-            console.log(err)
-          })
+        .then(hotelID => {
+          sessionStorage.setItem('hotelID',hotelID);
+          if (hotelID == null) {
+            this.isShow = true;
+          } else {
+            this.isShow = false
+          }
+        }, err => {
+          console.log(err)
+        })
       },
       //点击添加按钮
       addButton() {
@@ -385,7 +380,7 @@
           "areaPid": 0
         }
         this.$store.dispatch('initHotelProvinceData', getAreaProvice)
-          .then()
+        .then()
       },
 
       //选择市
@@ -401,7 +396,7 @@
           "areaPid": this.addHotelDetilsObj.ht_ht_ProviceId ? this.addHotelDetilsObj.ht_ht_ProviceId : ''
         }
         this.$store.dispatch('initHotelCityData', getCity)
-          .then()
+        .then()
       },
 
       //选择县
@@ -417,7 +412,7 @@
           "areaPid": this.addHotelDetilsObj.ht_ht_CityId ? this.addHotelDetilsObj.ht_ht_CityId : ''
         }
         this.$store.dispatch('initHotelCountyData', getCounty)
-          .then()
+        .then()
       },
 
       //添加提交
@@ -428,18 +423,18 @@
           "data": this.addHotelDetilsObj
         }
         this.$store.dispatch('addHotelDetilsSubmit', insertHotelInfo)
-          .then(suc => {
-            this.$notify({
-              message: suc,
-              type: 'success'
-            });
-            this.initData()
-          }, err => {
-            this.$notify({
-              message: err,
-              type: 'error'
-            });
-          })
+        .then(suc => {
+          this.$notify({
+            message: suc,
+            type: 'success'
+          });
+          this.initData()
+        }, err => {
+          this.$notify({
+            message: err,
+            type: 'error'
+          });
+        })
         this.addHotelDetilsDialog = false;
       },
 
@@ -480,27 +475,20 @@
           }
         }
         this.$store.dispatch('updateHotelDetilsSubmit', updateHotelInfo)
-          .then(suc => {
-            this.$notify({
-              message: suc,
-              type: 'success'
-            });
-            this.initData();
-          }, err => {
-            this.$notify({
-              message: err,
-              type: 'error'
-            });
-          })
+        .then(suc => {
+          this.$notify({
+            message: suc,
+            type: 'success'
+          });
+          this.initData();
+        }, err => {
+          this.$notify({
+            message: err,
+            type: 'error'
+          });
+        })
         this.updateHotelDetilsDialog = false;
       },
-
-      //跳转到酒店推荐
-      goHotelRecommend() {
-        this.$router.push({name:'HotelDteilsContnet'})
-        sessionStorage.setItem('hotelRouterIndex',1)
-        sessionStorage.setItem('hotelId',this.myHotelDetailsList[0].ht_ht_hotelID)
-      }
     },
     created() {
       let id = JSON.parse(sessionStorage.getItem('admin')).sm_ai_AgentID

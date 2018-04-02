@@ -1,15 +1,23 @@
 <template>
   <div>
     <div id="wrap" class="clearfix">
-      <div class="title clearfix">
-        <h1>酒店推荐信息</h1>
-        <el-button type="primary" @click="addButton">添加</el-button>
+      <div class="title clearfix" style="padding: 20px">
+        <h1>酒店推荐信息</h1><br><br>
+        <el-button type="primary" @click="addButton" size="small">新增</el-button>
       </div>
 
       <!--数据展示-->
       <el-table
         :data="hotelQueryRecommendList"
-        style="width: 100%">
+        v-loading="isLoading"
+        style="width: 100%"
+      >
+        <el-table-column
+          prop="ht_hi_ID"
+          label="推荐类型编码"
+          align="center"
+        >
+        </el-table-column>
         <el-table-column
           prop="ht_hi_IntroduceTypeName"
           label="推荐类型"
@@ -18,15 +26,15 @@
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button
-              size="mini"
-              @click="updateButton(scope.row)"
-            >修改
-            </el-button>
+            <!--<el-button-->
+              <!--size="mini"-->
+              <!--@click="Update(scope.row.ht_hi_ID)"-->
+            <!--&gt;修改-->
+            <!--</el-button>-->
             <el-button
             size="mini"
             type="danger"
-            @click="deleteButton(scope.row)">删除
+            @click="Delete(scope.row.ht_hi_ID)">删除
             </el-button>
             <!--<el-button-->
             <!--size="mini"-->
@@ -42,9 +50,9 @@
         <el-form :model="addOptions">
 
           <el-form-item label="推荐类型:" :label-width="formLabelWidth">
-            <el-select v-model="addOptions.ht_hi_IntroduceType" placeholder="请选择类型" @focus="changeRecommendType">
+            <el-select v-model="addOptions.data.ht_hi_IntroduceType" placeholder="请选择类型">
               <el-option
-                v-for="item in recommendTypeList"
+                v-for="item in hotelIntroduceTypeList"
                 :key="item.ht_it_ID"
                 :label="item.ht_it_Name"
                 :value="item.ht_it_ID">
@@ -59,30 +67,6 @@
         </div>
       </el-dialog>
 
-      <!--修改-->
-
-      <el-dialog title="修改酒店推荐类型" :visible.sync="updateRecommendDialog">
-        <el-form :model="updateRecommendObj">
-
-          <el-form-item label="推荐类型:" :label-width="formLabelWidth">
-            <el-select v-model="updateRecommendObj.ht_hi_IntroduceType" placeholder="请选择类型"
-                       @focus="changeRecommendType">
-              <el-option
-                v-for="item in recommendTypeList"
-                :key="item.ht_it_ID"
-                :label="item.ht_it_Name"
-                :value="item.ht_it_ID">
-              </el-option>
-            </el-select>
-          </el-form-item>
-
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="updateRecommendDialog = false">取 消</el-button>
-          <el-button type="primary" @click="updateRecommendSubmit">确 定</el-button>
-        </div>
-      </el-dialog>
-
     </div>
   </div>
 </template>
@@ -93,17 +77,39 @@
     computed: mapGetters([
       'hotelQueryRecommendList',
       'recommendTypeList',
-      'updateRecommendObj'
+      'hotelIntroduceTypeList',
     ]),
     data() {
       return {
+        isLoading:false,
+        hotelID:'',
         addOptions: {
-          ht_hi_IntroduceType: ''
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "data": {
+            "ht_ht_hotelID": "",//酒店编码
+            "ht_hi_IntroduceType": "",//推荐类型编码
+          }
         },
         addRecommendDialog: false,
         formLabelWidth: '120px',
         updateRecommendDialog: false,
       }
+    },
+    created() {
+      this.hotelID = sessionStorage.getItem('hotelID');
+      if(!this.hotelID){
+        this.$router.push({name:'HotelDetil'})
+        this.$notify({
+          message: '请先添加酒店信息!',
+          position: 'top-left'
+        });
+        return
+      }
+      this.initData();
     },
     methods: {
       //初始化数据
@@ -111,10 +117,12 @@
         let selectHotelIntroduceInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
-          "ht_ht_hotelID": sessionStorage.getItem('hotelId')?sessionStorage.getItem('hotelId'):''
-        }
+          "ht_ht_hotelID": this.hotelID
+        };
+        this.isLoading = true;
         this.$store.dispatch('initHotelQueryRecommend', selectHotelIntroduceInfo)
           .then(() => {
+            this.isLoading  = false
           }, err => {
             this.$notify({
               message: err,
@@ -127,27 +135,10 @@
         this.$store.commit('setTranstionFalse');
         this.addRecommendDialog = true;
       },
-      //获取推荐类型数据
-      changeRecommendType() {
-        let selectIntroduceTypeInfo = {
-          "loginUserID": "huileyou",
-          "loginUserPass": "123",
-          "ht_it_ParentID": "0"
-        };
-        this.$store.dispatch('changeRecommendType', selectIntroduceTypeInfo)
-      },
       //添加提交
       addRecommendSubmit() {
-        //添加参数
-        let insertHotelIntroduceInfo = {
-          "loginUserID": "huileyou",
-          "loginUserPass": "123",
-          "data": {
-            "ht_ht_hotelID": sessionStorage.getItem('hotelId'),
-            "ht_hi_IntroduceType": this.addOptions.ht_hi_IntroduceType,
-          }
-        };
-        this.$store.dispatch('addRecommendSubmit', insertHotelIntroduceInfo)
+        this.addOptions.data.ht_ht_hotelID = this.hotelID;
+        this.$store.dispatch('AddHotelQueryRecommend', this.addOptions)
           .then(suc => {
             this.$notify({
               message: suc,
@@ -159,29 +150,22 @@
               message: err,
               type: 'error'
             });
-          })
+          });
         this.addRecommendDialog = false;
       },
-      //修改按钮
-      updateButton(row) {
-        this.$store.commit('setTranstionFalse');
-        this.$store.commit('updateRecommendData', row.ht_hi_ID);
-        this.updateRecommendDialog = true;
-        this.updateRecommendObj.ht_hi_IntroduceType = ''
-      },
-      //修改提交
-      updateRecommendSubmit() {
-        //修改数据
-        let updateHotelIntroduceInfo = {
-          "loginUserID": "huileyou",
-          "loginUserPass": "123",
-          "data": {
-            "ht_hi_ID": this.updateRecommendObj.ht_hi_ID,
-            "ht_ht_hotelID": this.updateRecommendObj.ht_ht_hotelID,
-            "ht_hi_IntroduceType": this.updateRecommendObj.ht_hi_IntroduceType,
-          }
-        };
-        this.$store.dispatch('updateRecommendSubmit', updateHotelIntroduceInfo)
+      //修改
+      Delete(id){
+        let deleteOptions = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "操作员编码",
+            "operateUserName": "操作员名称",
+            "pcName": "",
+            "data": {
+              "ht_hi_ID": id//酒店推荐编码
+            }
+          };
+        this.$store.dispatch('DeleteHotelQueryRecommend',deleteOptions)
           .then(suc => {
             this.$notify({
               message: suc,
@@ -193,41 +177,15 @@
               message: err,
               type: 'error'
             });
-          })
-      },
-      //删除酒店推荐
-      deleteButton(row){
-        let deleteHotelIntroduceInfo = {
-          "loginUserID": "huileyou",
-          "loginUserPass": "123",
-          "data": {
-            "ht_hi_ID": row.ht_hi_ID,
-          }
-        };
-        this.$store.dispatch('deleteHotelRecommendType', deleteHotelIntroduceInfo)
-          .then(suc => {
-            this.$notify({
-              message: suc,
-              type: 'success'
-            });
-            this.initData()
-          }, err => {
-            this.$notify({
-              message: err,
-              type: 'error'
-            });
-          })
+          });
       },
     },
-    created() {
-      this.initData();
-    }
   }
 </script>
 <style scoped>
   .title > h1 {
     float: left;
-    font: 15px/2 "微软雅黑";
+    font: 20px/2 "微软雅黑";
     color: #000;
   }
 

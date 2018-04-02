@@ -1,6 +1,25 @@
 import axios from 'axios';
 
 export default {
+  //查询惠乐游酒店推荐类型
+  initHotelIntroduceType({commit},data){
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/IntroduceType/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(data => {
+        var data = data.data;
+        if (Number(data.resultcode) == 200) {
+          commit('initHotelIntroduceType', data.data);
+          relove(data.resultcontent);
+        } else {
+          reject(data.resultcontent)
+        }
+      })
+    })
+  },
   //图片上传
   uploadAdminImgs(store, data) {
     return new Promise((relove, reject) => {
@@ -26,7 +45,7 @@ export default {
           var data = data.data;
           if (Number(data.resultcode) == 200) {
             commit('initMyHotelDetails', data.data.HotelModel);
-            relove(data.data.HotelModel.sm_ai_AgentInfoID);
+            relove(data.data.HotelModel.ht_ht_hotelID);
           } else {
             reject(data.resultcontent)
           }
@@ -120,134 +139,59 @@ export default {
         })
     })
   },
-  //酒店推荐类型列表
-  changeRecommendType({commit}, data) {
+//查询酒店推荐类型
+  initHotelQueryRecommend({commit},data){
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/IntroduceType/Select', JSON.stringify(data), {
+      axios.post('http://192.168.3.88:8080/HotelIntroduce/Select', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-        .then(data => {
-          var data = data.data;
-          if (Number(data.resultcode) == 200) {
-            commit('changeRecommendType', data.data);
-            relove(data.resultcontent);
-          } else {
-            reject(data.resultcontent);
-          }
-        })
-    })
-  },
-  //酒店推荐
-  initHotelQueryRecommend({commit}, data) {
-    return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/HotelIntroduce/Select', JSON.stringify(data), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+      .then(data => {
+        var data = data.data;
+        if (Number(data.resultcode) == 200) {
+          commit('initHotelQueryRecommend',data.data)
+          relove(data.resultcontent);
+        } else {
+          reject(data.resultcontent);
         }
       })
-        .then(data => {
-          var data = data.data;
-          if (Number(data.resultcode) == 200) {
-            commit('initHotelQueryRecommend', data.data);
-            relove();
-          } else {
-            reject(data.resultcontent);
-          }
-        })
     })
   },
   //添加酒店推荐类型
-  addRecommendSubmit({commit}, data) {
+  AddHotelQueryRecommend(store,data){
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/HotelIntroduce/Insert', JSON.stringify(data), {
+      axios.post('http://192.168.3.88:8080/HotelIntroduce/Insert', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-        .then(data => {
-          var data = data.data;
-          if (Number(data.resultcode) == 200) {
-            relove(data.resultcontent);
-          } else {
-            reject(data.resultcontent)
-          }
-        })
-    })
-  },
-  //修改酒店推荐类型
-  updateRecommendSubmit({commit}, data) {
-    return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/HotelIntroduce/Update', JSON.stringify(data), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+      .then(data => {
+        var data = data.data;
+        if (Number(data.resultcode) == 200) {
+          relove(data.resultcontent);
+        } else {
+          reject(data.resultcontent);
         }
       })
-        .then(data => {
-          var data = data.data;
-          if (Number(data.resultcode) == 200) {
-            relove(data.resultcontent);
-          } else {
-            reject(data.resultcontent)
-          }
-        })
     })
   },
   //删除酒店推荐类型
-  deleteHotelRecommendType({commit}, data) {
+  DeleteHotelQueryRecommend(store,data){
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/HotelIntroduce/Delete', JSON.stringify(data), {
+      axios.post('http://192.168.3.88:8080/HotelIntroduce/Delete', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
-        .then(data => {
-          var data = data.data;
-          if (Number(data.resultcode) == 200) {
-            relove(data.resultcontent);
-          } else {
-            reject(data.resultcontent)
-          }
-        })
-    })
-  },
-  //酒店图片数据
-  initHotelPicture({commit}, data) {
-    return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/HotelImage/Select', JSON.stringify(data), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+      .then(data => {
+        var data = data.data;
+        if (Number(data.resultcode) == 200) {
+          relove(data.resultcontent);
+        } else {
+          reject(data.resultcontent);
         }
       })
-        .then(data => {
-          var data = data.data;
-          if (Number(data.resultcode) == 200) {
-            relove();
-            commit('initHotelPicture', data.data);
-          } else {
-            reject(data.resultcontent);
-          }
-        })
-    })
-  },
-  //初始化房间列表
-  initHotelRoom({commit}, data) {
-    return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/HotelWebPage/SearchHotelRoom', JSON.stringify(data), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      })
-        .then(data => {
-          var data = data.data;
-          if (Number(data.resultcode) == 200) {
-            relove(Number(data.totalrows));
-            commit('initHotelRoom', data.data);
-          } else {
-            reject(data.resultcontent);
-          }
-        })
     })
   }
 }

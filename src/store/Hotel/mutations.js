@@ -26,21 +26,7 @@ export default {
   initHotelQueryRecommend(state,data){
     state.hotelQueryRecommendList = data;
   },
-  //修改酒店类型
-  updateRecommendData(state,id) {
-    state.updateRecommendObj = state.hotelQueryRecommendList.filter(item=>{
-      if( item.ht_hi_ID == id ){
-        return true;
-      }
-      return false;
-    })[0];
-  },
-  //酒店图片列表
-  initHotelPicture(state,data){
-    state.hotelPictureList = data;
-  },
-  //酒店房间列表
-  initHotelRoom(state,data){
-    state.hotelRoomList = data;
+  initHotelIntroduceType(state,data){
+    state.hotelIntroduceTypeList = data;
   }
 }

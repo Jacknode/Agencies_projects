@@ -39,18 +39,10 @@ import AdminPersonalBenefits from '@/components/admin/AdminPersonalBenefits'
 /*------------------------------------酒店----------------------------------------*/
 //酒店管理系统
 
-import MyHotel from '@/components/hotel/MyHotel'
-
 //酒店详情页
-import HotelDetilsInformation from '@/components/hotel/HotelDetilsInformation'
-//酒店推荐
+import HotelDetil from '@/components/hotel/HotelDetil'
+//酒店推荐信息
 import HotelQueryRecommend from '@/components/hotel/HotelQueryRecommend'
-//酒店详情内容
-import HotelDteilsContnet from '@/components/hotel/HotelDteilsContnet'
-//酒店图片
-import HotelPicture from '@/components/hotel/HotelPicture'
-//酒店房间
-import HotelRoomInformation from '@/components/hotel/HotelRoomInformation'
 
 
 /*------------------------------------门票----------------------------------------*/
@@ -213,59 +205,23 @@ export default [
         },
         name: 'AdminCommentsType'
       },
-      //酒店
+      //酒店基本信息
       {
-        path:'myHotel',
+        path: 'hotelDetil',
         components: {
           default: Home,
-          User: MyHotel
+          User: HotelDetil
         },
-        name: 'MyHotel',
-        children:[
-          {
-            path: 'hotelDetilsInformation',
-            components: {
-              default: MyHotel,
-              Hotel: HotelDetilsInformation
-            },
-            name: 'HotelDetilsInformation'
-          },
-          {
-            path: 'hotelDteilsContnet',
-            components: {
-              default: MyHotel,
-              Hotel: HotelDteilsContnet
-            },
-            name: 'HotelDteilsContnet',
-            children:[
-              {
-                path:'hotelQueryRecommend',
-                components: {
-                  default: HotelDteilsContnet,
-                  Hotel: HotelQueryRecommend
-                },
-                name: 'HotelQueryRecommend'
-              },
-              {
-                path:'hotelPicture',
-                components: {
-                  default: HotelDteilsContnet,
-                  Hotel: HotelPicture
-                },
-                name: 'HotelPicture'
-              },
-              {
-                path:'hotelRoomInformation',
-                components: {
-                  default: HotelDteilsContnet,
-                  Hotel: HotelRoomInformation
-                },
-                name: 'HotelRoomInformation'
-              },
-            ]
-          },
-
-        ]
+        name: 'HotelDetil'
+      },
+      //酒店推荐信息
+      {
+        path: 'hotelQueryRecommend',
+        components: {
+          default: Home,
+          User: HotelQueryRecommend
+        },
+        name: 'HotelQueryRecommend'
       },
       //门票景点
       {

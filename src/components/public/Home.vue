@@ -99,7 +99,10 @@
                     <a href="javascript:;"><i class="icon-office"></i> <span>酒店后台管理</span></a>
                     <ul>
                       <li>
-                        <router-link to="/home/myHotel/hotelDetilsInformation">酒店</router-link>
+                        <router-link to="/home/hotelDetil">酒店基本信息</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/hotelQueryRecommend">酒店推荐信息</router-link>
                       </li>
                     </ul>
                   </li>
@@ -194,6 +197,7 @@
       if(status){
         this.dialogVisible = false;
       }
+      this.initData()
       if(this.status==1){
         localStorage.setItem('status',true)
       }
@@ -247,6 +251,21 @@
       }
     },
     methods: {
+      async initData(){
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "操作员编码",
+          "operateUserName": "操作员名称",
+          "pcName": "",
+          "data": {
+            "ht_it_ID": "",//推荐类型ID
+            "ht_it_Name": "",//推荐类型名称
+            "ht_it_ParentID": "",//推荐类型父ID
+          }
+        }
+        await this.$store.dispatch('initHotelIntroduceType',options)
+      },
       //退出
       Quit(){
         this.$router.push({name: 'adminLogin'})
