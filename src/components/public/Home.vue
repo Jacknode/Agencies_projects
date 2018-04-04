@@ -28,7 +28,7 @@
             </a>
 
             <ul class="dropdown-menu dropdown-menu-right">
-              <li @click="getUser"><a href="javascript:;"><i class="icon-user-plus"></i>{{qiankeUser?qiankeUser:''}}</a>
+              <li @click="getUser"><a href="javascript:;"><i class="icon-user-plus"></i>{{qiankeUser ? qiankeUser : ''}}</a>
               </li>
               <li @click="Quit"><a href="javascript:;"><i class="icon-switch2"></i>退出</a></li>
             </ul>
@@ -57,7 +57,7 @@
                     <!--<img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt="">-->
                   </a>
                   <div class="media-body">
-                    <span class="media-heading text-semibold">欢迎您:{{qiankeUser?qiankeUser:''}}</span>
+                    <span class="media-heading text-semibold">欢迎您:{{qiankeUser ? qiankeUser : ''}}</span>
                   </div>
                 </div>
               </div>
@@ -86,7 +86,7 @@
                       <li v-show="userInfo.sm_ai_IsPass==1">
                         <router-link to="/home/adminAllFunction2">产品信息</router-link>
                       </li>
-                      <li  v-show="userInfo.sm_ai_IsPass==1">
+                      <li v-show="userInfo.sm_ai_IsPass==1">
                         <router-link to="/home/adminPersonalBenefits">供应商收益</router-link>
                       </li>
                     </ul>
@@ -114,7 +114,13 @@
                     <a href="javascript:;"><i class="icon-ticket"></i> <span>门票后台管理</span></a>
                     <ul>
                       <li>
-                        <router-link to="/home/ticketAttractions">景点管理</router-link>
+                        <router-link to="/home/ticketAttractions">景点信息管理</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/TicketType">票种</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/TicketTypeTicketPrice">票种_票价</router-link>
                       </li>
                     </ul>
                   </li>
@@ -176,36 +182,37 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
-  export default{
+
+  export default {
     name: '',
-    data(){
+    data() {
       return {
-        dialogVisible:true,
-        status:'',
+        dialogVisible: true,
+        status: '',
         qiankeUser: '',
-        userInfo:{}
+        userInfo: {}
 //        isAdmin:true
       }
     },
     computed: mapGetters([
       'transtionActive',
     ]),
-    created(){
+    created() {
       this.userInfo = JSON.parse(sessionStorage.getItem('admin'));
       this.status = this.userInfo.sm_ai_IsPass;
       let status = localStorage.getItem('status')
-      if(status){
+      if (status) {
         this.dialogVisible = false;
       }
       this.initData()
-      if(this.status==1){
-        localStorage.setItem('status',true)
+      if (this.status == 1) {
+        localStorage.setItem('status', true)
       }
       if (!sessionStorage.getItem('index')) {
         sessionStorage.setItem('index', '0')
       }
     },
-    mounted(){
+    mounted() {
       let user = JSON.parse(sessionStorage.getItem('admin'));
       if (!user) {
         this.$router.push({name: 'Login'})
@@ -236,7 +243,7 @@
       this.$store.dispatch('initHomeAdminGroupTour', AdminOptions)
     },
     watch: {
-      '$route' (to, from) {
+      '$route'(to, from) {
 //        this.$store.commit('clearData')
         if (to.path == '/home/adminAllFunction2') {
           this.$router.push({name: 'AdminMerchantProducts'})
@@ -267,14 +274,33 @@
         await this.$store.dispatch('initHotelIntroduceType',options)
       },
       //退出
-      Quit(){
+      Quit() {
         this.$router.push({name: 'adminLogin'})
       },
       //用户信息
-      getUser(){
+      getUser() {
         this.$router.push({name: 'AdminMerchantProducts'})
       },
+      //查询景点主题分类信息
+      initData() {
+        let getThemeTypeList = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "ttID": "",
+          "ttName": "",
+          "isDelete": 0,
+          "page": 1,
+          "rows": 100
+        };
+        this.$store.dispatch('initThemeType', getThemeTypeList)
+          .then(suc => {
+          }, err => {
+          })
+      }
 
+    },
+    created() {
+      this.initData();
     }
   }
 </script>
@@ -300,6 +326,7 @@
     margin-bottom: 0;
     width: 50%;
   }
+
   #allmap {
     position: absolute;
     top: 0;

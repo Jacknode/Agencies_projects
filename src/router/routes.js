@@ -48,6 +48,16 @@ import HotelQueryRecommend from '@/components/hotel/HotelQueryRecommend'
 /*------------------------------------门票----------------------------------------*/
 //门票景点
 import TicketAttractions from '@/components/ticket/TicketAttractions'
+//预定须知
+import PredeterminedInstructions from '@/components/ticket/PredeterminedInstructions'
+//交通信息
+import TrafficInformation from '@/components/ticket/TrafficInformation'
+//票种管理
+import TicketType from '@/components/ticket/TicketType'
+//票种票价管理
+import TicketTypeTicketPrice from '@/components/ticket/TicketTypeTicketPrice'
+
+
 
 
 export default [
@@ -231,6 +241,42 @@ export default [
           User: TicketAttractions
         },
         name: 'TicketAttractions',
+      },
+      //预定须知
+      {
+        path: 'predeterminedInstructions/:id',
+        components: {
+          default: Home,
+          User: PredeterminedInstructions
+        },
+        name: 'PredeterminedInstructions',
+      },
+      //交通信息
+      {
+        path: 'trafficInformation/:id',
+        components: {
+          default: Home,
+          User: TrafficInformation
+        },
+        name: 'TrafficInformation',
+      },
+      //票种票价管理
+      {
+        path: 'ticketType',
+        components: {
+          default: Home,
+          User: TicketType
+        },
+        name: 'TicketType',
+      },
+      //票种票价管理
+      {
+        path: 'ticketTypeTicketPrice',
+        components: {
+          default: Home,
+          User: TicketTypeTicketPrice
+        },
+        name: 'TicketTypeTicketPrice',
       }
     ],
   },
