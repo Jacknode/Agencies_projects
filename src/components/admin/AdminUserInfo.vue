@@ -750,14 +750,14 @@
       },
       //修改
       updateAdminUserInfo(id) {
-        this.uploaNode()
+
         this.changeScopeOfOperation()
         this.adminSupplierListObj.agentInfo.sm_ai_Sex = this.adminSupplierListObj.agentInfo.sm_ai_Sex + ''
         this.adminSupplierListObj.agentInfoScopeList = []
         this.obj = this.adminSupplierListObj;
         this.updateDialog = true;
         this.$store.commit('setTranstionFalse');
-        console.log(this.adminSupplierList)
+        this.uploaNode()
 
         //
       },

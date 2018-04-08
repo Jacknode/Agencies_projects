@@ -38,19 +38,6 @@ export default {
       })
     })
   },
-  //图片上传
-  uploadAdminImgs(store, data) {
-    return new Promise((relove, reject) => {
-      axios.post('http://image.1000da.com.cn/PostImage/PostToService', JSON.stringify(data), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      })
-        .then(data => {
-          relove(data.data)
-        })
-    })
-  },
   //酒店数据
   initMyHotelDetails({commit}, data) {
     return new Promise(function (relove, reject) {
@@ -80,6 +67,7 @@ export default {
       })
         .then(data => {
           var data = data.data;
+          console.log(data)
           if (Number(data.resultcode) == 200) {
             commit('initHotelProvinceData', data.data)
             relove()

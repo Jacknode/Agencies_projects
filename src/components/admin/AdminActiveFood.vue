@@ -173,7 +173,6 @@
               :value="item.ts_ta_ID">
             </el-option>
           </el-select>
-          <!--<el-input v-model="updateAdminActiveFoodObj.ts_sf_TimeActivityID" :disabled="true"></el-input>-->
         </el-form-item>
         <el-form-item label="用餐类型:" :label-width="formLabelWidth">
           <el-select v-model="updateAdminActiveFoodObj.ts_af_Type" placeholder="请选择">
