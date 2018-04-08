@@ -104,6 +104,18 @@
                       <li>
                         <router-link to="/home/hotelQueryRecommend">酒店推荐信息</router-link>
                       </li>
+                      <li>
+                        <router-link to="/home/hotelImage">酒店图片信息</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/hotelIcon">酒店图标信息</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/hotelPolicy">酒店政策信息</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/hotelTheme">酒店主题信息</router-link>
+                      </li>
                     </ul>
                   </li>
                   <!-- /main -->
@@ -189,15 +201,26 @@
     },
     computed: mapGetters([
       'transtionActive',
+      'hotelImageTypeList',
+      'hotelIntroduceTypeList',
+      'hotelThemeTypeList',
+      'hotelIconGalleryList'
     ]),
     created(){
+
       this.userInfo = JSON.parse(sessionStorage.getItem('admin'));
       this.status = this.userInfo.sm_ai_IsPass;
       let status = localStorage.getItem('status')
       if(status){
         this.dialogVisible = false;
       }
-      this.initData()
+      if(!this.hotelImageTypeList.length
+        ||!this.hotelIntroduceTypeList.length
+        ||!this.hotelThemeTypeList.length
+        ||!this.hotelIconGalleryList.length
+      ){
+        this.initData()
+      }
       if(this.status==1){
         localStorage.setItem('status',true)
       }
@@ -252,6 +275,7 @@
     },
     methods: {
       async initData(){
+        //惠乐游推荐类型
         let options = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
@@ -265,6 +289,44 @@
           }
         }
         await this.$store.dispatch('initHotelIntroduceType',options)
+        //惠乐游图片类型
+        let imgOptions = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "ht_it_ID": "",//图片类型编码
+          "ht_hi_Name": '',//图片类型名称
+        };
+        await this.$store.dispatch('initHotelImageType',imgOptions)
+
+        //惠乐游主题类型
+        let themeOptions = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "ht_tt_ThemeID": "",//主题ID
+          "ht_tt_Name": '',//主题名称
+          "ht_tt_IsHot": "",//是否热门
+        };
+        await this.$store.dispatch('initHotelThemeType',themeOptions)
+
+        //酒店图标库
+        let iconOptions = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "操作员编码",
+          "operateUserName": "操作员名称",
+          "pcName": "",
+          "ht_ie_ID": "",//图标库ID
+          "ht_ie_Name": '',//图标名称
+          "ht_ie_Image": '',//图标
+          "ht_id_Remark": "",//备注
+        }
+        await this.$store.dispatch('initHotelIconGallery',iconOptions)
       },
       //退出
       Quit(){

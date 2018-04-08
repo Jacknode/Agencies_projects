@@ -377,8 +377,8 @@
       //选择省
       changeProvince(v) {
         let getAreaProvice = {
-          "areaPid": 0
-        }
+          "areaPid": 3337
+        };
         this.$store.dispatch('initHotelProvinceData', getAreaProvice)
         .then()
       },

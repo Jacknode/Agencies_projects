@@ -7,4 +7,13 @@ export default {
   recommendTypeList: state => state.recommendTypeList,
   hotelQueryRecommendList: state => state.hotelQueryRecommendList,
   hotelIntroduceTypeList: state => state.hotelIntroduceTypeList,
+  hotelImageList: state => state.hotelImageList,
+  hotelImageTypeList: state => state.hotelImageTypeList,
+  hotelPolicyList: state => state.hotelPolicyList,
+  updateHotelImageObj: state => state.updateHotelImageObj,
+  updateHotelPolicyObj: state => state.updateHotelPolicyObj,
+  hotelThemeTypeList: state => state.hotelThemeTypeList,
+  hotelThemeList: state => state.hotelThemeList,
+  hotelIconList: state => state.hotelIconList,
+  hotelIconGalleryList: state => state.hotelIconGalleryList,
 }

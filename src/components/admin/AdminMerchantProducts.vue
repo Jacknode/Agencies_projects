@@ -413,7 +413,7 @@
     created(){
       //初始化省
       let sCity = {
-        "areaPid": 0
+        "areaPid": 3337
       };
       this.$store.dispatch('initProvice',sCity)
       let obj = JSON.parse(sessionStorage.getItem('admin'));

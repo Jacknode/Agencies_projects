@@ -43,6 +43,14 @@ import AdminPersonalBenefits from '@/components/admin/AdminPersonalBenefits'
 import HotelDetil from '@/components/hotel/HotelDetil'
 //酒店推荐信息
 import HotelQueryRecommend from '@/components/hotel/HotelQueryRecommend'
+//酒店图片信息
+import HotelImage from '@/components/hotel/HotelImage'
+//酒店图片政策
+import HotelPolicy from '@/components/hotel/HotelPolicy'
+//酒店主题
+import HotelTheme from '@/components/hotel/HotelTheme'
+//酒店图标
+import HotelIcon from '@/components/hotel/HotelIcon'
 
 
 /*------------------------------------门票----------------------------------------*/
@@ -214,6 +222,15 @@ export default [
         },
         name: 'HotelDetil'
       },
+      //酒店图标
+      {
+        path: 'hotelIcon',
+        components: {
+          default: Home,
+          User: HotelIcon
+        },
+        name: 'HotelIcon'
+      },
       //酒店推荐信息
       {
         path: 'hotelQueryRecommend',
@@ -222,6 +239,34 @@ export default [
           User: HotelQueryRecommend
         },
         name: 'HotelQueryRecommend'
+      },
+      //酒店主题
+      {
+        path: 'hotelTheme',
+        components: {
+          default: Home,
+          User: HotelTheme
+        },
+        name: 'HotelTheme'
+      },
+      //酒店政策信息
+      {
+        path: 'hotelPolicy',
+        components: {
+          default: Home,
+          User: HotelPolicy
+        },
+        name: 'HotelPolicy'
+      },
+      //酒店图片信息
+
+      {
+        path: 'hotelImage',
+        components: {
+          default: Home,
+          User: HotelImage
+        },
+        name: 'HotelImage'
       },
       //门票景点
       {

@@ -213,7 +213,7 @@
     created(){
       //初始化省
       let sCity = {
-        "areaPid": 0
+        "areaPid": 3337
       };
       this.$store.dispatch('initProvice',sCity)
       if(this.adminLineScheduleManagementId){

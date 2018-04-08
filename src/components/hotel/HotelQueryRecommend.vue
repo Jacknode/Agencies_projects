@@ -45,7 +45,6 @@
       </el-table>
 
       <!--添加-->
-
       <el-dialog title="添加酒店推荐类型" :visible.sync="addRecommendDialog">
         <el-form :model="addOptions">
 
@@ -153,7 +152,7 @@
           });
         this.addRecommendDialog = false;
       },
-      //修改
+      //删除
       Delete(id){
         let deleteOptions = {
             "loginUserID": "huileyou",
