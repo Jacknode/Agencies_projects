@@ -116,6 +116,9 @@
                       <li>
                         <router-link to="/home/hotelTheme">酒店主题信息</router-link>
                       </li>
+                      <li>
+                        <router-link to="/home/hotelFacilitiesServices">酒店设施服务信息</router-link>
+                      </li>
                     </ul>
                   </li>
                   <!-- /main -->
@@ -225,8 +228,10 @@
         || !this.hotelThemeTypeList.length
         || !this.hotelIconGalleryList.length
       ) {
+        console.log(1)
         this.initData()
       }
+      this.initData()
       if (this.status == 1) {
         localStorage.setItem('status', true)
       }
@@ -293,7 +298,7 @@
             "ht_it_Name": "",//推荐类型名称
             "ht_it_ParentID": "",//推荐类型父ID
           }
-        }
+        };
         await this.$store.dispatch('initHotelIntroduceType', options)
         //惠乐游图片类型
         let imgOptions = {
@@ -331,19 +336,9 @@
           "ht_ie_Name": '',//图标名称
           "ht_ie_Image": '',//图标
           "ht_id_Remark": "",//备注
-        }
-        await this.$store.dispatch('initHotelIconGallery', iconOptions)
-      },
-      //退出
-      Quit() {
-        this.$router.push({name: 'adminLogin'})
-      },
-      //用户信息
-      getUser() {
-        this.$router.push({name: 'AdminMerchantProducts'})
-      },
-      //查询景点主题分类信息
-      initData() {
+        };
+        await this.$store.dispatch('initHotelIconGallery', iconOptions);
+        //查询景点主题分类信息
         let getThemeTypeList = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
@@ -353,12 +348,16 @@
           "page": 1,
           "rows": 100
         };
-        this.$store.dispatch('initThemeType', getThemeTypeList)
-        .then(suc => {
-        }, err => {
-        })
-      }
-
+        await this.$store.dispatch('initThemeType', getThemeTypeList)
+      },
+      //退出
+      Quit() {
+        this.$router.push({name: 'adminLogin'})
+      },
+      //用户信息
+      getUser() {
+        this.$router.push({name: 'AdminMerchantProducts'})
+      },
     },
     created() {
       this.initData();
