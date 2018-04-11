@@ -45,7 +45,7 @@ export default {
   //添加景点信息
   addTicletInformation({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://192.168.3.245/TourSite/Insert', JSON.stringify(data), {
+      axios.post('http://webservice.1000da.com.cn/TourSite/Insert', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -312,7 +312,7 @@ export default {
   //初始化票种类型
   initTicketType({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://192.168.43.188/TicketType/Select', JSON.stringify(data), {
+      axios.post('http://webservice.1000da.com.cn/TicketType/Select', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -331,7 +331,7 @@ export default {
   //添加票种类型
   addTicketTypeSubmit({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://192.168.43.188/TicketType/Insert', JSON.stringify(data), {
+      axios.post('http://webservice.1000da.com.cn/TicketType/Insert', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }

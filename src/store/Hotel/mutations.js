@@ -65,5 +65,93 @@ export default {
   },
   initHotelIconGallery(state,data){
     state.hotelIconGalleryList = data;
+  },
+  initHotelFacilitiesServices(state,data){
+    state.hotelFacilitiesServicesList = data;
+  },
+  updateHotelFacilitiesServices(state,id){
+    state.updateHotelFacilitiesServicesObj = state.hotelFacilitiesServicesList.filter(item=>{
+      if(item.ht_hs_ID==id){
+        return true;
+      }
+      return false;
+    })[0]
+  },
+  initHotelFacilities(state,data){
+    state.hotelFacilitiesList = data;
+  },
+  initHotelFacilitiesServicesFacilities(state,data){
+    state.hotelFacilitiesServicesFacilitiesList = data;
+  },
+  initHotelRoom(state,data){
+    state.hotelRoomList = data;
+  },
+  UpdateHotelRoom(state,id){
+    state.updateHotelRoomObj = state.hotelRoomList.filter(item=>{
+      if(item.ht_bt_RoomID==id){
+        return true;
+      }
+      return false;
+    })[0]
+  },
+  initHotelFacilitiesType(state,data){
+    state.hotelFacilitiesTypeList = data;
+  },
+  initSearchFacilities(state,data){
+    state.searchFacilitiesList = data;
+  },
+  initHotelRoomFacilitiesType(state,data){
+    state.hotelRoomFacilitiesTypeList = data;
+  },
+  initHotelRoomProduct(state,data){
+    state.hotelRoomProductList = data;
+  },
+  UpdateHotelRoomProduct(state,id){
+    state.updateHotelRoomProductObj = state.hotelRoomProductList.filter(item=>{
+      if(item.ht_rpp_ID==id){
+        return true;
+      }
+      return false;
+    })[0]
+  },
+  initHotelRoomRoomFacilities(state,data){
+    state.hotelRoomRoomFacilitiesList = data;
+  },
+  initRoomFacilities(state,data){
+    state.roomFacilitiesList = data;
+  },
+  initHotelID(state,id){
+    state.hotelID = id;
+  },
+  UpdateHotelRoomRoomFacilities(state,id){
+    state.updateHotelRoomRoomFacilitiesObj = state.hotelRoomRoomFacilitiesList.filter(item=>{
+      if(item.ht_rth_ID==id){
+        return true;
+      }
+      return false;
+    })[0]
+  },
+  initHotelOrderDetails(state,data){
+    state.hotelOrderDetailsList = data;
+  },
+  initHotelConfirmOrder(state,data){
+    state.hotelConfirmOrderList = data;
+  },
+  initHotelRoomEntity(state,data){
+    state.hotelRoomEntityList = data;
+  },
+  UpdateHotelRoomEntity(state,id){
+    state.updateHotelRoomEntityObj = state.hotelRoomEntityList.filter(item=>{
+      if(item.ht_re_Id==id){
+        return true;
+      }
+      return false;
+    })[0]
+  },
+  initHotelRoomNumber(state,data){
+    state.hotelRoomNumberList = data;
+  },
+  initHotelLotRoomNumber(state,data){
+    state.hotelLotRoomNumberList = data;
   }
 }

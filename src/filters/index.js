@@ -197,3 +197,71 @@ export const getDoStatus = val=>{
       return '未知';
   }
 }
+//床型
+export const getBedType = val=>{
+  switch (Number(val)) {
+    case 1:
+      return '单床';
+    case 2:
+      return '双床';
+    case 3:
+      return '三床';
+    default:
+      return '未知';
+  }
+};
+//早餐类型
+export const getBreakfastType = val=>{
+  switch (Number(val)) {
+    case 0:
+      return '无早';
+    case 1:
+      return '单早';
+    case 2:
+      return '双早';
+    case 3:
+      return '三早';
+    case 4:
+      return '四早';
+    default:
+      return '未知';
+  }
+}
+//WAFI
+export const getWafiType = val=>{
+  switch (Number(val)) {
+    case 0:
+      return '免费WAFI';
+    case 1:
+      return '免费有线';
+    case 2:
+      return '收费有线';
+    default:
+      return '未知';
+  }
+};
+//取消类型
+export const getCancelType = val=>{
+  switch (Number(val)) {
+    case 0:
+      return '可取消';
+    case 1:
+      return '不可取消';
+    default:
+      return '未知';
+  }
+}
+//房间锁定状态
+export const getLockStatus = val=>{
+  switch (Number(val)) {
+    case 0:
+      return '未锁定';
+    case 1:
+      return '锁定';
+    case 2:
+      return '已售出';
+    default:
+      return '未知';
+  }
+}
+

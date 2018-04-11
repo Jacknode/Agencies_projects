@@ -1,25 +1,31 @@
 <template>
   <div id="wrap" class="clearfix">
     <div class="title clearfix" style="padding: 20px">
-      <h1 style="font-size: 20px;">酒店主题信息</h1><br><br>
+      <h1 style="font-size: 20px;">酒店设施服务设施</h1><br><br>
       <el-button type="primary" @click="Add" size="small" style="float: right;">新增</el-button>
     </div>
 
     <!--数据展示-->
     <el-table
-      :data="hotelThemeList"
+      :data="hotelFacilitiesServicesFacilitiesList"
       v-loading="isLoading"
       style="width: 100%"
     >
       <el-table-column
-        prop="ht_ht_Id"
-        label="酒店主题编码"
+        prop="ht_hsh_ID"
+        label="设施服务设施ID"
         align="center"
       >
       </el-table-column>
       <el-table-column
-        prop="ht_tt_ThemeName"
-        label="主题类别"
+        prop="ht_hd_HardName"
+        label="设施服务设施名称"
+        align="center"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="ht_ht_HardTypeName"
+        label="设施类型名称"
         align="center"
       >
       </el-table-column>
@@ -28,16 +34,17 @@
           <!--<el-button-->
             <!--size="mini"-->
             <!--type="primary"-->
-            <!--@click="Update(scope.row.ht_hi_ID)">修改-->
+            <!--@click="Update(scope.row.ht_hsh_ID)">修改-->
           <!--</el-button>-->
           <el-button
             size="mini"
             type="danger"
-            @click="Delete(scope.row.ht_ht_Id)">删除
+            @click="Delete(scope.row.ht_hsh_ID)">删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
+
     <!--分页-->
     <div class="block" style="float: right;">
       <el-pagination
@@ -49,22 +56,29 @@
       >
       </el-pagination>
     </div>
-
-    <!--添加酒店主题-->
-    <el-dialog title="添加酒店主题" :visible.sync="addDialog">
+    <!--添加酒店设施服务设施-->
+    <el-dialog title="添加酒店设施服务设施" :visible.sync="addDialog">
       <el-form :model="addOptions">
-
-        <el-form-item label="主题类别:" :label-width="formLabelWidth">
-          <el-select v-model="addOptions.data.ht_tt_ThemeID" placeholder="请选择主题类别">
+        <el-form-item label="设施类型:" :label-width="formLabelWidth">
+          <el-select placeholder="请选择设施类型" v-model="facilitiesTypeID" @change="changeFacilitiesType">
             <el-option
-              v-for="item in hotelThemeTypeList"
-              :key="item.ht_tt_ThemeID"
-              :label="item.ht_tt_Name"
-              :value="item.ht_tt_ThemeID">
+              v-for="item in hotelFacilitiesTypeList"
+              :key="item.ht_ht_ID"
+              :label="item.ht_ht_Name"
+              :value="item.ht_ht_ID">
             </el-option>
           </el-select>
         </el-form-item>
-
+        <el-form-item label="设施:" :label-width="formLabelWidth" style="margin-bottom: 100px">
+          <el-select  placeholder="请选择设施" v-model="addOptions.data.ht_hsh_HardID">
+            <el-option
+              v-for="item in searchFacilitiesList"
+              :key="item.ht_hd_ID"
+              :label="item.ht_hd_Name"
+              :value="item.ht_hd_ID">
+            </el-option>
+          </el-select>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="addDialog = false">取 消</el-button>
@@ -79,12 +93,13 @@
     name: '',
     data(){
       return {
-        hotelID:'',
         total:0,
+        hotelID:'',
+        isLoading:false,
         addDialog:false,
         updateDialog:false,
         formLabelWidth:'120px',
-        isLoading:false,
+        facilitiesTypeID:'',
         addOptions:{
           "loginUserID": "huileyou",
           "loginUserPass": "123",
@@ -92,15 +107,17 @@
           "operateUserName": "操作员名称",
           "pcName": "",
           "data": {
-            "ht_tt_ThemeID": "",//主题ID
-            "ht_ht_hotelID": "",//酒店编码
+            "ht_hsh_HardID": "",//设施编码
+            "ht_ht_hotelID": "",//酒店ID
           }
         }
       }
     },
     computed: mapGetters([
-      'hotelThemeList',
-      'hotelThemeTypeList'
+      'hotelFacilitiesServicesFacilitiesList',
+      'hotelFacilitiesList',
+      'hotelFacilitiesTypeList',
+      'searchFacilitiesList'
     ]),
     created(){
       this.hotelID = sessionStorage.getItem('hotelID');
@@ -109,42 +126,56 @@
         this.$notify({
           message: '请先添加酒店信息!',
           position: 'top-left',
-          type:'error'
+          type: 'error'
         });
         return
       }
-      this.initData(1)
+      this.initData()
     },
     methods: {
-      //分页
-      handleCurrentChange(num){
-        this.initData(num);
-      },
-      //初始化数据
-      initData(page){
+      //选中设施类型
+      changeFacilitiesType(){
         let options = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "操作员编码",
           "operateUserName": "操作员名称",
           "pcName": "",
-          "ht_ht_Id": "",//酒店主题编号
-          "ht_tt_ThemeID": "",//主题ID
-          "ht_ht_hotelID": this.hotelID,//酒店编码
-          "page": page?page:1,//页码编号
-          "rows": "5",//单页显示数量
+          "ht_hd_ID": "",//设施编码
+          "ht_hd_Name": "",//设施名称
+          "ht_hd_HardTypeID": this.facilitiesTypeID,//设施类型ID
+          "ht_hd_IsHot": "",//是否热门
         };
-        this.isLoading = true;
-        this.$store.dispatch('initHotelTheme',options)
-          .then((total) => {
+        this.$store.dispatch('initSearchFacilities',options)
+      },
+      //分页
+      handleCurrentChange(num){
+        this.initData(num)
+      },
+      initData(page){
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "操作员编码",
+          "operateUserName": "lb",
+          "pcName": "",
+          "ht_hsh_ID": "",//设施服务设施ID
+          "ht_hsh_HardID": "",//设施编码
+          "ht_ht_hotelID": this.hotelID,//酒店ID
+          "page":page?page:1,//页码编号
+          "rows":"5",//单页显示数量
+        };
+        this.isLoading  = true;
+        this.$store.dispatch('initHotelFacilitiesServicesFacilities',options)
+        .then((total) => {
             this.total = total
             this.isLoading  = false
-          }, err => {
-            this.$notify({
-              message: err,
-              type: 'error'
-            });
-          })
+        }, err => {
+          this.$notify({
+            message: err,
+            type: 'error'
+          });
+        })
       },
       //添加
       Add(){
@@ -154,7 +185,7 @@
       //添加提交
       addSubmit(){
         this.addOptions.data.ht_ht_hotelID = this.hotelID;
-        this.$store.dispatch('AddHotelTheme',this.addOptions)
+        this.$store.dispatch('AddHotelFacilitiesServicesFacilities',this.addOptions)
           .then(suc => {
             this.$notify({
               message: suc,
@@ -178,10 +209,10 @@
           "operateUserName": "lb",
           "pcName": "",
           "data": {
-            "ht_ht_Id": id//酒店主题编号
+            "ht_hsh_ID": id//特色图标ID
           }
         };
-        this.$store.dispatch('DeleteHotelTheme',deleteOptions)
+        this.$store.dispatch('DeleteHotelFacilitiesServicesFacilities',deleteOptions)
         .then(suc => {
           this.$notify({
             message: suc,

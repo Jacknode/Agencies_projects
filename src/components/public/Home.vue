@@ -102,6 +102,12 @@
                         <router-link to="/home/hotelDetil">酒店基本信息</router-link>
                       </li>
                       <li>
+                        <router-link to="/home/hotelOrderDetails">酒店订单明细</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/hotelConfirmOrder">酒店确认订单</router-link>
+                      </li>
+                      <li>
                         <router-link to="/home/hotelQueryRecommend">酒店推荐信息</router-link>
                       </li>
                       <li>
@@ -117,7 +123,13 @@
                         <router-link to="/home/hotelTheme">酒店主题信息</router-link>
                       </li>
                       <li>
+                        <router-link to="/home/hotelRoom">酒店房间管理</router-link>
+                      </li>
+                      <li>
                         <router-link to="/home/hotelFacilitiesServices">酒店设施服务信息</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/hotelFacilitiesServicesFacilities">酒店设施服务设施信息</router-link>
                       </li>
                     </ul>
                   </li>
@@ -228,10 +240,8 @@
         || !this.hotelThemeTypeList.length
         || !this.hotelIconGalleryList.length
       ) {
-        console.log(1)
         this.initData()
       }
-      this.initData()
       if (this.status == 1) {
         localStorage.setItem('status', true)
       }
@@ -349,6 +359,44 @@
           "rows": 100
         };
         await this.$store.dispatch('initThemeType', getThemeTypeList)
+
+        //惠乐游设施
+        let hotelFacilitiesServicesoptions = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "ht_hd_ID": "",//设施编码
+          "ht_hd_Name": '',//设施名称
+          "ht_hd_HardTypeID": "",//设施类型ID
+          "ht_hd_IsHot": "",//是否热门
+        };
+        await this.$store.dispatch('initHotelFacilities',hotelFacilitiesServicesoptions)
+
+        //惠乐游设施类型
+        let hotelFacilitiesTypeOptions = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "ht_ht_ID": "",//设施类型Id
+          "ht_ht_Name": '',//设施类型名称
+        };
+        await this.$store.dispatch('initHotelFacilitiesType',hotelFacilitiesTypeOptions)
+
+        //惠乐游房间设施类型
+        let roomTypeOptions = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "操作员编码",
+          "operateUserName": "操作员名称",
+          "pcName": "",
+          "ht_rht_ID": "",//房间设施类型ID
+          "ht_rht_Name": "",//类型名称
+        };
+        await this.$store.dispatch('initHotelRoomFacilitiesType',roomTypeOptions)
       },
       //退出
       Quit() {
@@ -359,9 +407,6 @@
         this.$router.push({name: 'AdminMerchantProducts'})
       },
     },
-    created() {
-      this.initData();
-    }
   }
 </script>
 <style>

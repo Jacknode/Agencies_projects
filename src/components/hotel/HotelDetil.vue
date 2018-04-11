@@ -3,7 +3,7 @@
     <div id="wrap" class="clearfix">
       <div class="title clearfix" style="padding: 20px">
         <h1>酒店基本信息</h1>
-        <el-button type="primary" v-show="isShow" @click="addButton">添加</el-button>
+        <el-button type="primary" v-show="isShow" @click="addButton" size="small">添加</el-button>
       </div>
 
       <!--数据展示-->
@@ -55,7 +55,7 @@
               <el-form-item label="经度:">
                 <span>{{ props.row.ht_ht_Longitude }}°</span>
               </el-form-item>
-              <el-form-item label="维度:">
+              <el-form-item label="纬度:">
                 <span>{{ props.row.ht_ht_Latitude }}°</span>
               </el-form-item>
               <el-form-item label="温馨提示:">

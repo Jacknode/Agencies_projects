@@ -97,7 +97,8 @@
         this.$router.push({name:'HotelDetil'})
         this.$notify({
           message: '请先添加酒店信息!',
-          position: 'top-left'
+          position: 'top-left',
+          type:'error'
         });
         return
       }
@@ -128,6 +129,11 @@
       },
       //添加
       Add(){
+        this.addOptions.data.ht_hi_ImageID = '';
+//        let obj = this.addOptions.data;
+//        for(let attr in obj){
+//          this.addOptions.data[attr] = obj[attr] = ''
+//        }
         this.$store.commit('setTranstionFalse');
         this.addDialog = true;
       },
