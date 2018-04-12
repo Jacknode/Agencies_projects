@@ -38,4 +38,5 @@ export default {
   updateHotelRoomEntityObj:{},//修改房间实体obj
   hotelRoomNumberList:[],//房间实体生成房间
   hotelLotRoomNumberList:[],//房间产品批量生成房间
+  parentHotelQueryRecommendList:[],//通过父类型查询子 类型
 }

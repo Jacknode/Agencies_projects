@@ -157,7 +157,7 @@ export default {
         var data = data.data;
         if (Number(data.resultcode) == 200) {
           commit('initHotelQueryRecommend',data.data)
-          relove(data.resultcontent);
+          relove(Number(data.totalrows))
         } else {
           reject(data.resultcontent);
         }
@@ -1108,6 +1108,24 @@ export default {
         if(Number(data.resultcode)==200){
           commit('initHotelLotRoomNumber',data.data);
           relove(Number(data.totalrows))
+        }else{
+          reject(data.resultcontent)
+        }
+      })
+    })
+  },
+  //通过父类型查询子 类型
+  initParentHotelQueryRecommend({commit},data){
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/IntroduceType/Select',JSON.stringify(data),{
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(data=>{
+        var data = data.data;
+        if(Number(data.resultcode)==200){
+          commit('initParentHotelQueryRecommend',data.data);
+          relove(data.resultcontent)
         }else{
           reject(data.resultcontent)
         }

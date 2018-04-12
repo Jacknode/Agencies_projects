@@ -1,6 +1,6 @@
 <template>
   <div id="wrap" class="clearfix">
-    <h1 class="userClass">酒店生成房间管理</h1>
+    <h1 class="userClass" style="font-size: 20px;">酒店生成房间管理</h1>
     <el-col :span="24" class="formSearch">
       <el-form :inline="true">
         <el-form-item>

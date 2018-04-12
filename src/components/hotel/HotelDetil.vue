@@ -72,6 +72,11 @@
           </template>
         </el-table-column>
         <el-table-column
+          width="100"
+          label="酒店编码"
+          prop="ht_ht_hotelID">
+        </el-table-column>
+        <el-table-column
           label="酒店名称"
           prop="ht_ht_HotelName">
         </el-table-column>

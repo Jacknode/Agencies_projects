@@ -44,14 +44,36 @@
         </el-table-column>
       </el-table>
 
+      <!--分页-->
+      <div class="block" style="float: right;">
+        <el-pagination
+          @current-change="handleCurrentChange"
+          :page-size="5"
+          layout="total, prev, pager, next"
+          :total="total"
+          v-show="total"
+        >
+        </el-pagination>
+      </div>
+
       <!--添加-->
       <el-dialog title="添加酒店推荐类型" :visible.sync="addRecommendDialog">
         <el-form :model="addOptions">
 
+          <el-form-item label="父推荐类型:" :label-width="formLabelWidth">
+            <el-select placeholder="请选择类型" @change="changeParent" v-model="ParentID">
+              <el-option
+                v-for="item in hotelIntroduceTypeList"
+                :key="item.ht_it_ID"
+                :label="item.ht_it_Name"
+                :value="item.ht_it_ID">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="推荐类型:" :label-width="formLabelWidth">
             <el-select v-model="addOptions.data.ht_hi_IntroduceType" placeholder="请选择类型">
               <el-option
-                v-for="item in hotelIntroduceTypeList"
+                v-for="item in parentHotelQueryRecommendList"
                 :key="item.ht_it_ID"
                 :label="item.ht_it_Name"
                 :value="item.ht_it_ID">
@@ -77,11 +99,14 @@
       'hotelQueryRecommendList',
       'recommendTypeList',
       'hotelIntroduceTypeList',
+      'parentHotelQueryRecommendList'
     ]),
     data() {
       return {
+        ParentID:'',
         isLoading:false,
         hotelID:'',
+        total:0,
         addOptions: {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
@@ -112,16 +137,42 @@
       this.initData();
     },
     methods: {
+      //选中父类型
+      changeParent(){
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "操作员编码",
+            "operateUserName": "操作员名称",
+            "pcName": "",
+            "ht_it_ID": "",//推荐类型ID
+            "ht_it_Name": "",//推荐类型名称
+            "ht_it_ParentID": this.ParentID,//推荐类型父ID
+          };
+          this.$store.dispatch('initParentHotelQueryRecommend',options)
+      },
+      //分页
+      handleCurrentChange(num){
+        this.initData(num)
+      },
       //初始化数据
-      initData() {
+      initData(page) {
         let selectHotelIntroduceInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
-          "ht_ht_hotelID": this.hotelID
+          "operateUserID": "操作员编码",
+          "operateUserName": "操作员名称",
+          "pcName": "",
+          "ht_hi_ID": "",//酒店推荐编码
+          "ht_ht_hotelID": this.hotelID,//酒店编码
+          "ht_hi_IntroduceType": "",//推荐类型编码
+          "page":"1",//页码编号
+          "rows":"5",//单页显示数量
         };
         this.isLoading = true;
         this.$store.dispatch('initHotelQueryRecommend', selectHotelIntroduceInfo)
-          .then(() => {
+          .then((total) => {
+            this.total = total;
             this.isLoading  = false
           }, err => {
             this.$notify({

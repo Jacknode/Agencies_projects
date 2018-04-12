@@ -37,4 +37,5 @@ export default {
   updateHotelRoomEntityObj: state => state.updateHotelRoomEntityObj,
   hotelRoomNumberList: state => state.hotelRoomNumberList,
   hotelLotRoomNumberList: state => state.hotelLotRoomNumberList,
+  parentHotelQueryRecommendList: state => state.parentHotelQueryRecommendList,
 }

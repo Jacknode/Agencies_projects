@@ -153,5 +153,8 @@ export default {
   },
   initHotelLotRoomNumber(state,data){
     state.hotelLotRoomNumberList = data;
+  },
+  initParentHotelQueryRecommend(state,data){
+    state.parentHotelQueryRecommendList = data;
   }
 }
