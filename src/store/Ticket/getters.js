@@ -16,4 +16,7 @@ export default {
   updateTrafficInformationObj: state => state.updateTrafficInformationObj,
   ticketTypeList: state => state.ticketTypeList,
   updateTicketTypeObj: state => state.updateTicketTypeObj,
+
+  ticketTypeTicketPriceList: state => state.ticketTypeTicketPriceList,
+  ticketQueryOrderList: state => state.ticketQueryOrderList,
 }

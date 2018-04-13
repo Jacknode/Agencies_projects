@@ -102,6 +102,12 @@
                         <router-link to="/home/hotelDetil">酒店基本信息</router-link>
                       </li>
                       <li>
+                        <router-link to="/home/hotelOrderDetails">酒店订单明细</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/hotelConfirmOrder">酒店确认订单</router-link>
+                      </li>
+                      <li>
                         <router-link to="/home/hotelQueryRecommend">酒店推荐信息</router-link>
                       </li>
                       <li>
@@ -117,7 +123,13 @@
                         <router-link to="/home/hotelTheme">酒店主题信息</router-link>
                       </li>
                       <li>
+                        <router-link to="/home/hotelRoom">酒店房间管理</router-link>
+                      </li>
+                      <li>
                         <router-link to="/home/hotelFacilitiesServices">酒店设施服务信息</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/hotelFacilitiesServicesFacilities">酒店设施服务设施信息</router-link>
                       </li>
                     </ul>
                   </li>
@@ -132,14 +144,63 @@
                         <router-link to="/home/ticketAttractions">景点信息管理</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/TicketType">票种</router-link>
+                        <router-link to="/home/ticketPredeterminedInstructions">预定须知</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/TicketTypeTicketPrice">票种_票价</router-link>
+                        <router-link to="/home/trafficInformation">交通信息</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/ticketType">票种</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/ticketTypeTicketPrice">票种_票价</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/ticketQueryOrder">查询订单</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/ticketApplyShowHomePage">申请景点展示首页</router-link>
                       </li>
                     </ul>
                   </li>
                   <!-- /main -->
+                </ul>
+
+                <ul class="navigation navigation-main navigation-accordion">
+                  <li>
+                    <!--美食管理-->
+                    <a href="javascript:;"><i class="icon-ticket"></i> <span>美食后台管理</span></a>
+                    <ul>
+                      <!--美食店铺信息-->
+                      <li>
+                        <router-link to="foodStoreInformation">店面信息</router-link>
+                      </li>
+                      <li>
+                        <router-link to="foodRoomTableTimeEveryDay">店面每天可锁桌时间</router-link>
+                      </li>
+                      <li>
+                        <router-link to="foodStorefrontRoomTableTime">店面房间餐桌时间</router-link>
+                      </li>
+                      <li>
+                        <router-link to="foodStoreRoomPicture">房间图片</router-link>
+                      </li>
+                      <li>
+                        <router-link to="storeRecommendFood">推荐菜</router-link>
+                      </li>
+                      <li>
+                        <router-link to="foodStoreProduct">店面产品</router-link>
+                      </li>
+                      <li>
+                        <router-link to="foodStoreRoom">店面房间</router-link>
+                      </li>
+                      <li>
+                        <router-link to="foodParkingSpace">停车位</router-link>
+                      </li>
+                      <li>
+                        <router-link to="foodRoomTable">房间餐桌</router-link>
+                      </li>
+                    </ul>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -211,10 +272,6 @@
     },
     computed: mapGetters([
       'transtionActive',
-      'hotelImageTypeList',
-      'hotelIntroduceTypeList',
-      'hotelThemeTypeList',
-      'hotelIconGalleryList'
     ]),
     created(){
       this.userInfo = JSON.parse(sessionStorage.getItem('admin'));
@@ -223,15 +280,17 @@
       if (!status) {
         this.dialogVisible = false;
       }
-      if (!this.hotelImageTypeList.length
-        || !this.hotelIntroduceTypeList.length
-        || !this.hotelThemeTypeList.length
-        || !this.hotelIconGalleryList.length
-      ) {
-        console.log(1)
-        this.initData()
-      }
-      this.initData()
+//      if (!this.hotelImageTypeList.length
+//        || !this.hotelIntroduceTypeList.length
+//        || !this.hotelThemeTypeList.length
+//        || !this.hotelIconGalleryList.length
+//      ) {
+        this.initData().then(()=>{
+
+        },err=>{
+          console.log(err)
+        })
+//      }
       if (this.status == 1) {
         localStorage.setItem('status', true)
       }
@@ -348,7 +407,70 @@
           "page": 1,
           "rows": 100
         };
-        await this.$store.dispatch('initThemeType', getThemeTypeList)
+//        await this.$store.dispatch('initThemeType', getThemeTypeList)
+
+        //惠乐游设施
+        let hotelFacilitiesServicesoptions = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "ht_hd_ID": "",//设施编码
+          "ht_hd_Name": '',//设施名称
+          "ht_hd_HardTypeID": "",//设施类型ID
+          "ht_hd_IsHot": "",//是否热门
+        };
+        await this.$store.dispatch('initHotelFacilities',hotelFacilitiesServicesoptions)
+
+        //惠乐游设施类型
+        let hotelFacilitiesTypeOptions = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "ht_ht_ID": "",//设施类型Id
+          "ht_ht_Name": '',//设施类型名称
+        };
+        await this.$store.dispatch('initHotelFacilitiesType',hotelFacilitiesTypeOptions)
+
+        //惠乐游房间设施类型
+        let roomTypeOptions = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "操作员编码",
+          "operateUserName": "操作员名称",
+          "pcName": "",
+          "ht_rht_ID": "",//房间设施类型ID
+          "ht_rht_Name": "",//类型名称
+        };
+        await this.$store.dispatch('initHotelRoomFacilitiesType',roomTypeOptions)
+//用餐人数类型
+        let selectPropertyInfo = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "fd_py_ParentID": "28",//父编码
+          "page": "1",
+          "rows": "10000",
+        };
+        await this.$store.dispatch('initNumberOfMeals',selectPropertyInfo)
+
+//店面类型
+        let selectPropertyInfoType = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "fd_py_ParentID": "1",//父编码
+          "page": "1",
+          "rows": "10000",
+        }
+        await this.$store.dispatch('initStorefrontType',selectPropertyInfoType)
       },
       //退出
       Quit() {
@@ -359,9 +481,6 @@
         this.$router.push({name: 'AdminMerchantProducts'})
       },
     },
-    created() {
-      this.initData();
-    }
   }
 </script>
 <style>

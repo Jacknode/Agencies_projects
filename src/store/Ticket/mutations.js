@@ -2,15 +2,15 @@
  * Created by leibo on 18/3/29.
  */
 export default {
+  initThemeType(state, data) {
+    state.themeTypeList = data;
+  },
   initTicketAttractions(state, data) {
     for (let i = 0; i < data.length; i++) {
       //处理图片
       data[i].tm_ts_ShowImage = data[i].tm_ts_ShowImage.split(',');
     }
     state.ticketAttractionsList = data;
-  },
-  initThemeType(state, data) {
-    state.themeTypeList = data;
   },
   initTicketGreat(state, data) {
     state.ticketGreatList = data;
@@ -70,7 +70,12 @@ export default {
       }
       return false;
     })[0];
+  },
+
+  initTicketTypeTicketPrice(state, data) {
+    state.ticketTypeTicketPriceList = data;
+  },
+  initTicketQueryOrder(state, data) {
+    state.ticketQueryOrderList = data;
   }
-
-
 }

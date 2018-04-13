@@ -32,8 +32,8 @@
               <el-form-item label="票种编码">
                 <span>{{ props.row.tm_tt_ID }}</span>
               </el-form-item>
-              <el-form-item label="景点编号">
-                <span>{{ props.row.tm_ts_Code }}</span>
+              <el-form-item label="景点名称">
+                <span>{{ props.row.tm_ts_Name}}</span>
               </el-form-item>
               <el-form-item label="票种名称">
                 <span>{{ props.row.tm_tt_Name }}</span>
@@ -78,14 +78,14 @@
           prop="tm_tt_Name">
         </el-table-column>
         <el-table-column
-          label="景点编号"
-          prop="tm_ts_Code">
+          label="景点名称"
+          prop="tm_ts_Name">
         </el-table-column>
         <el-table-column
           label="实际价格"
           prop="tm_tt_RealPrice">
         </el-table-column>
-        <el-table-column>
+        <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -318,10 +318,14 @@
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
-          "tsCode": "",    //景点编码
-          "tsName": '',//景点名称
-          "tradeInfoID": this.loginId.sm_ai_ID,//供应商编码
-          "isDelete": 0,//必须传
+          "tm_ts_Code": "",    //景点编码
+          "tm_ts_Name": "",//景点名称
+          "tm_ts_TradeInfoID": this.loginId.sm_ai_ID,//供应商编码
+          "tm_ts_IsDelete": 0,//必须传
+          "tm_ts_IsPass": "",//是否通过审核(0审核中1通过审核2未通过审核)
+          "tm_ts_ShowTop": "",//是否展示首页（0否，1是）
+          "tm_ts_IsHot": "",//是否热门景点（0普通1热门)
+          "tm_ts_ThemeTypeID": "",//主题编码
           "page": 1,
           "rows": 5
         };
@@ -454,8 +458,8 @@
 
     created() {
       this.loginId = JSON.parse(sessionStorage.getItem('admin'));
-      this.initData();
       this.initTicketAttraction();
+      this.initData();
     }
   }
 </script>

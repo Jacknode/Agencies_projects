@@ -51,20 +51,64 @@ import HotelPolicy from '@/components/hotel/HotelPolicy'
 import HotelTheme from '@/components/hotel/HotelTheme'
 //酒店图标
 import HotelIcon from '@/components/hotel/HotelIcon'
+//酒店房间
+import HotelRoom from '@/components/hotel/HotelRoom'
+//酒店设施服务
+import HotelFacilitiesServices from '@/components/hotel/HotelFacilitiesServices'
+//酒店设施服务设施
+import HotelFacilitiesServicesFacilities from '@/components/hotel/HotelFacilitiesServicesFacilities'
+//酒店房间产品
+import HotelRoomProduct from '@/components/hotel/HotelRoomProduct'
+//酒店房间房间设施
+import HotelRoomRoomFacilities from '@/components/hotel/HotelRoomRoomFacilities'
+//酒店订单明细
+import HotelOrderDetails from '@/components/hotel/HotelOrderDetails'
+//酒店确认订单
+import HotelConfirmOrder from '@/components/hotel/HotelConfirmOrder'
+//酒店生成房间
+import HotelRoomNumber from '@/components/hotel/HotelRoomNumber'
+//酒店批量生成房间
+import HotelLotRoomNumber from '@/components/hotel/HotelLotRoomNumber'
+//酒店房间实体
+import HotelRoomEntity from '@/components/hotel/HotelRoomEntity'
 
 
 /*------------------------------------门票----------------------------------------*/
 //门票景点
 import TicketAttractions from '@/components/ticket/TicketAttractions'
 //预定须知
-import PredeterminedInstructions from '@/components/ticket/PredeterminedInstructions'
+import TicketPredeterminedInstructions from '@/components/ticket/TicketPredeterminedInstructions'
 //交通信息
 import TrafficInformation from '@/components/ticket/TrafficInformation'
 //票种管理
 import TicketType from '@/components/ticket/TicketType'
 //票种票价管理
 import TicketTypeTicketPrice from '@/components/ticket/TicketTypeTicketPrice'
+//查询商户订单
+import TicketQueryOrder from '@/components/ticket/TicketQueryOrder'
+//申请显示在首页
+import TicketApplyShowHomePage from '@/components/ticket/TicketApplyShowHomePage'
 
+//美食
+
+//美食店铺管理
+import FoodStoreInformation from '@/components/food/FoodStoreInformation'
+//美食房间图片
+import FoodStoreRoomPicture from '@/components/food/FoodStoreRoomPicture'
+//美食推荐菜
+import StoreRecommendFood from '@/components/food/StoreRecommendFood'
+//店面产品
+import FoodStoreProduct from '@/components/food/FoodStoreProduct'
+//店面房间
+import FoodStoreRoom  from '@/components/food/FoodStoreRoom'
+//停车位
+import FoodParkingSpace  from '@/components/food/FoodParkingSpace'
+//房间餐桌
+import FoodRoomTable  from '@/components/food/FoodRoomTable'
+//店面房间餐桌时间
+import FoodStorefrontRoomTableTime from '@/components/food/FoodStorefrontRoomTableTime'
+//店面每天可锁桌时间
+import FoodRoomTableTimeEveryDay from '@/components/food/FoodRoomTableTimeEveryDay'
 
 
 
@@ -232,6 +276,51 @@ export default [
         },
         name: 'HotelDetil'
       },
+      //酒店订单明细
+      {
+        path: 'hotelOrderDetails',
+        components: {
+          default: Home,
+          User: HotelOrderDetails
+        },
+        name: 'HotelOrderDetails'
+      },
+      //酒店确认订单
+      {
+        path: 'hotelConfirmOrder',
+        components: {
+          default: Home,
+          User: HotelConfirmOrder
+        },
+        name: 'HotelConfirmOrder'
+      },
+      //酒店生成房间
+      {
+        path: 'hotelRoomNumber/:id',
+        components: {
+          default: Home,
+          User: HotelRoomNumber
+        },
+        name: 'HotelRoomNumber'
+      },
+      //酒店批量生成房间
+      {
+        path: 'hotelLotRoomNumber/:id',
+        components: {
+          default: Home,
+          User: HotelLotRoomNumber
+        },
+        name: 'HotelLotRoomNumber'
+      },
+      //酒店房间实体
+      {
+        path: 'hotelRoomEntity/:id',
+        components: {
+          default: Home,
+          User: HotelRoomEntity
+        },
+        name: 'HotelRoomEntity'
+      },
       //酒店图标
       {
         path: 'hotelIcon',
@@ -240,6 +329,51 @@ export default [
           User: HotelIcon
         },
         name: 'HotelIcon'
+      },
+      //酒店房间
+      {
+        path: 'hotelRoom',
+        components: {
+          default: Home,
+          User: HotelRoom
+        },
+        name: 'HotelRoom'
+      },
+      //酒店房间产品
+      {
+        path: 'hotelRoomProduct/:id',
+        components: {
+          default: Home,
+          User: HotelRoomProduct
+        },
+        name: 'HotelRoomProduct'
+      },
+      //酒店房间房间设施
+      {
+        path: 'hotelRoomRoomFacilities/:id',
+        components: {
+          default: Home,
+          User: HotelRoomRoomFacilities
+        },
+        name: 'HotelRoomRoomFacilities'
+      },
+      //酒店设施服务
+      {
+        path: 'hotelFacilitiesServices',
+        components: {
+          default: Home,
+          User: HotelFacilitiesServices
+        },
+        name: 'HotelFacilitiesServices'
+      },
+      //酒店设施服务设施
+      {
+        path: 'hotelFacilitiesServicesFacilities',
+        components: {
+          default: Home,
+          User: HotelFacilitiesServicesFacilities
+        },
+        name: 'HotelFacilitiesServicesFacilities'
       },
       //酒店推荐信息
       {
@@ -289,16 +423,16 @@ export default [
       },
       //预定须知
       {
-        path: 'predeterminedInstructions/:id',
+        path: 'ticketPredeterminedInstructions',
         components: {
           default: Home,
-          User: PredeterminedInstructions
+          User: TicketPredeterminedInstructions
         },
-        name: 'PredeterminedInstructions',
+        name: 'TicketPredeterminedInstructions',
       },
       //交通信息
       {
-        path: 'trafficInformation/:id',
+        path: 'trafficInformation',
         components: {
           default: Home,
           User: TrafficInformation
@@ -322,7 +456,110 @@ export default [
           User: TicketTypeTicketPrice
         },
         name: 'TicketTypeTicketPrice',
-      }
+      },
+      //查询商户订单
+      {
+        path: 'ticketQueryOrder',
+        components: {
+          default: Home,
+          User: TicketQueryOrder
+        },
+        name: 'TicketQueryOrder',
+      },
+      //申请显示在首页
+      {
+        path: 'ticketApplyShowHomePage',
+        components: {
+          default: Home,
+          User: TicketApplyShowHomePage
+        },
+        name: 'TicketApplyShowHomePage',
+      },
+
+      //美食
+
+      //美食管理
+      {
+        path: 'foodStoreInformation',
+        components:{
+          default:Home,
+          User:FoodStoreInformation
+        },
+        name:'FoodStoreInformation'
+      },
+      //房间图片
+      {
+        path: 'foodStoreRoomPicture',
+        components:{
+          default:Home,
+          User:FoodStoreRoomPicture
+        },
+        name:'FoodStoreRoomPicture'
+      },
+      //推荐菜
+      {
+        path: 'storeRecommendFood',
+        components:{
+          default:Home,
+          User:StoreRecommendFood
+        },
+        name:'StoreRecommendFood'
+      },
+      //店面产品
+      {
+        path: 'foodStoreProduct',
+        components:{
+          default:Home,
+          User:FoodStoreProduct
+        },
+        name:'FoodStoreProduct'
+      },
+      //店面房间
+      {
+        path: 'foodStoreRoom',
+        components:{
+          default:Home,
+          User:FoodStoreRoom
+        },
+        name:'FoodStoreRoom'
+      },
+      //停车位
+      {
+        path: 'foodParkingSpace',
+        components:{
+          default:Home,
+          User:FoodParkingSpace
+        },
+        name:'FoodParkingSpace'
+      },
+      //房间餐桌
+      {
+        path: 'foodRoomTable',
+        components:{
+          default:Home,
+          User:FoodRoomTable
+        },
+        name:'FoodRoomTable'
+      },
+      //店面房间餐桌时间
+      {
+        path: 'foodStorefrontRoomTableTime',
+        components:{
+          default:Home,
+          User:FoodStorefrontRoomTableTime
+        },
+        name:'FoodStorefrontRoomTableTime'
+      },
+      //店面每天可锁桌时间
+      {
+        path:'foodRoomTableTimeEveryDay',
+        components:{
+          default: Home,
+          User: FoodRoomTableTimeEveryDay
+        },
+        name: 'FoodRoomTableTimeEveryDay'
+      },
+
     ],
   },
 
@@ -330,6 +567,6 @@ export default [
   {
     path: '*',
     hidden: true,
-    redirect: { name: 'AdminBusinessInformation' }
+    redirect: { name: 'AdminUserInfo' }
   },
 ]

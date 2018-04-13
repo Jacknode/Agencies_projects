@@ -172,7 +172,8 @@
         this.$router.push({name:'HotelDetil'})
         this.$notify({
           message: '请先添加酒店信息!',
-          position: 'top-left'
+          position: 'top-left',
+          type:'error'
         });
         return
       }
@@ -267,6 +268,8 @@
       },
       //添加
       Add(){
+        this.ImageURL = [];
+        this.ImageURL1 = [];
         this.$store.commit('setTranstionFalse');
         this.addDialog = true;
         this.uploaNode()
@@ -307,6 +310,7 @@
           "pcName": "",
           "data": this.updateHotelImageObj
         };
+        updateOptions.data.ht_hi_ImageURL = this.ImageURL1.join(',');
         this.$store.dispatch('UpdateHotelImage',updateOptions)
           .then(suc => {
             this.$notify({

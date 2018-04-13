@@ -6,6 +6,16 @@
       <!--添加-->
 
       <div class="add">
+        <el-select v-model="ticketAttractionsValue" placeholder="请选择查询的景点">
+          <el-option
+            v-for="item in ticketAttractionsList"
+            :key="item.tm_ts_Code"
+            :label="item.tm_ts_Name"
+            :value="item.tm_ts_Code">
+          </el-option>
+        </el-select>
+
+        <el-button type="primary" @click="search">查询</el-button>
         <el-button type="primary" @click="Add">新增</el-button>
       </div>
 
@@ -37,7 +47,7 @@
           label="公交线路">
           <template slot-scope="scope">
             <el-popover
-              ref="popover1"
+              ref="popover2"
               placement="top-start"
               title="公交线路"
               width="300"
@@ -45,14 +55,14 @@
               trigger="hover"
               :content="scope.row.tm_tm_Bus">
             </el-popover>
-            <el-button v-popover:popover1 size="mini">移入查看</el-button>
+            <el-button v-popover:popover2 size="mini">移入查看</el-button>
           </template>
         </el-table-column>
         <el-table-column
           label="景点地址">
           <template slot-scope="scope">
             <el-popover
-              ref="popover1"
+              ref="popover3"
               placement="top-start"
               title="景点地址"
               width="300"
@@ -60,7 +70,7 @@
               trigger="hover"
               :content="scope.row.tm_tm_Address">
             </el-popover>
-            <el-button v-popover:popover1 size="mini">移入查看</el-button>
+            <el-button v-popover:popover3 size="mini">移入查看</el-button>
           </template>
         </el-table-column>
         <el-table-column label="操作">
@@ -127,11 +137,11 @@
   export default {
     computed: mapGetters([
       'trafficInformationList',
-      'updateTrafficInformationObj'
+      'updateTrafficInformationObj',
+      'ticketAttractionsList'
     ]),
     data() {
       return {
-        number: '',
         addOptions: {
           "tm_tm_TourSiteID": "",
           "tm_tm_Drive": "",
@@ -142,15 +152,45 @@
         formLabelWidth: '120px',
         isLoading: false,
         updateDialog: false,
+        adminUserInfo: '',
+        ticketAttractionsValue: ''
       }
     },
     methods: {
+      //初始化景点信息
+      initTicketAttraction() {
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "tm_ts_Code": "",    //景点编码
+          "tm_ts_Name": "",//景点名称
+          "tm_ts_TradeInfoID": this.adminUserInfo.sm_ai_ID,//供应商编码
+          "tm_ts_IsDelete": 0,//必须传
+          "tm_ts_IsPass": "",//是否通过审核(0审核中1通过审核2未通过审核)
+          "tm_ts_ShowTop": "",//是否展示首页（0否，1是）
+          "tm_ts_IsHot": "",//是否热门景点（0普通1热门)
+          "tm_ts_ThemeTypeID": "",//主题编码
+          "page": 1,
+          "rows": 5
+        };
+        this.$store.dispatch('initTicketAttractions', options)
+      },
       initData(id) {
+        if( !id ){
+          this.$notify({
+            message: '请选择景点!!',
+            type: 'error'
+          });
+          return
+        }
         this.isLoading = true;
         let getTransport = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
-          "tm_tm_TourSiteID": id ? id : '',
+          "tm_tm_TourSiteID": id,
         };
         this.$store.dispatch('initTrafficInformation', getTransport)
           .then(() => {
@@ -162,10 +202,13 @@
             });
           })
       },
+      search() {
+        this.initData(this.ticketAttractionsValue)
+      },
       Add() {
         this.$store.commit('setTranstionFalse');
         this.addDialog = true;
-        this.addOptions.tm_tm_TourSiteID = this.number
+        this.addOptions.tm_tm_TourSiteID = this.ticketAttractionsValue
       },
       addSubmit() {
         let insertTransport = {
@@ -179,7 +222,7 @@
               message: suc,
               type: 'success'
             });
-            this.initData(this.number)
+            this.initData(this.ticketAttractionsValue)
           }, err => {
             this.$notify({
               message: err,
@@ -206,7 +249,7 @@
               message: suc,
               type: 'success'
             });
-            this.initData(this.number);
+            this.initData(this.ticketAttractionsValue);
           }, err => {
             this.$notify({
               message: err,
@@ -224,13 +267,13 @@
             "tm_tm_ID": id
           }
         };
-        this.$store.dispatch('deleteTrafficInformation',deleteTransport)
+        this.$store.dispatch('deleteTrafficInformation', deleteTransport)
           .then(suc => {
             this.$notify({
               message: suc,
               type: 'success'
             });
-            this.initData(this.number);
+            this.initData(this.ticketAttractionsValue);
           }, err => {
             this.$notify({
               message: err,
@@ -240,14 +283,13 @@
       }
     },
     created() {
-      this.number = this.$route.params.id;
-      this.initData(this.number);
+      this.adminUserInfo = JSON.parse(sessionStorage.getItem('admin'));
+      this.initTicketAttraction();
     }
   }
 </script>
 <style scoped>
   .add {
     margin: 20px;
-    text-align: right;
   }
 </style>

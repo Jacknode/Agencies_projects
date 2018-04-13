@@ -34,11 +34,8 @@
               <el-form-item label="景点名称:">
                 <span>{{ props.row.tm_ts_Name }}</span>
               </el-form-item>
-              <el-form-item label="主题编码:">
-                <span>{{ props.row.tm_ts_ThemeTypeID }}</span>
-              </el-form-item>
-              <el-form-item label="预订须知编号:">
-                <span>{{ props.row.tm_bk_ID }}</span>
+              <el-form-item label="主题名称:">
+                <span>{{ props.row.tm_tt_Name }}</span>
               </el-form-item>
               <el-form-item label="票种编号:">
                 <span>{{ props.row.tm_tm_ID }}</span>
@@ -89,9 +86,9 @@
               <el-form-item label="是否热门景点:">
                 <span>{{ props.row.tm_ts_IsHot }}</span>
               </el-form-item>
-              <el-form-item label="是否精选景点:">
-                <span>{{ props.row.tm_ts_IsChoice }}</span>
-              </el-form-item>
+              <!--<el-form-item label="是否精选景点:">-->
+                <!--<span>{{ props.row.tm_ts_IsChoice }}</span>-->
+              <!--</el-form-item>-->
               <el-form-item label="是否境外景点:">
                 <span>{{ props.row.tm_ts_IsOversea }}</span>
               </el-form-item>
@@ -129,15 +126,6 @@
               type="danger"
               @click="deleteTicketAttractions(scope.row.tm_ts_Code)">删除
             </el-button>
-            <el-select v-model="value" placeholder="请选择操作类型" size="mini" @change="clickGo(scope.row.tm_ts_Code)">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-
           </template>
         </el-table-column>
       </el-table>
@@ -244,12 +232,12 @@
             <el-input v-model="addOptions.tm_ts_Phone"></el-input>
           </el-form-item>
           <el-form-item label="经度:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.tm_ts_Longitude"></el-input>
+            <el-input v-model="addOptions.tm_ts_Longitude" placeholder="请输入数字"></el-input>
           </el-form-item>
           <el-form-item label="纬度:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.tm_ts_Latitude"></el-input>
+            <el-input v-model="addOptions.tm_ts_Latitude" placeholder="请输入数字"></el-input>
           </el-form-item>
-          <el-form-item label="是否精选景点:" :label-width="formLabelWidth">
+          <el-form-item label="是否热门景点:" :label-width="formLabelWidth">
             <el-select v-model="addOptions.tm_ts_IsHot" placeholder="请选择" @change="changeContry">
               <el-option
                 v-for="item in selectedScenicSpot"
@@ -280,7 +268,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="建议价格:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.tm_ts_SuggestPrice"></el-input>
+            <el-input v-model="addOptions.tm_ts_SuggestPrice"  placeholder="请输入数字"></el-input>
           </el-form-item>
           <el-form-item label="备注:" :label-width="formLabelWidth">
             <el-input v-model="addOptions.tm_ts_Remark" type="textarea"></el-input>
@@ -314,7 +302,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="洲:" :label-width="formLabelWidth">
-            <el-select v-model="updateTicketAttractionsObj.tm_ts_Great" placeholder="请选择洲" @change="changeGreat">
+            <el-select v-model="addOptions.tm_ts_GreatID" placeholder="请选择洲" @change="changeGreat">
               <el-option
                 v-for="item in ticketGreatList"
                 :key="item.sm_af_AreaID"
@@ -324,7 +312,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="国:" :label-width="formLabelWidth">
-            <el-select v-model="updateTicketAttractionsObj.tm_ts_Countrie" placeholder="请选择国家" @change="changeCountrie">
+            <el-select v-model="addOptions.tm_ts_CountrieID" placeholder="请选择国家" @change="changeCountrie">
               <el-option
                 v-for="item in ticketCountrieList"
                 :key="item.sm_af_AreaID"
@@ -334,7 +322,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="省:" :label-width="formLabelWidth">
-            <el-select v-model="updateTicketAttractionsObj.tm_ts_Provice" placeholder="请选择省" @change="changeProvice">
+            <el-select v-model="addOptions.tm_ts_ProviceID" placeholder="请选择省" @change="changeProvice">
               <el-option
                 v-for="item in ticketProviceList"
                 :key="item.sm_af_AreaID"
@@ -344,7 +332,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="市:" :label-width="formLabelWidth">
-            <el-select v-model="updateTicketAttractionsObj.tm_ts_City" placeholder="请选择市" @change="changeCity">
+            <el-select v-model="addOptions.tm_ts_CityID" placeholder="请选择市" @change="changeCity">
               <el-option
                 v-for="item in ticketCityList"
                 :key="item.sm_af_AreaID"
@@ -354,7 +342,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="县:" :label-width="formLabelWidth">
-            <el-select v-model="updateTicketAttractionsObj.tm_ts_Contry" placeholder="请选择县" @change="changeContry">
+            <el-select v-model="addOptions.tm_ts_ContryID" placeholder="请选择县" @change="changeContry">
               <el-option
                 v-for="item in ticketContryList"
                 :key="item.sm_af_AreaID"
@@ -403,12 +391,12 @@
             <el-input v-model="updateTicketAttractionsObj.tm_ts_Phone"></el-input>
           </el-form-item>
           <el-form-item label="经度:" :label-width="formLabelWidth">
-            <el-input v-model="updateTicketAttractionsObj.tm_ts_Longitude"></el-input>
+            <el-input v-model="updateTicketAttractionsObj.tm_ts_Longitude" placeholder="请输入数字"></el-input>
           </el-form-item>
           <el-form-item label="纬度:" :label-width="formLabelWidth">
-            <el-input v-model="updateTicketAttractionsObj.tm_ts_Latitude"></el-input>
+            <el-input v-model="updateTicketAttractionsObj.tm_ts_Latitude" placeholder="请输入数字"></el-input>
           </el-form-item>
-          <el-form-item label="是否精选景点:" :label-width="formLabelWidth">
+          <el-form-item label="是否热门景点:" :label-width="formLabelWidth">
             <el-select v-model="updateTicketAttractionsObj.tm_ts_IsHot" placeholder="请选择" @change="changeContry">
               <el-option
                 v-for="item in selectedScenicSpot"
@@ -440,7 +428,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="建议价格:" :label-width="formLabelWidth">
-            <el-input v-model="updateTicketAttractionsObj.tm_ts_SuggestPrice"></el-input>
+            <el-input v-model="updateTicketAttractionsObj.tm_ts_SuggestPrice" placeholder="请输入数字"></el-input>
           </el-form-item>
           <el-form-item label="备注:" :label-width="formLabelWidth">
             <el-input v-model="updateTicketAttractionsObj.tm_ts_Remark" type="textarea"></el-input>
@@ -531,7 +519,7 @@
           "tm_ts_SuggestPrice": "",//建议价格
           "tm_ts_Remark": "",//备注
         },
-        //是否精选景点
+        //是否热门景点
         selectedScenicSpot: [
           {
             value: '0',
@@ -539,7 +527,7 @@
           },
           {
             value: '1',
-            label: '精选'
+            label: '热门'
           }
         ],
         //是否境外景点
@@ -580,24 +568,6 @@
         updateDialog: false,
         isLoading: false,
         updateImageURL: [],
-        options: [
-          {
-            value: '0',
-            label: '预定须知'
-          },
-          {
-            value: '1',
-            label: '交通信息'
-          },
-          {
-            value: '2',
-            label: '上传首页小图'
-          },
-          {
-            value: '3',
-            label: '上传首页大图'
-          }
-        ],
         value: '',
       }
     },
@@ -730,10 +700,14 @@
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
-          "tsCode": "",    //景点编码
-          "tsName": name ? name : '',//景点名称
-          "tradeInfoID": this.adminUserInfo.sm_ai_ID,//供应商编码
-          "isDelete": 0,//必须传
+          "tm_ts_Code": "",    //景点编码
+          "tm_ts_Name": name ? name : '',//景点名称
+          "tm_ts_TradeInfoID": this.adminUserInfo.sm_ai_ID,//供应商编码
+          "tm_ts_IsDelete": 0,//必须传
+          "tm_ts_IsPass": "",//是否通过审核(0审核中1通过审核2未通过审核)
+          "tm_ts_ShowTop": "",//是否展示首页（0否，1是）
+          "tm_ts_IsHot": "",//是否热门景点（0普通1热门)
+          "tm_ts_ThemeTypeID": "",//主题编码
           "page": page ? page : 1,
           "rows": 5
         };
@@ -803,6 +777,11 @@
       },
       //添加
       Add() {
+        this.addOptions.tm_ts_GreatID = '';
+        this.addOptions.tm_ts_CountrieID = '';
+        this.addOptions.tm_ts_ProviceID = '';
+        this.addOptions.tm_ts_CityID = '';
+        this.addOptions.tm_ts_ContryID = '';
         this.$store.commit('setTranstionFalse');
         this.addDialog = true;
         this.uploaNode();
@@ -836,26 +815,33 @@
 
 //      修改
       update(id) {
+        this.addOptions.tm_ts_GreatID = '';
+        this.addOptions.tm_ts_CountrieID = '';
+        this.addOptions.tm_ts_ProviceID = '';
+        this.addOptions.tm_ts_CityID = '';
+        this.addOptions.tm_ts_ContryID = '';
         this.$store.commit('setTranstionFalse');
         this.updateDialog = true;
         this.uploaNode();
         this.$store.commit('updateTicketAttractions', id);
+        this.updateTicketAttractionsObj.tm_ts_IsHot = '';
+        this.updateTicketAttractionsObj.tm_ts_IsOversea = '';
+        this.updateTicketAttractionsObj.tm_ts_IsSeasonChoice = '';
+        this.updateTicketAttractionsObj.tm_ts_ThemeTypeID = '';
       },
 
       //修改提交
       updateSubmit() {
-        if (this.ImageURL != '') {
-          this.updateTicketAttractionsObj.tm_ts_ShowImage = this.ImageURL.join(',');
+        if (this.updateImageURL != '') {
+          this.updateTicketAttractionsObj.tm_ts_ShowImage = this.updateImageURL.join(',');
         } else {
-          this.updateTicketAttractionsObj.tm_ts_ShowImage = this.updateTicketAttractionsObj.tm_ts_ShowImage;
+          this.updateTicketAttractionsObj.tm_ts_ShowImage = this.updateTicketAttractionsObj.tm_ts_ShowImage.join(',');
         }
         let updateTourSite = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "data": this.updateTicketAttractionsObj
         };
-        console.log(updateTourSite)
-        return;
         this.$store.dispatch('updateTicketAttractionsSubmit', updateTourSite)
           .then(suc => {
             this.$notify({
@@ -877,7 +863,9 @@
         let deleteTourSite = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
-          "tsCode": id
+          "data": {
+            "tm_ts_Code": id,
+          }
         };
         this.$store.dispatch('deleteTicketAttractions', deleteTourSite)
           .then(suc => {

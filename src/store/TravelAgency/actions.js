@@ -1714,6 +1714,8 @@ export default {
           if (Number(data.resultcode) == 200) {
             commit('initChangeScopeOfOperation', data.data)
             relove()
+          }else{
+            reject(data.resultcontent)
           }
         })
     })
@@ -1731,6 +1733,8 @@ export default {
           if (Number(data.resultcode) == 200) {
             commit('initChangeCompanyType', data.data)
             relove()
+          }else{
+            reject(data.resultcontent)
           }
         })
     })
@@ -1768,6 +1772,8 @@ export default {
           if (Number(data.resultcode) == 200) {
             commit('initChangeMineyType', data.data)
             relove(data.data)
+          }else{
+            reject(data.resultcontent)
           }
         })
     })
@@ -1785,6 +1791,8 @@ export default {
           if (Number(data.resultcode) == 200) {
             commit('initChangeCooperationType', data.data)
             relove()
+          }else{
+            reject(data.resultcontent)
           }
         })
     })
@@ -1818,7 +1826,7 @@ export default {
         .then(data => {
           var data = data.data;
           if (Number(data.resultcode) == 200) {
-            commit('initLookList', data.checkFlowList)
+            commit('initProvinceData', data.checkFlowList)
             relove(data.resultcontent)
           } else {
             reject(data.resultcontent)
@@ -1833,14 +1841,16 @@ export default {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
+        })
             .then(data => {
               var data = data.data;
               if (Number(data.resultcode) == 200) {
-                commit('initProvinceData', data.data)
+                commit('initLookList', data.checkFlowList)
                 relove()
+              }else{
+                reject(data.resultcontent)
               }
             })
-        })
       })
   },
   initCityData({commit}, data){
@@ -1855,6 +1865,8 @@ export default {
           if (Number(data.resultcode) == 200) {
             commit('initCityData', data.data)
             relove();
+          }else{
+            reject(data.resultcontent)
           }
         })
     })
@@ -1872,6 +1884,8 @@ export default {
           if (Number(data.resultcode) == 200) {
             commit('initCountyData', data.data)
             relove()
+          }else{
+            reject(data.resultcontent)
           }
         })
     })

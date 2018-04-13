@@ -16,4 +16,6 @@ export default {
   updateTrafficInformationObj: {},//修改交通信息
   ticketTypeList: [],//票种类型
   updateTicketTypeObj: {},//修改票种类型
+  ticketTypeTicketPriceList: [],//票种票价数据
+  ticketQueryOrderList: [],//商户订单信息数据
 }

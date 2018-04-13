@@ -108,7 +108,8 @@
         this.$router.push({name:'HotelDetil'})
         this.$notify({
           message: '请先添加酒店信息!',
-          position: 'top-left'
+          position: 'top-left',
+          type:'error'
         });
         return
       }
