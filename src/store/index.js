@@ -8,6 +8,7 @@ import hotel from './Hotel'
 import travelAgency from './TravelAgency'
 import ticket from './Ticket'
 import food from './Food'
+import adverts from './Adverts'
 
 Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production'
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     hotel,
     travelAgency,
     ticket,
-    food
+    food,
+    adverts
   },
 })

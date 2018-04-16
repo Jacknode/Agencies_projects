@@ -99,6 +99,12 @@ import FoodProductImg  from '@/components/food/FoodProductImg'
 
 
 
+/*------------------------------------广告----------------------------------------*/
+//广告申请管理
+import AdApply from '@/components/adverts/AdApply'
+
+
+
 
 
 export default [
@@ -115,6 +121,15 @@ export default [
     },
     children: [
 // <------------------------------------管理员------------------------------------------------------>
+      //广告申请
+      {
+        path: 'adApply',
+        components: {
+          default: Home,
+          User: AdApply
+        },
+        name: 'AdApply'
+      },
 //       AdminActivitySite
       //线路日程
       {
@@ -478,4 +493,5 @@ export default [
     hidden: true,
     redirect: { name: 'AdminBusinessInformation' }
   },
+
 ]

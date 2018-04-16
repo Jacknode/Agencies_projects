@@ -185,6 +185,18 @@
                     </ul>
                   </li>
                 </ul>
+                <ul class="navigation navigation-main navigation-accordion">
+                  <!--境外查询-->
+                  <li>
+                    <a href="javascript:;"><i class="icon-ticket"></i> <span>广告后台管理</span></a>
+                    <ul>
+                      <li>
+                        <router-link to="/home/AdApply">广告申请管理</router-link>
+                      </li>
+                    </ul>
+                  </li>
+                  <!-- /main -->
+                </ul>
               </div>
             </div>
             <!-- /main navigation-->
