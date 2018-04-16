@@ -105,6 +105,7 @@
         //新增
         Add() {
           this.dialogFormVisible = true;
+          this.$store.commit('setTranstionFalse');
         },
         //新增提交
         addSubmit() {
@@ -164,7 +165,7 @@
             "operateUserID": "操作员编码",
             "operateUserName": "操作员名称",
             "pcName": "",
-            "fd_sfr_ID":"id"
+            "fd_sfr_ID":id
           };
           this.$store.dispatch('deleteFoodStoreRoom',deleteStoreRoom).then(
             suc => {

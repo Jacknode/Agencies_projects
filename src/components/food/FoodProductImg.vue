@@ -1,27 +1,28 @@
 <template>
-    <!--店面产品-->
+  <!--产品图片-->
   <div id="wrap" class="clearfix">
     <div class="title clearfix" style="padding: 20px">
-      <h1 style="font-size: 20px;">店面产品</h1><br><br>
+      <h1 style="font-size: 20px;">产品图片</h1><br><br>
       <el-button type="primary" @click="Add" size="small" style="">新增</el-button>
       <el-button type="primary" @click="search" size="small" style="margin-left: 20px">查询</el-button>
     </div>
 
     <!--添加-->
-    <el-dialog title="添加房间信息" :visible.sync="dialogFormVisible">
+    <el-dialog title="添加产品图片" :visible.sync="dialogFormVisible">
       <el-form :model="data">
 
-        <el-form-item label="名称" :label-width="formLabelWidth" style="width: 55%">
-          <el-input v-model="data.fd_sfp_Name" auto-complete="off"></el-input>
+
+        <el-form-item label="图片编码" :label-width="formLabelWidth" style="width: 55%">
+          <el-input v-model="data.fd_pi_ID" auto-complete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="价格" :label-width="formLabelWidth" style="width: 55%">
-          <el-input v-model="data.fd_sfp_Price" auto-complete="off"></el-input>
+        <el-form-item label="店面编码" :label-width="formLabelWidth" style="width: 55%">
+          <el-input v-model="data.fd_pi_StoreFront" auto-complete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="备注" :label-width="formLabelWidth" style="width: 55%">
-          <el-input v-model="data.fd_sfp_Remark" auto-complete="off"></el-input>
-        </el-form-item>
+        <!--<el-form-item label="图片地址" :label-width="formLabelWidth" style="width: 55%">-->
+          <!--<el-input v-model="data.fd_pi_ImageUrl" auto-complete="off"></el-input>-->
+        <!--</el-form-item>-->
 
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -33,36 +34,24 @@
 
     <!--展示-->
     <el-table
-      :data="FoodStoreProduct"
+      :data="FoodProductImg"
       style="width: 100%">
 
       <el-table-column
-        prop="fd_sfp_StoreFrontID"
+        prop="fd_pi_ID"
+        label="图片编码"
+        align="center">
+      </el-table-column>
+
+      <el-table-column
+        prop="fd_pi_StoreFront"
         label="店面编号"
         align="center">
       </el-table-column>
 
       <el-table-column
-        prop="fd_sfp_ID"
-        label="店面产品编号"
-        align="center">
-      </el-table-column>
-
-      <el-table-column
-        prop="fd_sfp_Name"
-        label="名称"
-        align="center">
-      </el-table-column>
-
-      <el-table-column
-        prop="fd_sfp_Price"
-        label="价格"
-        align="center">
-      </el-table-column>
-
-      <el-table-column
-        prop="fd_sfp_Remark"
-        label="备注"
+        prop="fd_pi_ImageUrl"
+        label="图片地址"
         align="center">
       </el-table-column>
 
@@ -76,7 +65,7 @@
           <el-button
             size="mini"
             type="danger"
-            @click="deleteFoodStoreProduct(scope.row.fd_sfp_ID)">删除
+            @click="deleteFoodProductImg(scope.row.fd_sfp_ID)">删除
           </el-button>
         </template>
       </el-table-column>
@@ -86,15 +75,17 @@
 
 
 
+
   </div>
+
 </template>
 
 <script>
   import {mapGetters} from 'vuex'
     export default {
-      computed:mapGetters([
-        'FoodStoreProduct'
-      ]),
+    computed:mapGetters([
+      'FoodProductImg'
+    ]),
       data(){
         return{
           dialogFormVisible:false,
@@ -105,41 +96,33 @@
           "operateUserName": "操作员名称",
           "pcName": "",
           "data": {
-            "fd_sfp_ID": "",//店面产品编码
-            "fd_sfp_StoreFrontID": "",//店面编号
-            "fd_sfp_Name": "",//名称
-            "fd_sfp_Price": "",//价格
-            "fd_sfp_Remark": "",//备注
+            "fd_pi_ID": "",//图片编号
+            "fd_pi_StoreFront": "",//店面编号
+            "fd_pi_ImageUrl": "",//图片地址
           }
         }
       },
       methods:{
-        //新增
+        //添加
         Add(){
-          this.dialogFormVisible= true;
+          this.dialogFormVisible=true;
           this.$store.commit('setTranstionFalse');
         },
-        //新增提交?数据处理有点问题
+        //提交添加
         addSubmit(){
-          this.dialogFormVisible= false;
-          let addSubmitStoreProduct={
+          this.dialogFormVisible=false;
+          let addSubmitProductImg={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
-            "operateUserID": "操作员编码",
-            "operateUserName": "操作员名称",
+            "operateUserID": "",
+            "operateUserName": "",
             "pcName": "",
-            "data":
-              {
-              "fd_sfp_StoreFrontID": "1",//店面编号
-              "fd_sfp_Name": "2",//名称
-              "fd_sfp_Price": "3",//价格
-              "fd_sfp_Remark": "4",//备注
-              "fd_sfp_Name": "1",//名称
-              "fd_sfp_Price": "1",//价格
-              "fd_sfp_Remark": "1",//备注
+            "data": {
+              "fd_pi_StoreFront": "1",//店面编号
+              "fd_pi_ImageUrl": "http://image.1000da.com.cn/3.png",//图片地址
             }
           };
-          this.$store.dispatch('addFoodStoreProduct',addSubmitStoreProduct).then(
+          this.$store.dispatch('addFoodProductImg',addSubmitProductImg).then(
             suc => {
               this.$notify({
                 message: suc,
@@ -154,40 +137,19 @@
         },
         //查询
         search(){
-          let initStoreProduct={
+          let initProductImg={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
-            "operateUserID": "操作员编码",
-            "operateUserName": "操作员名称",
+            "operateUserID": "",
+            "operateUserName": "",
             "pcName": "",
-            "data":this.data,
-          };
-          this.$store.dispatch('initFoodStoreProduct',initStoreProduct).then(
-            suc => {
-              this.$notify({
-                message: suc,
-                type: 'success'
-              });
-            }, err => {
-              this.$notify({
-                message: err,
-                type: 'error'
-              });
-            })
-        },
-        //删除
-        deleteFoodStoreProduct(id){
-          let deleteStoreProduct={
-            "loginUserID": "huileyou",
-            "loginUserPass": "123",
-            "operateUserID": "操作员编码",
-            "operateUserName": "操作员名称",
-            "pcName": "",
-            "data":{
-              "fd_sfp_ID":id,
+            "data": {
+              "fd_pi_ID": "1",//图片编号
+              "fd_pi_StoreFront": "",//店面编号
+              "fd_pi_ImageUrl": "",//图片地址
             }
           };
-          this.$store.dispatch('deleteFoodStoreProduct',deleteStoreProduct).then(
+          this.$store.dispatch('initFoodProductImg',initProductImg).then(
             suc => {
               this.$notify({
                 message: suc,
@@ -200,6 +162,30 @@
               });
             })
         },
+        deleteFoodProductImg(id){
+          let deleteProductImg={
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "操作员编码",
+            "operateUserName": "操作员名称",
+            "pcName": "",
+            "data": {
+              "fd_pi_ID": id//图片编号
+            }
+          };
+          this.$store.dispatch('deleteFoodProductImg',deleteProductImg).then(
+            suc => {
+              this.$notify({
+                message: suc,
+                type: 'success'
+              });
+            }, err => {
+              this.$notify({
+                message: err,
+                type: 'error'
+              });
+            })
+        }
       }
     }
 </script>

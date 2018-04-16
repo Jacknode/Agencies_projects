@@ -102,12 +102,6 @@
                         <router-link to="/home/hotelDetil">酒店基本信息</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/hotelOrderDetails">酒店订单明细</router-link>
-                      </li>
-                      <li>
-                        <router-link to="/home/hotelConfirmOrder">酒店确认订单</router-link>
-                      </li>
-                      <li>
                         <router-link to="/home/hotelQueryRecommend">酒店推荐信息</router-link>
                       </li>
                       <li>
@@ -121,15 +115,6 @@
                       </li>
                       <li>
                         <router-link to="/home/hotelTheme">酒店主题信息</router-link>
-                      </li>
-                      <li>
-                        <router-link to="/home/hotelRoom">酒店房间管理</router-link>
-                      </li>
-                      <li>
-                        <router-link to="/home/hotelFacilitiesServices">酒店设施服务信息</router-link>
-                      </li>
-                      <li>
-                        <router-link to="/home/hotelFacilitiesServicesFacilities">酒店设施服务设施信息</router-link>
                       </li>
                     </ul>
                   </li>
@@ -165,13 +150,17 @@
                   </li>
                   <!-- /main -->
                 </ul>
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
                 <ul class="navigation navigation-main navigation-accordion">
                   <li>
                     <!--美食管理-->
                     <a href="javascript:;"><i class="icon-ticket"></i> <span>美食后台管理</span></a>
                     <ul>
                       <!--美食店铺信息-->
+<<<<<<< Updated upstream
                       <li>
                         <router-link to="foodStoreInformation">店面信息</router-link>
                       </li>
@@ -198,6 +187,29 @@
                       </li>
                       <li>
                         <router-link to="foodRoomTable">房间餐桌</router-link>
+=======
+
+                      <li>
+                        <router-link to="FoodStoreRoomPicture">房间图片</router-link>
+                      </li>
+                      <li>
+                        <router-link to="StoreRecommendFood">推荐菜</router-link>
+                      </li>
+                      <li>
+                        <router-link to="FoodStoreProduct">店面产品</router-link>
+                      </li>
+                      <li>
+                        <router-link to="FoodStoreRoom">店面房间</router-link>
+                      </li>
+                      <li>
+                        <router-link to="FoodParkingSpace">停车位</router-link>
+                      </li>
+                      <li>
+                        <router-link to="FoodRoomTable">房间餐桌</router-link>
+                      </li>
+                      <li>
+                        <router-link to="FoodProductImg">产品图片</router-link>
+>>>>>>> Stashed changes
                       </li>
                     </ul>
                   </li>
@@ -357,7 +369,7 @@
             "ht_it_Name": "",//推荐类型名称
             "ht_it_ParentID": "",//推荐类型父ID
           }
-        };
+        }
         await this.$store.dispatch('initHotelIntroduceType', options)
         //惠乐游图片类型
         let imgOptions = {
@@ -395,9 +407,19 @@
           "ht_ie_Name": '',//图标名称
           "ht_ie_Image": '',//图标
           "ht_id_Remark": "",//备注
-        };
-        await this.$store.dispatch('initHotelIconGallery', iconOptions);
-        //查询景点主题分类信息
+        }
+        await this.$store.dispatch('initHotelIconGallery', iconOptions)
+      },
+      //退出
+      Quit() {
+        this.$router.push({name: 'adminLogin'})
+      },
+      //用户信息
+      getUser() {
+        this.$router.push({name: 'AdminMerchantProducts'})
+      },
+      //查询景点主题分类信息
+      initData() {
         let getThemeTypeList = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
@@ -407,6 +429,7 @@
           "page": 1,
           "rows": 100
         };
+<<<<<<< Updated upstream
 //        await this.$store.dispatch('initThemeType', getThemeTypeList)
 
         //惠乐游设施
@@ -480,7 +503,18 @@
       getUser() {
         this.$router.push({name: 'AdminMerchantProducts'})
       },
+=======
+        this.$store.dispatch('initThemeType', getThemeTypeList)
+        .then(suc => {
+        }, err => {
+        })
+      }
+
+>>>>>>> Stashed changes
     },
+    created() {
+      this.initData();
+    }
   }
 </script>
 <style>

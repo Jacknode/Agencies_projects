@@ -1,8 +1,10 @@
 <template>
     <!--推荐菜-->
+
+
   <div id="wrap" class="clearfix">
     <div class="title clearfix" style="padding: 20px">
-      <h1 style="font-size: 20px;">推荐菜</h1><br><br>
+      <h1 style="font-size: 20px;">美食推荐菜</h1><br><br>
       <el-button type="primary" @click="Add" size="small" style="">新增</el-button>
       <el-button type="primary" @click="search" size="small" style="margin-left: 20px">查询</el-button>
     </div>
@@ -23,6 +25,9 @@
             <!--<el-option label="2" value="beijing"></el-option>-->
           <!--</el-select>-->
         <!--</el-form-item>-->
+        <el-form-item label="店面编号" :label-width="formLabelWidth" style="width: 55%">
+          <el-input v-model="data.fd_if_StoreFrontID" auto-complete="off"></el-input>
+        </el-form-item>
 
         <el-form-item label="价格" :label-width="formLabelWidth" style="width: 55%">
             <el-input v-model="data.fd_if_Price" auto-complete="off"></el-input>
@@ -47,6 +52,13 @@
       v-loading=""
       style="width: 100%"
     >
+      <el-table-column
+        prop="fd_if_StoreFrontID"
+        label="店面编号"
+        align="center"
+      >
+      </el-table-column>
+
       <el-table-column
         prop="fd_if_ID"
         label="推荐菜编号"
@@ -105,7 +117,9 @@
   import {mapGetters} from 'vuex'
     export default {
     computed:mapGetters([
-      'RecommendFood'
+      'RecommendFood',
+      'RecommendFoodList',
+      'updateRecommendFoodObj'
     ]),
       data(){
         return{
@@ -114,7 +128,7 @@
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
-          data: {
+          "data": {
             "fd_if_StoreFrontID": "",//店面编号
             "fd_if_Image": "",//推荐菜系图片
             "fd_if_Price": "",//价格
@@ -127,10 +141,11 @@
         }
       },
       methods:{
-        //新增推荐菜的框
+        //添加
         Add(){
           this.dialogFormVisible = true;
           this.$store.commit('setTranstionFalse');
+          // console.log(111)
         },
         //初始化
         initData(){
@@ -177,6 +192,7 @@
             // }
           };
           this.$store.dispatch('addRecommendFood',addSubmitRecommendFood)  //N
+          this.$store.dispatch('addRecommendFood',addSubmitRecommendFood)
             .then(suc => {
               this.$notify({
                 message: suc,
