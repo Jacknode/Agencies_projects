@@ -1,5 +1,5 @@
 <template>
-    <!--房间餐桌-->
+    <!--房间餐桌   y -->
 
   <div id="wrap" class="clearfix">
     <div class="title clearfix" style="padding: 20px">
@@ -87,12 +87,12 @@
           <el-button
             size="mini"
             type="primary"
-            @click="update(scope.row.fd_sfr_ID)">修改
+            @click="update(scope.row.fd_rt_ID)">修改
           </el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="deleteFoodStoreProduct(scope.row.fd_sfp_ID)">删除
+            @click="deleteFoodRoomTable(scope.row.fd_rt_ID)">删除
           </el-button>
         </template>
       </el-table-column>

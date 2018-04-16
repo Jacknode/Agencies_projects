@@ -73,18 +73,6 @@ import TicketApplyShowHomePage from '@/components/ticket/TicketApplyShowHomePage
 
 //美食店铺管理
 import FoodStoreInformation from '@/components/food/FoodStoreInformation'
-//美食房间图片
-import FoodStoreRoomPicture from '@/components/food/FoodStoreRoomPicture'
-//美食推荐菜
-import StoreRecommendFood from '@/components/food/StoreRecommendFood'
-//店面产品
-import FoodStoreProduct from '@/components/food/FoodStoreProduct'
-//店面房间
-import FoodStoreRoom  from '@/components/food/FoodStoreRoom'
-//停车位
-import FoodParkingSpace  from '@/components/food/FoodParkingSpace'
-//房间餐桌
-import FoodRoomTable  from '@/components/food/FoodRoomTable'
 //店面房间餐桌时间
 import FoodStorefrontRoomTableTime from '@/components/food/FoodStorefrontRoomTableTime'
 //店面每天可锁桌时间
@@ -368,7 +356,6 @@ export default [
         },
         name: 'TicketTypeTicketPrice',
       },
-<<<<<<< Updated upstream
       //查询商户订单
       {
         path: 'ticketQueryOrder',
@@ -399,18 +386,16 @@ export default [
         },
         name:'FoodStoreInformation'
       },
-=======
 
->>>>>>> Stashed changes
       //房间图片
-      {
-        path: 'foodStoreRoomPicture',
-        components:{
-          default:Home,
-          User:FoodStoreRoomPicture
-        },
-        name:'FoodStoreRoomPicture'
-      },
+      // {
+      //   path: 'foodStoreRoomPicture',
+      //   components:{
+      //     default:Home,
+      //     User:FoodStoreRoomPicture
+      //   },
+      //   name:'FoodStoreRoomPicture'
+      // },
       //推荐菜
       {
         path: 'storeRecommendFood',
@@ -456,7 +441,6 @@ export default [
         },
         name:'FoodRoomTable'
       },
-<<<<<<< Updated upstream
       //店面房间餐桌时间
       {
         path: 'foodStorefrontRoomTableTime',
@@ -476,7 +460,6 @@ export default [
         name: 'FoodRoomTableTimeEveryDay'
       },
 
-=======
       //产品图片
       {
         path: 'foodProductImg',
@@ -486,7 +469,6 @@ export default [
         },
         name:'FoodProductImg'
       }
->>>>>>> Stashed changes
     ],
   },
 

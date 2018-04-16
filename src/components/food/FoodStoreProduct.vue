@@ -114,12 +114,12 @@
         }
       },
       methods:{
-        //新增
+        //添加
         Add(){
           this.dialogFormVisible= true;
           this.$store.commit('setTranstionFalse');
         },
-        //新增提交?数据处理有点问题
+        //添加提交
         addSubmit(){
           this.dialogFormVisible= false;
           let addSubmitStoreProduct={
@@ -130,13 +130,10 @@
             "pcName": "",
             "data":
               {
-              "fd_sfp_StoreFrontID": "1",//店面编号
-              "fd_sfp_Name": "2",//名称
-              "fd_sfp_Price": "3",//价格
-              "fd_sfp_Remark": "4",//备注
-              "fd_sfp_Name": "1",//名称
-              "fd_sfp_Price": "1",//价格
-              "fd_sfp_Remark": "1",//备注
+              "fd_sfp_StoreFrontID": "",//店面编号
+              "fd_sfp_Name": "",//名称
+              "fd_sfp_Price": "",//价格
+              "fd_sfp_Remark": "",//备注
             }
           };
           this.$store.dispatch('addFoodStoreProduct',addSubmitStoreProduct).then(

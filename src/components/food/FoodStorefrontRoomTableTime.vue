@@ -81,49 +81,49 @@
       <!--添加-->
 
       <!--<el-dialog title="添加店面信息" :visible.sync="addDialog">-->
-        <!--<el-form :model="addOptions">-->
-          <!--<el-form-item label="店面名称:" :label-width="formLabelWidth">-->
-            <!--<el-form-item>-->
-              <!--<el-select v-model="storeId" placeholder="请选择" @change="changeStore">-->
-                <!--<el-option-->
-                  <!--v-for="item in foodStoreInformtionList"-->
-                  <!--:key="item.fd_sf_ID"-->
-                  <!--:label="item.fd_sf_ProductName"-->
-                  <!--:value="item.fd_sf_ID">-->
-                <!--</el-option>-->
-              <!--</el-select>-->
-            <!--</el-form-item>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item label="可预定时间:" :label-width="formLabelWidth">-->
-            <!--<el-form-item>-->
-              <!--<el-select v-model="addOptions.fd_rtt_ID" placeholder="请选择">-->
-                <!--<el-option-->
-                  <!--v-for="item in roomTableTimeEveryDayList"-->
-                  <!--:key="item.fd_clt_ID"-->
-                  <!--:label="item.fd_clt_CanSellTime"-->
-                  <!--:value="item.fd_clt_ID">-->
-                <!--</el-option>-->
-              <!--</el-select>-->
-            <!--</el-form-item>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item label="日期:" :label-width="formLabelWidth">-->
-            <!--<el-form-item>-->
-              <!--<div class="block">-->
-                <!--<el-date-picker-->
-                  <!--v-model="addOptions.fd_rtt_Date"-->
-                  <!--type="date"-->
-                  <!--placeholder="选择日期"-->
-                  <!--value-format="yyyy-MM-dd"-->
-                <!--&gt;-->
-                <!--</el-date-picker>-->
-              <!--</div>-->
-            <!--</el-form-item>-->
-          <!--</el-form-item>-->
-        <!--</el-form>-->
-        <!--<div slot="footer" class="dialog-footer">-->
-          <!--<el-button @click="addDialog = false">取 消</el-button>-->
-          <!--<el-button type="primary" @click="addSubmit">确 定</el-button>-->
-        <!--</div>-->
+      <!--<el-form :model="addOptions">-->
+      <!--<el-form-item label="店面名称:" :label-width="formLabelWidth">-->
+      <!--<el-form-item>-->
+      <!--<el-select v-model="storeId" placeholder="请选择" @change="changeStore">-->
+      <!--<el-option-->
+      <!--v-for="item in foodStoreInformtionList"-->
+      <!--:key="item.fd_sf_ID"-->
+      <!--:label="item.fd_sf_ProductName"-->
+      <!--:value="item.fd_sf_ID">-->
+      <!--</el-option>-->
+      <!--</el-select>-->
+      <!--</el-form-item>-->
+      <!--</el-form-item>-->
+      <!--<el-form-item label="可预定时间:" :label-width="formLabelWidth">-->
+      <!--<el-form-item>-->
+      <!--<el-select v-model="addOptions.fd_rtt_ID" placeholder="请选择">-->
+      <!--<el-option-->
+      <!--v-for="item in roomTableTimeEveryDayList"-->
+      <!--:key="item.fd_clt_ID"-->
+      <!--:label="item.fd_clt_CanSellTime"-->
+      <!--:value="item.fd_clt_ID">-->
+      <!--</el-option>-->
+      <!--</el-select>-->
+      <!--</el-form-item>-->
+      <!--</el-form-item>-->
+      <!--<el-form-item label="日期:" :label-width="formLabelWidth">-->
+      <!--<el-form-item>-->
+      <!--<div class="block">-->
+      <!--<el-date-picker-->
+      <!--v-model="addOptions.fd_rtt_Date"-->
+      <!--type="date"-->
+      <!--placeholder="选择日期"-->
+      <!--value-format="yyyy-MM-dd"-->
+      <!--&gt;-->
+      <!--</el-date-picker>-->
+      <!--</div>-->
+      <!--</el-form-item>-->
+      <!--</el-form-item>-->
+      <!--</el-form>-->
+      <!--<div slot="footer" class="dialog-footer">-->
+      <!--<el-button @click="addDialog = false">取 消</el-button>-->
+      <!--<el-button type="primary" @click="addSubmit">确 定</el-button>-->
+      <!--</div>-->
       <!--</el-dialog>-->
 
       <!--修改-->
@@ -193,7 +193,6 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
-
   export default {
     computed: mapGetters([
       'foodTableTimeList',
@@ -240,7 +239,6 @@
       }
     },
     methods: {
-
       //初始化店面数据
       initRoomData(name) {
         let selectStoreFrontInfo = {
@@ -351,7 +349,6 @@
       //添加提交
       addSubmit() {
         let insertRoomTableTimeInfo = {
-
         };
         return;
         this.$store.dispatch('addTableTimeSubmit', insertRoomTableTimeInfo)
@@ -406,7 +403,6 @@
           })
         this.updateDialog = false;
       },
-
       //删除
       Delete(id) {
         let deleteRoomTableTimeInfo = {

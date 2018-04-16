@@ -1,5 +1,5 @@
 <template>
-    <!--停车位-->
+    <!--停车位 y  -->
   <div id="wrap" class="clearfix">
     <div class="title clearfix" style="padding: 20px">
       <h1 style="font-size: 20px;">停车位</h1><br><br>
@@ -9,7 +9,7 @@
 
     <!--数据展示-->
     <el-table
-      :data="FoodParkingSpace"
+      :data="FoodParkingSpaceList"
       style="width: 100%">
 
 
@@ -66,13 +66,6 @@
 
     <!--添加-->
 
-
-
-      <el-form-item label="店面编号" :label-width="formLabelWidth" style="width: 55%">
-         <el-input v-model="data" auto-complete="off"></el-input>
-      </el-form-item>
-
-
     <el-dialog title="停车位" :visible.sync="dialogFormVisible">
       <el-form :model="addOptions">
 
@@ -89,13 +82,13 @@
         </el-form-item>
 
       </el-form>
-    </el-dialog>
-
 
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="addSubmit">确 定</el-button>
       </div>
+    </el-dialog>
+
 
 
 

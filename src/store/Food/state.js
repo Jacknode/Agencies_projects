@@ -1,6 +1,5 @@
 export default {
   //美食房间图片
-<<<<<<< Updated upstream
   FoodStoreRoomInformation: [],  //美食房间信息
   UpdataFoodStoreRoomInformationObj: [],  //修改美食房间信息
   FoodStoreRoomPicture: [],  //美食房间图片
@@ -36,7 +35,6 @@ export default {
   roomTableTimeEveryDayList: [],//店面每天预定餐桌时间
 
   foodTableTimeList: [], //初始化店面房间餐桌时间
-=======
   FoodStoreRoomPicture:[],    //房间图片
   FoodStoreRoomPictureList:[],  //房间图片列表
 
@@ -44,7 +42,6 @@ export default {
   RecommendFood:[],   //推荐菜
   RecommendFoodList:[],   //推荐菜列表
   updateRecommendFoodObj:{},    //修改
-  // updateRecommendFood:[],   //修改推荐菜
 
   //美食店面房间
   FoodStoreRoom:[],   //店面房间
@@ -66,5 +63,4 @@ export default {
 
   //美食产品图片
   FoodProductImg:[],    //产品图片
->>>>>>> Stashed changes
 }

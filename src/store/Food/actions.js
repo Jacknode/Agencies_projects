@@ -627,10 +627,7 @@ export default {
     })
   },
 
-  //初始化店面房间餐桌时间
-  // initFoodTableTime({commit}, data) {
-  //   return new Promise(function (relove, reject) {
-  //     axios.post('http://webservice.1000da.com.cn/RoomTableTime/Select', JSON.stringify(data), {
+
   //添加
   addFoodRoomTable(store,data){
     return new Promise((relove, reject) => {
@@ -657,10 +654,6 @@ export default {
         })
     })
   },
-  //添加店面房间餐桌时间
-  // addTableTimeSubmit({commit}, data) {
-  //   return new Promise(function (relove, reject) {
-  //     axios.post('http://webservice.1000da.com.cn/RoomTableTime/Insert', JSON.stringify(data), {
   //美食产品图片
   //查询
   initFoodProductImg({commit},data){
@@ -682,10 +675,6 @@ export default {
         })
     })
   },
-  //修改店面房间餐桌时间
-  updateTableTimeSubmit({commit}, data) {
-    return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/RoomTableTime/Update', JSON.stringify(data), {
 
   //删除
   deleteFoodProductImg(store,data){
@@ -711,10 +700,6 @@ export default {
     })
   },
 
-  //删除店面房间餐桌时间
-  deleteTableTimeSubmit({commit}, data) {
-    return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/RoomTableTime/Delete', JSON.stringify(data), {
 
         //添加
         addFoodProductImg(store, data) {
@@ -735,36 +720,82 @@ export default {
               })
           })
         },
-      }
-    }
-
-
-
-  //停车位
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  //初始化店面房间餐桌时间
+  initFoodTableTime({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/RoomTableTime/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode == 200)) {
+            commit('initFoodTableTime',data.data)
+            relove(Number(data.totalrows))
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //添加店面房间餐桌时间
+  addTableTimeSubmit({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/RoomTableTime/Insert', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode == 200)) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //修改店面房间餐桌时间
+  updateTableTimeSubmit({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/RoomTableTime/Update', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode == 200)) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //删除店面房间餐桌时间
+  deleteTableTimeSubmit({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/RoomTableTime/Delete', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode == 200)) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+ }
 

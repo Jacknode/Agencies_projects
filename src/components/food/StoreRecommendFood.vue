@@ -1,5 +1,5 @@
 <template>
-    <!--推荐菜-->
+    <!--推荐菜  y -->
 
 
   <div id="wrap" class="clearfix">
@@ -48,7 +48,7 @@
 
     <!--数据展示isLoading-->
     <el-table
-      :data="RecommendFood"
+      :data="RecommendFoodList"
       v-loading=""
       style="width: 100%"
     >
@@ -117,7 +117,6 @@
   import {mapGetters} from 'vuex'
     export default {
     computed:mapGetters([
-      'RecommendFood',
       'RecommendFoodList',
       'updateRecommendFoodObj'
     ]),
@@ -192,7 +191,6 @@
             // }
           };
           this.$store.dispatch('addRecommendFood',addSubmitRecommendFood)  //N
-          this.$store.dispatch('addRecommendFood',addSubmitRecommendFood)
             .then(suc => {
               this.$notify({
                 message: suc,
