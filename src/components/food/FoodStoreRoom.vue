@@ -48,6 +48,16 @@
 
     </el-table>
 
+    <!--分页-->
+    <div class="block" style="float: right; margin:10px 40px 0px 0px">
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :page-size="5"
+        layout="prev, pager, next"
+      >
+      </el-pagination>
+    </div>
+
     <!--添加-->
     <el-dialog title="新增推荐菜" :visible.sync="dialogFormVisible">
       <el-form :model="addOptions">
@@ -100,6 +110,10 @@
         }
       },
       methods: {
+        //分页
+        handleCurrentChange(num){
+          this.initData(num)
+        },
         //新增
         Add() {
           this.dialogFormVisible = true;
@@ -126,21 +140,23 @@
         search(){
           this.initData();
         },
-        initData() {
+        initData(page) {
           let initOptions={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
             "operateUserID": "操作员编码",
             "operateUserName": "操作员名称",
             "pcName": "",
+            "page":page?page:1,//页码编号
+            "rows":"5",//单页显示数量
             // "data": this.data
           }
           this.$store.dispatch('initFoodStoreRoom',initOptions).then(
             suc => {
-              this.$notify({
-                message: suc,
-                type: 'success'
-              });
+              // this.$notify({
+              //   message: suc,
+              //   type: 'success'
+              // });
             }, err => {
               this.$notify({
                 message: err,

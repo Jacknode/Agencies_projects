@@ -88,6 +88,16 @@
 
     </el-table>
 
+    <!--分页-->
+    <div class="block" style="float: right; margin:10px 40px 0px 0px">
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :page-size="5"
+        layout="prev, pager, next"
+      >
+      </el-pagination>
+    </div>
+
 
 
 
@@ -121,13 +131,16 @@
         }
       },
       methods:{
+        //分页
+        handleCurrentChange(num){
+          this.initData(num)
+        },
         //添加
         Add(){
           this.dialogFormVisible= true;
           this.$store.commit('setTranstionFalse');
         },
         //添加提交
-        //新增提交?数据处理有点问题
         addSubmit(){
           this.dialogFormVisible= false;
           let addSubmitStoreProduct={
@@ -162,26 +175,23 @@
         search(){
           this.initData()
         },
-        initData(){
-          let initStoreProduct={
+        initData(page){
+          let initOptions={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
             "operateUserID": "操作员编码",
             "operateUserName": "操作员名称",
             "pcName": "",
-            //"fd_sfp_ID": "3",//店面产品编码
-            //"fd_sfp_StoreFrontID": "1",//店面编号
-            //"fd_sfp_Name": "牛排",//名称
-            //"priceFrom": "100",//价格
-            //"priceTo": "800",//备注
-            "data":this.data,
+            "page":page?page:1,//页码编号
+            "rows":"5",//单页显示数量
+            // "data":this.data,
           };
-          this.$store.dispatch('initFoodStoreProduct',initStoreProduct).then(
+          this.$store.dispatch('initFoodStoreProduct',initOptions).then(
             suc => {
-              this.$notify({
-                message: suc,
-                type: 'success'
-              });
+              // this.$notify({
+              //   message: suc,
+              //   type: 'success'
+              // });
             }, err => {
               this.$notify({
                 message: err,

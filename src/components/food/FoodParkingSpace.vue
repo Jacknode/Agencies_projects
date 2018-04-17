@@ -59,6 +59,16 @@
 
     </el-table>
 
+    <!--分页-->
+    <div class="block" style="float: right; margin:10px 40px 0px 0px">
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :page-size="5"
+        layout="prev, pager, next"
+      >
+      </el-pagination>
+    </div>
+
     <!--添加-->
 
     <el-dialog title="停车位" :visible.sync="dialogFormVisible">
@@ -153,6 +163,10 @@
         }
       },
       methods:{
+        //分页
+        handleCurrentChange(num){
+          this.initData(num)
+        },
         //添加
         Add(){
           this.dialogFormVisible = true;
@@ -187,20 +201,22 @@
         },
 
         //查询
-        initData(){
+        initData(page){
           let initParkingSpace={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
             "operateUserID": "",
             "operateUserName": "",
             "pcName": "",
+            "page":page?page:1,//页码编号
+            "rows":"5",//单页显示数量
           };
           this.$store.dispatch('initFoodParkingSpace',initParkingSpace).then(
             suc => {
-              this.$notify({
-                message: suc,
-                type: 'success'
-              });
+              // this.$notify({
+              //   message: suc,
+              //   type: 'success'
+              // })
             }, err => {
               this.$notify({
                 message: err,

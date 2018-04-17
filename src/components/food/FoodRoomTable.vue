@@ -11,26 +11,26 @@
 
     <!--添加-->
     <el-dialog title="添加房间信息" :visible.sync="dialogFormVisible">
-      <el-form :model="data">
+      <el-form :model="addOptions">
 
         <el-form-item label="店面房间编号" :label-width="formLabelWidth" style="width: 55%">
-          <el-input v-model="data.fd_rt_RoomID" auto-complete="off"></el-input>
+          <el-input v-model="addOptions.data.fd_rt_RoomID" auto-complete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="餐桌编号" :label-width="formLabelWidth" style="width: 55%">
-          <el-input v-model="data.fd_rt_TableID" auto-complete="off"></el-input>
+          <el-input v-model="addOptions.data.fd_rt_TableID" auto-complete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="餐桌状态" :label-width="formLabelWidth" style="width: 55%">
-          <el-input v-model="data.fd_rt_State" auto-complete="off"></el-input>
+          <el-input v-model="addOptions.data.fd_rt_State" auto-complete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="允许占用时间" :label-width="formLabelWidth" style="width: 55%">
-          <el-input v-model="data.fd_rt_EatTime" auto-complete="off"></el-input>
+          <el-input v-model="addOptions.data.fd_rt_EatTime" auto-complete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="备注" :label-width="formLabelWidth" style="width: 55%">
-          <el-input v-model="data.fd_rt_Remark" auto-complete="off"></el-input>
+          <el-input v-model="addOptions.data.fd_rt_Remark" auto-complete="off"></el-input>
         </el-form-item>
 
       </el-form>
@@ -138,6 +138,16 @@
 
     </el-table>
 
+    <!--分页-->
+    <div class="block" style="float: right; margin:10px 40px 0px 0px">
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :page-size="5"
+        layout="prev, pager, next"
+      >
+      </el-pagination>
+    </div>
+
 
 
 
@@ -159,22 +169,29 @@
           formLabelWidth:'120px',
           updateFoodRoomTableinformation:false,
           isLoading:false,
-          "loginUserID": "huileyou",
-          "loginUserPass": "123",
-          "operateUserID": "操作员编码",
-          "operateUserName": "操作员名称",
-          "pcName": "",
-          "data": {
-            // "fd_rt_ID": "",//房间餐桌编号
-            "fd_rt_RoomID": "",//店面房间编号
-            "fd_rt_TableID": "",//餐桌编号
-            "fd_rt_State": "",//餐桌状态
-            "fd_rt_EatTime": "",//允许占用时间
-            "fd_rt_Remark": "",//备注
+          addOptions:{
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "操作员编码",
+            "operateUserName": "操作员名称",
+            "pcName": "",
+            "data": {
+              // "fd_rt_ID": "",//房间餐桌编号
+              "fd_rt_RoomID": "",//店面房间编号
+              "fd_rt_TableID": "",//餐桌编号
+              "fd_rt_State": "",//餐桌状态
+              "fd_rt_EatTime": "",//允许占用时间
+              "fd_rt_Remark": "",//备注
+            }
           }
+
         }
       },
       methods:{
+        //分页
+        handleCurrentChange(num){
+          this.initData(num)
+        },
         //添加
         Add(){
           this.dialogFormVisible=true;
@@ -182,22 +199,7 @@
         },
         //添加提交
         addSubmit(){
-          let addSubmitRoomTable={
-            "loginUserID": "huileyou",
-            "loginUserPass": "123",
-            "operateUserID": "操作员编码",
-            "operateUserName": "操作员名称",
-            "pcName": "",
-            "data":this.data
-            //   {
-            //   "fd_rt_RoomID": "",//店面房间编号
-            //   "fd_rt_TableID": "",//餐桌编号
-            //   // "fd_rt_State": "",//餐桌状态
-            //   // "fd_rt_EatTime": "",//允许占用时间
-            //   "fd_rt_Remark": "",//备注
-            // },
-          };
-          this.$store.dispatch('addFoodRoomTable',addSubmitRoomTable).then(
+          this.$store.dispatch('addFoodRoomTable',this.addOptions).then(
             suc => {
               this.$notify({
                 message: suc,
@@ -221,13 +223,15 @@
         search(){
           this.initData()
         },
-        initData(){
-          let initRoomTable={
+        initData(page){
+          let initOptions={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
             "operateUserID": "操作员编码",
             "operateUserName": "操作员名称",
             "pcName": "",
+            "page":page?page:1,//页码编号
+            "rows":"5",//单页显示数量
             // "data": {
             //   "fd_rt_ID": "",//餐桌编号
             //   "fd_rt_RoomID": "",//店面房间编号
@@ -239,12 +243,12 @@
             // },
           };
           this.isLoading=true;
-          this.$store.dispatch('initFoodRoomTable',initRoomTable).then(
+          this.$store.dispatch('initFoodRoomTable',initOptions).then(
             suc => {
-              this.$notify({
-                message: suc,
-                type: 'success'
-              });
+              // this.$notify({
+              //   message: suc,
+              //   type: 'success'
+              // })
               this.isLoading=false;
             }, err => {
               this.$notify({

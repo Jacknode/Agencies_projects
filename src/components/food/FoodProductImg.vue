@@ -80,6 +80,16 @@
 
     </el-table>
 
+    <!--分页-->
+    <div class="block" style="float: right; margin:10px 40px 0px 0px">
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :page-size="5"
+        layout="prev, pager, next"
+      >
+      </el-pagination>
+    </div>
+
 
 
 
@@ -113,6 +123,10 @@
         }
       },
       methods:{
+        //分页
+        handleCurrentChange(num){
+          this.initData(num)
+        },
         //添加
         Add(){
           this.dialogFormVisible=true;
@@ -152,30 +166,27 @@
         search(){
           this.initData();
         },
-        initData(){
-          let initProductImg={
+        initData(page){
+          let initOptions={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
             "operateUserID": "",
             "operateUserName": "",
             "pcName": "",
-            // "data": {
-            //   "fd_pi_ID": "",//图片编号
-            //   "fd_pi_StoreFront": "",//店面编号
-            //   "fd_pi_ImageUrl": "",//图片地址
-            // }
+            "page":page?page:1,//页码编号
+            "rows":"5",//单页显示数量
             "data": {
               "fd_pi_ID": "1",//图片编号
               "fd_pi_StoreFront": "",//店面编号
               "fd_pi_ImageUrl": "",//图片地址
             }
           };
-          this.$store.dispatch('initFoodProductImg',initProductImg).then(
+          this.$store.dispatch('initFoodProductImg',initOptions).then(
             suc => {
-              this.$notify({
-                message: suc,
-                type: 'success'
-              });
+              // this.$notify({
+              //   message: suc,
+              //   type: 'success'
+              // });
             }, err => {
               this.$notify({
                 message: err,

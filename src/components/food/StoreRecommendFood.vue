@@ -117,6 +117,18 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <!--分页-->
+    <div class="block" style="float: right; margin:10px 40px 0px 0px">
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :page-size="5"
+        layout="prev, pager, next"
+      >
+      </el-pagination>
+    </div>
+
+
   </div>
 </template>
 
@@ -147,29 +159,32 @@
         }
       },
       methods:{
+        //分页
+        handleCurrentChange(num){
+          this.initData(num)
+        },
         //添加
         Add(){
           this.dialogFormVisible = true;
           this.$store.commit('setTranstionFalse');
-          // console.log(111)
         },
         //初始化
-        initData(){
+        initData(page){
           let initRecommendFood={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
             "operateUserID": "操作员编码",
             "operateUserName": "操作员名称",
             "pcName": "",
-            "fd_if_ID": "",//推荐菜编号
-            "fd_if_StoreFrontID": "",//店面编号
-            "fd_if_Image": "",//推荐菜系图片
-            "fd_if_Price": "",//价格
-            "fd_if_Name": "",//推荐菜系名称
+            "page":page?page:1,//页码编号
+            "rows":"5",//单页显示数量
           };
           this.$store.dispatch('initRecommendFood',initRecommendFood)
-            .then(total => {
-              this.total = total;
+            .then(suc => {
+              // this.$notify({
+              //   message: suc,
+              //   type: 'success'
+              // });
             }, err => {
               this.$notify({
                 message: err,

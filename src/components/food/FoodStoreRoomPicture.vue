@@ -57,6 +57,19 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <!--分页-->
+    <div class="block" style="float: right; margin:10px 40px 0px 0px">
+      <el-pagination
+        @current-change="handleCurrentChange"
+        :page-size="5"
+        layout="prev, pager, next"
+        :total="total"
+      >
+      </el-pagination>
+    </div>
+
+
     <!--查看大图-->
     <el-dialog
       title="图片"
@@ -189,6 +202,7 @@
         imgShow: false,
         imgUrl: '',
         RoomID: '',
+        total:0,
         addDialog: false,
         updateDialog: false,
         formLabelWidth: '120px',
@@ -207,6 +221,10 @@
       }
     },
     methods: {
+      //分页
+      handleCurrentChange(num){
+        this.initData(num)
+      },
       //图片转二进制
       uploadImg(file) {
         return new Promise(function (relove, reject) {
@@ -270,7 +288,7 @@
         this.imgUrl = imgUrl
       },
       //初始化
-      initData() {
+      initData(page) {
         let options = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
@@ -280,11 +298,13 @@
           "fd_ri_ID": "",   //房间图片编码
           "fd_ri_RoomID": this.RoomID,    //店面房间编码
           "fd_ri_Image": "",    //图片地址
+          "page":page?page:1,//页码编号
+          "rows":"5",//单页显示数量
         }
         this.isLoading = true;
+        this.updateDialog = false;
         this.$store.dispatch('initFoodStoreRoomPicture', options)
           .then(() => {
-            this.isLoading = false
           }, err => {
             this.$notify({
               message: err,
@@ -309,19 +329,19 @@
       //提交添加
       addSubmit() {
         this.dialogFormVisible = false;
-        let addSubmitStoreRoomPicture = {
+        let addOptions = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "操作员编码",
           "operateUserName": "操作员名称",
           "pcName": "",
           "data": {
-            "fd_ri_RoomID": "1",//店面房间编号
-            "fd_ri_Image": "1",//图片地址
-            "fd_ri_Remark": "1",//备注
+            "fd_ri_RoomID": "",//店面房间编号
+            "fd_ri_Image": "",//图片地址
+            "fd_ri_Remark": "",//备注
           }
         };
-        this.$store.dispatch('addFoodStoreRoomPicture', addSubmitStoreRoomPicture).then(
+        this.$store.dispatch('addFoodStoreRoomPicture', addOptions).then(
           suc => {
             this.$notify({
               message: suc,
@@ -350,30 +370,7 @@
       },
       //查询
       search() {
-        let initStoreRoomPicture = {
-          dialogFormVisible: false,
-          formLabelWidth: '120px',
-          "loginUserID": "huileyou",
-          "loginUserPass": "123",
-          "operateUserID": "操作员编码",
-          "operateUserName": "操作员名称",
-          "pcName": "",
-          // "data": this.updateStoreRoomImageObj
-        };
-        this.$store.dispatch('initFoodStoreRoomPicture', initStoreRoomPicture).then(
-          suc => {
-            this.$notify({
-              message: suc,
-              type: 'success'
-            });
-            this.initData()
-          }, err => {
-            this.$notify({
-              message: err,
-              type: 'error'
-            });
-          });
-        this.updateDialog = false;
+        this.initData()
       },
 
       //删除
