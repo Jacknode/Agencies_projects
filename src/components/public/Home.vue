@@ -102,6 +102,12 @@
                         <router-link to="/home/hotelDetil">酒店基本信息</router-link>
                       </li>
                       <li>
+                        <router-link to="/home/hotelOrderDetails">酒店订单明细</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/hotelConfirmOrder">酒店确认订单</router-link>
+                      </li>
+                      <li>
                         <router-link to="/home/hotelQueryRecommend">酒店推荐信息</router-link>
                       </li>
                       <li>
@@ -115,6 +121,15 @@
                       </li>
                       <li>
                         <router-link to="/home/hotelTheme">酒店主题信息</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/hotelRoom">酒店房间管理</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/hotelFacilitiesServices">酒店设施服务信息</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/hotelFacilitiesServicesFacilities">酒店设施服务设施信息</router-link>
                       </li>
                     </ul>
                   </li>
@@ -156,32 +171,32 @@
                     <a href="javascript:;"><i class="icon-ticket"></i> <span>美食后台管理</span></a>
                     <ul>
                       <li>
-                        <router-link to="foodStoreInformation">店面信息</router-link>
+                        <router-link to="/home/foodStoreInformation">店面信息</router-link>
                       </li>
                       <li>
-                        <router-link to="foodRoomTableTimeEveryDay">店面每天可锁桌时间</router-link>
+                        <router-link to="/home/foodRoomTableTimeEveryDay">店面每天可锁桌时间</router-link>
                       </li>
                       <!--<li>-->
                         <!--<router-link to="foodStoreRoomPicture">房间图片</router-link>-->
                       <!--</li>-->
                       <li>
-                        <router-link to="storeRecommendFood">推荐菜</router-link>
+                        <router-link to="/home/storeRecommendFood">推荐菜</router-link>
                       </li>
                       <li>
-                        <router-link to="foodStoreProduct">店面产品</router-link>
+                        <router-link to="/home/foodStoreProduct">店面产品</router-link>
                       </li>
                       <li>
-                        <router-link to="foodStoreRoom">店面房间</router-link>
+                        <router-link to="/home/foodStoreRoom">店面房间</router-link>
                       </li>
                       <li>
                         <router-link to="foodParkingSpace">停车位</router-link>
                       </li>
                       <li>
-                        <router-link to="foodRoomTable">房间餐桌</router-link>
+                        <router-link to="/home/foodRoomTable">房间餐桌</router-link>
                       </li>
-                      <li>
-                        <router-link to="foodCanReserve">生成餐桌可订餐时间</router-link>
-                      </li>
+                      <!--<li>-->
+                        <!--<router-link to="/home/foodCanReserve">生成餐桌可订餐时间</router-link>-->
+                      <!--</li>-->
                     </ul>
                   </li>
                 </ul>
@@ -478,9 +493,6 @@
           })
       }
     },
-    created() {
-    this.initData();
-  }
   }
 </script>
 <style>

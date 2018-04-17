@@ -24,6 +24,12 @@
           align="center"
         >
         </el-table-column>
+        <el-table-column
+          prop="ht_it_IntroduceTypePName"
+          label="父推荐类型"
+          align="center"
+        >
+        </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <!--<el-button-->
@@ -70,7 +76,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="推荐类型:" :label-width="formLabelWidth">
+          <el-form-item label="推荐类型:" :label-width="formLabelWidth" v-show="showChild">
             <el-select v-model="addOptions.data.ht_hi_IntroduceType" placeholder="请选择类型">
               <el-option
                 v-for="item in parentHotelQueryRecommendList"
@@ -103,6 +109,7 @@
     ]),
     data() {
       return {
+        showChild:false,
         ParentID:'',
         isLoading:false,
         hotelID:'',
@@ -150,6 +157,14 @@
             "ht_it_ParentID": this.ParentID,//推荐类型父ID
           };
           this.$store.dispatch('initParentHotelQueryRecommend',options)
+          .then(total=>{
+              if(total){
+                this.showChild = true;
+              }else{
+                this.addOptions.data.ht_hi_IntroduceType =  this.ParentID;
+                this.showChild = false;
+              }
+          })
       },
       //分页
       handleCurrentChange(num){

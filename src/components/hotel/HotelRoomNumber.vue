@@ -59,7 +59,7 @@
     <div class="block" style="float: right;">
       <el-pagination
         @current-change="handleCurrentChange"
-        :page-size="10"
+        :page-size="5"
         layout="total, prev, pager, next"
         :total="total"
         v-show="total"

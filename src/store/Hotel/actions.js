@@ -1125,7 +1125,7 @@ export default {
         var data = data.data;
         if(Number(data.resultcode)==200){
           commit('initParentHotelQueryRecommend',data.data);
-          relove(data.resultcontent)
+          relove(Number(data.totalrows))
         }else{
           reject(data.resultcontent)
         }

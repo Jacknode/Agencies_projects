@@ -51,6 +51,26 @@ import HotelPolicy from '@/components/hotel/HotelPolicy'
 import HotelTheme from '@/components/hotel/HotelTheme'
 //酒店图标
 import HotelIcon from '@/components/hotel/HotelIcon'
+//酒店房间
+import HotelRoom from '@/components/hotel/HotelRoom'
+//酒店设施服务
+import HotelFacilitiesServices from '@/components/hotel/HotelFacilitiesServices'
+//酒店设施服务设施
+import HotelFacilitiesServicesFacilities from '@/components/hotel/HotelFacilitiesServicesFacilities'
+//酒店房间产品
+import HotelRoomProduct from '@/components/hotel/HotelRoomProduct'
+//酒店房间房间设施
+import HotelRoomRoomFacilities from '@/components/hotel/HotelRoomRoomFacilities'
+//酒店订单明细
+import HotelOrderDetails from '@/components/hotel/HotelOrderDetails'
+//酒店确认订单
+import HotelConfirmOrder from '@/components/hotel/HotelConfirmOrder'
+//酒店生成房间
+import HotelRoomNumber from '@/components/hotel/HotelRoomNumber'
+//酒店批量生成房间
+import HotelLotRoomNumber from '@/components/hotel/HotelLotRoomNumber'
+//酒店房间实体
+import HotelRoomEntity from '@/components/hotel/HotelRoomEntity'
 
 
 /*------------------------------------门票----------------------------------------*/
@@ -265,6 +285,51 @@ export default [
         },
         name: 'HotelDetil'
       },
+      //酒店订单明细
+      {
+        path: 'hotelOrderDetails',
+        components: {
+          default: Home,
+          User: HotelOrderDetails
+        },
+        name: 'HotelOrderDetails'
+      },
+      //酒店确认订单
+      {
+        path: 'hotelConfirmOrder',
+        components: {
+          default: Home,
+          User: HotelConfirmOrder
+        },
+        name: 'HotelConfirmOrder'
+      },
+      //酒店生成房间
+      {
+        path: 'hotelRoomNumber/:id',
+        components: {
+          default: Home,
+          User: HotelRoomNumber
+        },
+        name: 'HotelRoomNumber'
+      },
+      //酒店批量生成房间
+      {
+        path: 'hotelLotRoomNumber/:id',
+        components: {
+          default: Home,
+          User: HotelLotRoomNumber
+        },
+        name: 'HotelLotRoomNumber'
+      },
+      //酒店房间实体
+      {
+        path: 'hotelRoomEntity/:id',
+        components: {
+          default: Home,
+          User: HotelRoomEntity
+        },
+        name: 'HotelRoomEntity'
+      },
       //酒店图标
       {
         path: 'hotelIcon',
@@ -273,6 +338,51 @@ export default [
           User: HotelIcon
         },
         name: 'HotelIcon'
+      },
+      //酒店房间
+      {
+        path: 'hotelRoom',
+        components: {
+          default: Home,
+          User: HotelRoom
+        },
+        name: 'HotelRoom'
+      },
+      //酒店房间产品
+      {
+        path: 'hotelRoomProduct/:id',
+        components: {
+          default: Home,
+          User: HotelRoomProduct
+        },
+        name: 'HotelRoomProduct'
+      },
+      //酒店房间房间设施
+      {
+        path: 'hotelRoomRoomFacilities/:id',
+        components: {
+          default: Home,
+          User: HotelRoomRoomFacilities
+        },
+        name: 'HotelRoomRoomFacilities'
+      },
+      //酒店设施服务
+      {
+        path: 'hotelFacilitiesServices',
+        components: {
+          default: Home,
+          User: HotelFacilitiesServices
+        },
+        name: 'HotelFacilitiesServices'
+      },
+      //酒店设施服务设施
+      {
+        path: 'hotelFacilitiesServicesFacilities',
+        components: {
+          default: Home,
+          User: HotelFacilitiesServicesFacilities
+        },
+        name: 'HotelFacilitiesServicesFacilities'
       },
       //酒店推荐信息
       {
