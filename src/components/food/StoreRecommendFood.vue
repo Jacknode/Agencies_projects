@@ -1,5 +1,5 @@
 <template>
-    <!--推荐菜  y -->
+    <!--推荐菜   -->
 
 
   <div id="wrap" class="clearfix">
@@ -16,7 +16,7 @@
       <el-form :model="data">
 
         <el-form-item label="推荐菜名称" :label-width="formLabelWidth" style="width: 55%">
-          <el-input v-model="data.fd_if_Name" auto-complete="off"></el-input>
+          <el-input v-model="data.fd_sf_ProductName" auto-complete="off"></el-input>
         </el-form-item>
 
         <!--<el-form-item label="店面名称" :label-width="formLabelWidth">-->
@@ -25,6 +25,7 @@
             <!--<el-option label="2" value="beijing"></el-option>-->
           <!--</el-select>-->
         <!--</el-form-item>-->
+
         <el-form-item label="店面编号" :label-width="formLabelWidth" style="width: 55%">
           <el-input v-model="data.fd_if_StoreFrontID" auto-complete="off"></el-input>
         </el-form-item>
@@ -52,6 +53,12 @@
       v-loading=""
       style="width: 100%"
     >
+      <!--<el-table-column-->
+        <!--prop="fd_if_StoreFrontID"-->
+        <!--label="店面编号"-->
+        <!--align="center"-->
+      <!--&gt;-->
+      <!--</el-table-column>-->
       <el-table-column
         prop="fd_if_StoreFrontID"
         label="店面编号"
@@ -67,7 +74,7 @@
       </el-table-column>
 
       <el-table-column
-        prop="fd_if_Name"
+        prop="fd_sf_ProductName"
         label="推荐菜系名称"
         align="center"
       >
@@ -105,7 +112,7 @@
           <el-button
             size="mini"
             type="danger"
-            @click="deleteRecommendFood(scope.row.fd_if_ID)">删除
+            @click="Delete(scope.row.fd_if_ID)">删除
           </el-button>
         </template>
       </el-table-column>
@@ -190,7 +197,7 @@
             //   "fd_if_Name": "",//推荐菜系名称
             // }
           };
-          this.$store.dispatch('addRecommendFood',addSubmitRecommendFood)  //N
+          this.$store.dispatch('addRecommendFood',addSubmitRecommendFood)
             .then(suc => {
               this.$notify({
                 message: suc,
@@ -206,7 +213,7 @@
           this.dialogFormVisible=false;
         },
         //删除
-        deleteRecommendFood(id){
+        Delete(id){
           let delRecommendFood={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
@@ -214,8 +221,8 @@
             "operateUserName": "",
             "pcName": "",
             "data": {
-              "fd_if_ID":id,
-            }
+              "fd_if_ID": id//停车位编码
+            },
           };
           this.$store.dispatch("deleteRecommendFood",delRecommendFood).then(
             suc => {

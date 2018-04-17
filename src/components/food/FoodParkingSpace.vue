@@ -1,5 +1,5 @@
 <template>
-    <!--停车位 y  -->
+    <!--停车位-->
   <div id="wrap" class="clearfix">
     <div class="title clearfix" style="padding: 20px">
       <h1 style="font-size: 20px;">停车位</h1><br><br>
@@ -27,24 +27,19 @@
 
       <el-table-column
 
-        prop="fd_sc_SeatNo"
 
+        prop="fd_sc_SeatNo"
         label="停车位名称"
         align="center">
       </el-table-column>
 
 
       <el-table-column
-        prop=""
+        prop="fd_sc_LockStatus"
         label="停车位状态"
         align="center">
       </el-table-column>
 
-      <!--<el-table-column-->
-        <!--prop="fd_sc_LockStatus"-->
-        <!--label="停车位状态"-->
-        <!--align="center">-->
-      <!--</el-table-column>-->
 
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
@@ -56,7 +51,7 @@
           <el-button
             size="mini"
             type="danger"
-            @click="deleteParkingSpace(scope.row.fd_sc_ID)">删除
+            @click="Delete(scope.row.fd_sc_ID)">删除
           </el-button>
         </template>
 
@@ -88,10 +83,6 @@
         <el-button type="primary" @click="addSubmit">确 定</el-button>
       </div>
     </el-dialog>
-
-
-
-
 
 
 
@@ -134,14 +125,6 @@
 </template>
 
 <script>
-
-  // import {mapGetters} from 'vuex'
-    // computed:mapGetters([
-    //   'FoodParkingSpace'
-    // ]),
-
-
-
   import {mapGetters} from 'vuex'
     export default {
     computed:mapGetters([
@@ -173,13 +156,10 @@
         //添加
         Add(){
           this.dialogFormVisible = true;
-        },
-        //添加提交
-        addSubmit(){
-          this.dialogFormVisible = false;
+          this.$store.commit('setTranstionFalse');
         },
         search(){
-          this.$store.commit('setTranstionFalse');
+          this.initData();
         },
 
 
@@ -191,31 +171,30 @@
                 message: suc,
                 type: 'success'
               });
+              this.initData();
             }, err => {
               this.$notify({
                 message: err,
                 type: 'error'
               });
             })
+
           this.dialogFormVisible = false;
           this.addOptions.data.fd_sc_SeatNo="";
           this.addOptions.data.fd_sc_LockStatus="";
           this.addOptions.data.fd_sc_ShopID="";
+
         },
+
         //查询
-        search(){
+        initData(){
           let initParkingSpace={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
             "operateUserID": "",
             "operateUserName": "",
             "pcName": "",
-            //"fd_sc_ID": "2",//停车位编码
-            //"fd_sc_ShopID": "1",//店面编号
-            //"fd_sc_SeatNo": "1",//停车位名称
-            //"fd_sc_LockStatus": "1",//锁定状态
           };
-
           this.$store.dispatch('initFoodParkingSpace',initParkingSpace).then(
             suc => {
               this.$notify({
@@ -230,8 +209,7 @@
             })
         },
         //删除
-        deleteParkingSpace(id){
-          console.log(id)
+        Delete(id){
           let delteParkingSpace={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
@@ -239,7 +217,7 @@
             "operateUserName": "操作员名称",
             "pcName": "",
             "data": {
-              "fd_sc_ID": id//停车位编码
+              "fd_sc_ID": id
             },
           };
           this.$store.dispatch('deleteFoodParkingSpace',delteParkingSpace).then(
@@ -248,6 +226,7 @@
                 message: suc,
                 type: 'success'
               });
+              this.initData();
             }, err => {
               this.$notify({
                 message: err,

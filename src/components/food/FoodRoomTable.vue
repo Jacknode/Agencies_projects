@@ -1,5 +1,5 @@
 <template>
-    <!--房间餐桌   y -->
+    <!--房间餐桌  -->
 
   <div id="wrap" class="clearfix">
     <div class="title clearfix" style="padding: 20px">
@@ -41,14 +41,53 @@
     </el-dialog>
 
 
+    <!--修改-->
+    <el-dialog title="添加房间信息" :visible.sync="updateFoodRoomTableinformation">
+      <el-form :model="updateFoodRoomTableObj">
+
+        <el-form-item label="店面房间编号" :label-width="formLabelWidth" style="width: 55%">
+          <el-input v-model="updateFoodRoomTableObj.fd_rt_RoomID" auto-complete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="餐桌编号" :label-width="formLabelWidth" style="width: 55%">
+          <el-input v-model="updateFoodRoomTableObj.fd_rt_TableID" auto-complete="off"></el-input>
+        </el-form-item>
+
+        <!--<el-form-item label="餐桌状态" :label-width="formLabelWidth" style="width: 55%">-->
+          <!--<el-input v-model="updateFoodRoomTableObj.fd_rt_State" auto-complete="off"></el-input>-->
+        <!--</el-form-item>-->
+
+        <!--<el-form-item label="允许占用时间" :label-width="formLabelWidth" style="width: 55%">-->
+          <!--<el-input v-model="updateFoodRoomTableObj.fd_rt_EatTime" auto-complete="off"></el-input>-->
+        <!--</el-form-item>-->
+
+        <el-form-item label="备注" :label-width="formLabelWidth" style="width: 55%">
+          <el-input v-model="updateFoodRoomTableObj.fd_rt_Remark" auto-complete="off"></el-input>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
+
+
     <!--展示-->
     <el-table
       :data="FoodRoomTableList"
+      v-loading="isLoading"
       style="width: 100%">
 
+      <!--<el-table-column-->
+        <!--prop="fd_rt_ID"-->
+        <!--label="房间餐桌编号"-->
+        <!--align="center">-->
+      <!--</el-table-column>-->
+
       <el-table-column
-        prop="fd_rt_ID"
-        label="房间餐桌编号"
+        prop="fd_sfr_RoomName"
+        label="店面房间名称"
         align="center">
       </el-table-column>
 
@@ -87,7 +126,7 @@
           <el-button
             size="mini"
             type="primary"
-            @click="update(scope.row.fd_rt_ID)">修改
+            @click="updateFoodRoomTable(scope.row.fd_rt_ID)">修改
           </el-button>
           <el-button
             size="mini"
@@ -118,6 +157,8 @@
         return{
           dialogFormVisible:false,
           formLabelWidth:'120px',
+          updateFoodRoomTableinformation:false,
+          isLoading:false,
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "操作员编码",
@@ -162,6 +203,7 @@
                 message: suc,
                 type: 'success'
               });
+              this.initData()
             }, err => {
               this.$notify({
                 message: err,
@@ -172,9 +214,14 @@
           this.data.fd_rt_RoomID="";
           this.data.fd_rt_TableID="";
           this.data.fd_rt_Remark="";
+          this.data.fd_rt_EatTime="";
+          this.data.fd_rt_State="";
         },
         //查询
         search(){
+          this.initData()
+        },
+        initData(){
           let initRoomTable={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
@@ -191,12 +238,14 @@
             //
             // },
           };
+          this.isLoading=true;
           this.$store.dispatch('initFoodRoomTable',initRoomTable).then(
             suc => {
               this.$notify({
                 message: suc,
                 type: 'success'
               });
+              this.isLoading=false;
             }, err => {
               this.$notify({
                 message: err,
@@ -206,6 +255,7 @@
         },
         //删除
         deleteFoodRoomTable(id){
+          console.log(id);
           let deleteRoomTable={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
@@ -222,15 +272,38 @@
                 message: suc,
                 type: 'success'
               });
+              this.initData()
             }, err => {
               this.$notify({
                 message: err,
                 type: 'error'
               });
             })
-        }
+        },
+        //修改
+        updateFoodRoomTable(){
+          let updateOptions={
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "操作员编码",
+            "operateUserName": "操作员名称",
+            "pcName": "",
+            "data": this.updateFoodRoomTableObj
+          }
+          this.$store.dispatch('updateFoodRoomTableObj',updateOptions).then(
+            suc => {
+              this.$notify({
+                message: suc,
+                type: 'success'
+              });
+            }, err => {
+              this.$notify({
+                message: err,
+                type: 'error'
+              });
+            })
+        },
       }
-
     }
 </script>
 

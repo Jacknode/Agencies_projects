@@ -70,6 +70,8 @@ import TicketQueryOrder from '@/components/ticket/TicketQueryOrder'
 import TicketApplyShowHomePage from '@/components/ticket/TicketApplyShowHomePage'
 
 //美食
+/*------------------------------------美食----------------------------------------*/
+
 
 //美食店铺管理
 import FoodStoreInformation from '@/components/food/FoodStoreInformation'
@@ -78,9 +80,8 @@ import FoodStorefrontRoomTableTime from '@/components/food/FoodStorefrontRoomTab
 //店面每天可锁桌时间
 import FoodRoomTableTimeEveryDay from '@/components/food/FoodRoomTableTimeEveryDay'
 
-/*------------------------------------美食----------------------------------------*/
 
-//美食房间图片
+//房间图片
 import FoodStoreRoomPicture from '@/components/food/FoodStoreRoomPicture'
 //美食推荐菜
 import StoreRecommendFood from '@/components/food/StoreRecommendFood'
@@ -94,6 +95,10 @@ import FoodParkingSpace  from '@/components/food/FoodParkingSpace'
 import FoodRoomTable  from '@/components/food/FoodRoomTable'
 //产品图片
 import FoodProductImg  from '@/components/food/FoodProductImg'
+
+
+
+
 
 
 
@@ -388,14 +393,14 @@ export default [
       },
 
       //房间图片
-      // {
-      //   path: 'foodStoreRoomPicture',
-      //   components:{
-      //     default:Home,
-      //     User:FoodStoreRoomPicture
-      //   },
-      //   name:'FoodStoreRoomPicture'
-      // },
+      {
+        path: 'foodStoreRoomPicture',
+        components:{
+          default:Home,
+          User:FoodStoreRoomPicture
+        },
+        name:'FoodStoreRoomPicture'
+      },
       //推荐菜
       {
         path: 'storeRecommendFood',

@@ -161,14 +161,17 @@
                       <li>
                         <router-link to="foodRoomTableTimeEveryDay">店面每天可锁桌时间</router-link>
                       </li>
-                      <!--<li>-->
-                        <!--<router-link to="foodStoreRoomPicture">房间图片</router-link>-->
-                      <!--</li>-->
+                      <li>
+                        <router-link to="foodStoreRoomPicture">房间图片</router-link>
+                      </li>
                       <li>
                         <router-link to="storeRecommendFood">推荐菜</router-link>
                       </li>
                       <li>
                         <router-link to="foodStoreProduct">店面产品</router-link>
+                      </li>
+                      <li>
+                        <router-link to="foodProductImg">产品图片</router-link>
                       </li>
                       <li>
                         <router-link to="foodStoreRoom">店面房间</router-link>
@@ -179,9 +182,9 @@
                       <li>
                         <router-link to="foodRoomTable">房间餐桌</router-link>
                       </li>
-                      <li>
-                        <router-link to="foodCanReserve">生成餐桌可订餐时间</router-link>
-                      </li>
+                      <!--<li>-->
+                        <!--<router-link to="foodCanReserve">生成餐桌可订餐时间</router-link>-->
+                      <!--</li>-->
                     </ul>
                   </li>
                 </ul>
@@ -391,6 +394,8 @@
       // },
       //查询景点主题分类信息
       // initData() {
+
+
         let getThemeTypeList = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
@@ -413,7 +418,7 @@
           "ht_hd_Name": '',//设施名称
           "ht_hd_HardTypeID": "",//设施类型ID
           "ht_hd_IsHot": "",//是否热门
-        };
+        }
         await this.$store.dispatch('initHotelFacilities', hotelFacilitiesServicesoptions)
 
         //惠乐游设施类型
@@ -425,7 +430,7 @@
           "pcName": "",
           "ht_ht_ID": "",//设施类型Id
           "ht_ht_Name": '',//设施类型名称
-        };
+        }
         await this.$store.dispatch('initHotelFacilitiesType', hotelFacilitiesTypeOptions)
 
         //惠乐游房间设施类型
@@ -437,7 +442,7 @@
           "pcName": "",
           "ht_rht_ID": "",//房间设施类型ID
           "ht_rht_Name": "",//类型名称
-        };
+        }
         await this.$store.dispatch('initHotelRoomFacilitiesType', roomTypeOptions)
 //用餐人数类型
         let selectPropertyInfo = {
@@ -449,7 +454,7 @@
           "fd_py_ParentID": "28",//父编码
           "page": "1",
           "rows": "10000",
-        };
+        }
         await this.$store.dispatch('initNumberOfMeals', selectPropertyInfo)
 
 //店面类型
@@ -478,9 +483,8 @@
           })
       }
     },
-    created() {
-    this.initData();
-  }
+
+
   }
 </script>
 <style>

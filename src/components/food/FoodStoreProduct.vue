@@ -15,6 +15,10 @@
           <el-input v-model="data.fd_sfp_Name" auto-complete="off"></el-input>
         </el-form-item>
 
+        <el-form-item label="店面编码" :label-width="formLabelWidth" style="width: 55%">
+          <el-input v-model="data.fd_sfp_StoreFrontID" auto-complete="off"></el-input>
+        </el-form-item>
+
         <el-form-item label="价格" :label-width="formLabelWidth" style="width: 55%">
           <el-input v-model="data.fd_sfp_Price" auto-complete="off"></el-input>
         </el-form-item>
@@ -33,8 +37,9 @@
 
     <!--展示-->
     <el-table
-      :data="FoodStoreProduct"
+      :data="FoodStoreProductList"
       style="width: 100%">
+
 
       <el-table-column
         prop="fd_sfp_StoreFrontID"
@@ -76,7 +81,7 @@
           <el-button
             size="mini"
             type="danger"
-            @click="deleteFoodStoreProduct(scope.row.fd_sfp_ID)">删除
+            @click="Delete(scope.row.fd_sfp_ID)">删除
           </el-button>
         </template>
       </el-table-column>
@@ -93,7 +98,8 @@
   import {mapGetters} from 'vuex'
     export default {
       computed:mapGetters([
-        'FoodStoreProduct'
+        'FoodStoreProductList',
+        'updateFoodStoreProductObj'
       ]),
       data(){
         return{
@@ -105,6 +111,7 @@
           "operateUserName": "操作员名称",
           "pcName": "",
           "data": {
+            // "fd_sfp_ID": "",//店面产品编码
             "fd_sfp_ID": "",//店面产品编码
             "fd_sfp_StoreFrontID": "",//店面编号
             "fd_sfp_Name": "",//名称
@@ -120,6 +127,7 @@
           this.$store.commit('setTranstionFalse');
         },
         //添加提交
+        //新增提交?数据处理有点问题
         addSubmit(){
           this.dialogFormVisible= false;
           let addSubmitStoreProduct={
@@ -128,13 +136,13 @@
             "operateUserID": "操作员编码",
             "operateUserName": "操作员名称",
             "pcName": "",
-            "data":
-              {
-              "fd_sfp_StoreFrontID": "",//店面编号
-              "fd_sfp_Name": "",//名称
-              "fd_sfp_Price": "",//价格
-              "fd_sfp_Remark": "",//备注
-            }
+            "data": this.data
+            //   {
+            //   "fd_sfp_StoreFrontID": "",//店面编号
+            //   "fd_sfp_Name": "",//名称
+            //   "fd_sfp_Price": "",//价格
+            //   "fd_sfp_Remark": "",//备注
+            // }
           };
           this.$store.dispatch('addFoodStoreProduct',addSubmitStoreProduct).then(
             suc => {
@@ -142,6 +150,7 @@
                 message: suc,
                 type: 'success'
               });
+              this.initData()
             }, err => {
               this.$notify({
                 message: err,
@@ -151,12 +160,20 @@
         },
         //查询
         search(){
+          this.initData()
+        },
+        initData(){
           let initStoreProduct={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
             "operateUserID": "操作员编码",
             "operateUserName": "操作员名称",
             "pcName": "",
+            //"fd_sfp_ID": "3",//店面产品编码
+            //"fd_sfp_StoreFrontID": "1",//店面编号
+            //"fd_sfp_Name": "牛排",//名称
+            //"priceFrom": "100",//价格
+            //"priceTo": "800",//备注
             "data":this.data,
           };
           this.$store.dispatch('initFoodStoreProduct',initStoreProduct).then(
@@ -173,7 +190,7 @@
             })
         },
         //删除
-        deleteFoodStoreProduct(id){
+        Delete(id){
           let deleteStoreProduct={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
@@ -190,6 +207,7 @@
                 message: suc,
                 type: 'success'
               });
+              this.initData()
             }, err => {
               this.$notify({
                 message: err,

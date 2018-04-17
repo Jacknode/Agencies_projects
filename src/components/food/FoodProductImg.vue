@@ -34,6 +34,14 @@
 
     <!--展示-->
     <el-table
+      :data="FoodProductImgList"
+      style="width: 100%">
+
+      <!--<el-table-column-->
+        <!--prop="fd_pi_ID"-->
+        <!--label="图片编码"-->
+        <!--align="center">-->
+      <!--</el-table-column>-->
       :data="FoodProductImg"
       style="width: 100%">
 
@@ -65,7 +73,7 @@
           <el-button
             size="mini"
             type="danger"
-            @click="deleteFoodProductImg(scope.row.fd_sfp_ID)">删除
+            @click="Delete(scope.row.fd_pi_ID)">删除
           </el-button>
         </template>
       </el-table-column>
@@ -84,7 +92,8 @@
   import {mapGetters} from 'vuex'
     export default {
     computed:mapGetters([
-      'FoodProductImg'
+      'FoodProductImgList',
+      'updateFoodProductImgObj'
     ]),
       data(){
         return{
@@ -96,6 +105,7 @@
           "operateUserName": "操作员名称",
           "pcName": "",
           "data": {
+            // "fd_pi_ID": "",//图片编号
             "fd_pi_ID": "",//图片编号
             "fd_pi_StoreFront": "",//店面编号
             "fd_pi_ImageUrl": "",//图片地址
@@ -117,10 +127,12 @@
             "operateUserID": "",
             "operateUserName": "",
             "pcName": "",
-            "data": {
-              "fd_pi_StoreFront": "1",//店面编号
-              "fd_pi_ImageUrl": "http://image.1000da.com.cn/3.png",//图片地址
-            }
+            "data": this.data
+            //   {
+            //   "fd_pi_StoreFront": "",//店面编号
+            //   "fd_pi_ImageUrl": "",//图片地址
+            // }
+
           };
           this.$store.dispatch('addFoodProductImg',addSubmitProductImg).then(
             suc => {
@@ -128,6 +140,7 @@
                 message: suc,
                 type: 'success'
               });
+              this.initData();
             }, err => {
               this.$notify({
                 message: err,
@@ -137,12 +150,20 @@
         },
         //查询
         search(){
+          this.initData();
+        },
+        initData(){
           let initProductImg={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
             "operateUserID": "",
             "operateUserName": "",
             "pcName": "",
+            // "data": {
+            //   "fd_pi_ID": "",//图片编号
+            //   "fd_pi_StoreFront": "",//店面编号
+            //   "fd_pi_ImageUrl": "",//图片地址
+            // }
             "data": {
               "fd_pi_ID": "1",//图片编号
               "fd_pi_StoreFront": "",//店面编号
@@ -162,7 +183,7 @@
               });
             })
         },
-        deleteFoodProductImg(id){
+        Delete(id){
           let deleteProductImg={
             "loginUserID": "huileyou",
             "loginUserPass": "123",
@@ -179,6 +200,7 @@
                 message: suc,
                 type: 'success'
               });
+              this.initData();
             }, err => {
               this.$notify({
                 message: err,
