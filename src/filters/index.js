@@ -250,7 +250,7 @@ export const getCancelType = val=>{
     default:
       return '未知';
   }
-}
+};
 //房间锁定状态
 export const getLockStatus = val=>{
   switch (Number(val)) {
@@ -263,5 +263,19 @@ export const getLockStatus = val=>{
     default:
       return '未知';
   }
-}
+};
+//广告申请是否通过
+export const getAdApplyPass = val=>{
+  switch (Number(val)) {
+    case 0:
+      return '审核中';
+    case 1:
+      return '通过';
+    case 2:
+      return '不通过';
+    default:
+      return '未知';
+  }
+};
+
 
