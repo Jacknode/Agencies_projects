@@ -89,32 +89,14 @@ import TicketQueryOrder from '@/components/ticket/TicketQueryOrder'
 //申请显示在首页
 import TicketApplyShowHomePage from '@/components/ticket/TicketApplyShowHomePage'
 
-//美食
 /*------------------------------------美食----------------------------------------*/
 
-
-//美食店铺管理
+//店面信息
 import FoodStoreInformation from '@/components/food/FoodStoreInformation'
-//店面房间餐桌时间
-import FoodStorefrontRoomTableTime from '@/components/food/FoodStorefrontRoomTableTime'
-//店面每天可锁桌时间
-import FoodRoomTableTimeEveryDay from '@/components/food/FoodRoomTableTimeEveryDay'
-
-
-//房间图片
-import FoodStoreRoomPicture from '@/components/food/FoodStoreRoomPicture'
-//美食推荐菜
-import StoreRecommendFood from '@/components/food/StoreRecommendFood'
-//店面产品
-import FoodStoreProduct from '@/components/food/FoodStoreProduct'
 //店面房间
 import FoodStoreRoom  from '@/components/food/FoodStoreRoom'
-//停车位
-import FoodParkingSpace  from '@/components/food/FoodParkingSpace'
-//房间餐桌
-import FoodRoomTable  from '@/components/food/FoodRoomTable'
-//产品图片
-import FoodProductImg  from '@/components/food/FoodProductImg'
+//店面产品
+import FoodStoreProduct from '@/components/food/FoodStoreProduct'
 
 
 
@@ -516,34 +498,6 @@ export default [
         },
         name:'FoodStoreInformation'
       },
-
-      //房间图片
-      {
-        path: 'foodStoreRoomPicture',
-        components:{
-          default:Home,
-          User:FoodStoreRoomPicture
-        },
-        name:'FoodStoreRoomPicture'
-      },
-      //推荐菜
-      {
-        path: 'storeRecommendFood',
-        components:{
-          default:Home,
-          User:StoreRecommendFood
-        },
-        name:'StoreRecommendFood'
-      },
-      //店面产品
-      {
-        path: 'foodStoreProduct',
-        components:{
-          default:Home,
-          User:FoodStoreProduct
-        },
-        name:'FoodStoreProduct'
-      },
       //店面房间
       {
         path: 'foodStoreRoom',
@@ -553,51 +507,14 @@ export default [
         },
         name:'FoodStoreRoom'
       },
-      //停车位
+      //店面产品
       {
-        path: 'foodParkingSpace',
+        path: 'foodStoreProduct',
         components:{
           default:Home,
-          User:FoodParkingSpace
+          User:FoodStoreProduct
         },
-        name:'FoodParkingSpace'
-      },
-      //房间餐桌
-      {
-        path: 'foodRoomTable',
-        components:{
-          default:Home,
-          User:FoodRoomTable
-        },
-        name:'FoodRoomTable'
-      },
-      //店面房间餐桌时间
-      {
-        path: 'foodStorefrontRoomTableTime',
-        components:{
-          default:Home,
-          User:FoodStorefrontRoomTableTime
-        },
-        name:'FoodStorefrontRoomTableTime'
-      },
-      //店面每天可锁桌时间
-      {
-        path:'foodRoomTableTimeEveryDay',
-        components:{
-          default: Home,
-          User: FoodRoomTableTimeEveryDay
-        },
-        name: 'FoodRoomTableTimeEveryDay'
-      },
-
-      //产品图片
-      {
-        path: 'foodProductImg',
-        components:{
-          default:Home,
-          User:FoodProductImg
-        },
-        name:'FoodProductImg'
+        name:'FoodStoreProduct'
       }
     ],
   },

@@ -173,35 +173,14 @@
                     <a href="javascript:;"><i class="icon-ticket"></i> <span>美食后台管理</span></a>
                     <ul>
                       <li>
-                        <router-link to="foodStoreInformation">店面信息</router-link>
+                        <router-link to="foodStoreInformation">美食店面信息</router-link>
                       </li>
                       <li>
-                        <router-link to="foodRoomTableTimeEveryDay">店面每天可锁桌时间</router-link>
+                        <router-link to="foodStoreRoom">美食店面房间</router-link>
                       </li>
                       <li>
-                        <router-link to="foodStoreRoomPicture">房间图片</router-link>
+                        <router-link to="foodStoreProduct">美食店面产品</router-link>
                       </li>
-                      <li>
-                        <router-link to="storeRecommendFood">推荐菜</router-link>
-                      </li>
-                      <li>
-                        <router-link to="/home/foodStoreProduct">店面产品</router-link>
-                      </li>
-                      <li>
-                        <router-link to="foodProductImg">产品图片</router-link>
-                      </li>
-                      <li>
-                        <router-link to="foodStoreRoom">店面房间</router-link>
-                      </li>
-                      <li>
-                        <router-link to="foodParkingSpace">停车位</router-link>
-                      </li>
-                      <li>
-                        <router-link to="foodRoomTable">房间餐桌</router-link>
-                      </li>
-                      <!--<li>-->
-                        <!--<router-link to="foodCanReserve">生成餐桌可订餐时间</router-link>-->
-                      <!--</li>-->
                     </ul>
                   </li>
                 </ul>
@@ -498,6 +477,28 @@
           "rows": "10000",
         }
         await this.$store.dispatch('initStorefrontType', selectPropertyInfoType)
+
+        //店面列表
+        let selectStoreFrontInfo = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "fd_sf_ID": "",//店面编号
+          "fd_sf_TypeID": "",//分类编号
+          "fd_sf_MansID": "",//用餐人数编号
+          "fd_sf_ProductName": "",//产品名称 like
+          "fd_sf_Provice": "",//省
+          "fd_sf_City": "",//市
+          "priceFrom": "",//人均价格大于
+          "priceTo": "",//人均价格小于
+          "fd_sf_Phone": "",//联系电话
+          "fd_sf_TradeID": this.userInfo.sm_ai_ID,//供应商编码
+          "page": 1,
+          "rows": 10000,
+        };
+        await this.$store.dispatch('initFoodStoreInformtion', selectStoreFrontInfo)
       },
       //退出
       Quit() {

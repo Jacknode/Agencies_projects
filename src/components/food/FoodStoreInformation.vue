@@ -44,10 +44,10 @@
                 <span>{{ props.row.fd_sf_Address }}</span>
               </el-form-item>
               <el-form-item label="经度">
-                <span>{{ props.row.fd_sf_Lng }}</span>
+                <span>{{ props.row.fd_sf_Lng }}°</span>
               </el-form-item>
               <el-form-item label="纬度">
-                <span>{{ props.row.fd_sf_Lat }}</span>
+                <span>{{ props.row.fd_sf_Lat }}°</span>
               </el-form-item>
               <el-form-item label="省">
                 <span>{{ props.row.fd_sf_Provice }}</span>
@@ -93,7 +93,7 @@
         <el-table-column
           label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" @click="update(scope.row.fd_sf_ID)">修改</el-button>
+            <el-button size="mini" type="primary" @click="update(scope.row)">修改</el-button>
             <el-button size="mini" type="danger" @click="deleteFoodStoreInformtion(scope.row.fd_sf_ID)">删除</el-button>
           </template>
         </el-table-column>
@@ -106,7 +106,9 @@
           :page-size="5"
           @current-change="handleCurrentChange"
           layout="prev, pager, next"
-          :total="total">
+          :total="total"
+          v-show="total"
+        >
         </el-pagination>
       </div>
 
@@ -195,9 +197,9 @@
       <!--修改-->
 
       <el-dialog title="修改店面信息" :visible.sync="updateDialog">
-        <el-form :model="updateFoodStoreInformtionObj">
+        <el-form :model="updateObj">
           <el-form-item label="店面用餐类型:" :label-width="formLabelWidth">
-            <el-select v-model="updateFoodStoreInformtionObj.fd_sf_TypeID" placeholder="请选择">
+            <el-select v-model="updateObj.fd_sf_TypeID" placeholder="请选择">
               <el-option
                 v-for="item in storefrontTypeList"
                 :key="item.propertyID"
@@ -207,7 +209,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="用餐人数:" :label-width="formLabelWidth">
-            <el-select v-model="updateFoodStoreInformtionObj.fd_sf_MansID" placeholder="请选择">
+            <el-select v-model="updateObj.fd_sf_MansID" placeholder="请选择">
               <el-option
                 v-for="item in numberOfMealsList"
                 :key="item.propertyID"
@@ -217,19 +219,19 @@
             </el-select>
           </el-form-item>
           <el-form-item label="产品名称:" :label-width="formLabelWidth">
-            <el-input v-model="updateFoodStoreInformtionObj.fd_sf_ProductName"></el-input>
+            <el-input v-model="updateObj.fd_sf_ProductName"></el-input>
           </el-form-item>
           <el-form-item label="地址描述:" :label-width="formLabelWidth">
-            <el-input v-model="updateFoodStoreInformtionObj.fd_sf_Address"></el-input>
+            <el-input v-model="updateObj.fd_sf_Address"></el-input>
           </el-form-item>
           <el-form-item label="经度:" :label-width="formLabelWidth">
-            <el-input v-model="updateFoodStoreInformtionObj.fd_sf_Lng"></el-input>
+            <el-input v-model="updateObj.fd_sf_Lng"></el-input>
           </el-form-item>
           <el-form-item label="纬度:" :label-width="formLabelWidth">
-            <el-input v-model="updateFoodStoreInformtionObj.fd_sf_Lat"></el-input>
+            <el-input v-model="updateObj.fd_sf_Lat"></el-input>
           </el-form-item>
           <el-form-item label="省:" :label-width="formLabelWidth">
-            <el-select v-model="updateFoodStoreInformtionObj.fd_sf_Provice" placeholder="请选择" @change="changeCity">
+            <el-select v-model="updateObj.fd_sf_Provice" placeholder="请选择" @change="changeCity">
               <el-option
                 v-for="item in foodProcinceList"
                 :key="item.sm_af_AreaID"
@@ -239,7 +241,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="市:" :label-width="formLabelWidth">
-            <el-select v-model="updateFoodStoreInformtionObj.fd_sf_City" placeholder="请选择">
+            <el-select v-model="updateObj.fd_sf_City" placeholder="请选择">
               <el-option
                 v-for="item in foodCityList"
                 :key="item.sm_af_AreaID"
@@ -249,16 +251,16 @@
             </el-select>
           </el-form-item>
           <el-form-item label="人均价格:" :label-width="formLabelWidth">
-            <el-input v-model="updateFoodStoreInformtionObj.fd_sf_AvgPrice"></el-input>
+            <el-input v-model="updateObj.fd_sf_AvgPrice"></el-input>
           </el-form-item>
           <el-form-item label="营业时间:" :label-width="formLabelWidth">
-            <el-input v-model="updateFoodStoreInformtionObj.fd_sf_OpenTime"></el-input>
+            <el-input v-model="updateObj.fd_sf_OpenTime"></el-input>
           </el-form-item>
           <el-form-item label="联系电话:" :label-width="formLabelWidth">
-            <el-input v-model="updateFoodStoreInformtionObj.fd_sf_Phone"></el-input>
+            <el-input v-model="updateObj.fd_sf_Phone"></el-input>
           </el-form-item>
           <el-form-item label="是否有WAFI:" :label-width="formLabelWidth">
-            <el-select v-model="updateFoodStoreInformtionObj.fd_sf_HasWafi" placeholder="请选择">
+            <el-select v-model="updateObj.fd_sf_HasWafi" placeholder="请选择">
               <el-option
                 v-for="item in isWifi"
                 :key="item.value"
@@ -283,7 +285,6 @@
   export default {
     computed: mapGetters([
       'foodStoreInformtionList',
-      'updateFoodStoreInformtionObj',
       'numberOfMealsList',
       'storefrontTypeList',
       'foodProcinceList',
@@ -324,12 +325,13 @@
         ],
         proviceId: '',
         roomName: '',
+        updateObj:{},
       }
     },
     methods: {
 //      分页
       handleCurrentChange(num) {
-        this.initData(num)
+        this.initData('', num)
       },
       //查询省
       initProvince() {
@@ -384,7 +386,7 @@
       },
       //查询
       search() {
-        this.initData(this.roomName)
+        this.initData(this.roomName, 1)
       },
       //添加
       add() {
@@ -418,11 +420,11 @@
         this.addDialog = false;
       },
       //修改按钮
-      update(id) {
+      update(rowData) {
+        this.updateObj = rowData
         this.$store.commit('setTranstionFalse');
-        this.$store.commit('updateFoodStoreInformtion', id);
         this.updateDialog = true;
-        this.updateFoodStoreInformtionObj.fd_sf_HasWafi = '';
+        this.updateObj.fd_sf_HasWafi = '';
       },
       //修改提交
       updateSubmit() {
@@ -433,20 +435,20 @@
           "operateUserName": "",
           "pcName": "",
           "data": {
-            "fd_sf_ID": this.updateFoodStoreInformtionObj.fd_sf_ID,
-            "fd_sf_TypeID": this.updateFoodStoreInformtionObj.fd_sf_TypeID,
-            "fd_sf_MansID": this.updateFoodStoreInformtionObj.fd_sf_MansID,
-            "fd_sf_ProductName": this.updateFoodStoreInformtionObj.fd_sf_ProductName,
-            "fd_sf_Address": this.updateFoodStoreInformtionObj.fd_sf_Address,
-            "fd_sf_Lng": this.updateFoodStoreInformtionObj.fd_sf_Lng,
-            "fd_sf_Lat": this.updateFoodStoreInformtionObj.fd_sf_Lat,
-            "fd_sf_Provice": this.updateFoodStoreInformtionObj.fd_sf_Provice,
-            "fd_sf_City": this.updateFoodStoreInformtionObj.fd_sf_City,
-            "fd_sf_AvgPrice": this.updateFoodStoreInformtionObj.fd_sf_AvgPrice,
-            "fd_sf_OpenTime": this.updateFoodStoreInformtionObj.fd_sf_OpenTime,
-            "fd_sf_Phone": this.updateFoodStoreInformtionObj.fd_sf_Phone,
-            "fd_sf_HasWafi": this.updateFoodStoreInformtionObj.fd_sf_HasWafi,
-            "fd_sf_TradeID": this.updateFoodStoreInformtionObj.fd_sf_TradeID,
+            "fd_sf_ID": this.updateObj.fd_sf_ID,
+            "fd_sf_TypeID": this.updateObj.fd_sf_TypeID,
+            "fd_sf_MansID": this.updateObj.fd_sf_MansID,
+            "fd_sf_ProductName": this.updateObj.fd_sf_ProductName,
+            "fd_sf_Address": this.updateObj.fd_sf_Address,
+            "fd_sf_Lng": this.updateObj.fd_sf_Lng,
+            "fd_sf_Lat": this.updateObj.fd_sf_Lat,
+            "fd_sf_Provice": this.updateObj.fd_sf_Provice,
+            "fd_sf_City": this.updateObj.fd_sf_City,
+            "fd_sf_AvgPrice": this.updateObj.fd_sf_AvgPrice,
+            "fd_sf_OpenTime": this.updateObj.fd_sf_OpenTime,
+            "fd_sf_Phone": this.updateObj.fd_sf_Phone,
+            "fd_sf_HasWafi": this.updateObj.fd_sf_HasWafi,
+            "fd_sf_TradeID": this.updateObj.fd_sf_TradeID,
           }
         };
         this.$store.dispatch('updateFoodStoreInformtionSubmit', updateStoreFrontInfo)
