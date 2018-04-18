@@ -4,7 +4,7 @@
     <div class="title clearfix" style="padding: 20px">
       <h1 style="font-size: 20px;">房间图片</h1><br><br>
       <el-button type="primary" @click="Add" size="small" style="float: right;">新增</el-button>
-      <el-button type="primary" @click="search" size="small" style="float: right; margin-right: 20px">查询</el-button>
+      <!--<el-button type="primary" @click="search" size="small" style="float: right; margin-right: 20px">查询</el-button>-->
     </div>
 
     <!--数据展示-->
@@ -399,12 +399,13 @@
             });
           });
       },
+    },
+    created(){
+      this.initData()
     }
   }
 
-    // created(){
-    //   this.initData()
-    // }
+
 
 
 

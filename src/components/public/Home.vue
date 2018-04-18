@@ -102,6 +102,12 @@
                         <router-link to="/home/hotelDetil">酒店基本信息</router-link>
                       </li>
                       <li>
+                        <router-link to="/home/hotelOrderDetails">酒店订单明细</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/hotelConfirmOrder">酒店确认订单</router-link>
+                      </li>
+                      <li>
                         <router-link to="/home/hotelQueryRecommend">酒店推荐信息</router-link>
                       </li>
                       <li>
@@ -116,40 +122,51 @@
                       <li>
                         <router-link to="/home/hotelTheme">酒店主题信息</router-link>
                       </li>
+                      <li>
+                        <router-link to="/home/hotelRoom">酒店房间管理</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/hotelFacilitiesServices">酒店设施服务信息</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/hotelFacilitiesServicesFacilities">酒店设施服务设施信息</router-link>
+                      </li>
                     </ul>
                   </li>
                   <!-- /main -->
                 </ul>
+                <!--景点-->
                 <ul class="navigation navigation-main navigation-accordion">
                   <!--境外查询-->
                   <li>
                     <a href="javascript:;"><i class="icon-ticket"></i> <span>门票后台管理</span></a>
                     <ul>
                       <li>
-                        <router-link to="/home/ticketAttractions">景点信息管理</router-link>
+                        <router-link to="/home/ticketAttractions">门票景点信息管理</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/ticketPredeterminedInstructions">预定须知</router-link>
+                        <router-link to="/home/ticketPredeterminedInstructions">门票预定须知</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/trafficInformation">交通信息</router-link>
+                        <router-link to="/home/trafficInformation">门票交通信息</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/ticketType">票种</router-link>
+                        <router-link to="/home/ticketType">门票票种</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/ticketTypeTicketPrice">票种_票价</router-link>
+                        <router-link to="/home/ticketTypeTicketPrice">门票票种_票价</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/ticketQueryOrder">查询订单</router-link>
+                        <router-link to="/home/ticketQueryOrder">门票查询订单</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/ticketApplyShowHomePage">申请景点展示首页</router-link>
+                        <router-link to="/home/ticketApplyShowHomePage">门票申请景点展示首页</router-link>
                       </li>
                     </ul>
                   </li>
                   <!-- /main -->
                 </ul>
+                <!--美食-->
                 <ul class="navigation navigation-main navigation-accordion">
                   <li>
                     <!--美食管理-->
@@ -168,7 +185,7 @@
                         <router-link to="storeRecommendFood">推荐菜</router-link>
                       </li>
                       <li>
-                        <router-link to="foodStoreProduct">店面产品</router-link>
+                        <router-link to="/home/foodStoreProduct">店面产品</router-link>
                       </li>
                       <li>
                         <router-link to="foodProductImg">产品图片</router-link>
@@ -187,6 +204,18 @@
                       <!--</li>-->
                     </ul>
                   </li>
+                </ul>
+                <ul class="navigation navigation-main navigation-accordion">
+                  <!--境外查询-->
+                  <li>
+                    <a href="javascript:;"><i class="icon-ticket"></i> <span>广告后台管理</span></a>
+                    <ul>
+                      <li>
+                        <router-link to="/home/AdApply">广告申请管理</router-link>
+                      </li>
+                    </ul>
+                  </li>
+                  <!-- /main -->
                 </ul>
               </div>
             </div>

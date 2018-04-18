@@ -311,9 +311,6 @@ export default {
       })
         .then(data => {
           var data = data.data;
-          console.log(111);
-          console.log(data);
-          // alert(111);
           if (Number(data.resultcode == 200)) {
             relove(data.resultcontent)
             commit('initFoodStoreProduct', data.data)
@@ -334,9 +331,6 @@ export default {
       })
         .then(data => {
           var data = data.data;
-          console.log(111);
-          console.log(data);
-          // alert(111);
           if (Number(data.resultcode == 200)) {
             relove(data.resultcontent)
           }
@@ -356,9 +350,6 @@ export default {
       })
         .then(data => {
           var data = data.data;
-          console.log(111);
-          console.log(data);
-          // alert(111);
           if (Number(data.resultcode == 200)) {
             relove(data.resultcontent)
           }
@@ -483,9 +474,6 @@ export default {
       })
         .then(data => {
           var data = data.data;
-          console.log(111);
-          console.log(data);
-          // alert(111);
           if (Number(data.resultcode == 200)) {
             relove(data.resultcontent)
             commit('initFoodParkingSpace', data.data)
@@ -648,9 +636,6 @@ export default {
       })
         .then(data => {
           var data = data.data;
-          console.log(111);
-          console.log(data);
-          // alert(111);
           if (Number(data.resultcode == 200)) {
             relove(data.resultcontent)
           }
@@ -672,9 +657,6 @@ export default {
       })
         .then(data => {
           var data = data.data;
-          console.log(111);
-          console.log(data);
-          // alert(111);
           if (Number(data.resultcode == 200)) {
             relove(data.resultcontent)
           }
@@ -717,9 +699,7 @@ export default {
         .then(data => {
 
           var data = data.data;
-          // alert(111);
           if (Number(data.resultcode == 200)) {
-
             relove(data.resultcontent)
           }
           else {
@@ -777,9 +757,6 @@ export default {
       })
         .then(data => {
           var data = data.data;
-          console.log(111);
-          console.log(data);
-          // alert(111);
           if (Number(data.resultcode == 200)) {
             relove(data.resultcontent)
           }

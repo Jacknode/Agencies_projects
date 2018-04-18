@@ -137,6 +137,7 @@
           "ht_rpp_EndUseDate": "",//结束供应日期
         },
         roomID:'',
+        isLoading:false,
         total: 0,
         formLabelWidth:'120px',
       }

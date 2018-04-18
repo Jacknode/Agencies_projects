@@ -3,8 +3,8 @@
   <div id="wrap" class="clearfix">
     <div class="title clearfix" style="padding: 20px">
       <h1 style="font-size: 20px;">产品图片</h1><br><br>
-      <el-button type="primary" @click="Add" size="small" style="">新增</el-button>
-      <el-button type="primary" @click="search" size="small" style="margin-left: 20px">查询</el-button>
+      <el-button type="primary" @click="Add" size="small" style="float: right">新增</el-button>
+      <!--<el-button type="primary" @click="search" size="small" style="margin-left: 20px">查询</el-button>-->
     </div>
 
     <!--添加-->
@@ -219,6 +219,9 @@
               });
             })
         }
+      },
+      created(){
+      this.initData()
       }
     }
 </script>
