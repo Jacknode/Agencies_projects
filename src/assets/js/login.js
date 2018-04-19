@@ -1,5 +1,4 @@
 import $ from 'jquery'
-
 $(function(){
 	$('#username').focus().blur(checkName);
 	$('#password').blur(checkPassword);

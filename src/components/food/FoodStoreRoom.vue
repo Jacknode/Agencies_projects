@@ -68,7 +68,7 @@
 
     </el-table>
 
-
+    <!--分页-->
     <div class="block" style="text-align: right">
       <el-pagination
         :page-size="5"
@@ -108,6 +108,7 @@
         <el-button type="primary" @click="addSubmit">确 定</el-button>
       </div>
     </el-dialog>
+
     <!--修改-->
     <el-dialog title="修改店面房间" :visible.sync="updateDialog">
       <el-form :model="updateObj">

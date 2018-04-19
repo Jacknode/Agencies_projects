@@ -14,4 +14,20 @@ export default {
 
   foodStoreProductList: [],//店面产品
 
+  foodRoomPictureList: [],//店面房间图片
+
+  foodProductPictureList: [],//店面图片
+
+  foodStoreRoomTabelList: [],//店面餐桌
+
+  foodStoreRecommendList: [],//推荐菜
+
+  foodStoreTableTimeList: [],//店面每天可锁桌时间
+
+  foodStoreOrderingTimeList: [],//店面可订餐时间
+
+  foodStoreConfirnOrderList: [],//订单列表
+
+
+
 }

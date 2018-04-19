@@ -1,8 +1,10 @@
 <template>
   <div>
     <div id="wrap" class="clearfix">
-      <h1 class="userClass">店面菜肴</h1>
+      <h1 class="userClass">店面每天可锁桌时间</h1>
+
       <!--查询-->
+
       <el-col :span="24" class="formSearch">
         <el-form :inline="true">
           <el-form-item>
@@ -28,33 +30,28 @@
       <!--数据展示-->
 
       <el-table
-        :data="foodStoreProductList"
+        :data="foodStoreTableTimeList"
         style="width: 100%">
+
         <el-table-column
           prop="fd_sf_ProductName"
           label="店面名称"
           align="center">
         </el-table-column>
+
         <el-table-column
-          prop="fd_sfp_ID"
-          label="菜肴编号"
+          prop="fd_clt_CanSellTime"
+          label="可售时间"
           align="center">
         </el-table-column>
+
+
         <el-table-column
-          prop="fd_sfp_Name"
-          label="菜肴名称"
-          align="center">
-        </el-table-column>
-        <el-table-column
-          prop="fd_sfp_Price"
-          label="价格(元)"
-          align="center">
-        </el-table-column>
-        <el-table-column
-          prop="fd_sfp_Remark"
+          prop="fd_clt_Remark"
           label="备注"
           align="center">
         </el-table-column>
+
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button
@@ -65,7 +62,7 @@
             <el-button
               size="mini"
               type="danger"
-              @click="Delete(scope.row.fd_sfp_ID)">删除
+              @click="Delete(scope.row.fd_clt_ID)">删除
             </el-button>
           </template>
         </el-table-column>
@@ -73,7 +70,6 @@
       </el-table>
 
       <!--分页-->
-
       <div class="block" style="text-align: right">
         <el-pagination
           :page-size="5"
@@ -87,10 +83,10 @@
 
       <!--添加-->
 
-      <el-dialog title="添加店面菜肴" :visible.sync="addDialog">
+      <el-dialog title="添加店面每天可锁桌时间" :visible.sync="addDialog">
         <el-form :model="addOptions">
           <el-form-item label="店面名称:" :label-width="formLabelWidth">
-            <el-select v-model="addOptions.fd_sfp_StoreFrontID" placeholder="请选择店面">
+            <el-select v-model="addOptions.fd_clt_FrontID" placeholder="请选择店面">
               <el-option
                 v-for="item in foodStoreInformtionList"
                 :key="item.fd_sf_ID"
@@ -99,14 +95,16 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="菜名:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.fd_sfp_Name"></el-input>
-          </el-form-item>
-          <el-form-item label="价格:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.fd_sfp_Price"></el-input>
-          </el-form-item>
-          <el-form-item label="备注:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.fd_sfp_Remark"></el-input>
+          <el-form-item label="可售时间:" :label-width="formLabelWidth">
+            <el-time-select
+              v-model="addOptions.fd_clt_CanSellTime"
+              :picker-options="{
+                start: '00:00',
+                step: '01:00',
+                end: '24:00'
+              }"
+              placeholder="选择时间">
+            </el-time-select>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -117,10 +115,10 @@
 
       <!--修改-->
 
-      <el-dialog title="修改店面菜肴" :visible.sync="updateDialog">
+      <el-dialog title="修改店面每天可锁桌时间" :visible.sync="updateDialog">
         <el-form :model="updateObj">
           <el-form-item label="店面名称:" :label-width="formLabelWidth">
-            <el-select v-model="updateObj.fd_sfp_StoreFrontID" placeholder="请选择店面">
+            <el-select v-model="updateObj.fd_clt_FrontID" placeholder="请选择店面">
               <el-option
                 v-for="item in foodStoreInformtionList"
                 :key="item.fd_sf_ID"
@@ -129,14 +127,16 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="菜名:" :label-width="formLabelWidth">
-            <el-input v-model="updateObj.fd_sfp_Name"></el-input>
-          </el-form-item>
-          <el-form-item label="价格:" :label-width="formLabelWidth">
-            <el-input v-model="updateObj.fd_sfp_Price"></el-input>
-          </el-form-item>
-          <el-form-item label="备注:" :label-width="formLabelWidth">
-            <el-input v-model="updateObj.fd_sfp_Remark"></el-input>
+          <el-form-item label="可售时间:" :label-width="formLabelWidth">
+            <el-time-select
+              v-model="updateObj.fd_clt_CanSellTime"
+              :picker-options="{
+                start: '00:00',
+                step: '01:00',
+                end: '24:00'
+              }"
+              placeholder="选择时间">
+            </el-time-select>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -144,7 +144,6 @@
           <el-button type="primary" @click="updateSubmit">确 定</el-button>
         </div>
       </el-dialog>
-
 
     </div>
   </div>
@@ -155,28 +154,26 @@
   export default {
     computed: mapGetters([
       'foodStoreInformtionList',
-      'foodStoreProductList'
+      'foodStoreTableTimeList'
     ]),
     data() {
       return {
         storeId: '',
-        addDialog: false,
-        addOptions: {
-          "fd_sfp_StoreFrontID": "",//店面编号
-          "fd_sfp_Name": "",//名称
-          "fd_sfp_Price": "",//价格
-          "fd_sfp_Remark": "",//备注
-        },
-        formLabelWidth: '120px',
         total: 0,
-        updateObj: {},
+        formLabelWidth: '120px',
+        addDialog: false,
         updateDialog: false,
+        addOptions: {
+          "fd_clt_FrontID": "",//店面编号
+          "fd_clt_CanSellTime": "",//可售时间
+        },
+        updateObj: {},
       }
     },
     methods: {
-      //分页
+      //      分页
       handleCurrentChange(num) {
-        this.initData(this.storeId, num)
+        this.initData(this.storeId, num);
       },
       //初始化数据
       initData(id, num) {
@@ -185,27 +182,25 @@
             message: '请选择店面！',
             type: 'error'
           })
-          return;
+          return
         }
-        let selectStoreFrontProductInfo = {
+        let selectCanLockTimeInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
-          "fd_sfp_ID": "",//店面产品编码
-          "fd_sfp_StoreFrontID": id,//店面编号
-          "fd_sfp_Name": "",//名称
-          "priceFrom": "",//价格
-          "priceTo": "",//备注
           "page": num ? num : 1,
           "rows": "5",
+          "fd_clt_ID": "",//店面可锁桌时间编码
+          "fd_clt_FrontID": id,//店面编号
+          "fd_clt_CanSellTime": "",//可售时间
         };
-        this.$store.dispatch('initFoodStoreProduct', selectStoreFrontProductInfo)
+        this.$store.dispatch('initFoodStoreTableTime', selectCanLockTimeInfo)
           .then(total => {
             this.total = total;
           }, err => {
-            $notify({
+            this.$notify({
               message: err,
               type: 'error'
             })
@@ -213,7 +208,7 @@
       },
       //查询
       search() {
-        this.initData(this.storeId)
+        this.initData(this.storeId);
       },
       //添加
       add() {
@@ -222,7 +217,7 @@
       },
       //添加提交
       addSubmit() {
-        let insertStoreFrontProductInfo = {
+        let insertCanLockTimeInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
@@ -230,13 +225,13 @@
           "pcName": "",
           "data": this.addOptions
         };
-        this.$store.dispatch('addFoodStoreProduct', insertStoreFrontProductInfo)
+        this.$store.dispatch('addFoodStoreTableTime', insertCanLockTimeInfo)
           .then(suc => {
             this.$notify({
               message: suc,
               type: 'success'
             })
-            this.initData(this.storeId)
+            this.initData(this.storeId);
           }, err => {
             this.$notify({
               message: err,
@@ -253,7 +248,7 @@
       },
       //修改提交
       updateSubmit() {
-        let updateStoreFrontProductInfo = {
+        let updateCanLockTimeInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
@@ -261,13 +256,13 @@
           "pcName": "",
           "data": this.updateObj
         };
-        this.$store.dispatch('updateFoodStoreProduct', updateStoreFrontProductInfo)
+        this.$store.dispatch('updateFoodStoreTableTime', updateCanLockTimeInfo)
           .then(suc => {
             this.$notify({
               message: suc,
               type: 'success'
             })
-            this.initData(this.storeId)
+            this.initData(this.storeId);
           }, err => {
             this.$notify({
               message: err,
@@ -278,23 +273,23 @@
       },
       //删除
       Delete(id) {
-        let deleteStoreFrontProductInfo = {
+        let deleteCanLockTimeInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
           "data": {
-            "fd_sfp_ID": id ? id : '',//店面产品编码
+            "fd_clt_ID": id ? id : '',//店面可锁桌时间编码
           }
         };
-        this.$store.dispatch('deleteFoodStoreProduct',deleteStoreFrontProductInfo)
+        this.$store.dispatch('deleteFoodStoreTableTime',deleteCanLockTimeInfo)
           .then(suc => {
             this.$notify({
               message: suc,
               type: 'success'
             })
-            this.initData(this.storeId)
+            this.initData(this.storeId);
           }, err => {
             this.$notify({
               message: err,

@@ -6,6 +6,13 @@ export default {
   foodCityList: state => state.foodCityList,
   foodStoreRoomList: state => state.foodStoreRoomList,
   foodStoreProductList: state => state.foodStoreProductList,
+  foodRoomPictureList: state => state.foodRoomPictureList,
+  foodProductPictureList: state => state.foodProductPictureList,
+  foodStoreRoomTabelList: state => state.foodStoreRoomTabelList,
+  foodStoreRecommendList: state => state.foodStoreRecommendList,
+  foodStoreTableTimeList: state => state.foodStoreTableTimeList,
+  foodStoreOrderingTimeList: state => state.foodStoreOrderingTimeList,
+  foodStoreConfirnOrderList: state => state.foodStoreConfirnOrderList,
 
 
 }

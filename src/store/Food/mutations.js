@@ -26,6 +26,27 @@ export default {
   },
   initFoodStoreProduct(state, data) {
     state.foodStoreProductList = data;
+  },
+  initFoodRoomPicture(state, data) {
+    state.foodRoomPictureList = data;
+  },
+  initFoodProductPicture(state, data) {
+    state.foodProductPictureList = data;
+  },
+  initFoodStoreRoomTabel(state, data) {
+    state.foodStoreRoomTabelList = data;
+  },
+  initFoodStoreRecommend(state, data) {
+    state.foodStoreRecommendList = data;
+  },
+  initFoodStoreTableTime(state, data) {
+    state.foodStoreTableTimeList = data;
+  },
+  initFoodStoreOrderingTime(state, data) {
+    state.foodStoreOrderingTimeList = data;
+  },
+  initFoodStoreConfirnOrder(state, data){
+    state.foodStoreConfirnOrderList = data;
   }
 }
 

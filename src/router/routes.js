@@ -97,6 +97,20 @@ import FoodStoreInformation from '@/components/food/FoodStoreInformation'
 import FoodStoreRoom  from '@/components/food/FoodStoreRoom'
 //店面产品
 import FoodStoreProduct from '@/components/food/FoodStoreProduct'
+//房间图片
+import FoodRoomPicture from '@/components/food/FoodRoomPicture'
+//产品图片
+import FoodProductPicture from '@/components/food/FoodProductPicture'
+//房间餐桌
+import FoodStoreRoomTabel from '@/components/food/FoodStoreRoomTabel'
+//推荐菜
+import FoodStoreRecommend from '@/components/food/FoodStoreRecommend'
+//店面每天可锁桌时间
+import FoodStoreTableTime from '@/components/food/FoodStoreTableTime'
+//店面可订餐时间
+import FoodStoreOrderingTime from '@/components/food/FoodStoreOrderingTime'
+//查询订单
+import FoodStoreConfirmOrder from '@/components/food/FoodStoreConfirmOrder'
 
 
 
@@ -515,6 +529,69 @@ export default [
           User:FoodStoreProduct
         },
         name:'FoodStoreProduct'
+      },
+      //房间图片
+      {
+        path: 'foodRoomPicture',
+        components:{
+          default:Home,
+          User:FoodRoomPicture
+        },
+        name:'FoodRoomPicture'
+      },
+      //产品图片
+      {
+        path: 'foodProductPicture',
+        components:{
+          default:Home,
+          User:FoodProductPicture
+        },
+        name:'FoodProductPicture'
+      },
+      //房间餐桌
+      {
+        path: 'foodStoreRoomTabel',
+        components:{
+          default:Home,
+          User:FoodStoreRoomTabel
+        },
+        name:'FoodStoreRoomTabel'
+      },
+      //推荐菜
+      {
+        path: 'foodStoreRecommend',
+        components:{
+          default:Home,
+          User:FoodStoreRecommend
+        },
+        name:'FoodStoreRecommend'
+      },
+      //店面每天可锁桌时间
+      {
+        path: 'foodStoreTableTime',
+        components:{
+          default:Home,
+          User:FoodStoreTableTime
+        },
+        name:'FoodStoreTableTime'
+      },
+      //店面可订餐时间
+      {
+        path: 'foodStoreOrderingTime',
+        components:{
+          default:Home,
+          User:FoodStoreOrderingTime
+        },
+        name:'FoodStoreOrderingTime'
+      },
+      //查询订单
+      {
+        path:'foodStoreConfirmOrder',
+        components:{
+          default:Home,
+          User:FoodStoreConfirmOrder
+        },
+        name:'FoodStoreConfirmOrder'
       }
     ],
   },

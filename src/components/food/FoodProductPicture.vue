@@ -1,8 +1,10 @@
 <template>
   <div>
     <div id="wrap" class="clearfix">
-      <h1 class="userClass">店面菜肴</h1>
+      <h1 class="userClass">店面图片</h1>
+
       <!--查询-->
+
       <el-col :span="24" class="formSearch">
         <el-form :inline="true">
           <el-form-item>
@@ -28,33 +30,30 @@
       <!--数据展示-->
 
       <el-table
-        :data="foodStoreProductList"
+        :data="foodProductPictureList"
         style="width: 100%">
+
+        <el-table-column
+          prop="fd_pi_ID"
+          label="图片编号"
+          align="center">
+        </el-table-column>
+
         <el-table-column
           prop="fd_sf_ProductName"
           label="店面名称"
           align="center">
         </el-table-column>
+
         <el-table-column
-          prop="fd_sfp_ID"
-          label="菜肴编号"
+          label="店面图片"
           align="center">
+          <template slot-scope="scope">
+            <img v-lazy="scope.row.fd_pi_ImageUrl" width="128" height="80"
+                 @click="displayBigPicture(scope.row.fd_pi_ImageUrl)">
+          </template>
         </el-table-column>
-        <el-table-column
-          prop="fd_sfp_Name"
-          label="菜肴名称"
-          align="center">
-        </el-table-column>
-        <el-table-column
-          prop="fd_sfp_Price"
-          label="价格(元)"
-          align="center">
-        </el-table-column>
-        <el-table-column
-          prop="fd_sfp_Remark"
-          label="备注"
-          align="center">
-        </el-table-column>
+
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button
@@ -65,32 +64,32 @@
             <el-button
               size="mini"
               type="danger"
-              @click="Delete(scope.row.fd_sfp_ID)">删除
+              @click="Delete(scope.row.fd_pi_ID)">删除
             </el-button>
           </template>
         </el-table-column>
 
       </el-table>
 
-      <!--分页-->
 
-      <div class="block" style="text-align: right">
-        <el-pagination
-          :page-size="5"
-          @current-change="handleCurrentChange"
-          layout="prev, pager, next"
-          :total="total"
-          v-show="total"
-        >
-        </el-pagination>
-      </div>
+      <!--显示大图-->
+
+      <el-dialog
+        title="显示大图"
+        :visible.sync="bigPictureDialog"
+        width="50%">
+        <img v-lazy="imgUrl" width="100%">
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="bigPictureDialog = false">取 消</el-button>
+        </span>
+      </el-dialog>
 
       <!--添加-->
 
-      <el-dialog title="添加店面菜肴" :visible.sync="addDialog">
+      <el-dialog title="添加店面图片" :visible.sync="addDialog">
         <el-form :model="addOptions">
           <el-form-item label="店面名称:" :label-width="formLabelWidth">
-            <el-select v-model="addOptions.fd_sfp_StoreFrontID" placeholder="请选择店面">
+            <el-select v-model="addOptions.fd_pi_StoreFront" placeholder="请选择店面">
               <el-option
                 v-for="item in foodStoreInformtionList"
                 :key="item.fd_sf_ID"
@@ -99,14 +98,11 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="菜名:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.fd_sfp_Name"></el-input>
-          </el-form-item>
-          <el-form-item label="价格:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.fd_sfp_Price"></el-input>
-          </el-form-item>
-          <el-form-item label="备注:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.fd_sfp_Remark"></el-input>
+          <el-form-item label="菜肴图片:" :label-width="formLabelWidth">
+            <a href="javascript:;" class="file">上传图片
+              <input type="file" name="" ref="upload" accept="image/*">
+            </a>
+            <img v-lazy="addOptions.fd_pi_ImageUrl" v-show="addOptions.fd_pi_ImageUrl" width="128" height="80">
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -117,10 +113,10 @@
 
       <!--修改-->
 
-      <el-dialog title="修改店面菜肴" :visible.sync="updateDialog">
+      <el-dialog title="修改店面图片" :visible.sync="updateDialog">
         <el-form :model="updateObj">
           <el-form-item label="店面名称:" :label-width="formLabelWidth">
-            <el-select v-model="updateObj.fd_sfp_StoreFrontID" placeholder="请选择店面">
+            <el-select v-model="updateObj.fd_pi_StoreFront" placeholder="请选择店面">
               <el-option
                 v-for="item in foodStoreInformtionList"
                 :key="item.fd_sf_ID"
@@ -129,14 +125,11 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="菜名:" :label-width="formLabelWidth">
-            <el-input v-model="updateObj.fd_sfp_Name"></el-input>
-          </el-form-item>
-          <el-form-item label="价格:" :label-width="formLabelWidth">
-            <el-input v-model="updateObj.fd_sfp_Price"></el-input>
-          </el-form-item>
-          <el-form-item label="备注:" :label-width="formLabelWidth">
-            <el-input v-model="updateObj.fd_sfp_Remark"></el-input>
+          <el-form-item label="菜肴图片:" :label-width="formLabelWidth">
+            <a href="javascript:;" class="file">上传图片
+              <input type="file" name="" ref="upload" accept="image/*">
+            </a>
+            <img v-lazy="addOptions.fd_pi_ImageUrl" v-show="addOptions.fd_pi_ImageUrl" width="128" height="80">
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -155,57 +148,84 @@
   export default {
     computed: mapGetters([
       'foodStoreInformtionList',
-      'foodStoreProductList'
+      'foodProductPictureList'
     ]),
     data() {
       return {
         storeId: '',
         addDialog: false,
-        addOptions: {
-          "fd_sfp_StoreFrontID": "",//店面编号
-          "fd_sfp_Name": "",//名称
-          "fd_sfp_Price": "",//价格
-          "fd_sfp_Remark": "",//备注
-        },
         formLabelWidth: '120px',
-        total: 0,
-        updateObj: {},
+        addOptions: {
+          "fd_pi_StoreFront": "",//店面编号
+          "fd_pi_ImageUrl": "",//图片地址
+        },
+        imgUrl: '',
+        bigPictureDialog: false,
         updateDialog: false,
+        updateObj: {},
       }
     },
     methods: {
-      //分页
-      handleCurrentChange(num) {
-        this.initData(this.storeId, num)
+
+      //图片转二进制
+      uploadImg(file) {
+        return new Promise(function (relove, reject) {
+          lrz(file)
+            .then(data => {
+              relove(data.base64.split(',')[1])
+            })
+        })
       },
+
+      uploaNode() {
+        this.addOptions.fd_pi_ImageUrl = '';
+        setTimeout(() => {
+          if (this.$refs.upload) {
+            this.$refs.upload.addEventListener('change', data => {
+              for (var i = 0; i < this.$refs.upload.files.length; i++) {
+                this.uploadImg(this.$refs.upload.files[i]).then(data => {
+                  this.$store.dispatch('foodUploadAdminImgs', {
+                    imageData: data
+                  })
+                    .then(data => {
+                      if (data) {
+                        this.addOptions.fd_pi_ImageUrl = data.data;
+                      } else {
+                        this.$notify({
+                          message: '图片地址不存在!',
+                          type: 'error'
+                        });
+                      }
+                    })
+                })
+              }
+            })
+          }
+        }, 30)
+      },
+
       //初始化数据
-      initData(id, num) {
+      initData(id) {
         if (!id) {
           this.$notify({
-            message: '请选择店面！',
+            message: '请先选择店面！',
             type: 'error'
           })
-          return;
+          return
         }
-        let selectStoreFrontProductInfo = {
+        let selectProductImageInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
-          "fd_sfp_ID": "",//店面产品编码
-          "fd_sfp_StoreFrontID": id,//店面编号
-          "fd_sfp_Name": "",//名称
-          "priceFrom": "",//价格
-          "priceTo": "",//备注
-          "page": num ? num : 1,
-          "rows": "5",
+          "fd_pi_ID": "",//图片编号
+          "fd_pi_StoreFront": id,//店面编号
         };
-        this.$store.dispatch('initFoodStoreProduct', selectStoreFrontProductInfo)
-          .then(total => {
-            this.total = total;
+        this.$store.dispatch('initFoodProductPicture', selectProductImageInfo)
+          .then(() => {
           }, err => {
-            $notify({
+            this.$notify({
               message: err,
               type: 'error'
             })
@@ -213,16 +233,22 @@
       },
       //查询
       search() {
-        this.initData(this.storeId)
+        this.initData(this.storeId);
+      },
+      //显示大图
+      displayBigPicture(urlData) {
+        this.bigPictureDialog = true;
+        this.imgUrl = urlData;
       },
       //添加
       add() {
         this.$store.commit('setTranstionFalse');
         this.addDialog = true;
+        this.uploaNode();
       },
       //添加提交
       addSubmit() {
-        let insertStoreFrontProductInfo = {
+        let insertProductImageInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
@@ -230,13 +256,13 @@
           "pcName": "",
           "data": this.addOptions
         };
-        this.$store.dispatch('addFoodStoreProduct', insertStoreFrontProductInfo)
+        this.$store.dispatch('addFoodProductPicture', insertProductImageInfo)
           .then(suc => {
             this.$notify({
               message: suc,
               type: 'success'
             })
-            this.initData(this.storeId)
+            this.initData(this.storeId);
           }, err => {
             this.$notify({
               message: err,
@@ -247,13 +273,17 @@
       },
       //修改
       update(rowData) {
-        this.updateObj = rowData;
         this.$store.commit('setTranstionFalse');
         this.updateDialog = true;
+        this.updateObj = rowData;
+        this.uploaNode();
       },
       //修改提交
       updateSubmit() {
-        let updateStoreFrontProductInfo = {
+        if (this.addOptions.fd_pi_ImageUrl) {
+          this.updateObj.fd_pi_ImageUrl = this.addOptions.fd_pi_ImageUrl
+        }
+        let updateProductImageInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
@@ -261,13 +291,13 @@
           "pcName": "",
           "data": this.updateObj
         };
-        this.$store.dispatch('updateFoodStoreProduct', updateStoreFrontProductInfo)
+        this.$store.dispatch('updateFoodProductPicture', updateProductImageInfo)
           .then(suc => {
             this.$notify({
               message: suc,
               type: 'success'
             })
-            this.initData(this.storeId)
+            this.initData(this.storeId);
           }, err => {
             this.$notify({
               message: err,
@@ -278,30 +308,30 @@
       },
       //删除
       Delete(id) {
-        let deleteStoreFrontProductInfo = {
+        let deleteProductImageInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
           "data": {
-            "fd_sfp_ID": id ? id : '',//店面产品编码
+            "fd_pi_ID": id ? id : '',//图片编号
           }
         };
-        this.$store.dispatch('deleteFoodStoreProduct',deleteStoreFrontProductInfo)
+        this.$store.dispatch('deleteFoodProductPicture',deleteProductImageInfo)
           .then(suc => {
             this.$notify({
               message: suc,
               type: 'success'
             })
-            this.initData(this.storeId)
+            this.initData(this.storeId);
           }, err => {
             this.$notify({
               message: err,
               type: 'error'
             })
           })
-      },
+      }
     },
   }
 </script>

@@ -173,13 +173,34 @@
                     <a href="javascript:;"><i class="icon-ticket"></i> <span>美食后台管理</span></a>
                     <ul>
                       <li>
-                        <router-link to="foodStoreInformation">美食店面信息</router-link>
+                        <router-link to="/home/foodStoreInformation">美食店面信息</router-link>
                       </li>
                       <li>
-                        <router-link to="foodStoreRoom">美食店面房间</router-link>
+                        <router-link to="/home/foodProductPicture">美食店面图片</router-link>
                       </li>
                       <li>
-                        <router-link to="foodStoreProduct">美食店面产品</router-link>
+                        <router-link to="/home/foodStoreRecommend">美食推荐菜</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/foodStoreProduct">美食店面菜肴</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/foodStoreRoom">美食店面房间</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/foodRoomPicture">美食房间图片</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/foodStoreRoomTabel">美食房间餐桌</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/foodStoreTableTime">美食店面每天可锁桌时间</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/foodStoreOrderingTime">美食店面可订餐时间</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/foodStoreConfirmOrder">美食订单管理</router-link>
                       </li>
                     </ul>
                   </li>
