@@ -421,6 +421,7 @@
       },
       //修改按钮
       update(rowData) {
+        console.log(rowData)
         this.updateObj = rowData
         this.$store.commit('setTranstionFalse');
         this.updateDialog = true;

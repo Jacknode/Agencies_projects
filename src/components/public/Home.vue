@@ -202,6 +202,9 @@
                       <li>
                         <router-link to="/home/foodStoreConfirmOrder">美食订单管理</router-link>
                       </li>
+                      <li>
+                        <router-link to="foodStoppingPlace">美食停车场</router-link>
+                      </li>
                     </ul>
                   </li>
                 </ul>

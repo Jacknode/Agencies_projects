@@ -1,15 +1,24 @@
 <template>
   <div>
     <div id="wrap" class="clearfix">
-      <h1 class="userClass">店面信息</h1>
+
+      <h1 class="userClass">停车位管理</h1>
       <!--查询-->
       <el-col :span="24" class="formSearch">
         <el-form :inline="true">
           <el-form-item>
-            <span>店面名称筛选:</span>
+            <span>店面停车位查询:</span>
           </el-form-item>
           <el-form-item>
-            <el-input v-model="roomName"></el-input>
+            <el-select v-model="foodStoreName" placeholder="请选择店面名称">
+              <el-option
+                v-for="item in foodStoppingPlaceStoreAllList"
+                :key="item.fd_sf_ID"
+                :label="item.fd_sf_ProductName"
+                :value="item.fd_sf_ID"
+              >
+              </el-option>
+            </el-select>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="search">查询</el-button>
@@ -20,173 +29,67 @@
 
       <!--数据展示-->
       <el-table
-        :data="foodStoreInformtionList"
+
+        :data="foodStoppingPlaceList"
         style="width: 100%">
-        <el-table-column type="expand">
-          <template slot-scope="props">
-            <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="店面编号">
-                <span>{{ props.row.fd_sf_ID }}</span>
-              </el-form-item>
-              <el-form-item label="分类编号">
-                <span>{{ props.row.fd_sf_TypeID }}</span>
-              </el-form-item>
-              <el-form-item label="用餐人数">
-                <span>{{ props.row.fd_py_MansName }}</span>
-              </el-form-item>
-              <el-form-item label="店面名称">
-                <span>{{ props.row.fd_sf_ProductName }}</span>
-              </el-form-item>
-              <el-form-item label="店面类型">
-                <span>{{ props.row.fd_py_Name }}</span>
-              </el-form-item>
-              <el-form-item label="地址描述">
-                <span>{{ props.row.fd_sf_Address }}</span>
-              </el-form-item>
-              <el-form-item label="经度">
-                <span>{{ props.row.fd_sf_Lng }}°</span>
-              </el-form-item>
-              <el-form-item label="纬度">
-                <span>{{ props.row.fd_sf_Lat }}°</span>
-              </el-form-item>
-              <el-form-item label="省">
-                <span>{{ props.row.fd_sf_Provice }}</span>
-              </el-form-item>
-              <el-form-item label="市">
-                <span>{{ props.row.fd_sf_City }}</span>
-              </el-form-item>
-              <el-form-item label="人均价格">
-                <span>{{ props.row.fd_sf_AvgPrice }}元</span>
-              </el-form-item>
-              <el-form-item label="营业时间">
-                <span>{{ props.row.fd_sf_OpenTime }}</span>
-              </el-form-item>
-              <el-form-item label="联系电话">
-                <span>{{ props.row.fd_sf_Phone }}</span>
-              </el-form-item>
-              <el-form-item label="是否有WAFI">
-                <span>{{ props.row.fd_sf_HasWafi }}</span>
-              </el-form-item>
-              <el-form-item label="供应商编码">
-                <span>{{ props.row.fd_sf_TradeID }}</span>
-              </el-form-item>
-              <el-form-item label="审核状态">
-                <span>{{ props.row.fd_sf_PassStatus }}</span>
-              </el-form-item>
-            </el-form>
-          </template>
+        <el-table-column
+        label="停车位编码"
+        prop="fd_sc_ID">
+      </el-table-column>
+        <el-table-column
+          label="停车位名称"
+          prop="fd_sc_SeatNo">
         </el-table-column>
         <el-table-column
-          label="店面名称"
-          prop="fd_sf_ProductName">
+          label="店面编号"
+          prop="fd_sc_ShopID">
         </el-table-column>
         <el-table-column
-          label="联系电话"
-          prop="fd_sf_Phone">
-        </el-table-column>
-        <el-table-column
-          label="人均价格">
-          <template slot-scope="scope">
-            {{scope.row.fd_sf_AvgPrice}}元
-          </template>
+          label="锁定状态"
+          prop="fd_sc_LockStatus">
         </el-table-column>
         <el-table-column
           label="操作">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="update(scope.row)">修改</el-button>
-            <el-button size="mini" type="danger" @click="deleteFoodStoreInformtion(scope.row.fd_sf_ID)">删除</el-button>
+
+            <el-button size="mini" type="danger" @click="deleteSubmit(scope.row.fd_sc_ID)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
 
       <!--分页-->
 
-      <div class="block" style="text-align: right">
-        <el-pagination
-          :page-size="5"
-          @current-change="handleCurrentChange"
-          layout="prev, pager, next"
-          :total="total"
-          v-show="total"
-        >
-        </el-pagination>
-      </div>
+
+      <!--<div class="block" style="text-align: right">-->
+        <!--<el-pagination-->
+          <!--:page-size="5"-->
+          <!--@current-change="handleCurrentChange"-->
+          <!--layout="prev, pager, next"-->
+          <!--:total="total"-->
+          <!--v-show="total"-->
+        <!--&gt;-->
+        <!--</el-pagination>-->
+      <!--</div>-->
 
       <!--添加-->
 
-      <el-dialog title="添加店面信息" :visible.sync="addDialog">
-        <el-form :model="addOptions">
-          <el-form-item label="店面用餐类型:" :label-width="formLabelWidth">
-            <el-select v-model="addOptions.fd_sf_TypeID" placeholder="请选择">
-              <el-option
-                v-for="item in storefrontTypeList"
-                :key="item.propertyID"
-                :label="item.propertyName"
-                :value="item.propertyID">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="用餐人数:" :label-width="formLabelWidth">
-            <el-select v-model="addOptions.fd_sf_MansID" placeholder="请选择">
-              <el-option
-                v-for="item in numberOfMealsList"
-                :key="item.propertyID"
-                :label="item.propertyName"
-                :value="item.propertyID">
-              </el-option>
-            </el-select>
+      <el-dialog title="添加停车场" :visible.sync="addDialog">
+          <el-form-item label="停车位名称:" :label-width="formLabelWidth">
+            <el-input v-model="addOptions.data.fd_sc_SeatNo"></el-input>
           </el-form-item>
           <el-form-item label="店面名称:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.fd_sf_ProductName"></el-input>
-          </el-form-item>
-          <el-form-item label="地址描述:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.fd_sf_Address"></el-input>
-          </el-form-item>
-          <el-form-item label="经度:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.fd_sf_Lng"></el-input>
-          </el-form-item>
-          <el-form-item label="纬度:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.fd_sf_Lat"></el-input>
-          </el-form-item>
-          <el-form-item label="省:" :label-width="formLabelWidth">
-            <el-select v-model="addOptions.fd_sf_Provice" placeholder="请选择" @change="changeCity">
+            <el-select v-model="addOptions.data.fd_sc_ShopID" placeholder="请选择店面名称">
               <el-option
-                v-for="item in foodProcinceList"
-                :key="item.sm_af_AreaID"
-                :label="item.sm_af_AreaName"
-                :value="item.sm_af_AreaName">
+                v-for="item in foodStoppingPlaceStoreAllList"
+                :key="item.fd_sf_ID"
+                :label="item.fd_sf_ProductName"
+                :value="item.fd_sf_ID"
+              >
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="市:" :label-width="formLabelWidth">
-            <el-select v-model="addOptions.fd_sf_City" placeholder="请选择">
-              <el-option
-                v-for="item in foodCityList"
-                :key="item.sm_af_AreaID"
-                :label="item.sm_af_AreaName"
-                :value="item.sm_af_AreaName">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="人均价格:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.fd_sf_AvgPrice"></el-input>
-          </el-form-item>
-          <el-form-item label="营业时间:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.fd_sf_OpenTime"></el-input>
-          </el-form-item>
-          <el-form-item label="联系电话:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.fd_sf_Phone"></el-input>
-          </el-form-item>
-          <el-form-item label="是否有WAFI:" :label-width="formLabelWidth">
-            <el-select v-model="addOptions.fd_sf_HasWafi" placeholder="请选择">
-              <el-option
-                v-for="item in isWifi"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
+
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="addDialog = false">取 消</el-button>
@@ -196,73 +99,46 @@
 
       <!--修改-->
 
-      <el-dialog title="修改店面信息" :visible.sync="updateDialog">
+
+      <el-dialog title="修改停车位" :visible.sync="updateDialog">
         <el-form :model="updateObj">
-          <el-form-item label="店面用餐类型:" :label-width="formLabelWidth">
-            <el-select v-model="updateObj.fd_sf_TypeID" placeholder="请选择">
+          <!--<el-form-item label="店面用餐类型:" :label-width="formLabelWidth">-->
+            <!--<el-select v-model="updateObj.fd_sf_TypeID" placeholder="请选择">-->
+              <!--<el-option-->
+                <!--v-for="item in storefrontTypeList"-->
+                <!--:key="item.propertyID"-->
+                <!--:label="item.propertyName"-->
+                <!--:value="item.propertyID">-->
+              <!--</el-option>-->
+            <!--</el-select>-->
+          <!--</el-form-item>-->
+          <el-form-item label="停车位编码:" :label-width="formLabelWidth">
+           <el-input v-model="updateObj.fd_sc_ID" :disabled="isOff" ></el-input>
+          </el-form-item>
+          <el-form-item label="停车位名称:"   :label-width="formLabelWidth">
+            <el-input v-model="updateObj.fd_sc_SeatNo"></el-input>
+          </el-form-item>
+
+          <!--<el-form-item label="店面编号:" :label-width="formLabelWidth">-->
+            <!--<el-input v-model="updateObj.fd_sc_ShopID"></el-input>-->
+          <!--</el-form-item>-->
+
+          <el-form-item label="店面名称:" :label-width="formLabelWidth">
+            <el-select v-model="updateObj.fd_sc_ShopID" placeholder="请选择店面名称">
               <el-option
-                v-for="item in storefrontTypeList"
-                :key="item.propertyID"
-                :label="item.propertyName"
-                :value="item.propertyID">
+                v-for="item in foodStoppingPlaceStoreAllList"
+                :key="item.fd_sf_ID"
+                :label="item.fd_sf_ProductName"
+                :value="item.fd_sf_ID"
+              >
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="用餐人数:" :label-width="formLabelWidth">
-            <el-select v-model="updateObj.fd_sf_MansID" placeholder="请选择">
+
+          <el-form-item label="锁定状态:" :label-width="formLabelWidth">
+            <el-select v-model="updateObj.fd_sc_LockStatus" placeholder="请选择锁定状态">
               <el-option
-                v-for="item in numberOfMealsList"
-                :key="item.propertyID"
-                :label="item.propertyName"
-                :value="item.propertyID">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="产品名称:" :label-width="formLabelWidth">
-            <el-input v-model="updateObj.fd_sf_ProductName"></el-input>
-          </el-form-item>
-          <el-form-item label="地址描述:" :label-width="formLabelWidth">
-            <el-input v-model="updateObj.fd_sf_Address"></el-input>
-          </el-form-item>
-          <el-form-item label="经度:" :label-width="formLabelWidth">
-            <el-input v-model="updateObj.fd_sf_Lng"></el-input>
-          </el-form-item>
-          <el-form-item label="纬度:" :label-width="formLabelWidth">
-            <el-input v-model="updateObj.fd_sf_Lat"></el-input>
-          </el-form-item>
-          <el-form-item label="省:" :label-width="formLabelWidth">
-            <el-select v-model="updateObj.fd_sf_Provice" placeholder="请选择" @change="changeCity">
-              <el-option
-                v-for="item in foodProcinceList"
-                :key="item.sm_af_AreaID"
-                :label="item.sm_af_AreaName"
-                :value="item.sm_af_AreaName">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="市:" :label-width="formLabelWidth">
-            <el-select v-model="updateObj.fd_sf_City" placeholder="请选择">
-              <el-option
-                v-for="item in foodCityList"
-                :key="item.sm_af_AreaID"
-                :label="item.sm_af_AreaName"
-                :value="item.sm_af_AreaName">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="人均价格:" :label-width="formLabelWidth">
-            <el-input v-model="updateObj.fd_sf_AvgPrice"></el-input>
-          </el-form-item>
-          <el-form-item label="营业时间:" :label-width="formLabelWidth">
-            <el-input v-model="updateObj.fd_sf_OpenTime"></el-input>
-          </el-form-item>
-          <el-form-item label="联系电话:" :label-width="formLabelWidth">
-            <el-input v-model="updateObj.fd_sf_Phone"></el-input>
-          </el-form-item>
-          <el-form-item label="是否有WAFI:" :label-width="formLabelWidth">
-            <el-select v-model="updateObj.fd_sf_HasWafi" placeholder="请选择">
-              <el-option
-                v-for="item in isWifi"
+                v-for="item in Status"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value">
@@ -284,100 +160,68 @@
 
   export default {
     computed: mapGetters([
-      'foodStoreInformtionList',
-      'numberOfMealsList',
-      'storefrontTypeList',
-      'foodProcinceList',
-      'foodCityList',
+
+      'foodStoppingPlaceList',
+      'foodStoppingPlaceStoreAllList',
     ]),
     data() {
       return {
-        userInfo: {},
-        total: 0,
-        addDialog: false,
-        addOptions: {
-          "fd_sf_TypeID": "",
-          "fd_sf_MansID": "",
-          "fd_sf_ProductName": "",
-          "fd_sf_Address": "",
-          "fd_sf_Lng": "",
-          "fd_sf_Lat": "",
-          "fd_sf_Provice": "",
-          "fd_sf_City": "",
-          "fd_sf_AvgPrice": "",
-          "fd_sf_OpenTime": "",
-          "fd_sf_Phone": "",
-          "fd_sf_HasWafi": "",
-          "fd_sf_TradeID": "",
-        },
-        formLabelWidth: '120px',
-        updateDialog: false,
-        isWifi: [
-          {
-            value: 0,
-            label: '无'
-          },
-          {
-            value: 1,
-            label: '有'
-          }
-
-        ],
-        proviceId: '',
-        roomName: '',
+        isOff:true,
+        foodStoreName: "",
         updateObj:{},
-      }
-    },
-    methods: {
-//      分页
-      handleCurrentChange(num) {
-        this.initData('', num)
-      },
-      //查询省
-      initProvince() {
-        let getAreaProvice = {
-          "areaPid": 3337
-        };
-        this.$store.dispatch('initFoodProcince', getAreaProvice)
-      },
-      //市
-      changeCity(name) {
-        this.proviceId = this.foodProcinceList.filter(item => {
-          if (item.sm_af_AreaName == name) {
-            return true;
-          }
-          return false;
-        })[0].sm_af_AreaID
-        let getAreaProvice = {
-          "areaPid": this.proviceId
-        };
-        this.$store.dispatch('initFoodCity', getAreaProvice)
-      },
-      //初始化数据
-      initData(name, num) {
-        let selectStoreFrontInfo = {
+        addDialog: false,
+        formLabelWidth: '120px',
+        updateDialog:false,
+        addOptions: {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
-          "fd_sf_ID": "",//店面编号
-          "fd_sf_TypeID": "",//分类编号
-          "fd_sf_MansID": "",//用餐人数编号
-          "fd_sf_ProductName": name ? name : '',//产品名称 like
-          "fd_sf_Provice": "",//省
-          "fd_sf_City": "",//市
-          "priceFrom": "",//人均价格大于
-          "priceTo": "",//人均价格小于
-          "fd_sf_Phone": "",//联系电话
-          "fd_sf_TradeID": this.userInfo.sm_ai_ID,//供应商编码
-          "page": num ? num : 1,
-          "rows": "5",
+          "data": {
+            // "fd_sc_ID": "",//停车位编码
+            "fd_sc_SeatNo": "",//停车位名称
+            "fd_sc_ShopID": "",//店面编号
+          }
+        },
+
+        Status: [{
+          value: 0,
+          label: '空闲'
+        }, {
+          value: 1,
+          label: '锁定'
+        }, {
+          value: 2,
+          label: '已售'
+        }],
+
+      }
+    },
+    created() {
+      this.initData();
+      // this.userInfo = JSON.parse(sessionStorage.getItem('admin'))
+      this.initStoreAllData();
+    },
+    methods: {
+      //初始化数据
+      initData(name) {
+        let selectFoodStoppingPlace = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+
+          //"page": "1",
+          //"rows": "10",
+          //"fd_sc_ID": "2",//停车位编码
+          "fd_sc_ShopID": name,//店面编号
+          //"fd_sc_SeatNo": "1",//停车位名称
+          //"fd_sc_LockStatus": "1",//锁定状态
         };
-        this.$store.dispatch('initFoodStoreInformtion', selectStoreFrontInfo)
-          .then(total => {
-            this.total = total;
-          }, err => {
+        this.$store.dispatch('initFoodStoppingPlace', selectFoodStoppingPlace)
+          .then(() => {}, err => {
             this.$notify({
               message: err,
               type: 'error'
@@ -386,119 +230,177 @@
       },
       //查询
       search() {
-        this.initData(this.roomName, 1)
+
+        this.initData(this.foodStoreName)
       },
-      //添加
-      add() {
-        this.$store.commit('setTranstionFalse');
-        this.addDialog = true;
-        this.addOptions.fd_sf_TradeID = this.userInfo.sm_ai_ID;
-      },
-//      添加提交
-      addSubmit() {
-        let insertStoreFrontInfo = {
+      //初始化店面所有信息
+      initStoreAllData(){
+        let FoodStoreAllOptions = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
-          "data": this.addOptions
+
+          //"fd_sf_ID": "2",//店面编号
+          //"fd_sf_TypeID": "4",//分类编号
+          //"fd_sf_MansID": "32",//用餐人数编号
+          //"fd_sf_ProductName": "米兰主题派对火锅",//产品名称 like
+          //"fd_sf_Provice": "四川省",//省
+          //"fd_sf_City": "泸州市",//市
+          //"priceFrom": "21",//人均价格大于
+          //"priceTo":"50",//人均价格小于
+          //"fd_sf_Phone": "1",//联系电话
+          //"fd_sf_TradeID": "1",//供应商编码
+          //"page": "1",
+          //"rows":"10",
         };
-        this.$store.dispatch('addFoodStoreInformation', insertStoreFrontInfo)
-          .then(suc => {
-            this.$notify({
-              message: suc,
-              type: 'success'
-            });
-            this.initData();
-          }, err => {
+        this.$store.dispatch('FoodStoreAll',FoodStoreAllOptions)
+          .then(() => {}, err => {
             this.$notify({
               message: err,
               type: 'error'
             });
           })
+      },
+      //添加
+      add() {
+        this.addOptions.data.fd_sc_SeatNo="";
+        this.addOptions.data.fd_sc_ShopID="";
+        this.$store.commit('setTranstionFalse');
+        this.addDialog = true;
+        // this.addOptions.fd_sf_TradeID = this.userInfo.sm_ai_ID;
+      },
+//      添加提交
+      addSubmit() {
+       this.$store.dispatch('addFoodStoppingPlace',this.addOptions)
+         .then((suc)=>{
+           this.$notify({
+             message:suc,
+             type:'success'
+           });
+           this.initData()
+         },(err)=>{
+           this.$notify({
+             message:err,
+             type:"error"
+           })
+         });
         this.addDialog = false;
       },
       //修改按钮
       update(rowData) {
-        this.updateObj = rowData
+
+        //修改时状态显示问题
+        for( let i=0;i<this.Status.length;i++ ){
+          if( this.Status[i].label == rowData.fd_sc_LockStatus ){
+            rowData.fd_sc_LockStatus = this.Status[i].value;
+          }
+        }
+        this.updateObj=rowData;
         this.$store.commit('setTranstionFalse');
-        this.updateDialog = true;
-        this.updateObj.fd_sf_HasWafi = '';
+        this.updateDialog=true;
+        this.initData()
       },
       //修改提交
       updateSubmit() {
-        let updateStoreFrontInfo = {
+        let updateOptions = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
-          "data": {
-            "fd_sf_ID": this.updateObj.fd_sf_ID,
-            "fd_sf_TypeID": this.updateObj.fd_sf_TypeID,
-            "fd_sf_MansID": this.updateObj.fd_sf_MansID,
-            "fd_sf_ProductName": this.updateObj.fd_sf_ProductName,
-            "fd_sf_Address": this.updateObj.fd_sf_Address,
-            "fd_sf_Lng": this.updateObj.fd_sf_Lng,
-            "fd_sf_Lat": this.updateObj.fd_sf_Lat,
-            "fd_sf_Provice": this.updateObj.fd_sf_Provice,
-            "fd_sf_City": this.updateObj.fd_sf_City,
-            "fd_sf_AvgPrice": this.updateObj.fd_sf_AvgPrice,
-            "fd_sf_OpenTime": this.updateObj.fd_sf_OpenTime,
-            "fd_sf_Phone": this.updateObj.fd_sf_Phone,
-            "fd_sf_HasWafi": this.updateObj.fd_sf_HasWafi,
-            "fd_sf_TradeID": this.updateObj.fd_sf_TradeID,
+
+          "data":  {
+            "fd_sc_ID": this.updateObj.fd_sc_ID,//停车位编码
+            "fd_sc_ShopID": this.updateObj.fd_sc_ShopID,//店面编号
+            "fd_sc_SeatNo": this.updateObj.fd_sc_SeatNo,//停车位名称
+            "fd_sc_LockStatus": this.updateObj.fd_sc_LockStatus,//锁定状态
           }
         };
-        this.$store.dispatch('updateFoodStoreInformtionSubmit', updateStoreFrontInfo)
-          .then(suc => {
+        this.$store.dispatch('updateFoodStoppingPlace',updateOptions)
+          .then((suc)=>{
             this.$notify({
-              message: suc,
-              type: 'success'
+              message:suc,
+              type:"success"
             });
             this.initData();
-          }, err => {
+          },(err)=>{
             this.$notify({
-              message: err,
-              type: 'error'
+              message:err,
+              type:"error"
             });
-          })
-        this.updateDialog = false;
+          });
+        this.updateDialog=false;
+        // let updateStoreFrontInfo = {
+        //   "loginUserID": "huileyou",
+        //   "loginUserPass": "123",
+        //   "operateUserID": "",
+        //   "operateUserName": "",
+        //   "pcName": "",
+        //   "data": {
+        //     "fd_sf_ID": this.updateObj.fd_sf_ID,
+        //     "fd_sf_TypeID": this.updateObj.fd_sf_TypeID,
+        //     "fd_sf_MansID": this.updateObj.fd_sf_MansID,
+        //     "fd_sf_ProductName": this.updateObj.fd_sf_ProductName,
+        //     "fd_sf_Address": this.updateObj.fd_sf_Address,
+        //     "fd_sf_Lng": this.updateObj.fd_sf_Lng,
+        //     "fd_sf_Lat": this.updateObj.fd_sf_Lat,
+        //     "fd_sf_Provice": this.updateObj.fd_sf_Provice,
+        //     "fd_sf_City": this.updateObj.fd_sf_City,
+        //     "fd_sf_AvgPrice": this.updateObj.fd_sf_AvgPrice,
+        //     "fd_sf_OpenTime": this.updateObj.fd_sf_OpenTime,
+        //     "fd_sf_Phone": this.updateObj.fd_sf_Phone,
+        //     "fd_sf_HasWafi": this.updateObj.fd_sf_HasWafi,
+        //     "fd_sf_TradeID": this.updateObj.fd_sf_TradeID,
+        //   }
+        // };
+        // this.$store.dispatch('updateFoodStoreInformtionSubmit', updateStoreFrontInfo)
+        //   .then(suc => {
+        //     this.$notify({
+        //       message: suc,
+        //       type: 'success'
+        //     });
+        //     this.initData();
+        //   }, err => {
+        //     this.$notify({
+        //       message: err,
+        //       type: 'error'
+        //     });
+        //   })
+        // this.updateDialog = false;
       },
       //删除按钮
-      deleteFoodStoreInformtion(id) {
-        let deleteStoreFrontInfo = {
+      deleteSubmit(id) {
+        let deleteOptions= {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
           "data": {
-            "fd_sf_ID": id,//店面编号
+
+            "fd_sc_ID": id,//停车位编码
           }
-        };
-        this.$store.dispatch('deleteFoodStoreInformtion', deleteStoreFrontInfo)
-          .then(suc => {
+
+        }
+        this.$store.dispatch('deleteFoodStoppingPlace',deleteOptions)
+          .then((suc)=>{
             this.$notify({
-              message: suc,
-              type: 'success'
+              message:suc,
+              type:"success"
             });
             this.initData();
-          }, err => {
+          },(err)=>{
             this.$notify({
-              message: err,
-              type: 'error'
-            });
-          })
+              message:err,
+              type:"error"
+            })
+          });
       }
 
     },
-    created() {
-      this.userInfo = JSON.parse(sessionStorage.getItem('admin'))
-      this.initData();
-      this.initProvince()
-    }
+
   }
 </script>
 <style scoped>

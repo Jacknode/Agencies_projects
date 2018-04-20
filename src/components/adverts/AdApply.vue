@@ -127,6 +127,7 @@
                 :value="item.sm_pi_ID">
               </el-option>
             </el-select>
+
           </el-form-item>
           <!--<el-form-item label="供应商编码:" :label-width="formLabelWidth">-->
             <!--<el-input v-model="addOptions.data.sm_aa_AgentID" placeholder="供应商编码" ></el-input>-->

@@ -13,6 +13,11 @@ export default {
   foodStoreRoomList: [],//店面房间
 
   foodStoreProductList: [],//店面产品
+/**************************停车场*****************************************/
+  foodStoppingPlaceList: [],//停车场
+
+  foodStoppingPlaceStoreAllList:[],//停车场里所有店面信息
+
 
   foodRoomPictureList: [],//店面房间图片
 
