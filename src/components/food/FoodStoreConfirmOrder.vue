@@ -73,7 +73,7 @@
                 <span>{{ props.row.fd_or_Password }}</span>
               </el-form-item>
               <el-form-item label="订单状态:">
-                <span>{{ props.row.fd_or_PayState }}</span>
+                <span>{{ props.row.fd_or_PayState | payStatus  }}</span>
               </el-form-item>
               <el-form-item label="支付时间:">
                 <span>{{ props.row.fd_or_PayTime }}</span>
@@ -85,7 +85,7 @@
                 <span>{{ props.row.fd_or_TableID }}</span>
               </el-form-item>
               <el-form-item label="使用状态:">
-                <span>{{ props.row.fd_or_UseState }}</span>
+                <span>{{ props.row.fd_or_UseState | useStatus }}</span>
               </el-form-item>
               <el-form-item label="使用时间:">
                 <span>{{ props.row.fd_or_UseTime }}</span>
@@ -112,6 +112,9 @@
           label="订单状态"
           align="center"
           prop="fd_or_PayState">
+          <template slot-scope="scope">
+            {{ scope.row.fd_or_PayState | payStatus  }}
+          </template>
         </el-table-column>
         <el-table-column
           label="出票状态"

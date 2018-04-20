@@ -590,10 +590,10 @@ export default [
       },
       //查询订单
       {
-        path: 'foodStoppingPlace',
+        path: 'foodStoreConfirmOrder',
         components:{
           default:Home,
-          User:FoodStoppingPlace
+          User:FoodStoreConfirmOrder
         },
         name:'FoodStoreConfirmOrder'
       },
@@ -605,6 +605,15 @@ export default [
           User:FoodStoreProductPicture
         },
         name:'FoodStoreProductPicture'
+      },
+      //停车场
+      {
+        path:'foodStoppingPlace',
+        components:{
+          default:Home,
+          User:FoodStoppingPlace
+        },
+        name:'FoodStoppingPlace'
       }
     ],
   },

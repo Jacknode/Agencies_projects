@@ -263,7 +263,6 @@ export default {
         })
     })
   },
-
   //添加店面菜肴
   addFoodStoreProduct({commit}, data) {
     return new Promise((relove, reject) => {
@@ -552,7 +551,6 @@ export default {
         })
     })
   },
-
   //推荐菜
   initFoodStoreRecommend({commit}, data) {
     return new Promise((relove, reject) => {
@@ -688,6 +686,48 @@ export default {
         })
     })
   },
+  //删除店面每天可锁桌时间
+  deleteFoodStoreTableTime({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/CanLockTime/Delete', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //查询可订餐时间
+  initFoodStoreOrderingTime({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/RoomTableTime/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(Number(data.totalrows))
+            commit('initFoodStoreOrderingTime', data.data)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+
+
+
   //查询停车场
   initFoodStoppingPlace({commit},data){
     return new Promise(
@@ -709,7 +749,7 @@ export default {
     )
   },
 //添加停车场
-  addFoodStoppingPlace(store,data){
+  addFoodStoppingPlace({commit},data){
     return new Promise((relove,reject)=>{
       axios.post('http://webservice.1000da.com.cn/StopCar/Insert',JSON.stringify(data),{headers:{'Content-Type':'application/x-www-form-urlencoded'}})
         .then(data=>{
@@ -724,7 +764,7 @@ export default {
     });
   },
 //删除停车场
-  deleteFoodStoppingPlace(store,data){
+  deleteFoodStoppingPlace({commit},data){
     return new Promise((relove,reject)=>{
       axios.post('http://webservice.1000da.com.cn/StopCar/Delete',JSON.stringify(data),{headers:{'Content-Type':'application/x-www-form-urlencoded'}})
         .then(data=>{
@@ -739,9 +779,8 @@ export default {
         })
     })
   },
-
 //修改停车场
-  updateFoodStoppingPlace(store,data){
+  updateFoodStoppingPlace({commit},data){
     return new Promise((relove,reject)=>{
       axios.post('http://webservice.1000da.com.cn/StopCar/Update',JSON.stringify(data),{
         headers:{'Content-Type':'application/x-www-form-urlencoded'
@@ -754,6 +793,45 @@ export default {
           }
           else{
             reject(data.resultcontent)
+          }
+        });
+    });
+  },
+  //查询订单
+  initFoodStoreConfirnOrder({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/Order/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(Number(data.totalrows))
+            commit('initFoodStoreConfirnOrder', data.data)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //确认订单
+  foodOrderOk({commit},data){
+    return new Promise((relove,reject)=>{
+      axios.post('http://webservice.1000da.com.cn/Order/SureOrderInfo',JSON.stringify(data),{
+        headers:{
+          'Content-Type':'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data=>{
+          var data = data.data;
+          if(Number(data.resultcode==200)){
+            relove(data.resultcontent);
+          }
+          else{
+            reject(data.resultcontent);
           }
         });
     });

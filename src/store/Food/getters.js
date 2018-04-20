@@ -17,6 +17,7 @@ export default {
   foodStoreProductPictureList: state => state.foodStoreProductPictureList,
   foodStoppingPlaceList: state => state.foodStoppingPlaceList,
 
+
 }
 
 

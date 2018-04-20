@@ -61,16 +61,16 @@
       <!--分页-->
 
 
-      <!--<div class="block" style="text-align: right">-->
-      <!--<el-pagination-->
-      <!--:page-size="5"-->
-      <!--@current-change="handleCurrentChange"-->
-      <!--layout="prev, pager, next"-->
-      <!--:total="total"-->
-      <!--v-show="total"-->
-      <!--&gt;-->
-      <!--</el-pagination>-->
-      <!--</div>-->
+      <div class="block" style="text-align: right">
+        <el-pagination
+          :page-size="5"
+          @current-change="handleCurrentChange"
+          layout="prev, pager, next"
+          :total="total"
+          v-show="total"
+        >
+        </el-pagination>
+      </div>
 
       <!--添加-->
 
@@ -170,7 +170,6 @@
             "fd_sc_ShopID": "",//店面编号
           }
         },
-
         Status: [{
           value: 0,
           label: '空闲'
@@ -181,16 +180,21 @@
           value: 2,
           label: '已售'
         }],
+        total: 0,
 
       }
     },
     methods: {
+//      分页
+      handleCurrentChange(num) {
+        this.initData(this.foodStoreName, num)
+      },
       //初始化数据
-      initData(name) {
-        if(!name){
+      initData(name, num) {
+        if (!name) {
           this.$notify({
-            message:'请选择店面！',
-            type:'error'
+            message: '请选择店面！',
+            type: 'error'
           })
           return
         }
@@ -200,10 +204,17 @@
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
+          "page": num ? num : 1,
+          "rows": "10",
+          "fd_sc_ID": "",//停车位编码
           "fd_sc_ShopID": name,//店面编号
+          "fd_sc_SeatNo": "",//停车位名称
+          "fd_sc_LockStatus": "",//锁定状态
+
         };
         this.$store.dispatch('initFoodStoppingPlace', selectFoodStoppingPlace)
-          .then(() => {
+          .then(total => {
+            this.total = total;
           }, err => {
             this.$notify({
               message: err,

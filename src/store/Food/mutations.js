@@ -27,18 +27,29 @@ export default {
   initFoodStoreProduct(state, data) {
     state.foodStoreProductList = data;
   },
-
-/*******************************************停车场****************************************************/
-//查询停车场
-  initFoodStoppingPlace(state,data){
-    state.foodStoppingPlaceList=data;
+  initFoodProductPicture(state, data) {
+    state.foodProductPictureList = data
   },
-
-  initFoodStoreConfirnOrder(state, data){
+  initFoodStoreRecommend(state, data) {
+    state.foodStoreRecommendList = data;
+  },
+  initFoodStoreRoomTabel(state, data) {
+    state.foodStoreRoomTabelList = data
+  },
+  initFoodStoreTableTime(state, data) {
+    state.foodStoreTableTimeList = data
+  },
+  initFoodStoppingPlace(state, data) {
+    state.foodStoppingPlaceList = data;
+  },
+  initFoodStoreConfirnOrder(state, data) {
     state.foodStoreConfirnOrderList = data;
   },
   initFoodStoreProductPicture(state, data) {
     state.foodStoreProductPictureList = data;
+  },
+  initFoodStoreOrderingTime(state, data) {
+    state.foodStoreOrderingTimeList = data;
   }
 }
 

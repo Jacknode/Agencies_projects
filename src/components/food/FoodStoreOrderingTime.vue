@@ -111,11 +111,11 @@
           "pcName": "",
           "page": "1",
           "rows": "5",
-//          "fd_rtt_ID": "",//店面房间餐桌时间标识
-//          "fd_rtt_LockID": id,//店面可锁桌时间编码
-//          "dateFrom": "",//日期范围
-//          "dateTo": "",//日期范围
-//          "fd_rtt_TableState": "",//餐桌锁定状态
+          "fd_rtt_ID": id,//店面房间餐桌时间标识
+          "fd_rtt_LockID": '',//店面可锁桌时间编码
+          "dateFrom": "",//日期范围
+          "dateTo": "",//日期范围
+          "fd_rtt_TableState": "",//餐桌锁定状态
         };
         this.$store.dispatch('initFoodStoreOrderingTime', selectRoomTableTimeInfo)
           .then(total => {
@@ -141,6 +141,7 @@
       update() {
       },
       //修改提交
+      updateSubmit(){},
     },
   }
 </script>

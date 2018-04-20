@@ -11,6 +11,15 @@ export const getNewDate = (value) => {
   }
 
 };
+//支付状态
+export const payStatus = (value) => {
+  switch (Number(value)) {
+    case 0:
+      return '未支付';
+    case 1:
+      return '已支付';
+  }
+};
 //获取状态
 export const getStatus = (value) => {
   switch (Number(value)) {

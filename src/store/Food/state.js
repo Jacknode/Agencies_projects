@@ -18,7 +18,6 @@ export default {
 
   foodStoppingPlaceStoreAllList:[],//停车场里所有店面信息
 
-
   foodRoomPictureList: [],//店面房间图片
 
   foodProductPictureList: [],//店面图片

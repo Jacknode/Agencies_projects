@@ -203,10 +203,10 @@
                         <router-link to="/home/foodStoreOrderingTime">美食店面可订餐时间</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/foodStoreConfirmOrder">美食订单管理</router-link>
+                        <router-link to="/home/foodStoppingPlace">美食停车场</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/foodStoppingPlace">美食停车场</router-link>
+                        <router-link to="/home/foodStoreConfirmOrder">美食订单管理</router-link>
                       </li>
                     </ul>
                   </li>
