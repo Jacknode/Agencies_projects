@@ -237,6 +237,7 @@
       },
       //显示大图
       displayBigPicture(urlData) {
+        this.$store.commit('setTranstionFalse');
         this.bigPictureDialog = true;
         this.imgUrl = urlData;
       },

@@ -33,9 +33,12 @@ export default {
   initFoodStoppingPlace(state,data){
     state.foodStoppingPlaceList=data;
   },
-//查询停车场所有店面信息
-  FoodStoreAll(state,data){
-    state.foodStoppingPlaceStoreAllList=data;
+
+  initFoodStoreConfirnOrder(state, data){
+    state.foodStoreConfirnOrderList = data;
+  },
+  initFoodStoreProductPicture(state, data) {
+    state.foodStoreProductPictureList = data;
   }
 }
 

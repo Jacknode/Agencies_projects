@@ -6,10 +6,16 @@ export default {
   foodCityList: state => state.foodCityList,
   foodStoreRoomList: state => state.foodStoreRoomList,
   foodStoreProductList: state => state.foodStoreProductList,
-  //查询停车场
+
+  foodRoomPictureList: state => state.foodRoomPictureList,
+  foodProductPictureList: state => state.foodProductPictureList,
+  foodStoreRoomTabelList: state => state.foodStoreRoomTabelList,
+  foodStoreRecommendList: state => state.foodStoreRecommendList,
+  foodStoreTableTimeList: state => state.foodStoreTableTimeList,
+  foodStoreOrderingTimeList: state => state.foodStoreOrderingTimeList,
+  foodStoreConfirnOrderList: state => state.foodStoreConfirnOrderList,
+  foodStoreProductPictureList: state => state.foodStoreProductPictureList,
   foodStoppingPlaceList: state => state.foodStoppingPlaceList,
-  //停车场中所有店面信息
-  foodStoppingPlaceStoreAllList: state=>state.foodStoppingPlaceStoreAllList,
 
 }
 

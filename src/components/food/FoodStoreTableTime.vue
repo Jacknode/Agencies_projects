@@ -32,7 +32,11 @@
       <el-table
         :data="foodStoreTableTimeList"
         style="width: 100%">
-
+        <el-table-column
+          prop="fd_clt_ID"
+          label="时间编码"
+          align="center">
+        </el-table-column>
         <el-table-column
           prop="fd_sf_ProductName"
           label="店面名称"
@@ -280,7 +284,7 @@
           "operateUserName": "",
           "pcName": "",
           "data": {
-            "fd_clt_ID": id ? id : '',//店面可锁桌时间编码
+            "fd_clt_ID": id,//店面可锁桌时间编码
           }
         };
         this.$store.dispatch('deleteFoodStoreTableTime',deleteCanLockTimeInfo)

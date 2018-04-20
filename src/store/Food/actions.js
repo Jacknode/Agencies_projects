@@ -33,7 +33,6 @@ export default {
         })
     })
   },
-
   //店面类型
   initStorefrontType({commit}, data) {
     return new Promise(function (relove, reject) {
@@ -53,7 +52,6 @@ export default {
         })
     })
   },
-
   //省
   initFoodProcince({commit}, data) {
     return new Promise(function (relove, reject) {
@@ -92,7 +90,6 @@ export default {
         })
     })
   },
-
   //店面信息
   initFoodStoreInformtion({commit}, data) {
     return new Promise(function (relove, reject) {
@@ -112,7 +109,6 @@ export default {
         })
     })
   },
-
   //添加店面信息
   addFoodStoreInformation({commit}, data) {
     return new Promise(function (relove, reject) {
@@ -132,7 +128,6 @@ export default {
         })
     })
   },
-
   //修改店面信息
   updateFoodStoreInformtionSubmit({commit}, data) {
     return new Promise(function (relove, reject) {
@@ -152,7 +147,6 @@ export default {
         })
     })
   },
-
   //删除店面信息
   deleteFoodStoreInformtion({commit}, data) {
     return new Promise(function (relove, reject) {
@@ -172,7 +166,6 @@ export default {
         })
     })
   },
-
   //店面房间
   initFoodStoreRoom({commit}, data) {
     return new Promise((relove, reject) => {
@@ -193,7 +186,6 @@ export default {
         })
     })
   },
-
   //添加店面房间
   addFoodStoreRoom({commit}, data) {
     return new Promise((relove, reject) => {
@@ -213,7 +205,6 @@ export default {
         })
     })
   },
-
   //修改店面房间
   updateFoodStoreRoom({commit}, data) {
     return new Promise((relove, reject) => {
@@ -233,7 +224,6 @@ export default {
         })
     })
   },
-
   //删除店面房间
   deleteFoodStoreRoom({commit}, data) {
     return new Promise((relove, reject) => {
@@ -253,7 +243,6 @@ export default {
         })
     })
   },
-
   //初始化店面产品
   initFoodStoreProduct({commit}, data) {
     return new Promise((relove, reject) => {
@@ -275,14 +264,437 @@ export default {
     })
   },
 
-/*****************************************停车场***************************************************/
-//查询停车场
+  //添加店面菜肴
+  addFoodStoreProduct({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/StoreFrontProduct/Insert', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //修改店面菜肴
+  updateFoodStoreProduct({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/StoreFrontProduct/Update', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //删除店面菜肴
+  deleteFoodStoreProduct({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/StoreFrontProduct/Delete', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //初始化店面房间图片
+  initFoodRoomPicture({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/RoomImage/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(Number(data.totalrows))
+            commit('initFoodRoomPicture', data.data)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //添加店面房间图片
+  addFoodRoomPicture({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/RoomImage/Insert', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //修改店面房间图片
+  updateFoodRoomPicture({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/RoomImage/Update', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //删除店面房间图片
+  deleteFoodRoomPicture({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/RoomImage/Delete', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //店面图片
+  initFoodProductPicture({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/ProductImage/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove()
+            commit('initFoodProductPicture', data.data)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //添加店面图片
+  addFoodProductPicture({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/ProductImage/Insert', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //修改店面图片
+  updateFoodProductPicture({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/ProductImage/Update', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //删除店面图片
+  deleteFoodProductPicture({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/ProductImage/Delete', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //房间餐桌
+  initFoodStoreRoomTabel({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/RoomTable/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(Number(data.totalrows))
+            commit('initFoodStoreRoomTabel', data.data)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //添加房间餐桌
+  addFoodStoreRoomTabel({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/RoomTable/Insert', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //修改房间餐桌
+  updateFoodStoreRoomTabel({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/RoomTable/Update', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //删除房间餐桌
+  deleteFoodStoreRoomTabel({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/RoomTable/Delete', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+
+  //推荐菜
+  initFoodStoreRecommend({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/IntroduceFood/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(Number(data.totalrows))
+            commit('initFoodStoreRecommend', data.data)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //添加推荐菜
+  addFoodStoreRecommend({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/IntroduceFood/Insert', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //修改推荐菜
+  updateFoodStoreRecommend({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/IntroduceFood/Update', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //删除推荐菜
+  deleteFoodStoreRecommend({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/IntroduceFood/Delete', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //店面每天可锁桌时间
+  initFoodStoreTableTime({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/CanLockTime/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(Number(data.totalrows))
+            commit('initFoodStoreTableTime', data.data)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //添加店面每天可锁桌时间
+  addFoodStoreTableTime({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/CanLockTime/Insert', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //修改店面每天可锁桌时间
+  updateFoodStoreTableTime({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/CanLockTime/Update', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //查询停车场
   initFoodStoppingPlace({commit},data){
     return new Promise(
       (relove,reject)=>{
         axios.post('http://webservice.1000da.com.cn/StopCar/Select', JSON.stringify(data), {
-            headers:{'Content-Type': 'application/x-www-form-urlencoded'}
-          })
+          headers:{'Content-Type': 'application/x-www-form-urlencoded'}
+        })
           .then(data=>{
             var data = data.data;
             if(Number(data.resultcode)==200){
@@ -295,22 +707,6 @@ export default {
           })
       }
     )
-  },
-//停车场:查询店面所有信息
-  FoodStoreAll({commit},data){
-    return new Promise((relove,reject)=>{
-      axios.post('http://webservice.1000da.com.cn/StoreFront/Select',JSON.stringify(data),{headers:{'Content-Type': 'application/x-www-form-urlencoded'}})
-        .then(data=>{
-          var data = data.data;
-          if(Number(data.resultcode)==200){
-            relove(Number(data.tatalrows));
-            commit('FoodStoreAll',data.data)
-          }
-          else{
-            reject(data.resultcontent)
-          }
-        });
-    });
   },
 //添加停车场
   addFoodStoppingPlace(store,data){
@@ -333,7 +729,8 @@ export default {
       axios.post('http://webservice.1000da.com.cn/StopCar/Delete',JSON.stringify(data),{headers:{'Content-Type':'application/x-www-form-urlencoded'}})
         .then(data=>{
           var data = data.data;
-          if(Number(data.resultcode==200)){
+
+          if (Number(data.resultcode) == 200) {
             relove(data.resultcontent);
           }
           else{
@@ -346,7 +743,10 @@ export default {
 //修改停车场
   updateFoodStoppingPlace(store,data){
     return new Promise((relove,reject)=>{
-      axios.post('http://webservice.1000da.com.cn/StopCar/Update',JSON.stringify(data),{headers:{'Content-Type':'application/x-www-form-urlencoded'}})
+      axios.post('http://webservice.1000da.com.cn/StopCar/Update',JSON.stringify(data),{
+        headers:{'Content-Type':'application/x-www-form-urlencoded'
+        }
+      })
         .then((data)=>{
           var data = data.data;
           if(Number(data.resultcode==200)){
@@ -358,6 +758,101 @@ export default {
         });
     });
   },
-
+  //注销订单
+  deleteFoodStoreConfirnOrder({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/Order/CancelFoodOrder', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //店面菜肴图片
+  initFoodStoreProductPicture({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/GoodImage/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove()
+            commit('initFoodStoreProductPicture', data.data)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //添加店面菜肴图片
+  addFoodStoreProductPicture({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/GoodImage/Insert', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //修改店面菜肴图片
+  updateFoodStoreProductPicture({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/GoodImage/Update', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //删除店面菜肴图片
+  deleteFoodStoreProductPicture({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/GoodImage/Delete', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
 }
 

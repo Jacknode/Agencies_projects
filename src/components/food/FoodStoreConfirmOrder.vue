@@ -134,10 +134,14 @@
         </el-table-column>
         <el-table-column
           label="操作"
+          width="300"
           align="center">
           <template slot-scope="scope">
             <el-button v-show="!scope.row.fd_or_OutStatus" type="success" size="mini"
                        @click="orderOk(scope.row.fd_or_OrderID)">确认订单
+            </el-button>
+            <el-button type="danger" size="mini"
+                       @click="Delete(scope.row.fd_or_OrderID)">注销订单
             </el-button>
           </template>
         </el-table-column>
@@ -202,6 +206,7 @@
       },
       //初始化订单数据
       initData(outStatusId, payStateId, num) {
+
         let selectOrderInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
@@ -215,7 +220,7 @@
           "priceTo": "",//订单价格范围
           "fd_or_TouristTraderID": this.userInfo.sm_ai_ID,//供应商编码
           "fd_or_Password": "",//凭证码查订单
-          "fd_or_OutStatus": outStatusId ? outStatusId : '',//出票状态 0未出票 1已出票
+          "fd_or_OutStatus": outStatusId,//出票状态 0未出票 1已出票
           "fd_or_Phone": "",//手机号
           "useTimeFrom": "",//使用订单时间
           "useTimeTo": "",//使用订单时间
@@ -224,7 +229,7 @@
           "payTimeFrom": "",//支付订单时间
           "payTimeTo": "",//支付订单时间
           "fd_or_PayWay": "",//支付方式
-          "fd_or_PayState": payStateId ? payStateId : '',//订单状态 0未支付 1已支付
+          "fd_or_PayState": payStateId,//订单状态 0未支付 1已支付
           "fd_or_UseState": "",//使用状态 0未使用 1已使用
           "fd_or_IsDelete": "",//是否删除 0未注销 1已注销
           "rows": 5,
@@ -254,7 +259,31 @@
           "pcName": "",
           "orderID": id ? id : '',//订单编码
         };
-        this.$store.dispatch('foodOrderOk',sureOrderInfo)
+        this.$store.dispatch('foodOrderOk', sureOrderInfo)
+          .then(suc => {
+            this.$notify({
+              message: suc,
+              type: 'success'
+            })
+            this.initData(this.outStatusId, this.payStateId);
+          }, err => {
+            this.$notify({
+              message: err,
+              type: 'error'
+            })
+          })
+      },
+      //注销订单
+      Delete(id) {
+        let foodCancelOrder = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "2",
+          "operateUserName": "",
+          "pcName": "",
+          "orderID": id ? id : '',
+        };
+        this.$store.dispatch('deleteFoodStoreConfirnOrder', foodCancelOrder)
           .then(suc => {
             this.$notify({
               message: suc,
@@ -268,7 +297,6 @@
             })
           })
       },
-
     },
     created() {
       this.userInfo = JSON.parse(sessionStorage.getItem('admin'));

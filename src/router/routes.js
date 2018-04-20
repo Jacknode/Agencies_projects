@@ -97,9 +97,24 @@ import FoodStoreInformation from '@/components/food/FoodStoreInformation'
 import FoodStoreRoom  from '@/components/food/FoodStoreRoom'
 //店面产品
 import FoodStoreProduct from '@/components/food/FoodStoreProduct'
-
-//店面产品
-import FoodStoppingPlace from '@/components/food/FoodStoppingPlace'
+//房间图片
+import FoodRoomPicture from '@/components/food/FoodRoomPicture'
+//店面图片
+import FoodStorePicture from '@/components/food/FoodStorePicture'
+//店面产品图片
+import FoodStoreProductPicture from '@/components/food/FoodStoreProductPicture'
+//房间餐桌
+import FoodStoreRoomTabel from '@/components/food/FoodStoreRoomTabel'
+//推荐菜
+import FoodStoreRecommend from '@/components/food/FoodStoreRecommend'
+//店面每天可锁桌时间
+import FoodStoreTableTime from '@/components/food/FoodStoreTableTime'
+//店面可订餐时间
+import FoodStoreOrderingTime from '@/components/food/FoodStoreOrderingTime'
+//查询订单
+import FoodStoreConfirmOrder from '@/components/food/FoodStoreConfirmOrder'
+//停车场
+import  FoodStoppingPlace from '@/components/food/FoodStoppingPlace'
 
 
 
@@ -519,15 +534,77 @@ export default [
         },
         name:'FoodStoreProduct'
       },
-
-      //停车场
+      //房间图片
+      {
+        path: 'foodRoomPicture',
+        components:{
+          default:Home,
+          User:FoodRoomPicture
+        },
+        name:'FoodRoomPicture'
+      },
+      //产品图片
+      {
+        path: 'foodStorePicture',
+        components:{
+          default:Home,
+          User:FoodStorePicture
+        },
+        name:'FoodStorePicture'
+      },
+      //房间餐桌
+      {
+        path: 'foodStoreRoomTabel',
+        components:{
+          default:Home,
+          User:FoodStoreRoomTabel
+        },
+        name:'FoodStoreRoomTabel'
+      },
+      //推荐菜
+      {
+        path: 'foodStoreRecommend',
+        components:{
+          default:Home,
+          User:FoodStoreRecommend
+        },
+        name:'FoodStoreRecommend'
+      },
+      //店面每天可锁桌时间
+      {
+        path: 'foodStoreTableTime',
+        components:{
+          default:Home,
+          User:FoodStoreTableTime
+        },
+        name:'FoodStoreTableTime'
+      },
+      //店面可订餐时间
+      {
+        path: 'foodStoreOrderingTime',
+        components:{
+          default:Home,
+          User:FoodStoreOrderingTime
+        },
+        name:'FoodStoreOrderingTime'
+      },
+      //查询订单
       {
         path: 'foodStoppingPlace',
         components:{
           default:Home,
           User:FoodStoppingPlace
         },
-        name:'FoodStoppingPlace'
+        name:'FoodStoreConfirmOrder'
+      },
+      //店面菜肴图片
+      {
+        path:'foodStoreProductPicture',
+        components:{
+          default:Home,
+          User:FoodStoreProductPicture
+        },
+        name:'FoodStoreProductPicture'
       }
     ],
   },

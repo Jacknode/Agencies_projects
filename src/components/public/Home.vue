@@ -176,13 +176,16 @@
                         <router-link to="/home/foodStoreInformation">美食店面信息</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/foodProductPicture">美食店面图片</router-link>
+                        <router-link to="/home/foodStorePicture">美食店面图片</router-link>
                       </li>
                       <li>
                         <router-link to="/home/foodStoreRecommend">美食推荐菜</router-link>
                       </li>
                       <li>
                         <router-link to="/home/foodStoreProduct">美食店面菜肴</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/foodStoreProductPicture">美食店面菜肴图片</router-link>
                       </li>
                       <li>
                         <router-link to="/home/foodStoreRoom">美食店面房间</router-link>
@@ -203,7 +206,7 @@
                         <router-link to="/home/foodStoreConfirmOrder">美食订单管理</router-link>
                       </li>
                       <li>
-                        <router-link to="foodStoppingPlace">美食停车场</router-link>
+                        <router-link to="/home/foodStoppingPlace">美食停车场</router-link>
                       </li>
                     </ul>
                   </li>

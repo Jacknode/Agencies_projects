@@ -33,6 +33,8 @@ export default {
 
   foodStoreConfirnOrderList: [],//订单列表
 
+  foodStoreProductPictureList: [],//店面菜肴图片
+
 
 
 }
