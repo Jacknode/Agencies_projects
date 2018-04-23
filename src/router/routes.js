@@ -614,7 +614,7 @@ export default [
           User:FoodStoppingPlace
         },
         name:'FoodStoppingPlace'
-      }
+      },
     ],
   },
 

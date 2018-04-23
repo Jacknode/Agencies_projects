@@ -725,7 +725,44 @@ export default {
         })
     })
   },
-
+  //添加可订餐时间
+  addFoodStoreOrderingTime({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/RoomTableTime/CanOrderTime', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //删除可订餐时间
+  deleteFoodStoreOrderingTime({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/RoomTableTime/Delete', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
 
 
   //查询停车场
@@ -917,6 +954,44 @@ export default {
   deleteFoodStoreProductPicture({commit}, data) {
     return new Promise((relove, reject) => {
       axios.post('http://webservice.1000da.com.cn/GoodImage/Delete', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //申请推荐店面
+  recommendShopSubmit({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/IntroduceShop/Insert', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
+          }
+          else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //申请首页展示美食
+  applyRecommendFood({commit}, data) {
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/PageIntroduce/Insert', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }

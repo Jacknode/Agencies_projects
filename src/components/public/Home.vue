@@ -294,7 +294,7 @@
     computed: mapGetters([
       'transtionActive',
     ]),
-    created(){
+    created() {
       this.userInfo = JSON.parse(sessionStorage.getItem('admin'));
       this.status = this.userInfo.sm_ai_IsPass;
       let status = localStorage.getItem('status')
@@ -306,11 +306,11 @@
 //        || !this.hotelThemeTypeList.length
 //        || !this.hotelIconGalleryList.length
 //      ) {
-        this.initData().then(()=>{
+      this.initData().then(() => {
 
-        },err=>{
-          console.log(err)
-        })
+      }, err => {
+        console.log(err)
+      })
 //      }
       if (this.status == 1) {
         localStorage.setItem('status', true)
@@ -419,16 +419,16 @@
         }
         await this.$store.dispatch('initHotelIconGallery', iconOptions)
 
-      // //退出
-      // Quit() {
-      //   this.$router.push({name: 'adminLogin'})
-      // },
-      // //用户信息
-      // getUser() {
-      //   this.$router.push({name: 'AdminMerchantProducts'})
-      // },
-      //查询景点主题分类信息
-      // initData() {
+        // //退出
+        // Quit() {
+        //   this.$router.push({name: 'adminLogin'})
+        // },
+        // //用户信息
+        // getUser() {
+        //   this.$router.push({name: 'AdminMerchantProducts'})
+        // },
+        //查询景点主题分类信息
+        // initData() {
 
 
         let getThemeTypeList = {

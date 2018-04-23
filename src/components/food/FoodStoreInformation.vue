@@ -94,7 +94,9 @@
           label="操作">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="update(scope.row)">修改</el-button>
-            <el-button size="mini" type="danger" @click="deleteFoodStoreInformtion(scope.row.fd_sf_ID)">删除</el-button>
+            <el-button size="mini" type="danger" @click="Delete(scope.row.fd_sf_ID)">删除</el-button>
+            <el-button size="mini" type="success" @click="recommendShop(scope.row.fd_sf_ID)">申请推荐店面</el-button>
+
           </template>
         </el-table-column>
       </el-table>
@@ -325,7 +327,7 @@
         ],
         proviceId: '',
         roomName: '',
-        updateObj:{},
+        updateObj: {},
       }
     },
     methods: {
@@ -468,7 +470,7 @@
         this.updateDialog = false;
       },
       //删除按钮
-      deleteFoodStoreInformtion(id) {
+      Delete(id) {
         let deleteStoreFrontInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
@@ -492,7 +494,33 @@
               type: 'error'
             });
           })
-      }
+      },
+      //申请推荐店面
+      recommendShop(id) {
+        let insertIntroduceShopInfo = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "data": {
+            "fd_is_ShopID": id ? id : '',//店面编号
+          }
+        };
+        this.$store.dispatch('recommendShopSubmit',insertIntroduceShopInfo)
+          .then(suc => {
+            this.$notify({
+              message: suc,
+              type: 'success'
+            });
+            this.initData();
+          }, err => {
+            this.$notify({
+              message: err,
+              type: 'error'
+            });
+          })
+      },
 
     },
     created() {

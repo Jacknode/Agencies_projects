@@ -55,7 +55,7 @@
           label="备注"
           align="center">
         </el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column label="操作" align="center" width="300">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -66,6 +66,11 @@
               size="mini"
               type="danger"
               @click="Delete(scope.row.fd_sfp_ID)">删除
+            </el-button>
+            <el-button
+              size="mini"
+              type="success"
+              @click="Apply(scope.row.fd_sfp_ID)">申请首页推荐美食
             </el-button>
           </template>
         </el-table-column>
@@ -288,7 +293,7 @@
             "fd_sfp_ID": id ? id : '',//店面产品编码
           }
         };
-        this.$store.dispatch('deleteFoodStoreProduct',deleteStoreFrontProductInfo)
+        this.$store.dispatch('deleteFoodStoreProduct', deleteStoreFrontProductInfo)
           .then(suc => {
             this.$notify({
               message: suc,
@@ -302,6 +307,32 @@
             })
           })
       },
+      //申请首页推荐美食
+      Apply(id) {
+        let insertPageIntroduceInfo = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "data": {
+            "fd_pi_StoreID": id ? id : '',//店面产品编码
+          }
+        };
+        this.$store.dispatch('applyRecommendFood',insertPageIntroduceInfo)
+          .then(suc => {
+            this.$notify({
+              message: suc,
+              type: 'success'
+            });
+            this.initData(this.storeId);
+          }, err => {
+            this.$notify({
+              message: err,
+              type: 'error'
+            });
+          })
+      }
     },
   }
 </script>
