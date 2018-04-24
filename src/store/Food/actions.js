@@ -590,25 +590,6 @@ export default {
         })
     })
   },
-  //修改推荐菜
-  updateFoodStoreRecommend({commit}, data) {
-    return new Promise((relove, reject) => {
-      axios.post('http://webservice.1000da.com.cn/IntroduceFood/Update', JSON.stringify(data), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      })
-        .then(data => {
-          var data = data.data;
-          if (Number(data.resultcode) == 200) {
-            relove(data.resultcontent)
-          }
-          else {
-            reject(data.resultcontent)
-          }
-        })
-    })
-  },
   //删除推荐菜
   deleteFoodStoreRecommend({commit}, data) {
     return new Promise((relove, reject) => {

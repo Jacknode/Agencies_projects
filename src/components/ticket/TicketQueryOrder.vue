@@ -7,7 +7,7 @@
       <el-col :span="24" class="formSearch">
         <el-form :inline="true">
           <el-form-item>
-            <span>景点名称筛选:</span>
+            <span>支付状态筛选:</span>
           </el-form-item>
           <el-form-item>
             <el-select v-model="searchId" placeholder="请选择">
@@ -145,7 +145,11 @@
           label="出票状态"
           prop="tm_or_OutStatus">
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column
+          label="支付状态"
+          prop="tm_or_PayState">
+        </el-table-column>
+        <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button type="success" size="mini" @click="confirmOrder(scope.row.tm_or_OrderID)">确认订单并出单</el-button>
           </template>
@@ -157,7 +161,7 @@
       <div class="block" style="text-align: right">
         <el-pagination
           @current-change="handleCurrentChange"
-          :page-size="5"
+          :page-size="10"
           layout="prev, pager, next"
           :total="total"
           v-show="total"
@@ -189,13 +193,13 @@
             label: '已支付'
           }
         ],
-        userInfo:'',
+        userInfo: '',
       }
     },
     methods: {
       //分页
       handleCurrentChange(num) {
-        this.initData(num)
+        this.initData('',num)
       },
       //初始化数据
       initData(id, num) {
@@ -206,15 +210,24 @@
           "operateUserName": "",
           "pcName": "",
           "tm_or_UserID": "", //用户编码
-          "tm_or_TradeInfoID": this.userInfo.sm_ai_ID, //商户编码
+          "tm_or_TradeInfoID":this.userInfo.sm_ai_ID, //商户编码
           "tm_or_OrderID": "", //订单号
-          "tm_or_PayState": id ? id : '', //支付状态(0未支付1已支付)
+          "tm_or_PayState": "", //支付状态(0未支付1已支付)
           "tm_or_IsBalance": "", //是否结算(0未结算1已结算)
           "tm_or_OutStatus": "", //出票状态(0出票中1出票成功2出票失败)
           "tm_or_UseState": "", //使用状态(0未使用1已使用2已退票)
           "page": num ? num : 1,
           "rows": 10
         };
+        if (id == 0) {
+          getTradeOrderInfo.tm_or_PayState = 0;
+        }
+        if (id == 1) {
+          getTradeOrderInfo.tm_or_PayState = 1;
+        }
+        if (id == '') {
+          getTradeOrderInfo.tm_or_PayState = '';
+        }
         this.$store.dispatch('initTicketQueryOrder', getTradeOrderInfo)
           .then(total => {
             this.total = total;
@@ -225,8 +238,8 @@
             });
           })
       },
-      search(){
-        this.initData(this.searchId)
+      search() {
+        this.initData(this.searchId,1)
       },
       confirmOrder(id) {
         let reSureOrder = {
@@ -242,7 +255,7 @@
               message: suc,
               type: 'success'
             });
-            this.initData()
+            this.initData('',1)
           }, err => {
             this.$notify({
               message: err,
@@ -253,7 +266,7 @@
     },
     created() {
       this.userInfo = JSON.parse(sessionStorage.getItem('admin'))
-      this.initData();
+      this.initData('',1);
     }
   }
 </script>

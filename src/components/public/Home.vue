@@ -428,8 +428,6 @@
         //   this.$router.push({name: 'AdminMerchantProducts'})
         // },
         //查询景点主题分类信息
-        // initData() {
-
 
         let getThemeTypeList = {
           "loginUserID": "huileyou",
@@ -440,7 +438,7 @@
           "page": 1,
           "rows": 100
         };
-//        await this.$store.dispatch('initThemeType', getThemeTypeList)
+        await this.$store.dispatch('initThemeType', getThemeTypeList)
 
         //惠乐游设施
         let hotelFacilitiesServicesoptions = {

@@ -84,11 +84,11 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="实际价格"
+          label="实际价格(元)"
           prop="tm_tp_RealPrice">
         </el-table-column>
         <el-table-column
-          label="限售张数"
+          label="限售张数(张)"
           prop="tm_tp_Limit">
         </el-table-column>
         <el-table-column
@@ -305,6 +305,7 @@
       },
       //查询
       search() {
+        console.log(this.ticketTypeNumber)
         this.initData(this.ticketTypeNumber)
       },
       //添加按钮
