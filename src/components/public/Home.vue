@@ -287,6 +287,11 @@
         dialogVisible: false,
         status: '',
         qiankeUser: '',
+        lxs:false,
+        hotel:false,
+        ticket:false,
+        food:false,
+        Advertising:false,
         userInfo: {}
 //        isAdmin:true
       }

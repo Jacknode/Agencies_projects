@@ -10,7 +10,9 @@
 
       <el-table
         :data="myHotelDetailsList"
-        style="width: 100%">
+        style="width: 100%"
+        v-show="!isShow"
+      >
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
@@ -364,7 +366,7 @@
         this.$store.dispatch('initMyHotelDetails', HotelDetailInfo)
         .then(hotelID => {
           sessionStorage.setItem('hotelID',hotelID);
-          if (hotelID == null) {
+          if (!hotelID) {
             this.isShow = true;
           } else {
             this.isShow = false
