@@ -148,7 +148,7 @@
                         <router-link to="/home/ticketPredeterminedInstructions">门票预定须知</router-link>
                       </li>
                       <li>
-                        <router-link to="/home/trafficInformation">门票交通信息</router-link>
+                        <router-link to="/home/TicketTrafficInformation">门票交通信息</router-link>
                       </li>
                       <li>
                         <router-link to="/home/ticketType">门票票种</router-link>
