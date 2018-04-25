@@ -156,7 +156,7 @@
                 v-for="item in foodProcinceList"
                 :key="item.sm_af_AreaID"
                 :label="item.sm_af_AreaName"
-                :value="item.sm_af_AreaName">
+                :value="item.sm_af_AreaID">
               </el-option>
             </el-select>
           </el-form-item>
@@ -166,7 +166,7 @@
                 v-for="item in foodCityList"
                 :key="item.sm_af_AreaID"
                 :label="item.sm_af_AreaName"
-                :value="item.sm_af_AreaName">
+                :value="item.sm_af_AreaID">
               </el-option>
             </el-select>
           </el-form-item>
