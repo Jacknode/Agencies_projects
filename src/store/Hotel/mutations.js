@@ -1,8 +1,12 @@
 export default {
   //初始化酒店信息数据
   initMyHotelDetails(state, obj){
-    state.myHotelDetailsList = []
-    state.myHotelDetailsList.push(obj)
+    state.myHotelDetailsList = [];
+    if(obj){
+      state.myHotelDetailsList.push(obj)
+    }else{
+      state.myHotelDetailsList = [];
+    }
   },
   //获取省
   initHotelProvinceData(state, data){
