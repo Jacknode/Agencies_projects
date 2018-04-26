@@ -72,7 +72,6 @@
             </el-button>
           </template>
         </el-table-column>
-
       </el-table>
 
       <!--展示大图-->
