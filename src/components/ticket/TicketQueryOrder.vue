@@ -225,9 +225,6 @@
         if (id == 1) {
           getTradeOrderInfo.tm_or_PayState = 1;
         }
-        if (id == '') {
-          getTradeOrderInfo.tm_or_PayState = '';
-        }
         this.$store.dispatch('initTicketQueryOrder', getTradeOrderInfo)
           .then(total => {
             this.total = total;

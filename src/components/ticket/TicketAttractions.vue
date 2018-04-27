@@ -108,6 +108,10 @@
           </template>
         </el-table-column>
         <el-table-column
+          label="景点编码"
+          prop="tm_ts_Code">
+        </el-table-column>
+        <el-table-column
           label="景点名称"
           prop="tm_ts_Name">
         </el-table-column>
@@ -226,7 +230,7 @@
             <el-input v-model="addOptions.tm_ts_Opentime"></el-input>
           </el-form-item>
           <el-form-item label="建议游玩时间:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.tm_ts_Time" placeholder="（以小时为单位）"></el-input>
+            <el-input v-model="addOptions.tm_ts_Time" placeholder="以小时为单位且为数字"></el-input>
           </el-form-item>
           <el-form-item label="联系电话号码:" :label-width="formLabelWidth">
             <el-input v-model="addOptions.tm_ts_Phone"></el-input>
@@ -284,8 +288,8 @@
 
       <el-dialog title="修改景点信息" :visible.sync="updateDialog">
         <el-form :model="updateTicketAttractionsObj">
-          <el-form-item label="景点编码:" :label-width="formLabelWidth">
-            <el-input v-model="updateTicketAttractionsObj.tm_ts_Code"></el-input>
+          <el-form-item label="景点名称:" :label-width="formLabelWidth">
+            <el-input v-model="updateTicketAttractionsObj.tm_ts_Name"></el-input>
           </el-form-item>
           <el-form-item label="景点名称:" :label-width="formLabelWidth">
             <el-input v-model="updateTicketAttractionsObj.tm_ts_Name"></el-input>
@@ -355,21 +359,14 @@
             <a href="javascript:;" class="file">上传文件
               <input type="file" name="" ref="updateUpload" accept="image/*" multiple>
             </a>
-            <img
-              v-if="updateTicketAttractionsObj.tm_ts_ShowImage.length && !updateImageURL.length"
-              v-for="item,index in updateTicketAttractionsObj.tm_ts_ShowImage"
-              :src="item"
-              width="280"
-              height="125"
-              style="margin: 5px;"
-            >
+            <p>如果不修改图片默认为原来的图片</p>
             <img
               style="display: block"
               v-for="item in updateImageURL"
               :src="item"
               width="280"
               height="125"
-              v-if="updateImageURL.length"
+              v-show="updateImageURL.length"
             >
           </el-form-item>
           <el-form-item label="介绍:" :label-width="formLabelWidth">
@@ -385,7 +382,7 @@
             <el-input v-model="updateTicketAttractionsObj.tm_ts_Opentime"></el-input>
           </el-form-item>
           <el-form-item label="建议游玩时间:" :label-width="formLabelWidth">
-            <el-input v-model="updateTicketAttractionsObj.tm_ts_Time" placeholder="（以小时为单位）"></el-input>
+            <el-input v-model="updateTicketAttractionsObj.tm_ts_Time" placeholder="以小时为单位且为数字"></el-input>
           </el-form-item>
           <el-form-item label="联系电话号码:" :label-width="formLabelWidth">
             <el-input v-model="updateTicketAttractionsObj.tm_ts_Phone"></el-input>
@@ -641,6 +638,8 @@
       },
       //添加图片
       uploaNode() {
+        this.ImageURL = '';
+        this.updateImageURL = '';
         setTimeout(() => {
           if (this.$refs.upload) {
             this.$refs.upload.addEventListener('change', data => {
