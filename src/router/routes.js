@@ -2,118 +2,120 @@
  * Created by leibo on 18/1/2.
  */
 //------------------------------------------------管理员------------------------------------------
-// import AdminAllFunction2 from '@/components/admin/AdminAllFunction2'
+import AdminAllFunction2 from '@/components/admin/AdminAllFunction2'
 import Home from '@/components/public/Home'
 //登录
-// import adminLogin from '@/components/admin/Login'
+import adminLogin from '@/components/admin/Login'
 //时间活动
-// import AdminTimeActivities from '@/components/admin/AdminTimeActivities'
+import AdminTimeActivities from '@/components/admin/AdminTimeActivities'
 //日程时间
-// import AdminScheduleTime from '@/components/admin/AdminScheduleTime'
+import AdminScheduleTime from '@/components/admin/AdminScheduleTime'
 //产品线路
-// import AdminQueryProductInformation from '@/components/admin/AdminQueryProductInformation'
+import AdminQueryProductInformation from '@/components/admin/AdminQueryProductInformation'
 //商家产品
-// import AdminMerchantProducts from '@/components/admin/AdminMerchantProducts'
+import AdminMerchantProducts from '@/components/admin/AdminMerchantProducts'
 //跟团游栏目
-// import AdminGroupTour from '@/components/admin/AdminGroupTour'
+import AdminGroupTour from '@/components/admin/AdminGroupTour'
 //商家信息
-// import AdminBusinessInformation from '@/components/admin/AdminBusinessInformation'
+import AdminBusinessInformation from '@/components/admin/AdminBusinessInformation'
 //查询菜单
-// import AdminProductMenu from '@/components/admin/AdminProductMenu'
+import AdminProductMenu from '@/components/admin/AdminProductMenu'
 //产品线路下的所有内容
-// import AdminQueryProductInformationList from '@/components/admin/AdminQueryProductInformationList'
+import AdminQueryProductInformationList from '@/components/admin/AdminQueryProductInformationList'
 //时间活动下的所有内容
-// import AdminTimeActivitiesList from '@/components/admin/AdminTimeActivitiesList'
+import AdminTimeActivitiesList from '@/components/admin/AdminTimeActivitiesList'
 //系统菜单
-// import AdminSystemMenu from '@/components/admin/AdminSystemMenu'
+import AdminSystemMenu from '@/components/admin/AdminSystemMenu'
 //商家营业执照管理
-// import AdminBusinessLicense from '@/components/admin/AdminBusinessLicense'
+import AdminBusinessLicense from '@/components/admin/AdminBusinessLicense'
 //评论类型
-// import AdminCommentsType from '@/components/admin/AdminCommentsType'
+import AdminCommentsType from '@/components/admin/AdminCommentsType'
+//交通信息
+import TicketTrafficInformation from '@/components/ticket/TicketTrafficInformation'
 
 //供应商信息
 import AdminUserInfo from '@/components/admin/AdminUserInfo'
 //个人收益
-// import AdminPersonalBenefits from '@/components/admin/AdminPersonalBenefits'
+import AdminPersonalBenefits from '@/components/admin/AdminPersonalBenefits'
 
 /*------------------------------------酒店----------------------------------------*/
 //酒店管理系统
 
 //酒店详情页
-// import HotelDetil from '@/components/hotel/HotelDetil'
+import HotelDetil from '@/components/hotel/HotelDetil'
 //酒店推荐信息
-// import HotelQueryRecommend from '@/components/hotel/HotelQueryRecommend'
+import HotelQueryRecommend from '@/components/hotel/HotelQueryRecommend'
 //酒店图片信息
-// import HotelImage from '@/components/hotel/HotelImage'
+import HotelImage from '@/components/hotel/HotelImage'
 //酒店图片政策
-// import HotelPolicy from '@/components/hotel/HotelPolicy'
+import HotelPolicy from '@/components/hotel/HotelPolicy'
 //酒店主题
-// import HotelTheme from '@/components/hotel/HotelTheme'
+import HotelTheme from '@/components/hotel/HotelTheme'
 //酒店图标
-// import HotelIcon from '@/components/hotel/HotelIcon'
+import HotelIcon from '@/components/hotel/HotelIcon'
 //酒店房间
-// import HotelRoom from '@/components/hotel/HotelRoom'
+import HotelRoom from '@/components/hotel/HotelRoom'
 //酒店设施服务
-// import HotelFacilitiesServices from '@/components/hotel/HotelFacilitiesServices'
+import HotelFacilitiesServices from '@/components/hotel/HotelFacilitiesServices'
 //酒店设施服务设施
-// import HotelFacilitiesServicesFacilities from '@/components/hotel/HotelFacilitiesServicesFacilities'
+import HotelFacilitiesServicesFacilities from '@/components/hotel/HotelFacilitiesServicesFacilities'
 //酒店房间产品
-// import HotelRoomProduct from '@/components/hotel/HotelRoomProduct'
+import HotelRoomProduct from '@/components/hotel/HotelRoomProduct'
 //酒店房间房间设施
-// import HotelRoomRoomFacilities from '@/components/hotel/HotelRoomRoomFacilities'
+import HotelRoomRoomFacilities from '@/components/hotel/HotelRoomRoomFacilities'
 //酒店订单明细
-// import HotelOrderDetails from '@/components/hotel/HotelOrderDetails'
+import HotelOrderDetails from '@/components/hotel/HotelOrderDetails'
 //酒店确认订单
-// import HotelConfirmOrder from '@/components/hotel/HotelConfirmOrder'
+import HotelConfirmOrder from '@/components/hotel/HotelConfirmOrder'
 //酒店生成房间
-// import HotelRoomNumber from '@/components/hotel/HotelRoomNumber'
+import HotelRoomNumber from '@/components/hotel/HotelRoomNumber'
 //酒店批量生成房间
-// import HotelLotRoomNumber from '@/components/hotel/HotelLotRoomNumber'
+import HotelLotRoomNumber from '@/components/hotel/HotelLotRoomNumber'
 //酒店房间实体
-// import HotelRoomEntity from '@/components/hotel/HotelRoomEntity'
+import HotelRoomEntity from '@/components/hotel/HotelRoomEntity'
 
 
 /*------------------------------------门票----------------------------------------*/
 //门票景点
-// import TicketAttractions from '@/components/ticket/TicketAttractions'
+import TicketAttractions from '@/components/ticket/TicketAttractions'
 //预定须知
-// import TicketPredeterminedInstructions from '@/components/ticket/TicketPredeterminedInstructions'
+import TicketPredeterminedInstructions from '@/components/ticket/TicketPredeterminedInstructions'
 //交通信息
 //票种管理
-// import TicketType from '@/components/ticket/TicketType'
+import TicketType from '@/components/ticket/TicketType'
 //票种票价管理
-// import TicketTypeTicketPrice from '@/components/ticket/TicketTypeTicketPrice'
+import TicketTypeTicketPrice from '@/components/ticket/TicketTypeTicketPrice'
 //查询商户订单
-// import TicketQueryOrder from '@/components/ticket/TicketQueryOrder'
+import TicketQueryOrder from '@/components/ticket/TicketQueryOrder'
 //申请显示在首页
-// import TicketApplyShowHomePage from '@/components/ticket/TicketApplyShowHomePage'
+import TicketApplyShowHomePage from '@/components/ticket/TicketApplyShowHomePage'
 
 /*------------------------------------美食----------------------------------------*/
 
 //店面信息
-// import FoodStoreInformation from '@/components/food/FoodStoreInformation'
+import FoodStoreInformation from '@/components/food/FoodStoreInformation'
 //店面房间
-// import FoodStoreRoom  from '@/components/food/FoodStoreRoom'
+import FoodStoreRoom  from '@/components/food/FoodStoreRoom'
 //店面产品
-// import FoodStoreProduct from '@/components/food/FoodStoreProduct'
+import FoodStoreProduct from '@/components/food/FoodStoreProduct'
 //房间图片
-// import FoodRoomPicture from '@/components/food/FoodRoomPicture'
+import FoodRoomPicture from '@/components/food/FoodRoomPicture'
 //店面图片
-// import FoodStorePicture from '@/components/food/FoodStorePicture'
+import FoodStorePicture from '@/components/food/FoodStorePicture'
 //店面产品图片
-// import FoodStoreProductPicture from '@/components/food/FoodStoreProductPicture'
+import FoodStoreProductPicture from '@/components/food/FoodStoreProductPicture'
 //房间餐桌
-// import FoodStoreRoomTabel from '@/components/food/FoodStoreRoomTabel'
+import FoodStoreRoomTabel from '@/components/food/FoodStoreRoomTabel'
 //推荐菜
-// import FoodStoreRecommend from '@/components/food/FoodStoreRecommend'
+import FoodStoreRecommend from '@/components/food/FoodStoreRecommend'
 //店面每天可锁桌时间
-// import FoodStoreTableTime from '@/components/food/FoodStoreTableTime'
+import FoodStoreTableTime from '@/components/food/FoodStoreTableTime'
 //店面可订餐时间
-// import FoodStoreOrderingTime from '@/components/food/FoodStoreOrderingTime'
+import FoodStoreOrderingTime from '@/components/food/FoodStoreOrderingTime'
 //查询订单
-// import FoodStoreConfirmOrder from '@/components/food/FoodStoreConfirmOrder'
+import FoodStoreConfirmOrder from '@/components/food/FoodStoreConfirmOrder'
 //停车场
-// import  FoodStoppingPlace from '@/components/food/FoodStoppingPlace'
+import  FoodStoppingPlace from '@/components/food/FoodStoppingPlace'
 
 
 
@@ -121,7 +123,7 @@ import AdminUserInfo from '@/components/admin/AdminUserInfo'
 
 /*------------------------------------广告----------------------------------------*/
 //广告申请管理
-// import AdApply from '@/components/adverts/AdApply'
+import AdApply from '@/components/adverts/AdApply'
 
 
 
@@ -135,13 +137,13 @@ export default [
   {
     path: '/',
     name: 'adminLogin',
-    component: (resolve) => require(['@/components/admin/Login'],resolve)
+    component: adminLogin
   },
   {
     path: '/home',
     name: 'Home',
     components: {
-      default:(resolve) => require(['@/components/public/Home'],resolve)
+      default:Home
     },
     children: [
 // <------------------------------------管理员------------------------------------------------------>
@@ -149,8 +151,8 @@ export default [
       {
         path: 'adApply',
         components: {
-          default:(resolve) => require(['@/components/public/Home'],resolve),
-          User:(resolve) => require(['@/components/adverts/AdApply'],resolve)
+          default:Home,
+          User:AdApply
         },
         name: 'AdApply'
       },
@@ -159,8 +161,8 @@ export default [
       {
         path: 'adminAllFunction2',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/admin/AdminAllFunction2'],resolve),
+          default: Home,
+          User: AdminAllFunction2,
         },
         name: 'AdminAllFunction2',
         children:[
@@ -168,8 +170,8 @@ export default [
           {
             path: 'adminBusinessInformation',
             components: {
-              default: (resolve) => require(['@/components/public/Home'],resolve),
-              Content: (resolve) => require(['@/components/admin/AdminBusinessInformation'],resolve)
+              default: Home,
+              Content: AdminBusinessInformation
             },
             name: 'AdminBusinessInformation'
           },
@@ -178,8 +180,8 @@ export default [
           {
             path: 'adminQueryProductInformationList',
             components: {
-              default: (resolve) => require(['@/components/public/Home'],resolve),
-              Content: (resolve) => require(['@/components/admin/AdminQueryProductInformationList'],resolve)
+              default: Home,
+              Content: AdminQueryProductInformationList
             },
             name: 'AdminQueryProductInformationList'
           },
@@ -187,8 +189,8 @@ export default [
           {
             path: 'adminTimeActivitiesList',
             components: {
-              default: (resolve) => require(['@/components/public/Home'],resolve),
-              Content: (resolve) => require(['@/components/admin/AdminTimeActivitiesList'],resolve)
+              default: Home,
+              Content: AdminTimeActivitiesList
             },
             name: 'AdminTimeActivitiesList'
           },
@@ -196,8 +198,8 @@ export default [
           {
             path: 'adminMerchantProducts',
             components: {
-              default: (resolve) => require(['@/components/public/Home'],resolve),
-              Content: (resolve) => require(['@/components/admin/AdminMerchantProducts'],resolve)
+              default: Home,
+              Content: AdminMerchantProducts
             },
             name: 'AdminMerchantProducts'
           },
@@ -205,8 +207,8 @@ export default [
           {
             path: 'adminQueryProductInformation',
             components: {
-              default: (resolve) => require(['@/components/public/Home'],resolve),
-              Content: (resolve) => require(['@/components/admin/AdminQueryProductInformation'],resolve)
+              default: Home,
+              Content:AdminQueryProductInformation
             },
             name: 'AdminQueryProductInformation'
           },
@@ -214,8 +216,8 @@ export default [
           {
             path: 'adminScheduleTime',
             components: {
-              default: (resolve) => require(['@/components/public/Home'],resolve),
-              Content: (resolve) => require(['@/components/admin/AdminScheduleTime'],resolve)
+              default: Home,
+              Content:AdminScheduleTime
             },
             name: 'AdminScheduleTime'
           },
@@ -223,8 +225,8 @@ export default [
           {
             path: 'adminTimeActivities',
             components: {
-              default: (resolve) => require(['@/components/public/Home'],resolve),
-              Content: (resolve) => require(['@/components/admin/AdminTimeActivities'],resolve)
+              default: Home,
+              Content: AdminTimeActivities
             },
             name: 'AdminTimeActivities'
           },
@@ -234,8 +236,8 @@ export default [
       {
         path: 'adminUserInfo',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/admin/AdminUserInfo'],resolve)
+          default: Home,
+          User: AdminUserInfo
         },
         name: 'AdminUserInfo'
       },
@@ -243,8 +245,8 @@ export default [
       {
         path: 'adminPersonalBenefits',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/admin/AdminPersonalBenefits'],resolve)
+          default: Home,
+          User: AdminPersonalBenefits
         },
         name: 'AdminPersonalBenefits'
       },
@@ -253,8 +255,8 @@ export default [
       {
         path: 'adminGroupTour',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/admin/AdminGroupTour'],resolve)
+          default: Home,
+          User:AdminGroupTour
         },
         name: 'AdminGroupTour'
       },
@@ -263,8 +265,8 @@ export default [
       {
         path: 'adminProductMenu',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/admin/AdminProductMenu'],resolve)
+          default: Home,
+          User: AdminProductMenu
         },
         name: 'AdminProductMenu'
       },
@@ -273,8 +275,8 @@ export default [
       {
         path: 'adminBusinessLicense',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/admin/AdminBusinessLicense'],resolve)
+          default: Home,
+          User: AdminBusinessLicense
         },
         name: 'AdminBusinessLicense'
       },
@@ -282,16 +284,16 @@ export default [
       {
         path: 'adminSystemMenu',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/admin/AdminSystemMenu'],resolve)
+          default: Home,
+          User: AdminSystemMenu
         },
         name: 'AdminSystemMenu'
       },
       {
         path: 'adminCommentsType',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/admin/AdminCommentsType'],resolve)
+          default: Home,
+          User: AdminCommentsType
         },
         name: 'AdminCommentsType'
       },
@@ -299,8 +301,8 @@ export default [
       {
         path: 'hotelDetil',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelDetil'],resolve)
+          default: Home,
+          User: HotelDetil
         },
         name: 'HotelDetil'
       },
@@ -308,8 +310,8 @@ export default [
       {
         path: 'hotelOrderDetails',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelOrderDetails'],resolve)
+          default: Home,
+          User:HotelOrderDetails
         },
         name: 'HotelOrderDetails'
       },
@@ -317,8 +319,8 @@ export default [
       {
         path: 'hotelConfirmOrder',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelConfirmOrder'],resolve)
+          default: Home,
+          User: HotelConfirmOrder
         },
         name: 'HotelConfirmOrder'
       },
@@ -326,8 +328,8 @@ export default [
       {
         path: 'hotelRoomNumber/:id',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelRoomNumber'],resolve)
+          default: Home,
+          User: HotelRoomNumber
         },
         name: 'HotelRoomNumber'
       },
@@ -335,8 +337,8 @@ export default [
       {
         path: 'hotelLotRoomNumber/:id',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelLotRoomNumber'],resolve)
+          default: Home,
+          User: HotelLotRoomNumber
         },
         name: 'HotelLotRoomNumber'
       },
@@ -344,8 +346,8 @@ export default [
       {
         path: 'hotelRoomEntity/:id',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelRoomEntity'],resolve)
+          default: Home,
+          User:HotelRoomEntity
         },
         name: 'HotelRoomEntity'
       },
@@ -353,8 +355,8 @@ export default [
       {
         path: 'hotelIcon',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelIcon'],resolve)
+          default: Home,
+          User: HotelIcon
         },
         name: 'HotelIcon'
       },
@@ -362,8 +364,8 @@ export default [
       {
         path: 'hotelRoom',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelRoom'],resolve)
+          default: Home,
+          User: HotelRoom
         },
         name: 'HotelRoom'
       },
@@ -371,8 +373,8 @@ export default [
       {
         path: 'hotelRoomProduct/:id',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelRoomProduct'],resolve)
+          default: Home,
+          User: HotelRoomProduct
         },
         name: 'HotelRoomProduct'
       },
@@ -380,8 +382,8 @@ export default [
       {
         path: 'hotelRoomRoomFacilities/:id',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelRoomRoomFacilities'],resolve)
+          default: Home,
+          User: HotelRoomRoomFacilities
         },
         name: 'HotelRoomRoomFacilities'
       },
@@ -389,8 +391,8 @@ export default [
       {
         path: 'hotelFacilitiesServices',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelFacilitiesServices'],resolve)
+          default: Home,
+          User: HotelFacilitiesServices
         },
         name: 'HotelFacilitiesServices'
       },
@@ -398,8 +400,8 @@ export default [
       {
         path: 'hotelFacilitiesServicesFacilities',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelFacilitiesServicesFacilities'],resolve)
+          default: Home,
+          User: HotelFacilitiesServicesFacilities
         },
         name: 'HotelFacilitiesServicesFacilities'
       },
@@ -407,8 +409,8 @@ export default [
       {
         path: 'hotelQueryRecommend',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelQueryRecommend'],resolve)
+          default: Home,
+          User:HotelQueryRecommend
         },
         name: 'HotelQueryRecommend'
       },
@@ -416,8 +418,8 @@ export default [
       {
         path: 'hotelTheme',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelTheme'],resolve)
+          default: Home,
+          User:HotelTheme
         },
         name: 'HotelTheme'
       },
@@ -425,8 +427,8 @@ export default [
       {
         path: 'hotelPolicy',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelPolicy'],resolve)
+          default: Home,
+          User: HotelPolicy
         },
         name: 'HotelPolicy'
       },
@@ -435,8 +437,8 @@ export default [
       {
         path: 'hotelImage',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/hotel/HotelImage'],resolve)
+          default: Home,
+          User: HotelImage
         },
         name: 'HotelImage'
       },
@@ -444,8 +446,8 @@ export default [
       {
         path: 'ticketAttractions',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/ticket/TicketAttractions'],resolve)
+          default: Home,
+          User: TicketAttractions
         },
         name: 'TicketAttractions',
       },
@@ -453,8 +455,8 @@ export default [
       {
         path: 'ticketPredeterminedInstructions',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/ticket/TicketPredeterminedInstructions'],resolve)
+          default: Home,
+          User: TicketPredeterminedInstructions
         },
         name: 'TicketPredeterminedInstructions',
       },
@@ -462,8 +464,8 @@ export default [
       {
         path: 'ticketTrafficInformation',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/ticket/TicketTrafficInformation'],resolve)
+          default: Home,
+          User: TicketTrafficInformation
         },
         name: 'TicketTrafficInformation',
       },
@@ -471,8 +473,8 @@ export default [
       {
         path: 'ticketType',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/ticket/TicketType'],resolve)
+          default: Home,
+          User: TicketType
         },
         name: 'TicketType',
       },
@@ -480,8 +482,8 @@ export default [
       {
         path: 'ticketTypeTicketPrice',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/ticket/TicketTypeTicketPrice'],resolve)
+          default: Home,
+          User: TicketTypeTicketPrice
         },
         name: 'TicketTypeTicketPrice',
       },
@@ -489,8 +491,8 @@ export default [
       {
         path: 'ticketQueryOrder',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/ticket/TicketQueryOrder'],resolve)
+          default: Home,
+          User:TicketQueryOrder
         },
         name: 'TicketQueryOrder',
       },
@@ -498,8 +500,8 @@ export default [
       {
         path: 'ticketApplyShowHomePage',
         components: {
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/ticket/TicketApplyShowHomePage'],resolve)
+          default: Home,
+          User: TicketApplyShowHomePage
         },
         name: 'TicketApplyShowHomePage',
       },
@@ -510,8 +512,8 @@ export default [
       {
         path: 'foodStoreInformation',
         components:{
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/food/FoodStoreInformation'],resolve)
+          default: Home,
+          User: FoodStoreInformation
         },
         name:'FoodStoreInformation'
       },
@@ -519,8 +521,8 @@ export default [
       {
         path: 'foodStoreRoom',
         components:{
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/food/FoodStoreRoom'],resolve)
+          default: Home,
+          User: FoodStoreRoom
         },
         name:'FoodStoreRoom'
       },
@@ -528,8 +530,8 @@ export default [
       {
         path: 'foodStoreProduct',
         components:{
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/food/FoodStoreProduct'],resolve)
+          default: Home,
+          User: FoodStoreProduct
         },
         name:'FoodStoreProduct'
       },
@@ -537,8 +539,8 @@ export default [
       {
         path: 'foodRoomPicture',
         components:{
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/food/FoodRoomPicture'],resolve)
+          default: Home,
+          User: FoodRoomPicture
         },
         name:'FoodRoomPicture'
       },
@@ -546,8 +548,8 @@ export default [
       {
         path: 'foodStorePicture',
         components:{
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/food/FoodStorePicture'],resolve)
+          default: Home,
+          User: FoodStorePicture
         },
         name:'FoodStorePicture'
       },
@@ -555,8 +557,8 @@ export default [
       {
         path: 'foodStoreRoomTabel',
         components:{
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/food/FoodStoreRoomTabel'],resolve)
+          default: Home,
+          User: FoodStoreRoomTabel
         },
         name:'FoodStoreRoomTabel'
       },
@@ -564,8 +566,8 @@ export default [
       {
         path: 'foodStoreRecommend',
         components:{
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/food/FoodStoreRecommend'],resolve)
+          default: Home,
+          User: FoodStoreRecommend
         },
         name:'FoodStoreRecommend'
       },
@@ -573,8 +575,8 @@ export default [
       {
         path: 'foodStoreTableTime',
         components:{
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/food/FoodStoreTableTime'],resolve)
+          default: Home,
+          User: FoodStoreTableTime
         },
         name:'FoodStoreTableTime'
       },
@@ -582,8 +584,8 @@ export default [
       {
         path: 'foodStoreOrderingTime',
         components:{
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/food/FoodStoreOrderingTime'],resolve)
+          default: Home,
+          User: FoodStoreOrderingTime
         },
         name:'FoodStoreOrderingTime'
       },
@@ -591,8 +593,8 @@ export default [
       {
         path: 'foodStoreConfirmOrder',
         components:{
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/food/FoodStoreConfirmOrder'],resolve)
+          default: Home,
+          User: FoodStoreConfirmOrder
         },
         name:'FoodStoreConfirmOrder'
       },
@@ -600,8 +602,8 @@ export default [
       {
         path:'foodStoreProductPicture',
         components:{
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/food/FoodStoreProductPicture'],resolve)
+          default: Home,
+          User: FoodStoreProductPicture
         },
         name:'FoodStoreProductPicture'
       },
@@ -609,8 +611,8 @@ export default [
       {
         path:'foodStoppingPlace',
         components:{
-          default: (resolve) => require(['@/components/public/Home'],resolve),
-          User: (resolve) => require(['@/components/food/FoodStoppingPlace'],resolve)
+          default: Home,
+          User: FoodStoppingPlace
         },
         name:'FoodStoppingPlace'
       },
