@@ -2,118 +2,118 @@
  * Created by leibo on 18/1/2.
  */
 //------------------------------------------------管理员------------------------------------------
-import AdminAllFunction2 from '@/components/admin/AdminAllFunction2'
+// import AdminAllFunction2 from '@/components/admin/AdminAllFunction2'
 import Home from '@/components/public/Home'
 //登录
-import adminLogin from '@/components/admin/Login'
+// import adminLogin from '@/components/admin/Login'
 //时间活动
-import AdminTimeActivities from '@/components/admin/AdminTimeActivities'
+// import AdminTimeActivities from '@/components/admin/AdminTimeActivities'
 //日程时间
-import AdminScheduleTime from '@/components/admin/AdminScheduleTime'
+// import AdminScheduleTime from '@/components/admin/AdminScheduleTime'
 //产品线路
-import AdminQueryProductInformation from '@/components/admin/AdminQueryProductInformation'
+// import AdminQueryProductInformation from '@/components/admin/AdminQueryProductInformation'
 //商家产品
-import AdminMerchantProducts from '@/components/admin/AdminMerchantProducts'
+// import AdminMerchantProducts from '@/components/admin/AdminMerchantProducts'
 //跟团游栏目
-import AdminGroupTour from '@/components/admin/AdminGroupTour'
+// import AdminGroupTour from '@/components/admin/AdminGroupTour'
 //商家信息
-import AdminBusinessInformation from '@/components/admin/AdminBusinessInformation'
+// import AdminBusinessInformation from '@/components/admin/AdminBusinessInformation'
 //查询菜单
-import AdminProductMenu from '@/components/admin/AdminProductMenu'
+// import AdminProductMenu from '@/components/admin/AdminProductMenu'
 //产品线路下的所有内容
-import AdminQueryProductInformationList from '@/components/admin/AdminQueryProductInformationList'
+// import AdminQueryProductInformationList from '@/components/admin/AdminQueryProductInformationList'
 //时间活动下的所有内容
-import AdminTimeActivitiesList from '@/components/admin/AdminTimeActivitiesList'
+// import AdminTimeActivitiesList from '@/components/admin/AdminTimeActivitiesList'
 //系统菜单
-import AdminSystemMenu from '@/components/admin/AdminSystemMenu'
+// import AdminSystemMenu from '@/components/admin/AdminSystemMenu'
 //商家营业执照管理
-import AdminBusinessLicense from '@/components/admin/AdminBusinessLicense'
+// import AdminBusinessLicense from '@/components/admin/AdminBusinessLicense'
 //评论类型
-import AdminCommentsType from '@/components/admin/AdminCommentsType'
+// import AdminCommentsType from '@/components/admin/AdminCommentsType'
 
 //供应商信息
 import AdminUserInfo from '@/components/admin/AdminUserInfo'
 //个人收益
-import AdminPersonalBenefits from '@/components/admin/AdminPersonalBenefits'
+// import AdminPersonalBenefits from '@/components/admin/AdminPersonalBenefits'
 
 /*------------------------------------酒店----------------------------------------*/
 //酒店管理系统
 
 //酒店详情页
-import HotelDetil from '@/components/hotel/HotelDetil'
+// import HotelDetil from '@/components/hotel/HotelDetil'
 //酒店推荐信息
-import HotelQueryRecommend from '@/components/hotel/HotelQueryRecommend'
+// import HotelQueryRecommend from '@/components/hotel/HotelQueryRecommend'
 //酒店图片信息
-import HotelImage from '@/components/hotel/HotelImage'
+// import HotelImage from '@/components/hotel/HotelImage'
 //酒店图片政策
-import HotelPolicy from '@/components/hotel/HotelPolicy'
+// import HotelPolicy from '@/components/hotel/HotelPolicy'
 //酒店主题
-import HotelTheme from '@/components/hotel/HotelTheme'
+// import HotelTheme from '@/components/hotel/HotelTheme'
 //酒店图标
-import HotelIcon from '@/components/hotel/HotelIcon'
+// import HotelIcon from '@/components/hotel/HotelIcon'
 //酒店房间
-import HotelRoom from '@/components/hotel/HotelRoom'
+// import HotelRoom from '@/components/hotel/HotelRoom'
 //酒店设施服务
-import HotelFacilitiesServices from '@/components/hotel/HotelFacilitiesServices'
+// import HotelFacilitiesServices from '@/components/hotel/HotelFacilitiesServices'
 //酒店设施服务设施
-import HotelFacilitiesServicesFacilities from '@/components/hotel/HotelFacilitiesServicesFacilities'
+// import HotelFacilitiesServicesFacilities from '@/components/hotel/HotelFacilitiesServicesFacilities'
 //酒店房间产品
-import HotelRoomProduct from '@/components/hotel/HotelRoomProduct'
+// import HotelRoomProduct from '@/components/hotel/HotelRoomProduct'
 //酒店房间房间设施
-import HotelRoomRoomFacilities from '@/components/hotel/HotelRoomRoomFacilities'
+// import HotelRoomRoomFacilities from '@/components/hotel/HotelRoomRoomFacilities'
 //酒店订单明细
-import HotelOrderDetails from '@/components/hotel/HotelOrderDetails'
+// import HotelOrderDetails from '@/components/hotel/HotelOrderDetails'
 //酒店确认订单
-import HotelConfirmOrder from '@/components/hotel/HotelConfirmOrder'
+// import HotelConfirmOrder from '@/components/hotel/HotelConfirmOrder'
 //酒店生成房间
-import HotelRoomNumber from '@/components/hotel/HotelRoomNumber'
+// import HotelRoomNumber from '@/components/hotel/HotelRoomNumber'
 //酒店批量生成房间
-import HotelLotRoomNumber from '@/components/hotel/HotelLotRoomNumber'
+// import HotelLotRoomNumber from '@/components/hotel/HotelLotRoomNumber'
 //酒店房间实体
-import HotelRoomEntity from '@/components/hotel/HotelRoomEntity'
+// import HotelRoomEntity from '@/components/hotel/HotelRoomEntity'
 
 
 /*------------------------------------门票----------------------------------------*/
 //门票景点
-import TicketAttractions from '@/components/ticket/TicketAttractions'
+// import TicketAttractions from '@/components/ticket/TicketAttractions'
 //预定须知
-import TicketPredeterminedInstructions from '@/components/ticket/TicketPredeterminedInstructions'
+// import TicketPredeterminedInstructions from '@/components/ticket/TicketPredeterminedInstructions'
 //交通信息
 //票种管理
-import TicketType from '@/components/ticket/TicketType'
+// import TicketType from '@/components/ticket/TicketType'
 //票种票价管理
-import TicketTypeTicketPrice from '@/components/ticket/TicketTypeTicketPrice'
+// import TicketTypeTicketPrice from '@/components/ticket/TicketTypeTicketPrice'
 //查询商户订单
-import TicketQueryOrder from '@/components/ticket/TicketQueryOrder'
+// import TicketQueryOrder from '@/components/ticket/TicketQueryOrder'
 //申请显示在首页
-import TicketApplyShowHomePage from '@/components/ticket/TicketApplyShowHomePage'
+// import TicketApplyShowHomePage from '@/components/ticket/TicketApplyShowHomePage'
 
 /*------------------------------------美食----------------------------------------*/
 
 //店面信息
-import FoodStoreInformation from '@/components/food/FoodStoreInformation'
+// import FoodStoreInformation from '@/components/food/FoodStoreInformation'
 //店面房间
-import FoodStoreRoom  from '@/components/food/FoodStoreRoom'
+// import FoodStoreRoom  from '@/components/food/FoodStoreRoom'
 //店面产品
-import FoodStoreProduct from '@/components/food/FoodStoreProduct'
+// import FoodStoreProduct from '@/components/food/FoodStoreProduct'
 //房间图片
-import FoodRoomPicture from '@/components/food/FoodRoomPicture'
+// import FoodRoomPicture from '@/components/food/FoodRoomPicture'
 //店面图片
-import FoodStorePicture from '@/components/food/FoodStorePicture'
+// import FoodStorePicture from '@/components/food/FoodStorePicture'
 //店面产品图片
-import FoodStoreProductPicture from '@/components/food/FoodStoreProductPicture'
+// import FoodStoreProductPicture from '@/components/food/FoodStoreProductPicture'
 //房间餐桌
-import FoodStoreRoomTabel from '@/components/food/FoodStoreRoomTabel'
+// import FoodStoreRoomTabel from '@/components/food/FoodStoreRoomTabel'
 //推荐菜
-import FoodStoreRecommend from '@/components/food/FoodStoreRecommend'
+// import FoodStoreRecommend from '@/components/food/FoodStoreRecommend'
 //店面每天可锁桌时间
-import FoodStoreTableTime from '@/components/food/FoodStoreTableTime'
+// import FoodStoreTableTime from '@/components/food/FoodStoreTableTime'
 //店面可订餐时间
-import FoodStoreOrderingTime from '@/components/food/FoodStoreOrderingTime'
+// import FoodStoreOrderingTime from '@/components/food/FoodStoreOrderingTime'
 //查询订单
-import FoodStoreConfirmOrder from '@/components/food/FoodStoreConfirmOrder'
+// import FoodStoreConfirmOrder from '@/components/food/FoodStoreConfirmOrder'
 //停车场
-import  FoodStoppingPlace from '@/components/food/FoodStoppingPlace'
+// import  FoodStoppingPlace from '@/components/food/FoodStoppingPlace'
 
 
 
@@ -121,7 +121,7 @@ import  FoodStoppingPlace from '@/components/food/FoodStoppingPlace'
 
 /*------------------------------------广告----------------------------------------*/
 //广告申请管理
-import AdApply from '@/components/adverts/AdApply'
+// import AdApply from '@/components/adverts/AdApply'
 
 
 
