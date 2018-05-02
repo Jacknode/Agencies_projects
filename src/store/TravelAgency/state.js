@@ -66,6 +66,7 @@ export default {
   provinceDataList:[],//获取省
   cityDataList:[],//获取市
   countyDataList:[],//获取县
+  carCityPlaceList:[], //租车级联城市
 
 
   //参数

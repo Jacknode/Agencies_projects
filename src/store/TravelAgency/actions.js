@@ -2,6 +2,7 @@
  * Created by leibo on 18/1/2.
  */
 import axios from 'axios';
+import {postPromise} from '@/assets/public'
 
 export default {
 
@@ -1701,44 +1702,44 @@ export default {
         })
     })
   },
-  //经营范围
-  initChangeScopeOfOperation({commit}, data) {
-    return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/TradeScope/Select', JSON.stringify(data), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      })
-        .then(data => {
-          var data = data.data;
-          if (Number(data.resultcode) == 200) {
-            commit('initChangeScopeOfOperation', data.data)
-            relove()
-          }else{
-            reject(data.resultcontent)
-          }
-        })
-    })
-  },
-  //公司规模
-  initChangeCompanyType({commit}, data) {
-    return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/CompanySize/Select', JSON.stringify(data), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      })
-        .then(data => {
-          var data = data.data;
-          if (Number(data.resultcode) == 200) {
-            commit('initChangeCompanyType', data.data)
-            relove()
-          }else{
-            reject(data.resultcontent)
-          }
-        })
-    })
-  },
+  // //经营范围
+  // initChangeScopeOfOperation({commit}, data) {
+  //   return new Promise(function (relove, reject) {
+  //     axios.post('http://webservice.1000da.com.cn/TradeScope/Select', JSON.stringify(data), {
+  //       headers: {
+  //         'Content-Type': 'application/x-www-form-urlencoded'
+  //       }
+  //     })
+  //       .then(data => {
+  //         var data = data.data;
+  //         if (Number(data.resultcode) == 200) {
+  //           commit('initChangeScopeOfOperation', data.data)
+  //           relove()
+  //         }else{
+  //           reject(data.resultcontent)
+  //         }
+  //       })
+  //   })
+  // },
+  // //公司规模
+  // initChangeCompanyType({commit}, data) {
+  //   return new Promise(function (relove, reject) {
+  //     axios.post('http://webservice.1000da.com.cn/CompanySize/Select', JSON.stringify(data), {
+  //       headers: {
+  //         'Content-Type': 'application/x-www-form-urlencoded'
+  //       }
+  //     })
+  //       .then(data => {
+  //         var data = data.data;
+  //         if (Number(data.resultcode) == 200) {
+  //           commit('initChangeCompanyType', data.data)
+  //           relove()
+  //         }else{
+  //           reject(data.resultcontent)
+  //         }
+  //       })
+  //   })
+  // },
   //供应商收益
   initAdminPersonalBenefits({commit}, data) {
     return new Promise((relove, reject) => {
@@ -1759,25 +1760,25 @@ export default {
 
     })
   },
-  //查询结算币种
-  initChangeMineyType({commit}, data) {
-    return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/BalanceCurrency/Select', JSON.stringify(data), {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      })
-        .then(data => {
-          var data = data.data;
-          if (Number(data.resultcode) == 200) {
-            commit('initChangeMineyType', data.data)
-            relove(data.data)
-          }else{
-            reject(data.resultcontent)
-          }
-        })
-    })
-  },
+  // //查询结算币种
+  // initChangeMineyType({commit}, data) {
+  //   return new Promise(function (relove, reject) {
+  //     axios.post('http://webservice.1000da.com.cn/BalanceCurrency/Select', JSON.stringify(data), {
+  //       headers: {
+  //         'Content-Type': 'application/x-www-form-urlencoded'
+  //       }
+  //     })
+  //       .then(data => {
+  //         var data = data.data;
+  //         if (Number(data.resultcode) == 200) {
+  //           commit('initChangeMineyType', data.data)
+  //           relove(data.data)
+  //         }else{
+  //           reject(data.resultcontent)
+  //         }
+  //       })
+  //   })
+  // },
   //类型
   initChangeCooperationType({commit}, data) {
     return new Promise(function (relove, reject) {
@@ -1874,7 +1875,7 @@ export default {
   //获取县
   initCountyData({commit}, data){
     return new Promise(function (relove, reject) {
-      axios.post('http://hly.lxs.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
+      axios.post('http://webservice.1000da.com.cn/CarRentalWebPage/GetCarRentCity', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -1890,5 +1891,146 @@ export default {
         })
     })
   },
+  //租车级联城市
+  initCarCityPlace({commit},data){
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/CarRentalWebPage/GetCarRentCity', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(item => {
+        var resulte = item.data;
+        if (Number(resulte.resultcode) == 200) {
+          var data = resulte.data;
+          let arr1 = [{
+            label: 'ABCD',
+            value: '1',
+            children: []
+          }, {
+            label: 'EFGHI',
+            value: 2,
+            children: []
+          }, {
+            label: 'JKLM',
+            value: 3,
+            children: []
+          }, {
+            label: 'NOPQRS',
+            value: 4,
+            children: []
+          }, {
+            label: 'TUVWX',
+            value: 5,
+            children: []
+          }, {
+            label: 'YZ',
+            value: 6,
+            children: []
+          }
+          ];
+          for (let attr in data) {
+            for (var i = 0; i < arr1.length; i++) {
+              if (arr1[i].label == attr) {
+                let arr2 = data[attr];
+                for (var j = 0; j < attr.length; j++) {
+                  arr1[i].children.push({
+                    label: attr[j],
+                    value: j,
+                    children: arr2.filter(item => {
+                      if (item.CityFirst == attr[j]) {
+                        item.label = item.CityName
+                        item.value = item.CityId
+                        delete item.CityFirst
+                        delete item.CityName
+                        delete item.CityId
+                        return true;
+                      }
+                      return false;
+                    })
+                  })
+                }
+              }
+            }
+          }
+          commit('initCarCityPlace', arr1)
+          relove();
+        }
+        else {
+          reject(resulte.resultcontent);
+        }
+      })
+    })
+  },
+  //查询地标
+  initCarGetCityLandmarkInfo({commit},data){
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/CarRentalWebPage/GetCityLandmark', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(data => {
+        var data = data.data;
+        if (Number(data.resultcode) == 200) {
+          let resulte = data.data;
+          let arr = [];
 
+          for(var i=0;i<resulte.length;i++){
+            let arr1 = resulte[i].MarkArry;
+            arr.push({
+              label:resulte[i].AttrName,
+              value:resulte[i].AttrId,
+              children:[]
+            })
+            for(var j=0;j<arr1.length;j++){
+              arr[i].children.push({
+                label:arr1[j].MarkName,
+                value:arr1[j].MarkId,
+              })
+            }
+          }
+          commit('initCarGetCityLandmarkInfo', arr)
+          relove(data.resultcontent)
+        }else{
+          reject(data.resultcontent)
+        }
+      })
+    })
+  },
+  //初始化
+  initEducation({commit}, item) {
+    return new Promise((relove, reject) => {
+      // axios.post('http://webservice.1000da.com.cn/Job/Select', JSON.stringify(item), {
+      //   headers: {
+      //     'Content-Type': 'application/x-www-form-urlencoded'
+      //   }
+      // })
+      postPromise('http://webservice.1000da.com.cn/Job/Select',item)
+      .then(data => {
+        var resulte = JSON.parse(data);
+        if (Number(resulte.resultcode) == 200) {
+          switch (item.ui_jb_ParentID){
+            case '45':
+              //个人资料学历
+              commit('initChangeMineyType', resulte.data)
+              relove(resulte.data)
+              break;
+            case '46':
+              //公司规模
+              commit('initChangeCompanyType', resulte.data)
+              relove(resulte.data)
+              break;
+            case '70':
+              //经营范围
+              commit('initChangeScopeOfOperation', resulte.data)
+              relove(resulte.data)
+              break;
+          }
+        } else {
+          reject(resulte.resultcontent)
+        }
+      })
+    })
+  },
 }

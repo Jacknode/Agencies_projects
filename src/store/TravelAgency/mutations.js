@@ -351,5 +351,7 @@ export default {
   initCountyData(state,data){
     state.countyDataList = data;
   },
-
+  initCarCityPlace(state,data){
+    state.carCityPlaceList = data;
+  }
 };

@@ -11,6 +11,7 @@
       <el-table
         :data="myHotelDetailsList"
         style="width: 100%"
+        v-loading = "isLoading"
         v-show="!isShow"
       >
         <el-table-column type="expand">
@@ -348,6 +349,7 @@
           "ht_ht_Details": "",
           "ht_ht_Remark": ""
         },
+        isLoading:false,
         addHotelDetilsDialog: false,
         formLabelWidth: '120px',
         isShow: true,
@@ -362,9 +364,11 @@
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "sm_ai_AgentInfoID": sm_ai_AgentID,
-        }
+        };
+        this.isLoading = true;
         this.$store.dispatch('initMyHotelDetails', HotelDetailInfo)
         .then(hotelID => {
+          this.isLoading = false;
           sessionStorage.setItem('hotelID',hotelID);
           if (!hotelID) {
             this.isShow = true;
@@ -372,7 +376,10 @@
             this.isShow = false
           }
         }, err => {
-          console.log(err)
+          this.$notify({
+            message: err,
+            type: 'error'
+          });
         })
       },
       //点击添加按钮

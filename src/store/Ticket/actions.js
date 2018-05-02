@@ -99,6 +99,8 @@ export default {
           if (Number(data.resultcode) == 200) {
             commit('initTicketGreat', data.data)
             relove()
+          }else {
+            reject(data.resultcontent)
           }
         })
     })
@@ -116,6 +118,8 @@ export default {
           if (Number(data.resultcode) == 200) {
             commit('initTicketCountrie', data.data)
             relove()
+          }else {
+            reject(data.resultcontent)
           }
         })
     })
@@ -133,6 +137,8 @@ export default {
           if (Number(data.resultcode) == 200) {
             commit('initTicketProvice', data.data)
             relove()
+          }else {
+            reject(data.resultcontent)
           }
         })
     })
@@ -150,6 +156,8 @@ export default {
           if (Number(data.resultcode) == 200) {
             commit('initTicketCity', data.data)
             relove()
+          }else {
+            reject(data.resultcontent)
           }
         })
     })
@@ -167,6 +175,8 @@ export default {
           if (Number(data.resultcode) == 200) {
             commit('initTicketContry', data.data)
             relove()
+          }else {
+            reject(data.resultcontent)
           }
         })
     })

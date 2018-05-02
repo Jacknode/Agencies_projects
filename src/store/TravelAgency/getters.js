@@ -64,6 +64,7 @@ export default {
   provinceDataList: state => state.provinceDataList,
   cityDataList: state => state.cityDataList,
   countyDataList: state => state.countyDataList,
+  carCityPlaceList: state => state.carCityPlaceList,
   //参数
   adminMerchantProductsId: state => state.adminMerchantProductsId,
   adminProductLineManagementId: state => state.adminProductLineManagementId,

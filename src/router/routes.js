@@ -4,6 +4,8 @@
 //------------------------------------------------管理员------------------------------------------
 import AdminAllFunction2 from '@/components/admin/AdminAllFunction2'
 import Home from '@/components/public/Home'
+// const Home = () => import('@/components/public/Home')
+// const newHome = () => import('@/components/public/newHome')
 //登录
 import adminLogin from '@/components/admin/Login'
 //时间活动
@@ -125,9 +127,9 @@ import  FoodStoppingPlace from '@/components/food/FoodStoppingPlace'
 //广告申请管理
 import AdApply from '@/components/adverts/AdApply'
 
-
-
-
+import CarHome from '@/components/car/CarHome'
+import CarStore from '@/components/car/CarStore'
+import CarProduct from '@/components/car/CarProduct'
 
 
 
@@ -155,6 +157,31 @@ export default [
           User:AdApply
         },
         name: 'AdApply'
+      },
+// <------------------------------------租车------------------------------------------------------>
+      {
+        path: 'carHome',
+        components: {
+          default:(resolve) => require(['@/components/public/Home'],resolve),
+          User:(resolve) => require(['@/components/car/CarHome'],resolve)
+        },
+        name: 'CarHome'
+      },
+      {
+        path: 'carStore',
+        components: {
+          default:(resolve) => require(['@/components/public/Home'],resolve),
+          User:(resolve) => require(['@/components/car/CarStore'],resolve)
+        },
+        name: 'CarStore'
+      },
+      {
+        path: 'carProduct',
+        components: {
+          default:(resolve) => require(['@/components/public/Home'],resolve),
+          User:(resolve) => require(['@/components/car/CarProduct'],resolve)
+        },
+        name: 'CarProduct'
       },
 //       AdminActivitySite
       //线路日程

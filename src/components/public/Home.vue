@@ -211,13 +211,31 @@
                     </ul>
                   </li>
                 </ul>
+                <!--广告-->
                 <ul class="navigation navigation-main navigation-accordion">
-                  <!--境外查询-->
                   <li>
                     <a href="javascript:;"><i class="icon-ticket"></i> <span>广告后台管理</span></a>
                     <ul>
                       <li>
                         <router-link to="/home/AdApply">广告申请管理</router-link>
+                      </li>
+                    </ul>
+                  </li>
+                  <!-- /main -->
+                </ul>
+                <!--租车-->
+                <ul class="navigation navigation-main navigation-accordion">
+                  <li>
+                    <a href="javascript:;"><i class="icon-car"></i> <span>租车后台管理</span></a>
+                    <ul>
+                      <li>
+                        <router-link to="/home/carHome">租车公司基本信息</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/carStore">租车门店管理</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/carProduct">租车汽车产品管理</router-link>
                       </li>
                     </ul>
                   </li>
@@ -300,6 +318,7 @@
       'transtionActive',
     ]),
     created() {
+
       this.userInfo = JSON.parse(sessionStorage.getItem('admin'));
       this.status = this.userInfo.sm_ai_IsPass;
       let status = localStorage.getItem('status')
@@ -423,6 +442,16 @@
           "ht_id_Remark": "",//备注
         }
         await this.$store.dispatch('initHotelIconGallery', iconOptions)
+
+        //租车城市级联城市
+        let carOptions = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+        };
+        await this.$store.dispatch('initCarCityPlace', carOptions)
 
         // //退出
         // Quit() {

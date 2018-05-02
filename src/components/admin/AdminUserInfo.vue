@@ -515,10 +515,9 @@
     },
     created() {
       this.initData()
-      let userInfo = JSON.parse(sessionStorage.getItem('admin'))
+      let userInfo = JSON.parse(sessionStorage.getItem('admin'));
       this.isPass = userInfo.sm_ai_IsPass;
       this.activeIndex = userInfo.sm_ai_IsPass + '';
-      this.initData();
       this.changeScopeOfOperation();
       this.changeCompanyType();
       this.changeMoneyType();
@@ -539,6 +538,7 @@
         };
         this.$store.dispatch('initLookList',options)
         .then(()=>{
+          this.$store.commit('setTranstionFalse');
           this.lookDialog = true;
         },err=>{
           this.$notify({
@@ -559,8 +559,10 @@
           "page": 1,
           "rows": 5,
         };
+        this.isLoading = true;
         this.$store.dispatch('initAdminSupplier', options)
           .then(userInfo => {
+            this.isLoading = false;
           }, err => {
             this.$notify({
               message: err,
@@ -654,7 +656,7 @@
       changeProvince(v) {
         let getAreaProvice = {
           "areaPid": 3337
-        }
+        };
         this.$store.dispatch('initProvinceData', getAreaProvice)
       },
 
@@ -669,7 +671,7 @@
         }
         let getCity = {
           "areaPid": this.obj.agentInfo.sm_ai_Provice ? this.obj.agentInfo.sm_ai_Provice : ''
-        }
+        };
         this.$store.dispatch('initCityData', getCity)
       },
 
@@ -684,7 +686,7 @@
         }
         let getCounty = {
           "areaPid": this.obj.agentInfo.sm_ai_City ? this.obj.agentInfo.sm_ai_City : ''
-        }
+        };
         this.$store.dispatch('initCountyData', getCounty)
       },
 
@@ -693,11 +695,14 @@
         var selectTradeScope = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
-          "sm_ts_ID": "",
-          "sm_ts_Name": "",
-          "sm_ts_IsDelete": 0
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "ts_jb_ID": "",
+          "ts_jb_Name": "",
+          "ui_jb_ParentID": "70"
         };
-        this.$store.dispatch('initChangeScopeOfOperation', selectTradeScope)
+        this.$store.dispatch('initEducation', selectTradeScope)
       },
       //选择经营范围
       changeBox() {
@@ -720,22 +725,28 @@
         var selectCompanySize = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
-          "sm_cs_ID": "",
-          "sm_cs_Persons": "",
-          "sm_cs_IsDelete": 0
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "ts_jb_ID": "",
+          "ts_jb_Name": "",
+          "ui_jb_ParentID": "46"
         };
-        return this.$store.dispatch('initChangeCompanyType', selectCompanySize)
+        return this.$store.dispatch('initEducation', selectCompanySize)
       },
       //查询结算币种
       changeMoneyType() {
         var selectBalanceCurrency = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
-          "sm_bc_ID": "",
-          "sm_bc_Name": "",
-          "sm_bc_IsDelete": 0
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "ts_jb_ID": "",
+          "ts_jb_Name": "",
+          "ui_jb_ParentID": "45"
         }
-        return this.$store.dispatch('initChangeMineyType', selectBalanceCurrency)
+        return this.$store.dispatch('initEducation', selectBalanceCurrency)
       },
       //合作类型
       changeCooperationTypeL() {
