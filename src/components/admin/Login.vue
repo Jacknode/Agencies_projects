@@ -69,6 +69,15 @@
               if(Number(data.resultcode)==200){
                 this.$store.commit('showAdmin');
                 sessionStorage.setItem('admin',JSON.stringify(data.data.agentInfo));
+//                let arr = data.data.agentInfoTypeList
+//                for(var i=0;i<arr.length;i++){
+//                  switch (arr[i].sm_cp_ID){
+//                    case 3:
+//                      //旅行社
+//                      this.$store.commit('setIsAgencies');
+//                      break;
+//                  }
+//                }
                 this.$router.push({name:'AdminUserInfo'});
                 window.location.reload()
               }else{

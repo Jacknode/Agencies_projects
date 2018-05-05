@@ -418,7 +418,7 @@
       this.$store.dispatch('initProvice',sCity)
       let obj = JSON.parse(sessionStorage.getItem('admin'));
       this.userObj = obj;
-      this.productsID = obj.sm_ai_AgentID
+      this.productsID = obj.sm_ai_ID
     },
     methods: {
       //选中省

@@ -2033,4 +2033,52 @@ export default {
       })
     })
   },
+  //设置合作类型状态
+  initSetCooperationType({commit},data){
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/AgentInfo/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(data => {
+        var data = data.data;
+        if (Number(data.resultcode) == 200) {
+          let arr = data.data[0].agentInfoTypeList;
+          console.log(arr)
+          for(var i=0;i<arr.length;i++){
+            switch (arr[i].sm_cp_ID){
+              case 1:
+                //餐饮
+                commit('setIsFood');
+                break;
+              case 2:
+                //酒店
+                commit('setIsHotel');
+                break;
+              case 3:
+                //旅行社
+                commit('setIsAgencies');
+                break;
+              case 4:
+                //门票
+                commit('setIsTickets');
+                break;
+              case 5:
+                //租车
+                commit('setIsCar');
+                break;
+              case 6:
+                //广告
+                commit('setIsAdvertising');
+                break;
+            }
+          }
+          relove(data.resultcontent)
+        } else {
+          reject(data.resultcontent)
+        }
+      })
+    })
+  }
 }

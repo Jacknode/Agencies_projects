@@ -8,6 +8,24 @@ export default {
   hideAdmin(state) {
     state.isAdmin = false;
   },
+  setIsAgencies(state){
+    state.isAgencies = true;
+  },
+  setIsFood(state){
+    state.isFood = true;
+  },
+  setIsHotel(state){
+    state.isHotel = true;
+  },
+  setIsTickets(state){
+    state.isTickets = true;
+  },
+  setIsCar(state){
+    state.isCar = true;
+  },
+  setIsAdvertising(state){
+    state.isAdvertising = true;
+  },
   //初始化动画
   setTranstionFalse(state) {
     state.transtionActive = {

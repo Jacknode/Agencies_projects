@@ -6,6 +6,9 @@ export default {
   carStoreList: state => state.carStoreList,
   carGetCityLandmarkInfoList: state => state.carGetCityLandmarkInfoList,
   carProductList: state => state.carProductList,
+  carCompanyCarList: state => state.carCompanyCarList,
+  carCompanyCarStoreList: state => state.carCompanyCarStoreList,
+  carPreferentialPoliciesList: state => state.carPreferentialPoliciesList,
 }
 
 

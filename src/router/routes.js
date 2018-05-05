@@ -130,6 +130,10 @@ import AdApply from '@/components/adverts/AdApply'
 import CarHome from '@/components/car/CarHome'
 import CarStore from '@/components/car/CarStore'
 import CarProduct from '@/components/car/CarProduct'
+//公司汽车
+import CarCompanyCar from '@/components/car/CarCompanyCar'
+//公司优惠政策
+import CarPreferentialPolicies from '@/components/car/CarPreferentialPolicies'
 
 
 
@@ -162,26 +166,42 @@ export default [
       {
         path: 'carHome',
         components: {
-          default:(resolve) => require(['@/components/public/Home'],resolve),
-          User:(resolve) => require(['@/components/car/CarHome'],resolve)
+          default:Home,
+          User:CarHome
         },
         name: 'CarHome'
       },
       {
         path: 'carStore',
         components: {
-          default:(resolve) => require(['@/components/public/Home'],resolve),
-          User:(resolve) => require(['@/components/car/CarStore'],resolve)
+          default:Home,
+          User:CarStore
         },
         name: 'CarStore'
       },
       {
+        path: 'carPreferentialPolicies',
+        components: {
+          default:Home,
+          User:CarPreferentialPolicies
+        },
+        name: 'CarPreferentialPolicies'
+      },
+      {
         path: 'carProduct',
         components: {
-          default:(resolve) => require(['@/components/public/Home'],resolve),
-          User:(resolve) => require(['@/components/car/CarProduct'],resolve)
+          default:Home,
+          User:CarProduct
         },
         name: 'CarProduct'
+      },
+      {
+        path: 'carCompanyCar/:id/:carID',
+        components: {
+          default:Home,
+          User:CarCompanyCar
+        },
+        name: 'CarCompanyCar'
       },
 //       AdminActivitySite
       //线路日程

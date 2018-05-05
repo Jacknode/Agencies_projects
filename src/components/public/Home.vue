@@ -70,9 +70,18 @@
               <div class="category-content no-padding">
 
                 <!-------------------------------------管理员------------------------------------------------------>
-
-
                 <ul class="navigation navigation-main navigation-accordion">
+                  <li>
+                    <a href="javascript:;"><i class=" icon-home"></i> <span>供应商信息管理</span></a>
+                    <ul>
+                      <li>
+                        <router-link to="/home/adminUserInfo">供应商信息</router-link>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+
+                <ul class="navigation navigation-main navigation-accordion" v-show="userInfo.sm_ai_IsPass==1&&isAgencies">
                   <!-- Main -->
                   <li class="navigation-header"><span>main</span> <i class="icon-menu" title="Main pages"></i></li>
                   <!--境外查询-->
@@ -81,19 +90,17 @@
                     <a href="javascript:;"><i class=" icon-home"></i> <span>旅行社后台管理</span></a>
                     <ul>
                       <li>
-                        <router-link to="/home/adminUserInfo">供应商信息</router-link>
-                      </li>
-                      <li v-show="userInfo.sm_ai_IsPass==1">
                         <router-link to="/home/adminAllFunction2">产品信息</router-link>
                       </li>
-                      <li v-show="userInfo.sm_ai_IsPass==1">
+                      <li>
                         <router-link to="/home/adminPersonalBenefits">供应商收益</router-link>
                       </li>
                     </ul>
                   </li>
                   <!-- /main -->
                 </ul>
-                <ul class="navigation navigation-main navigation-accordion">
+
+                <ul class="navigation navigation-main navigation-accordion" v-show="userInfo.sm_ai_IsPass==1&&isHotel">
                   <!--境外查询-->
                   <li>
                     <a href="javascript:;"><i class="icon-office"></i> <span>酒店后台管理</span></a>
@@ -136,7 +143,7 @@
                   <!-- /main -->
                 </ul>
                 <!--景点-->
-                <ul class="navigation navigation-main navigation-accordion">
+                <ul class="navigation navigation-main navigation-accordion" v-show="userInfo.sm_ai_IsPass==1&&isTickets">
                   <!--境外查询-->
                   <li>
                     <a href="javascript:;"><i class="icon-ticket"></i> <span>门票后台管理</span></a>
@@ -167,10 +174,10 @@
                   <!-- /main -->
                 </ul>
                 <!--美食-->
-                <ul class="navigation navigation-main navigation-accordion">
+                <ul class="navigation navigation-main navigation-accordion" v-show="userInfo.sm_ai_IsPass==1&&isFood">
                   <li>
                     <!--美食管理-->
-                    <a href="javascript:;"><i class="icon-ticket"></i> <span>美食后台管理</span></a>
+                    <a href="javascript:;"><i class="icon-coin-yen"></i> <span>美食后台管理</span></a>
                     <ul>
                       <li>
                         <router-link to="/home/foodStoreInformation">美食店面信息</router-link>
@@ -212,9 +219,9 @@
                   </li>
                 </ul>
                 <!--广告-->
-                <ul class="navigation navigation-main navigation-accordion">
+                <ul class="navigation navigation-main navigation-accordion" v-show="userInfo.sm_ai_IsPass==1&&isAdvertising">
                   <li>
-                    <a href="javascript:;"><i class="icon-ticket"></i> <span>广告后台管理</span></a>
+                    <a href="javascript:;"><i class="icon-twitter"></i> <span>广告后台管理</span></a>
                     <ul>
                       <li>
                         <router-link to="/home/AdApply">广告申请管理</router-link>
@@ -224,7 +231,7 @@
                   <!-- /main -->
                 </ul>
                 <!--租车-->
-                <ul class="navigation navigation-main navigation-accordion">
+                <ul class="navigation navigation-main navigation-accordion" v-show="userInfo.sm_ai_IsPass==1&&isCar">
                   <li>
                     <a href="javascript:;"><i class="icon-car"></i> <span>租车后台管理</span></a>
                     <ul>
@@ -237,6 +244,12 @@
                       <li>
                         <router-link to="/home/carProduct">租车汽车产品管理</router-link>
                       </li>
+                      <li>
+                        <router-link to="/home/carPreferentialPolicies">租车优惠政策管理</router-link>
+                      </li>
+                      <!--<li>-->
+                        <!--<router-link to="/home/carCompanyCar">租车公司汽车管理</router-link>-->
+                      <!--</li>-->
                     </ul>
                   </li>
                   <!-- /main -->
@@ -316,6 +329,12 @@
     },
     computed: mapGetters([
       'transtionActive',
+      'isAgencies',
+      'isFood',
+      'isHotel',
+      'isTickets',
+      'isCar',
+      'isAdvertising'
     ]),
     created() {
 
@@ -347,6 +366,7 @@
       let user = JSON.parse(sessionStorage.getItem('admin'));
       if (!user) {
         this.$router.push({name: 'Login'})
+        return
       }
       this.qiankeUser = user.sm_ai_Name;
       let options = {
@@ -558,6 +578,18 @@
           "rows": 10000,
         };
         await this.$store.dispatch('initFoodStoreInformtion', selectStoreFrontInfo)
+
+        let userOptions = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          sm_ai_Name: '',
+          "sm_ai_ID": this.userInfo.sm_ai_ID,
+          "page": 1,
+          "rows": 5,
+        };
+        await this.$store.dispatch('initSetCooperationType',userOptions)
       },
       //退出
       Quit() {

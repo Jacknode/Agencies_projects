@@ -187,7 +187,7 @@
         </el-form-item>
         <el-form-item label="获许经营范围:" :label-width="formLabelWidth">
           <el-checkbox-group v-model="obj.agentInfoScopeList">
-            <el-checkbox v-for="item,index in changeScopeOfOperationList" :label="item.sm_ts_Name" :key="index"></el-checkbox>
+            <el-checkbox v-for="item,index in changeScopeOfOperationList" :label="item.ts_jb_Name" :key="index"></el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="公司地址:" :label-width="formLabelWidth">
@@ -210,9 +210,9 @@
                      @focus="changeCompanyType">
             <el-option
               v-for="item in changeCompanyTypeList"
-              :key="item.sm_cs_ID "
-              :label="item.sm_cs_Persons"
-              :value="item.sm_cs_Persons ">
+              :key="item.ts_jb_ID "
+              :label="item.ts_jb_Name"
+              :value="item.ts_jb_ID ">
             </el-option>
           </el-select>
         </el-form-item>
@@ -221,9 +221,9 @@
                      @focus="changeMoneyType">
             <el-option
               v-for="item in changeMineyTypeList"
-              :key="item.sm_bc_ID"
-              :label="item.sm_bc_Name"
-              :value="item.sm_bc_Name">
+              :key="item.ts_jb_ID"
+              :label="item.ts_jb_Name"
+              :value="item.ts_jb_ID">
             </el-option>
           </el-select>
         </el-form-item>

@@ -4,6 +4,12 @@
 export default {
   //------------管理员----------
   transtionActive: state => state.transtionActive,
+  isAgencies: state => state.isAgencies,
+  isFood: state => state.isFood,
+  isHotel: state => state.isHotel,
+  isTickets: state => state.isTickets,
+  isCar: state => state.isCar,
+  isAdvertising: state => state.isAdvertising,
   adminTradeGoodList: state => state.adminTradeGoodList,
   queryUserOrderList: state => state.queryUserOrderList,
   searchUserOrderList: state => state.searchUserOrderList,

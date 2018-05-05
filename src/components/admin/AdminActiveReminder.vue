@@ -233,7 +233,7 @@
             "loginUserPass": "123",
             "operateUserID": "",
             "operateUserName": "",
-            "tradeID": obj.sm_ai_AgentID ? obj.sm_ai_AgentID : '',
+            "tradeID": obj.sm_ai_ID ? obj.sm_ai_ID : '',
             "userID": "",
             "pcName": "",
             "ID": '',

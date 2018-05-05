@@ -369,7 +369,9 @@
         this.$store.dispatch('initMyHotelDetails', HotelDetailInfo)
         .then(hotelID => {
           this.isLoading = false;
-          sessionStorage.setItem('hotelID',hotelID);
+          if(hotelID){
+            sessionStorage.setItem('hotelID',hotelID);
+          }
           if (!hotelID) {
             this.isShow = true;
           } else {

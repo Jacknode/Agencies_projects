@@ -13,5 +13,14 @@ export default {
   },
   initCarProduct(state,data){
     state.carProductList = data;
+  },
+  initCarCompanyCar(state,data){
+    state.carCompanyCarList = data;
+  },
+  initCarCompanyCarStore(state,data){
+    state.carCompanyCarStoreList = data;
+  },
+  initCarPreferentialPolicies(state,data){
+    state.carPreferentialPoliciesList = data;
   }
 }

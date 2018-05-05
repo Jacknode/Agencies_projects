@@ -4,6 +4,12 @@ export default {
     isActive: false,
     isRotateInDownRight: false
   },
+  isAgencies:false,
+  isFood:false,
+  isHotel:false,
+  isTickets:false,
+  isCar:false,
+  isAdvertising:false,
 
   //----------管理员----------
   adminEventDiningList: [],

@@ -114,6 +114,16 @@
       'hotelOrderDetailsList'
     ]),
     created(){
+      this.hotelID = sessionStorage.getItem('hotelID');
+      if(!this.hotelID){
+        this.$router.push({name:'HotelDetil'})
+        this.$notify({
+          message: '请先添加酒店信息!',
+          position: 'top-left',
+          type:'error'
+        });
+        return
+      }
       this.touristTraderID = JSON.parse(sessionStorage.getItem('admin')).sm_ai_AgentID;
       this.initData('',1)
     },

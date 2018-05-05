@@ -180,6 +180,7 @@
                   })
                   .then(data => {
                     if (data) {
+                      this.ImageURL = []
                       this.ImageURL.push(data.data);
                     } else {
                       this.$notify({
@@ -201,6 +202,7 @@
                   })
                   .then(data => {
                     if (data) {
+                      this.ImageURL1 = []
                       this.ImageURL1.push(data.data);
                     } else {
                       this.$notify({
@@ -243,6 +245,8 @@
       },
       //点击添加按钮
       addButton() {
+        this.ImageURL = [];
+        this.ImageURL1 = [];
         this.addDialog = true;
         this.uploaNode();
         this.$store.commit('setTranstionFalse');
@@ -267,6 +271,8 @@
       },
       //修改
       Update(obj){
+        this.ImageURL = [];
+        this.ImageURL1 = [];
         this.updateOptions = obj;
         this.updateDialog = true;
         this.uploaNode();
