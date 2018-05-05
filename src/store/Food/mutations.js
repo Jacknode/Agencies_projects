@@ -50,6 +50,9 @@ export default {
   },
   initFoodStoreOrderingTime(state, data) {
     state.foodStoreOrderingTimeList = data;
+  },
+  initFoodRoomPicture(state, data) {
+    state.foodRoomPictureList = data;
   }
 }
 
