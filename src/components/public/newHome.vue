@@ -1,74 +1,201 @@
-
 <template>
-  <el-row class="container">
-    <!--头部-->
-    <el-col :span="24" class="topbar-wrap">
-      <div class="topbar-logo topbar-btn">
-        <!--<a href="/"><img src="../assets/logo.png" style="padding-left:8px;"></a>-->
-      </div>
-      <div class="topbar-logos" v-show="!collapsed">
-        <!--<a href="/"><img src="../assets/logotxt.png"></a>-->
-      </div>
-      <div class="topbar-title">
-        <span style="font-size: 18px;color: #fff;">供应商后台管理系统</span>
-      </div>
-      <div class="topbar-account topbar-btn">
-        <el-dropdown trigger="click">
-          <span class="el-dropdown-link userinfo-inner"><i class="iconfont icon-user"></i> 欢迎您:{{qiankeUser ? qiankeUser : ''}} <i
-            class="iconfont icon-down"></i></span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
-              <div @click="jumpTo('/user/profile')"><span style="color: #555;font-size: 14px;">{{qiankeUser ? qiankeUser : ''}}</span></div>
-            </el-dropdown-item>
-            <el-dropdown-item divided @click.native="Quit">退出登录</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
-    </el-col>
-
-    <!--中间-->
-    <el-col :span="24" class="main">
-      <!--左侧导航-->
-      <aside :class="{showSidebar:!collapsed}">
-        <!--展开折叠开关-->
-        <div class="menu-toggle" @click.prevent="collapse">
-          <i class="iconfont icon-menufold" v-show="!collapsed"></i>
-          <i class="iconfont icon-menuunfold" v-show="collapsed"></i>
+  <div>
+    <div class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">供应商后台管理系统</a>
         </div>
-        <!--导航菜单-->
-        <el-menu default-active="defaultActiveIndex" class="el-menu-vertical-demo" :collapse="collapsed">
-          <template v-for="item,index in menvList">
-            <el-submenu :index="index+''">
-              <template slot="title"><i></i><span slot="title">{{item.name}}</span></template>
-              <el-menu-item v-for="v in item.children" :key="v.pathName" :index="v.pathName" @click="toPath(v)">
-                <i></i><span slot="title">{{v.name}}</span>
-              </el-menu-item>
-            </el-submenu>
-          </template>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理员 <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li @click="getUser"><a href="javascript:;"><i class="icon-user-plus" style="padding-right: 10px"></i>{{qiankeUser ? qiankeUser : ''}}</a></li>
+                <li @click="Quit"><a href="javascript:;"><i class="icon-switch2" style="padding-right: 10px"></i>退出</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fl
+      <!--</div>-->
+    </div>
+    <!-- /main navbar -->
+    <el-container>
+      <el-aside width="200px">
+        <span style="background: #28343a;display: block;width: 199px;color: #fff;line-height: 60px;text-align: center;">欢迎您:{{qiankeUser ? qiankeUser : ''}}</span>
+        <el-menu
+          default-active="1"
+          :unique-opened="true"
+          class="el-menu-vertical-demo"
+          background-color="#28343a"
+          text-color="rgba(255,255,255,0.75)"
+          :router="true"
+          active-text-color="#ffd04b">
+          <el-submenu index="1">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>供应商信息</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/home/adminUserInfo">供应商信息</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="2"  v-show="userInfo.sm_ai_IsPass==1&&isAgencies">
+            <template slot="title">
+              <i class="icon-home" style="padding-right: 15px"></i>
+              <span>旅行社后台管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/home/adminAllFunction2">产品信息</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="3"  v-show="userInfo.sm_ai_IsPass==1&&isHotel">
+            <template slot="title">
+              <i class="icon-office" style="padding-right: 15px"></i>
+              <span>酒店后台管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/home/hotelDetil">酒店基本信息</el-menu-item>
+              <el-menu-item index="/home/hotelOrderDetails">酒店订单明细</el-menu-item>
+              <el-menu-item index="/home/hotelConfirmOrder">酒店确认订单</el-menu-item>
+              <el-menu-item index="/home/hotelQueryRecommend">酒店推荐信息</el-menu-item>
+              <el-menu-item index="/home/hotelImage">酒店图片信息</el-menu-item>
+              <el-menu-item index="/home/hotelIcon">酒店图标信息</el-menu-item>
+              <el-menu-item index="/home/hotelPolicy">酒店政策信息</el-menu-item>
+              <el-menu-item index="/home/hotelTheme">酒店主题信息</el-menu-item>
+              <el-menu-item index="/home/hotelRoom">酒店房间管理</el-menu-item>
+              <el-menu-item index="/home/hotelFacilitiesServices">酒店设施服务信息</el-menu-item>
+              <el-menu-item index="/home/hotelFacilitiesServicesFacilities">酒店设施服务设施信息</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="4"  v-show="userInfo.sm_ai_IsPass==1&&isTickets">
+            <template slot="title">
+              <i class="icon-ticket" style="padding-right: 15px"></i>
+              <span>门票后台管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/home/ticketAttractions">门票景点信息管理</el-menu-item>
+              <el-menu-item index="/home/ticketPredeterminedInstructions">门票预定须知</el-menu-item>
+              <el-menu-item index="/home/TicketTrafficInformation">门票交通信息</el-menu-item>
+              <el-menu-item index="/home/ticketType">门票票种</el-menu-item>
+              <el-menu-item index="/home/ticketTypeTicketPrice">门票票种_票价</el-menu-item>
+              <el-menu-item index="/home/ticketQueryOrder">门票查询订单</el-menu-item>
+              <el-menu-item index="/home/ticketApplyShowHomePage">门票申请景点展示首页</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+
+          <el-submenu index="5"  v-show="userInfo.sm_ai_IsPass==1&&isFood">
+            <template slot="title">
+              <i class="icon-office" style="padding-right: 15px"></i>
+              <span>美食后台管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/home/foodStoreInformation">美食店面信息</el-menu-item>
+              <el-menu-item index="/home/foodStorePicture">美食店面图片</el-menu-item>
+              <el-menu-item index="/home/foodStoreRecommend">美食推荐菜</el-menu-item>
+              <el-menu-item index="/home/foodStoreProduct">美食店面菜肴</el-menu-item>
+              <el-menu-item index="/home/foodStoreProductPicture">美食店面菜肴图片</el-menu-item>
+              <el-menu-item index="/home/foodStoreRoom">美食店面房间</el-menu-item>
+              <el-menu-item index="/home/foodRoomPicture">美食房间图片</el-menu-item>
+              <el-menu-item index="/home/foodStoreRoomTabel">美食房间餐桌</el-menu-item>
+              <el-menu-item index="/home/foodStoreTableTime">美食店面每天可锁桌时间</el-menu-item>
+              <el-menu-item index="/home/foodStoreOrderingTime">美食店面可订餐时间</el-menu-item>
+              <el-menu-item index="/home/foodStoppingPlace">美食停车场</el-menu-item>
+              <el-menu-item index="/home/foodStoreConfirmOrder">美食订单管理</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+
+          <el-submenu index="6"  v-show="userInfo.sm_ai_IsPass==1&&isAdvertising">
+            <template slot="title">
+              <i class="icon-twitter" style="padding-right: 15px"></i>
+              <span>广告后台管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/home/AdApply">广告申请管理</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+
+          <el-submenu index="7"  v-show="userInfo.sm_ai_IsPass==1">
+            <template slot="title">
+              <i class="icon-car" style="padding-right: 15px"></i>
+              <span>租车后台管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/home/carHome">租车公司基本信息</el-menu-item>
+              <el-menu-item index="/home/carStore">租车门店管理</el-menu-item>
+              <el-menu-item index="/home/carProduct">租车汽车产品管理</el-menu-item>
+              <el-menu-item index="/home/carPreferentialPolicies">租车优惠政策管理</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
         </el-menu>
-      </aside>
+      </el-aside>
+      <el-main>
+        <div
+             :class="{ 'animated': transtionActive.isActive, 'fadeIn': transtionActive.isRotateInDownRight }">
+          <!-- Page length options -->
+          <!-- /page length options -->
+          <router-view name="User"></router-view>
 
-      <!--右侧内容区-->
-      <section class="content-container"
-               :class="{ 'animated': transtionActive.isActive, 'fadeIn': transtionActive.isRotateInDownRight }">
-        <div class="grid-content bg-purple-light">
-          <el-col :span="24" class="content-wrapper">
-            <transition name="fade" mode="out-in">
-              <router-view  name="User"></router-view>
-            </transition>
-          </el-col>
+          <!-- Footer -->
+          <!--<div class="footer text-muted">-->
+          <!--&copy; 2015. <a href="#">Limitless Web App Kit</a> by <a href="http://themeforest.net/user/Kopyov" target="_blank">Eugene Kopyov</a>-->
+          <!--</div>-->
+          <!-- /footer -->
         </div>
-      </section>
-    </el-col>
+      </el-main>
+    </el-container>
 
-  </el-row>
+
+
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%"
+    >
+      当前审核状态为:<span style="color: #f60;font-weight: bold;padding-left: 10px">{{status | getPass}}</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
+
+  </div>
+  <!-- /page content -->
 </template>
-
 <script>
   import {mapGetters} from 'vuex'
+
   export default {
-    name: 'home',
-    created(){
+    name: '',
+    data() {
+      return {
+        isCollapse:false,
+        dialogVisible: false,
+        status: '',
+        qiankeUser: '',
+        lxs:false,
+        hotel:false,
+        ticket:false,
+        food:false,
+        Advertising:false,
+        userInfo: {}
+//        isAdmin:true
+      }
+    },
+    computed: mapGetters([
+      'transtionActive',
+      'isAgencies',
+      'isFood',
+      'isHotel',
+      'isTickets',
+      'isCar',
+      'isAdvertising'
+    ]),
+    created() {
+
       this.userInfo = JSON.parse(sessionStorage.getItem('admin'));
       this.status = this.userInfo.sm_ai_IsPass;
       let status = localStorage.getItem('status')
@@ -93,53 +220,53 @@
         sessionStorage.setItem('index', '0')
       }
     },
-    computed: mapGetters([
-      'transtionActive',
-    ]),
-    data () {
-      return {
-        menvList:[
-          {
-            name:'旅行社后台管理',
-            children:[
-              {
-                name:'供应商信息',
-                pathName:'AdminUserInfo'
-              },
-              {
-                name:'产品信息',
-                pathName:'AdminAllFunction2'
-              }
-            ]
-          }
-        ],
-        dialogVisible: false,
-        status: '',
-        qiankeUser: '',
-        lxs:false,
-        hotel:false,
-        ticket:false,
-        food:false,
-        Advertising:false,
-        userInfo: {},
-        isCollapse: true,
-        defaultActiveIndex: "0",
-        nickname: '',
-        collapsed: false,
+    mounted() {
+      let user = JSON.parse(sessionStorage.getItem('admin'));
+      if (!user) {
+        this.$router.push({name: 'Login'})
+        return
+      }
+      this.qiankeUser = user.sm_ai_Name;
+      let options = {
+        "loginUserID": "huileyou",
+        "loginUserPass": "123",
+        "operateUserID": "",
+        "operateUserName": "",
+        "tradeID": user.ts_tb_UserID ? user.ts_tb_UserID : '',
+        "userID": "",
+        "pcName": "",
+        "ID": "",
+        "page": 1,
+        "rows": 10
+      };
+      //跟团游栏目
+      let AdminOptions = {
+        "loginUserID": "huileyou",
+        "loginUserPass": "123",
+        "operateUserID": "",
+        "operateUserName": "",
+        "pcName": "",
+        isDelete: '0',
+        groupName: ''
+      };
+      this.$store.dispatch('initHomeAdminGroupTour', AdminOptions)
+    },
+    watch: {
+      '$route'(to, from) {
+//        this.$store.commit('clearData')
+        if (to.path == '/home/adminAllFunction2') {
+          this.$router.push({name: 'AdminMerchantProducts'})
+        }
+        // 对路由变化作出响应...
+        if (this.transtionActive.isActive && this.transtionActive.isRotateInDownRight) {
+          this.$store.commit('setTranstionFalse')
+        }
+        setTimeout(() => {
+          this.$store.commit('oPTranstionFalse')
+        }, 10)
       }
     },
     methods: {
-      toPath(v){
-        console.log(v)
-        this.$router.push({name:v.pathName})
-      },
-      handleSelect(index){
-        this.defaultActiveIndex = index;
-      },
-      //折叠导航栏
-      collapse: function () {
-        this.collapsed = !this.collapsed;
-      },
       async initData() {
         //惠乐游推荐类型
         let options = {
@@ -309,6 +436,18 @@
           "rows": 10000,
         };
         await this.$store.dispatch('initFoodStoreInformtion', selectStoreFrontInfo)
+
+        let userOptions = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          sm_ai_Name: '',
+          "sm_ai_ID": this.userInfo.sm_ai_ID,
+          "page": 1,
+          "rows": 5,
+        };
+        await this.$store.dispatch('initSetCooperationType',userOptions)
       },
       //退出
       Quit() {
@@ -323,166 +462,89 @@
         })
       }
     },
-    mounted() {
-      let user = JSON.parse(sessionStorage.getItem('admin'));
-      if (!user) {
-        this.$router.push({name: 'Login'})
-      }
-      this.qiankeUser = user.sm_ai_Name;
-      let options = {
-        "loginUserID": "huileyou",
-        "loginUserPass": "123",
-        "operateUserID": "",
-        "operateUserName": "",
-        "tradeID": user.ts_tb_UserID ? user.ts_tb_UserID : '',
-        "userID": "",
-        "pcName": "",
-        "ID": "",
-        "page": 1,
-        "rows": 10
-      };
-      //跟团游栏目
-      let AdminOptions = {
-        "loginUserID": "huileyou",
-        "loginUserPass": "123",
-        "operateUserID": "",
-        "operateUserName": "",
-        "pcName": "",
-        isDelete: '0',
-        groupName: ''
-      };
-      this.$store.dispatch('initHomeAdminGroupTour', AdminOptions)
-    },
-    watch: {
-      '$route'(to, from) {
-//        this.$store.commit('clearData')
-        if (to.path == '/home/adminAllFunction2') {
-          this.$router.push({name: 'AdminMerchantProducts'})
-        }
-        // 对路由变化作出响应...
-        if (this.transtionActive.isActive && this.transtionActive.isRotateInDownRight) {
-          this.$store.commit('setTranstionFalse')
-        }
-        setTimeout(() => {
-          this.$store.commit('oPTranstionFalse')
-        }, 10)
-      }
-    },
+
+
   }
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss" type="text/less">
-  .container {
+<style>
+  .navbar-inverse{
+    background-color: #28343a;
+    border-color:#28343a;
+  }
+  .navbar{
+    margin-bottom: 0;
+    border-radius: 0;
+  }
+  .el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 1400px;
+  }
+  .el-loading-spinner .circular {
+    margin-left: 50%;
+  }
+
+  .edui-default {
+    z-index: 3000 !important;
+  }
+
+  .demo-table-expand {
+    font-size: 0;
+  }
+
+  .demo-table-expand label {
+    color: #99a9bf;
+  }
+
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+
+  #allmap {
     position: absolute;
-    top: 0px;
-    bottom: 0px;
-    width: 100%;
-    .topbar-wrap {
-      height: 50px;
-      line-height: 50px;
-      background: #373d41;
-      padding: 0px;
-      .topbar-btn {
-        color: #fff;
-      }
-      /*.topbar-btn:hover {*/
-      /*background-color: #4A5064;*/
-      /*}*/
-      .topbar-logo {
-        float: left;
-        width: 59px;
-        line-height: 26px;
-      }
-      .topbar-logos {
-        float: left;
-        width: 120px;
-        line-height: 26px;
-      }
-      .topbar-logo img, .topbar-logos img {
-        height: 40px;
-        margin-top: 5px;
-        margin-left: 2px;
-      }
-      .topbar-title {
-        float: left;
-        text-align: left;
-        width: 200px;
-        padding-left: 10px;
-        border-left: 1px solid #000;
-      }
-      .topbar-account {
-        float: right;
-        padding-right: 12px;
-      }
-      .userinfo-inner {
-        cursor: pointer;
-        color: #fff;
-        padding-left: 10px;
-      }
-    }
-    .main {
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      position: absolute;
-      top: 50px;
-      bottom: 0px;
-      overflow: hidden;
-    }
-    aside {
-      min-width: 50px;
-      background: #333744;
-      &::-webkit-scrollbar {
-        display: none;
-      }
-      &.showSidebar {
-        overflow-x: hidden;
-        overflow-y: auto;
-      }
-      .el-menu {
-        height: 100%; /*写给不支持calc()的浏览器*/
-        height: -moz-calc(100% - 80px);
-        height: -webkit-calc(100% - 80px);
-        height: calc(100% - 80px);
-        border-radius: 0px;
-        background-color: #333744;
-        border-right: 0px;
-      }
-      .el-submenu .el-menu-item {
-        min-width: 60px;
-      }
-      .el-menu {
-        width: 180px;
-      }
-      .el-menu--collapse {
-        width: 60px;
-      }
-      .el-menu .el-menu-item, .el-submenu .el-submenu__title {
-        height: 46px;
-        line-height: 46px;
-      }
-      .el-menu-item:hover, .el-submenu .el-menu-item:hover, .el-submenu__title:hover {
-        background-color: #7ed2df;
-      }
-    }
-    .menu-toggle {
-      background: #4A5064;
-      text-align: center;
-      color: white;
-      height: 26px;
-      line-height: 30px;
-    }
-    .content-container {
-      background: #fff;
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px;
-      padding-bottom: 1px;
-      .content-wrapper {
-        background-color: #fff;
-        box-sizing: border-box;
-      }
-    }
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 9900;
+    margin-top: -50px;
+    font-family: "微软雅黑";
+  }
+
+  #wrap {
+    background: #fff;
+  }
+
+  .formSearch {
+    padding: 20px 0 0 20px;
+  }
+
+  .userClass {
+    padding: 20px 0 0 20px;
+    font-size: 18px;
+  }
+
+  .file {
+    position: relative;
+    display: inline-block;
+    background: #409EFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #fff;
+    text-decoration: none;
+    text-indent: 0;
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  .file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
   }
 </style>

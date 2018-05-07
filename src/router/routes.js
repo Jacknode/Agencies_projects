@@ -3,7 +3,7 @@
  */
 //------------------------------------------------管理员------------------------------------------
 import AdminAllFunction2 from '@/components/admin/AdminAllFunction2'
-import Home from '@/components/public/Home'
+import Home from '@/components/public/newHome'
 // const Home = () => import('@/components/public/Home')
 // const newHome = () => import('@/components/public/newHome')
 //登录
