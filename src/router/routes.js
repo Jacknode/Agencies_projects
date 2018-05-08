@@ -119,10 +119,6 @@ import FoodStoreConfirmOrder from '@/components/food/FoodStoreConfirmOrder'
 //停车场
 import  FoodStoppingPlace from '@/components/food/FoodStoppingPlace'
 
-
-
-
-
 /*------------------------------------广告----------------------------------------*/
 //广告申请管理
 import AdApply from '@/components/adverts/AdApply'
@@ -134,6 +130,20 @@ import CarProduct from '@/components/car/CarProduct'
 import CarCompanyCar from '@/components/car/CarCompanyCar'
 //公司优惠政策
 import CarPreferentialPolicies from '@/components/car/CarPreferentialPolicies'
+
+/*------------------------------------V电影----------------------------------------*/
+//V电影审核表
+import  VMovieCheckTable from '@/components/movie/VMovieCheckTable'
+//V电影系列
+import  VMovieSeries from '@/components/movie/VMovieSeries'
+//V电影视频系列
+import  VMovieVideoSeries from '@/components/movie/VMovieVideoSeries'
+//V电影微电影
+import  VMovieMiniMovie from '@/components/movie/VMovieMiniMovie'
+//V电影分类
+import  VMovieSorting from '@/components/movie/VMovieSorting'
+//V电影视频分类
+import  VMovieVideoCategories from '@/components/movie/VMovieVideoCategories'
 
 
 
@@ -662,6 +672,55 @@ export default [
           User: FoodStoppingPlace
         },
         name:'FoodStoppingPlace'
+      },
+// <------------------------------------V电影------------------------------------------------------>
+      {
+        path: 'vMovieCheckTable',
+        components: {
+          default:Home,
+          User:VMovieCheckTable
+        },
+        name: 'VMovieCheckTable'
+      },
+      {
+        path: 'vMovieSeries',
+        components: {
+          default:Home,
+          User:VMovieSeries
+        },
+        name: 'VMovieSeries'
+      },
+      {
+        path: 'vMovieVideoSeries',
+        components: {
+          default:Home,
+          User:VMovieVideoSeries
+        },
+        name: 'VMovieVideoSeries'
+      },
+      {
+        path: 'vMovieMiniMovie',
+        components: {
+          default:Home,
+          User:VMovieMiniMovie
+        },
+        name: 'VMovieMiniMovie'
+      },
+      {
+        path: 'vMovieSorting',
+        components: {
+          default:Home,
+          User:VMovieSorting
+        },
+        name: 'VMovieSorting'
+      },
+      {
+        path: 'vMovieVideoCategories',
+        components: {
+          default:Home,
+          User:VMovieVideoCategories
+        },
+        name: 'VMovieVideoCategories'
       },
     ],
   },

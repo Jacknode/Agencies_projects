@@ -254,6 +254,30 @@
                   </li>
                   <!-- /main -->
                 </ul>
+                <!--V电影-->
+                <ul class="navigation navigation-main navigation-accordion">
+                  <li>
+                    <a href="javascript:;"><i class="icon-ticket"></i> <span>V电影后台管理</span></a>
+                    <ul>
+                      <li>
+                        <router-link to="/home/vMovieCheckTable">V电影审核表</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/vMovieSeries">V电影系列</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/VMovieVideoSeries">V电影视频系列</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/VMovieMiniMovie">V电影微电影</router-link>
+                      </li>
+                      <li>
+                        <router-link to="/home/VMovieSorting">V电影分类</router-link>
+                      </li>
+                    </ul>
+                  </li>
+                  <!-- /main -->
+                </ul>
               </div>
             </div>
             <!-- /main navigation-->

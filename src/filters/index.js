@@ -297,4 +297,14 @@ export const getCarUseStatus = val=>{
   }
 }
 
-
+//微电影系列连载状态
+export const getSeriesState = val=>{
+  switch (Number(val)) {
+    case 0:
+      return '连载中';
+    case 1:
+      return '已完结';
+    default:
+      return '未知';
+  }
+};

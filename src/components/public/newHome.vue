@@ -130,6 +130,20 @@
               <el-menu-item index="/home/carPreferentialPolicies">租车优惠政策管理</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
+
+          <el-submenu index="8"  v-show="userInfo.sm_ai_IsPass==1">
+            <template slot="title">
+              <i class="icon-car" style="padding-right: 15px"></i>
+              <span>V电影后台管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="/home/vMovieCheckTable">V电影审核表</el-menu-item>
+              <el-menu-item index="/home/vMovieSeries">V电影系列</el-menu-item>
+              <el-menu-item index="/home/VMovieVideoSeries">V电影视频系列</el-menu-item>
+              <el-menu-item index="/home/VMovieMiniMovie">V电影微电影</el-menu-item>
+              <el-menu-item index="/home/VMovieSorting">V电影分类</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
         </el-menu>
       </el-aside>
       <el-main>
