@@ -176,6 +176,7 @@
     name: '',
     data(){
       return {
+        carCompaniesID:'',
         dateArr:'',
         carCompaniesID:'',
         addDialog:false,
@@ -207,6 +208,7 @@
       'carPreferentialPoliciesList'
     ]),
     created(){
+      this.carCompaniesID = sessionStorage.getItem('carCompaniesID');
       this.carCompaniesID = sessionStorage.getItem('carCompaniesID');
       if (!this.carCompaniesID) {
         this.$router.push({name: 'CarHome'});
@@ -241,7 +243,7 @@
           "page": page?page:1,//分页号
           "rows": "10",//单页显示数据量
           "cr_i_Id": "",//优惠政策编号
-          "cr_i_HertzId": "",//租车公司编号
+          "cr_i_HertzId": this.carCompaniesID,//租车公司编号
           "cr_i_Name": "",//优惠政策名称
         };
         this.isLoading= true;

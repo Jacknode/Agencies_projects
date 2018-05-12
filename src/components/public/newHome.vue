@@ -52,7 +52,8 @@
               <el-menu-item index="/home/adminAllFunction2">产品信息</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="3"  v-show="userInfo.sm_ai_IsPass==1&&isHotel">
+          <!-- v-show="userInfo.sm_ai_IsPass==1&&isHotel"-->
+          <el-submenu index="3" v-show="userInfo.sm_ai_IsPass==1&&isHotel">
             <template slot="title">
               <i class="icon-office" style="padding-right: 15px"></i>
               <span>酒店后台管理</span>
