@@ -1,5 +1,12 @@
 <template>
   <div id="wrap" class="clearfix">
+    <el-breadcrumb separator-class="el-icon-arrow-right"style="margin: 20px 0px 0px 20px" >
+      <el-breadcrumb-item :to="{ path:'/home/hotelRoom'}" >房间</el-breadcrumb-item>
+      <el-breadcrumb-item >酒店房间产品</el-breadcrumb-item>
+      <!--<el-breadcrumb-item>酒店房间实体</el-breadcrumb-item>-->
+      <!--<el-breadcrumb-item>前往生成房间数</el-breadcrumb-item>-->
+    </el-breadcrumb>
+
     <h1 class="userClass">酒店房间产品管理</h1>
     <el-col :span="24" class="formSearch">
       <el-form :inline="true">
@@ -335,6 +342,7 @@
       this.initData('', 1)
     },
     methods: {
+
       //前往房间实体
       toRoomEntity(item){
         sessionStorage.setItem('roomProductID',item.ht_rpp_ID)
