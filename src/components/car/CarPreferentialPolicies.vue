@@ -36,7 +36,7 @@
       >
       </el-table-column>
       <el-table-column
-        prop="cr_cc_NumberPlates"
+        prop="cr_i_MinDays"
         label="最低租车天数(天)"
         align="center"
       >

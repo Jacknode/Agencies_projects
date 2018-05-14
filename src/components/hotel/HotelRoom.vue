@@ -380,8 +380,8 @@
           "operateUserName": "lb",
           "pcName": "",
           "ht_bt_RoomID": "",//房间编码
-          "ht_bt_HotelID": "",//酒店编码
-          ht_bt_RoomName:name?name:'',
+          "ht_bt_HotelID": this.hotelID,//酒店编码
+          "ht_bt_RoomName":name?name:'',
           "ht_bt_IsDelete": "",//是否启用
           "page": page ? page : 1,//页码编号
           "rows": "5",//单页显示数量
@@ -389,7 +389,7 @@
         this.isLoading = true;
         this.$store.dispatch('initHotelRoom', options)
         .then((total) => {
-          this.total = total
+          this.total = total;
           this.isLoading = false
         }, err => {
           this.$notify({

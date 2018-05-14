@@ -43,7 +43,7 @@
               <el-menu-item index="/home/adminUserInfo">供应商信息</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="2"  v-show="userInfo.sm_ai_IsPass==1&&isAgencies">
+          <el-submenu index="2"  v-show="userInfo.sm_ai_IsPass==1">
             <template slot="title">
               <i class="icon-home" style="padding-right: 15px"></i>
               <span>旅行社后台管理</span>
@@ -52,8 +52,7 @@
               <el-menu-item index="/home/adminAllFunction2">产品信息</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <!-- v-show="userInfo.sm_ai_IsPass==1&&isHotel"-->
-          <el-submenu index="3" v-show="userInfo.sm_ai_IsPass==1&&isHotel">
+          <el-submenu index="3"  v-show="userInfo.sm_ai_IsPass==1">
             <template slot="title">
               <i class="icon-office" style="padding-right: 15px"></i>
               <span>酒店后台管理</span>
@@ -72,7 +71,7 @@
               <el-menu-item index="/home/hotelFacilitiesServicesFacilities">酒店设施服务设施信息</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="4"  v-show="userInfo.sm_ai_IsPass==1&&isTickets">
+          <el-submenu index="4"  v-show="userInfo.sm_ai_IsPass==1">
             <template slot="title">
               <i class="icon-ticket" style="padding-right: 15px"></i>
               <span>门票后台管理</span>
@@ -88,7 +87,7 @@
             </el-menu-item-group>
           </el-submenu>
 
-          <el-submenu index="5"  v-show="userInfo.sm_ai_IsPass==1&&isFood">
+          <el-submenu index="5"  v-show="userInfo.sm_ai_IsPass==1">
             <template slot="title">
               <i class="icon-office" style="padding-right: 15px"></i>
               <span>美食后台管理</span>
@@ -109,7 +108,7 @@
             </el-menu-item-group>
           </el-submenu>
 
-          <el-submenu index="6"  v-show="userInfo.sm_ai_IsPass==1&&isAdvertising">
+          <el-submenu index="6"  v-show="userInfo.sm_ai_IsPass==1">
             <template slot="title">
               <i class="icon-twitter" style="padding-right: 15px"></i>
               <span>广告后台管理</span>
@@ -126,6 +125,8 @@
             </template>
             <el-menu-item-group>
               <el-menu-item index="/home/carHome">租车公司基本信息</el-menu-item>
+              <el-menu-item index="/home/carOrderDetails">租车订单明细</el-menu-item>
+              <el-menu-item index="/home/carConfirmOrder">租车确认订单</el-menu-item>
               <el-menu-item index="/home/carStore">租车门店管理</el-menu-item>
               <el-menu-item index="/home/carProduct">租车汽车产品管理</el-menu-item>
               <el-menu-item index="/home/carPreferentialPolicies">租车优惠政策管理</el-menu-item>
@@ -148,9 +149,6 @@
         </div>
       </el-main>
     </el-container>
-
-
-
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"

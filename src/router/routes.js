@@ -127,6 +127,8 @@ import  FoodStoppingPlace from '@/components/food/FoodStoppingPlace'
 //广告申请管理
 import AdApply from '@/components/adverts/AdApply'
 
+/*------------------------------------租车----------------------------------------*/
+
 import CarHome from '@/components/car/CarHome'
 import CarStore from '@/components/car/CarStore'
 import CarProduct from '@/components/car/CarProduct'
@@ -134,7 +136,10 @@ import CarProduct from '@/components/car/CarProduct'
 import CarCompanyCar from '@/components/car/CarCompanyCar'
 //公司优惠政策
 import CarPreferentialPolicies from '@/components/car/CarPreferentialPolicies'
-
+//订单明细
+import CarOrderDetails from '@/components/car/CarOrderDetails'
+//确认订单
+import CarConfirmOrder from '@/components/car/CarConfirmOrder'
 
 
 
@@ -170,6 +175,22 @@ export default [
           User:CarHome
         },
         name: 'CarHome'
+      },
+      {
+        path: 'carConfirmOrder',
+        components: {
+          default:Home,
+          User:CarConfirmOrder
+        },
+        name: 'CarConfirmOrder'
+      },
+      {
+        path: 'carOrderDetails',
+        components: {
+          default:Home,
+          User:CarOrderDetails
+        },
+        name: 'CarOrderDetails'
       },
       {
         path: 'carStore',

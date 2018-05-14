@@ -2045,7 +2045,6 @@ export default {
         var data = data.data;
         if (Number(data.resultcode) == 200) {
           let arr = data.data[0].agentInfoTypeList;
-          console.log(arr)
           for(var i=0;i<arr.length;i++){
             switch (arr[i].sm_cp_ID){
               case 1:

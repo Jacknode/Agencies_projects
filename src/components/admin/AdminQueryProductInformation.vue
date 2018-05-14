@@ -207,12 +207,13 @@
             "operateUserID": "",
             "operateUserName": "",
             "tradeID": obj.sm_ai_ID ? obj.sm_ai_ID : '',
+            goodTitle:name?name:'',
             "userID": "",
             "pcName": "",
             "ID": '',
             'isDelete': 0,
             "page": 1,
-            "rows": 100
+            "rows": 20
           };
           this.$store.dispatch('initAdminTradeGoodList', options)
           .then((data) => {

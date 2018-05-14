@@ -295,6 +295,22 @@ export const getCarUseStatus = val=>{
     default:
       return '未知';
   }
+};
+
+//证件类型
+export const getIDType = val=>{
+  switch (Number(val)) {
+    case 1:
+      return '二代身份证';
+    case 2:
+      return '护照';
+    case 3:
+      return '回乡证';
+    case 4:
+      return '台胞证';
+    default:
+      return '未知';
+  }
 }
 
 
