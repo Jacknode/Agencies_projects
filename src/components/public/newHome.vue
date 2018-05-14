@@ -135,7 +135,7 @@
 
           <el-submenu index="8"  v-show="userInfo.sm_ai_IsPass==1">
             <template slot="title">
-              <i class="icon-car" style="padding-right: 15px"></i>
+              <i class="icon-movie" style="padding-right: 15px"></i>
               <span>V电影后台管理</span>
             </template>
             <el-menu-item-group>

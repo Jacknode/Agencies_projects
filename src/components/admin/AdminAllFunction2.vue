@@ -1,12 +1,12 @@
 <template>
   <div id="wrap">
-    <div class="wrapper">
-      <ul class="functionTypeList clearfix" id="functionTypeList" v-model="activeName">
-        <li v-for="item,index in functionTypeList" :name="item.value" @click="clickChageType(index,item)">
-          <router-link :to="'/home/adminAllFunction2/'+ item.link">{{item.name}}</router-link>
-        </li>
-      </ul>
-    </div>
+    <!--<div class="wrapper">-->
+      <!--<ul class="functionTypeList clearfix" id="functionTypeList" v-model="activeName">-->
+        <!--<li v-for="item,index in functionTypeList" :name="item.value" @click="clickChageType(index,item)">-->
+          <!--<router-link :to="'/home/adminAllFunction2/'+ item.link">{{item.name}}</router-link>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</div>-->
     <div v-loading="isLoading">
       <router-view name="Content"></router-view>
     </div>
@@ -104,13 +104,13 @@
       }
     },
     mounted() {
-      let num = sessionStorage.getItem('index')
-      var lis = document.getElementById('functionTypeList').children;
-      lis[num].className = 'active';
-      let scroll = new BScroll('.wrapper',{
-        scrollX: true,
-        click: true
-      })
+//      let num = sessionStorage.getItem('index')
+//      var lis = document.getElementById('functionTypeList').children;
+//      lis[num].className = 'active';
+//      let scroll = new BScroll('.wrapper',{
+//        scrollX: true,
+//        click: true
+//      })
     },
   }
 </script>
