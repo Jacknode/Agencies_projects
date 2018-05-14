@@ -11,4 +11,23 @@ export default {
   initVMovieVideoSeries(state, data) {
     state.VMovieVideoSeries = data;
   },
+  initVMovieVideo(state, data) {
+    state.VMovieVideoList = data;
+  },
+  initVMovieMiniMovie(state, data) {
+    state.VMovieMiniVideoList = data;
+  },
+  initVMovieVideoCategories(state, data) {
+    state.VMovieVideoCategoriesList = data;
+  },
+  initVMovieSeriesCategories(state, data) {
+    state.VMovieVideoSeriesCategoriesList = data;
+  },
+  initVMovieSorting(state, data) {
+    state.VMovieTypeList = data;
+  },
+  UploadVideo(state, data) {
+    state.UploadVideoList = data;
+  },
+
 }

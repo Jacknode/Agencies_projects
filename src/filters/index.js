@@ -289,9 +289,25 @@ export const getAdApplyPass = val=>{
 export const getCarUseStatus = val=>{
   switch (Number(val)) {
     case 0:
-      return '使用中';
-    case 1:
       return '未使用';
+    case 1:
+      return '使用中';
+    default:
+      return '未知';
+  }
+};
+
+//证件类型
+export const getIDType = val=>{
+  switch (Number(val)) {
+    case 1:
+      return '二代身份证';
+    case 2:
+      return '护照';
+    case 3:
+      return '回乡证';
+    case 4:
+      return '台胞证';
     default:
       return '未知';
   }

@@ -9,6 +9,7 @@ export default {
   carCompanyCarList: state => state.carCompanyCarList,
   carCompanyCarStoreList: state => state.carCompanyCarStoreList,
   carPreferentialPoliciesList: state => state.carPreferentialPoliciesList,
+  carOrderDetailsList: state => state.carOrderDetailsList,
 }
 
 

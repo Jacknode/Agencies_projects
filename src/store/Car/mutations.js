@@ -22,5 +22,8 @@ export default {
   },
   initCarPreferentialPolicies(state,data){
     state.carPreferentialPoliciesList = data;
-  }
+  },
+  initCarOrderDetails(state,data){
+    state.carOrderDetailsList = data;
+  },
 }

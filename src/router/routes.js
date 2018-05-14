@@ -119,6 +119,10 @@ import FoodStoreConfirmOrder from '@/components/food/FoodStoreConfirmOrder'
 //停车场
 import  FoodStoppingPlace from '@/components/food/FoodStoppingPlace'
 
+
+
+
+
 /*------------------------------------广告----------------------------------------*/
 //广告申请管理
 import AdApply from '@/components/adverts/AdApply'
@@ -144,6 +148,10 @@ import  VMovieMiniMovie from '@/components/movie/VMovieMiniMovie'
 import  VMovieSorting from '@/components/movie/VMovieSorting'
 //V电影视频分类
 import  VMovieVideoCategories from '@/components/movie/VMovieVideoCategories'
+//V电影视频
+import  VMovieVideo from '@/components/movie/VMovieVideo'
+//V电影系列分类
+import  VMovieSeriesCategories from '@/components/movie/VMovieSeriesCategories'
 
 
 
@@ -673,7 +681,7 @@ export default [
         },
         name:'FoodStoppingPlace'
       },
-// <------------------------------------V电影------------------------------------------------------>
+      // <------------------------------------V电影------------------------------------------------------>
       {
         path: 'vMovieCheckTable',
         components: {
@@ -721,6 +729,22 @@ export default [
           User:VMovieVideoCategories
         },
         name: 'VMovieVideoCategories'
+      },
+      {
+        path: 'vMovieVideo',
+        components: {
+          default:Home,
+          User:VMovieVideo
+        },
+        name: 'VMovieVideo'
+      },
+      {
+        path: 'vMovieSeriesCategories',
+        components: {
+          default:Home,
+          User:VMovieSeriesCategories
+        },
+        name: 'VMovieSeriesCategories'
       },
     ],
   },

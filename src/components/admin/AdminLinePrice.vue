@@ -49,8 +49,8 @@
       <el-table
         :data="adminLinePriceList"
         v-loading="isLoading"
+        @selection-change="handleSelectionChange"
         style="width: 100%">
-        <!--@selection-change="handleSelectionChange"-->
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
@@ -94,11 +94,11 @@
             </el-form>
           </template>
         </el-table-column>
-        <!--<el-table-column-->
-          <!--type="selection"-->
-          <!--label="主键编号"-->
-        <!--&gt;-->
-        <!--</el-table-column>-->
+        <el-table-column
+          type="selection"
+          label="主键编号"
+        >
+        </el-table-column>
         <el-table-column
           label="主键编号"
           prop="ts_pp_ID"
@@ -144,13 +144,13 @@
         </el-table-column>
       </el-table>
 
-      <!--<el-col :span="24" class="formSearch">-->
-        <!--<el-form :inline="true">-->
-          <!--<el-form-item>-->
-            <!--<el-button type="primary" @click="buildSeat">生成座位</el-button>-->
-          <!--</el-form-item>-->
-        <!--</el-form>-->
-      <!--</el-col>-->
+      <el-col :span="24" class="formSearch">
+        <el-form :inline="true">
+          <el-form-item>
+            <el-button type="primary" @click="buildSeat">生成座位</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
 
       <!--添加产品线路价格-->
       <el-dialog title="添加产品线路价格" :visible.sync="addAdminLinePriceDialog">
@@ -348,6 +348,7 @@
             "operateUserID": "",
             "operateUserName": "",
             "tradeID": obj.sm_ai_ID ? obj.sm_ai_ID : '',
+            goodTitle:name?name:'',
             "userID": "",
             "pcName": "",
             "ID": '',

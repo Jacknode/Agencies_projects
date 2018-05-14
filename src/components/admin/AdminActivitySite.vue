@@ -242,6 +242,7 @@
             "operateUserID": "",
             "operateUserName": "",
             "tradeID": obj.sm_ai_ID ? obj.sm_ai_ID : '',
+            goodTitle:name?name:'',
             "userID": "",
             "pcName": "",
             "ID": '',

@@ -9,4 +9,5 @@ export default {
   carCompanyCarList:[],//公司汽车
   carCompanyCarStoreList:[],//公司汽车用到所有门店
   carPreferentialPoliciesList:[],//优惠政策
+  carOrderDetailsList:[],//订单
 }

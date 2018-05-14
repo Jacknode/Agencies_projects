@@ -1,0 +1,383 @@
+<template>
+  <div>
+    <div id="wrap" class="clearfix">
+      <h1 class="userClass">系列分类</h1>
+      <!--查询栏-->
+      <el-col :span="24" class="formSearch">
+        <el-form :inline="true">
+          <el-form-item label="电影类型筛选:">
+            <el-select v-model="movieType" placeholder="请选择电影类型">
+              <el-option label="微电影" value="0"></el-option>
+              <el-option label="广告视频" value="1"></el-option>
+              <el-option label="教育视频" value="2"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="search">查询</el-button>
+            <el-button type="primary" @click="Add">新增</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+
+      <!--数据展示-->
+      <el-table
+        :data="VMovieVideoSeriesCategoriesList"
+        v-loading="isLoading"
+        style="width: 100%">
+        <el-table-column
+          label="系列分类编号"
+          prop="vf_st_ID">
+        </el-table-column>
+        <el-table-column
+          label="系列编号"
+          prop="vf_st_SeriesID">
+        </el-table-column>
+        <el-table-column
+          label="系列名称"
+          prop="vf_te_Name">
+        </el-table-column>
+        <el-table-column
+          label="分类编号"
+          prop="vf_st_SeriesTypeID">
+        </el-table-column>
+        <el-table-column
+          label="分类名称"
+          prop="vf_te_Name">
+        </el-table-column>
+
+        <el-table-column label="操作" align="center">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="primary"
+              @click="Update(scope.row)">修改
+            </el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="Delete(scope.row.vf_st_ID)">删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <!--分页-->
+      <div class="block" style="text-align: right">
+        <el-pagination
+          :page-size="5"
+          @current-change="handleCurrentChange"
+          layout="prev, pager, next"
+          :total="total"
+          v-show="total"
+        >
+        </el-pagination>
+      </div>
+
+      <!--添加-->
+      <el-dialog title="添加" :visible.sync="addDialog">
+        <el-form :model="addOptions">
+
+          <el-form-item label="系列编号:" :label-width="formLabelWidth">
+            <el-input v-model="addOptions.data.vf_st_SeriesID" placeholder="系列编号"></el-input>
+          </el-form-item>
+          <el-form-item label="分类编号:" :label-width="formLabelWidth">
+            <el-input v-model="addOptions.data.vf_st_SeriesTypeID" placeholder="分类编号"></el-input>
+          </el-form-item>
+
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="addDialog = false">取 消</el-button>
+          <el-button type="primary" @click="addSubmit">确 定</el-button>
+        </div>
+      </el-dialog>
+
+      <!--修改-->
+      <el-dialog title="修改" :visible.sync="updateDialog">
+        <el-form :model="VMovieSeriesCategoriesUpdateObj">
+
+          <el-form-item label="系列分类编号:" :label-width="formLabelWidth">
+            <el-input v-model="VMovieSeriesCategoriesUpdateObj.data.vf_st_ID" placeholder="系列编号"></el-input>
+          </el-form-item>
+          <el-form-item label="系列编号:" :label-width="formLabelWidth">
+            <el-input v-model="VMovieSeriesCategoriesUpdateObj.data.vf_st_SeriesID" placeholder="分类编号"></el-input>
+          </el-form-item>
+          <el-form-item label="分类编号:" :label-width="formLabelWidth">
+            <el-input v-model="VMovieSeriesCategoriesUpdateObj.data.vf_st_SeriesTypeID" placeholder="详情"></el-input>
+          </el-form-item>
+
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="updateDialog = false">取 消</el-button>
+          <el-button type="primary" @click="updateSubmit">确 定</el-button>
+        </div>
+      </el-dialog>
+
+    </div>
+  </div>
+</template>
+<script>
+  import {mapGetters} from 'vuex'
+
+  export default {
+
+    data() {
+      return {
+        //是否禁用
+        isDisabled: true,
+        //修改
+        updateDialog: false,
+        ImageURL: '',
+        ImageURL1: [],
+        //数据展示
+        isLoading: false,
+        //分页
+        total: 0,
+        //查询
+        movieType: '',
+        //添加
+        addDialog: false,
+        addOptions: {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",//操作员编码
+          "operateUserName": "",//操作员名称
+          "pcName": "",
+          "data": {
+            "vf_st_SeriesID": "1",//系列编号
+            "vf_st_SeriesTypeID": "1",//分类编号
+          }
+        },
+        //表单宽度
+        formLabelWidth: '120px',
+        VMovieSeriesCategoriesUpdateObj: {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",//操作员编码
+          "operateUserName": "",//操作员名称
+          "pcName": "",
+          "data": {
+            "vf_st_ID": "1",//系列分类编号
+            "vf_st_SeriesID": "1",//系列编号
+            "vf_st_SeriesTypeID": "1",//分类编号
+          }
+        },
+      }
+    },
+    computed: mapGetters([
+      'VMovieVideoSeriesCategoriesList',
+    ]),
+
+    created() {
+      this.initData()
+    },
+    methods: {
+      //分页
+      handleCurrentChange(num) {
+        this.initData('','', num)
+      },
+      initData(series,vedio, page) {
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",//操作员编码
+          "operateUserName": "",//操作员名称
+          "pcName": "",
+          "vf_fs_ID": "",//系列编码
+          "vf_fs_SeriesID": series ? series : "",//系列编号
+          "vf_fs_VedioID": vedio ? vedio:"",//视频编号
+          "page": page ? page : 1,//页码
+          "rows": 5//条数
+        };
+        this.$store.dispatch("initVMovieSeriesCategories", options)
+          .then((total) => {
+            this.total = total;
+          }, (err) => {
+            this.$notify({
+              message: err,
+              type: "error"
+            });
+          });
+      },
+      search() {
+        this.initData();
+      },
+      searchSeries(seriesCategoriesId,seriesId,typeId,page){
+          let options = {
+            "loginUserID": "huileyou",  //惠乐游用户ID
+            "loginUserPass": "123",  //惠乐游用户密码
+            "operateUserID": "",//操作员编码
+            "operateUserName": "",//操作员名称
+            "pcName": "",  //机器码
+            "vf_st_ID": seriesCategoriesId?seriesCategoriesId:"",//系列分类编号
+            "vf_st_SeriesID": seriesId?seriesId:"",//系列编号
+            "vf_st_SeriesTypeID": typeId?typeId:"",//分类编号
+            "page": page?page:1,//页码
+            "rows": 5//条数
+          };
+          this.$store.dispatch("initVMovieSeriesCategories", options)
+            .then((total) => {
+              this.total = total;
+            }, (err) => {
+              this.$notify({
+                message: err,
+                type: "error"
+              });
+            });
+        },
+      Add() {
+        // this.searchSeries('','','',1);
+        // for(let i in this.addOptions.data){
+        //   this.addOptions.data[i]=""
+        // };
+        this.addDialog = true;
+        this.$store.commit('setTranstionFalse');
+      },
+      addSubmit() {
+
+        // console.log(this.addOptions)
+
+        // this.vf_ve_Content.vf_vo_ImageURL = this.ImageURL;
+        // let date = new Date();
+        // let day = date.getDay() - 1;
+        // let nowDate = date.getFullYear() + "/" + date.getMonth() + "/" + day + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        // this.addOptions.data.vf_ve_Content.vf_vo_CreateTime = nowDate;
+        // this.addOptions.data.vf_ve_Content = JSON.stringify(this.addOptions.data.vf_ve_Content);
+        // console.log(this.addOptions)
+        this.$store.dispatch("addVMovieSeriesCategories", this.addOptions)
+          .then((suc) => {
+            this.$notify({
+              message: suc,
+              type: "success"
+            })
+            this.initData('','', 1)
+          }, (err) => {
+            this.$notify({
+              message: err,
+              type: "error"
+            });
+          });
+        this.addDialog = false;
+      },
+      uploadImg(file) {
+        return new Promise((relove, reject) => {
+          lrz(file)
+            .then(data => {
+              relove(data.base64.split(',')[1])
+            })
+        })
+      },
+      uploaNode() {
+        this.addOptions.data.vf_ve_Content.vf_vo_ImageURL = '';
+        this.ImageURL1 = [];
+        setTimeout(() => {
+          if (this.$refs.upload) {
+            this.$refs.upload.addEventListener('change', data => {
+              for (var i = 0; i < this.$refs.upload.files.length; i++) {
+                this.uploadImg(this.$refs.upload.files[i]).then(data => {
+                  this.$store.dispatch('VMovieCheckTableUploadnImgs', {
+                    imageData: data
+                  })
+                    .then(data => {
+                      this.addOptions.data.vf_ve_Content.vf_vo_ImageURL="";
+                      if (data) {
+                        this.addOptions.data.vf_ve_Content.vf_vo_ImageURL = data.data;
+                        // console.log(data.data)
+                      } else {
+                        this.$notify({
+                          message: '图片地址不存在!',
+                          type: 'error'
+                        });
+                      }
+                    })
+                })
+              }
+            })
+          }
+          if (this.$refs.upload1) {
+            this.$refs.upload1.addEventListener('change', data => {
+              for (var i = 0; i < this.$refs.upload1.files.length; i++) {
+                this.uploadImg(this.$refs.upload1.files[i]).then(data => {
+                  this.$store.dispatch('VMovieCheckTableUploadnImgs', {
+                    imageData: data
+                  })
+                    .then(data => {
+                      if (data) {
+                        this.ImageURL1.push(data.data);
+                      } else {
+                        this.$notify({
+                          message: '图片地址不存在!',
+                          type: 'error'
+                        });
+                      }
+                    })
+                })
+              }
+            })
+          }
+        }, 30)
+      },
+      Delete(id) {
+        let deleteOption = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "data": {
+            "vf_st_ID": id,//系列分类编号
+          }
+        };
+        this.$store.dispatch('DeleteVMovieSeriesCategories', deleteOption)
+          .then(
+            (suc) => {
+              this.$notify({
+                message: suc,
+                type: "success"
+              });
+              this.initData();
+            }
+            , (err) => {
+              this.$notify({
+                message: err,
+                type: "error"
+              })
+            })
+      },
+      Update(obj) {
+        this.VMovieSeriesCategoriesUpdateObj.data=obj;
+        // console.log(obj)
+        // this.ImageURL1 = [];
+        // this.uploaNode();
+        this.updateDialog = true;
+        this.$store.commit('setTranstionFalse');
+        // this.VMovieCheckTableUpdateObj.data.vf_ve_Content = obj.vf_ve_Content;
+        // this.VMovieCheckTableUpdateObj.data.vf_ve_ID = obj.vf_ve_ID;
+        // this.VMovieCheckTableUpdateObj.data.vf_ve_Type = obj.vf_ve_Type;
+
+
+      },
+      updateSubmit() {
+        console.log(this.VMovieSeriesCategoriesUpdateObj)
+        this.$store.dispatch("updateVMovieSeriesCategories", this.VMovieSeriesCategoriesUpdateObj)
+          .then(
+            (suc) => {
+              this.$notify({
+                message: suc,
+                type: "success"
+              });
+              this.initData();
+            }
+            , (err) => {
+              this.$notify({
+                message: err,
+                type: "error"
+              })
+            });
+        this.updateDialog = false;
+      },
+    }
+  }
+
+</script>
+<style scoped>
+</style>
