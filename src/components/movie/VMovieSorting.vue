@@ -4,7 +4,7 @@
       <h1 class="userClass">分类</h1>
       <!--查询栏-->
       <el-col :span="24" class="formSearch">
-        <el-form :inline="true">
+        <el-form :inline="true" size="small">
           <el-form-item>
             <span>分类名称:</span>
             <el-input type="text" v-model="typeName" auto-complete="off" placeholder="分类名称"  style="width: 250px"></el-input>
@@ -27,10 +27,6 @@
         <el-table-column
           label="分类名称"
           prop="vf_te_Name">
-        </el-table-column>
-        <el-table-column
-          label="分类编号父编号"
-          prop="vf_te_ParentID">
         </el-table-column>
         <el-table-column
           label="分类编号父名称"

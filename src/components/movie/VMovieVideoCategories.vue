@@ -4,7 +4,7 @@
       <h1 class="userClass">视频分类</h1>
       <!--查询栏-->
       <el-col :span="24" class="formSearch">
-        <el-form :inline="true">
+        <el-form :inline="true" size="small">
           <el-form-item>
             <span>视频分类编号:</span>
             <el-input type="text" v-model="movieType" auto-complete="off" placeholder="视频分类编号"  style="width: 250px"></el-input>
@@ -39,16 +39,8 @@
           prop="vf_vt_ID">
         </el-table-column>
         <el-table-column
-          label="分类编号"
-          prop="vf_vt_TypeID">
-        </el-table-column>
-        <el-table-column
           label="分类名称"
           prop="vf_te_Name">
-        </el-table-column>
-        <el-table-column
-          label="视频编号"
-          prop="vf_vt_VedioID">
         </el-table-column>
         <el-table-column
           label="标题"

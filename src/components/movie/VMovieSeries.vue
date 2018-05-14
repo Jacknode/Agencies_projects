@@ -4,22 +4,22 @@
       <h1 class="userClass">系列</h1>
       <!--查询栏-->
       <el-col :span="24" class="formSearch">
-        <el-form :inline="true">
+        <el-form :inline="true" size="small">
           <el-form-item label="系列名称:">
             <el-input v-model="SeriesName" placeholder="系列名称"></el-input>
           </el-form-item>
-          <el-form-item label="连载状态:">
+          <el-form-item label="连载状态:" >
             <el-select v-model="WriteState" placeholder="连载状态">
               <el-option label="连载中" value="0"></el-option>
               <el-option label="已完结" value="1"></el-option>
             </el-select>
-          </el-form-item>
-          <el-form-item label="作者:">
+          </el-form-item >
+          <el-form-item label="作者:" >
             <el-input v-model="Author" placeholder="作者"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="search">查询</el-button>
-            <el-button type="primary" @click="Add">新增</el-button>
+            <el-button  type="primary" @click="search">查询</el-button>
+            <el-button  type="primary" @click="Add">新增</el-button>
           </el-form-item>
         </el-form>
       </el-col>

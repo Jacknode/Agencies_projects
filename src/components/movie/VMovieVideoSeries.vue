@@ -1,10 +1,10 @@
 <template>
   <div>
     <div id="wrap" class="clearfix">
-      <h1 class="userClass">审核表</h1>
+      <h1 class="userClass">视频系列</h1>
       <!--查询栏-->
       <el-col :span="24" class="formSearch">
-        <el-form :inline="true">
+        <el-form :inline="true" size="small">
           <el-form-item label="电影类型筛选:">
             <el-select v-model="movieType" placeholder="请选择电影类型">
               <el-option label="微电影" value="0"></el-option>
@@ -25,20 +25,12 @@
         v-loading="isLoading"
         style="width: 100%">
         <el-table-column
-          label="系列编码"
+          label="视频系列编码"
           prop="vf_fs_ID">
-        </el-table-column>
-        <el-table-column
-          label="系列编号"
-          prop="vf_fs_SeriesID">
         </el-table-column>
         <el-table-column
           label="系列名称"
           prop="vf_ss_Name">
-        </el-table-column>
-        <el-table-column
-          label="视频编号"
-          prop="vf_fs_VedioID">
         </el-table-column>
         <el-table-column
           label="标题"
