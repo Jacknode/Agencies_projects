@@ -1,7 +1,7 @@
 <template>
   <div id="wrap" class="clearfix">
-    <h1 class="userClass">酒店订单明细</h1>
-    <el-col :span="24" class="formSearch">
+    <h1 class="userClass not-print" >酒店订单明细</h1>
+    <el-col :span="24" class="formSearch not-print">
       <el-form :inline="true">
         <el-form-item>
           <span>订单号筛选:</span>
@@ -11,6 +11,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search" size="small">查询</el-button>
+          <el-button type="primary" @click="print" size="small">打印</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -187,10 +188,22 @@
       //查询
       search(){
         this.initData(this.orderID,1)
+      },
+      //打印
+      print(e){
+        let subOutputRankPrin = document.querySelector('#wrap');
+          document.body.innerHTML = subOutputRankPrin.innerHTML;
+          window.print();
+          window.location.reload();
+          return false;
       }
     },
   }
 </script>
 <style scoped>
-
+  @media print {
+    .not-print {
+      opacity: 0
+    }
+  }
 </style>

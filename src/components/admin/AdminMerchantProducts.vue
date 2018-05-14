@@ -1,18 +1,23 @@
 <template>
   <section id="wrap">
+    <div>
+      <p style="font-weight: bold;font-size: 20px;margin-bottom: 20px">添加流程:</p>
+      <el-tree :data="data" :props="defaultProps" :default-expand-all="isOff"></el-tree>
+    </div>
+
     <h1 class="userClass">商家产品信息</h1>
     <el-col :span="24" class="formSearch">
       <el-form :inline="true">
+        <el-form-item>
+
+        </el-form-item>
         <!--<el-form-item>-->
-          <!--<span>商家产品名称筛选:</span>-->
-        <!--</el-form-item>-->
-        <!--<el-form-item>-->
-          <!--<el-autocomplete-->
-            <!--v-model="userName"-->
-            <!--:fetch-suggestions="querySearchAsync"-->
-            <!--placeholder="请输入商家名称"-->
-            <!--@select="handleSelect"-->
-          <!--&gt;</el-autocomplete>-->
+        <!--<el-autocomplete-->
+        <!--v-model="userName"-->
+        <!--:fetch-suggestions="querySearchAsync"-->
+        <!--placeholder="请输入商家名称"-->
+        <!--@select="handleSelect"-->
+        <!--&gt;</el-autocomplete>-->
         <!--</el-form-item>-->
         <el-form-item style="float: right;">
           <!--<el-button type="primary" @click="search">查询</el-button>-->
@@ -64,7 +69,8 @@
               <span>{{ props.row.ts_tg_GroupSite }}</span>
             </el-form-item>
             <el-form-item label="展示图片地址:">
-              <img :src="item" alt="" v-for="item in props.row.ta_tg_ShowImages" style="width: 100px;height: 100px;margin-right: 10px">
+              <img :src="item" alt="" v-for="item in props.row.ta_tg_ShowImages"
+                   style="width: 100px;height: 100px;margin-right: 10px">
             </el-form-item>
             <el-form-item label="产品创建时间:">
               <span>{{ props.row.ta_tg_CreateDateTime }}</span>
@@ -79,7 +85,7 @@
               <el-button v-popover:popover1 size="small">移入查看</el-button>
             </el-form-item>
             <!--<el-form-item label="是否展示首页:">-->
-              <!--<span>{{ props.row.ts_tg_ShowTop==0?"否":"是" }}</span>-->
+            <!--<span>{{ props.row.ts_tg_ShowTop==0?"否":"是" }}</span>-->
             <!--</el-form-item>-->
             <el-form-item label="是否精选:">
               <span>{{ props.row.ts_tg_Special==0?"非精选":"精选" }}</span>
@@ -148,13 +154,13 @@
           </el-select>
         </el-form-item>
         <!--<el-form-item label="商家名称" :label-width="formLabelWidth">-->
-          <!--<el-autocomplete-->
-            <!--v-model="userName"-->
-            <!--:fetch-suggestions="querySearchAsync"-->
-            <!--placeholder="请输入商家"-->
-            <!--@select="handleSelect"-->
-          <!--&gt;</el-autocomplete>-->
-          <!--<span style="color: #f60;">(模糊搜索)</span>-->
+        <!--<el-autocomplete-->
+        <!--v-model="userName"-->
+        <!--:fetch-suggestions="querySearchAsync"-->
+        <!--placeholder="请输入商家"-->
+        <!--@select="handleSelect"-->
+        <!--&gt;</el-autocomplete>-->
+        <!--<span style="color: #f60;">(模糊搜索)</span>-->
         <!--</el-form-item>-->
         <el-form-item label="产品标题:" :label-width="formLabelWidth">
           <el-input v-model="addOptions.data.ta_tg_Title" placeholder="请输入产品标题"></el-input>
@@ -198,16 +204,16 @@
           <p v-for="item in ImageURL" v-show="ImageURL.length">{{item?item:""}}</p>
         </el-form-item>
         <!--<el-form-item label="是否展示首页:" :label-width="formLabelWidth">-->
-          <!--<el-select v-model="addOptions.data.ts_tg_ShowTop" placeholder="请选择是否展示首页">-->
-            <!--<el-option-->
-              <!--label="是"-->
-              <!--value="1">-->
-            <!--</el-option>-->
-            <!--<el-option-->
-              <!--label="否"-->
-              <!--value="0">-->
-            <!--</el-option>-->
-          <!--</el-select>-->
+        <!--<el-select v-model="addOptions.data.ts_tg_ShowTop" placeholder="请选择是否展示首页">-->
+        <!--<el-option-->
+        <!--label="是"-->
+        <!--value="1">-->
+        <!--</el-option>-->
+        <!--<el-option-->
+        <!--label="否"-->
+        <!--value="0">-->
+        <!--</el-option>-->
+        <!--</el-select>-->
         <!--</el-form-item>-->
         <el-form-item label="是否精选:" :label-width="formLabelWidth">
           <el-select v-model="addOptions.data.ts_tg_Special" placeholder="请选择是否精选">
@@ -260,13 +266,13 @@
           </el-select>
         </el-form-item>
         <!--<el-form-item label="商家名称" :label-width="formLabelWidth">-->
-          <!--<el-autocomplete-->
-            <!--v-model="userName"-->
-            <!--:fetch-suggestions="querySearchAsync"-->
-            <!--placeholder="请输入商家"-->
-            <!--@select="handleSelect"-->
-          <!--&gt;</el-autocomplete>-->
-          <!--<span style="color: #f60;">(模糊搜索)</span>-->
+        <!--<el-autocomplete-->
+        <!--v-model="userName"-->
+        <!--:fetch-suggestions="querySearchAsync"-->
+        <!--placeholder="请输入商家"-->
+        <!--@select="handleSelect"-->
+        <!--&gt;</el-autocomplete>-->
+        <!--<span style="color: #f60;">(模糊搜索)</span>-->
         <!--</el-form-item>-->
         <el-form-item label="产品标题:" :label-width="formLabelWidth">
           <el-input v-model="updateAdminMerchantProductsObj.ta_tg_Title" placeholder="请输入产品标题"></el-input>
@@ -307,20 +313,21 @@
           <a href="javascript:;" class="file">展示图片上传
             <input type="file" name="" ref="upload1" accept="image/*" multiple>
           </a>
-         <p v-if="ImageURL.length" v-for="item in ImageURL">{{item}}</p>
-          <p v-for="item in updateAdminMerchantProductsObj.ta_tg_ShowImages" v-show="updateAdminMerchantProductsObj.ta_tg_ShowImages.length" v-else>{{item?item:""}}</p>
+          <p v-if="ImageURL.length" v-for="item in ImageURL">{{item}}</p>
+          <p v-for="item in updateAdminMerchantProductsObj.ta_tg_ShowImages"
+             v-show="updateAdminMerchantProductsObj.ta_tg_ShowImages.length" v-else>{{item?item:""}}</p>
         </el-form-item>
         <!--<el-form-item label="是否展示首页:" :label-width="formLabelWidth">-->
-          <!--<el-select v-model="updateAdminMerchantProductsObj.ts_tg_ShowTop" placeholder="请选择是否展示首页">-->
-            <!--<el-option-->
-              <!--label="是"-->
-              <!--value="1">-->
-            <!--</el-option>-->
-            <!--<el-option-->
-              <!--label="否"-->
-              <!--value="0">-->
-            <!--</el-option>-->
-          <!--</el-select>-->
+        <!--<el-select v-model="updateAdminMerchantProductsObj.ts_tg_ShowTop" placeholder="请选择是否展示首页">-->
+        <!--<el-option-->
+        <!--label="是"-->
+        <!--value="1">-->
+        <!--</el-option>-->
+        <!--<el-option-->
+        <!--label="否"-->
+        <!--value="0">-->
+        <!--</el-option>-->
+        <!--</el-select>-->
         <!--</el-form-item>-->
         <el-form-item label="是否精选:" :label-width="formLabelWidth">
           <el-select v-model="updateAdminMerchantProductsObj.ts_tg_Special" placeholder="请选择是否精选">
@@ -364,17 +371,75 @@
     name: '',
     data(){
       return {
-        value:'',
-        userName:'',
+        data: [{
+          label: '商家产品',
+          children: [{
+            label: '产品线路',
+            children: [
+              {
+                label: '产品线路出发城市'
+              },
+              {
+                label: '产品线路价格'
+              },
+              {
+                label: '产品线路特色'
+              },
+              {
+                label: '产品线路日程',
+                children:[
+                  {
+                    label: '日程时间',
+                    children:[
+                      {
+                        label: '时间活动',
+                        children:[
+                          {
+                            label:'活动用餐'
+                          },
+                          {
+                            label:'活动景点'
+                          },
+                          {
+                            label:'活动购物'
+                          },
+                          {
+                            label:'活动住宿'
+                          },
+                          {
+                            label:'活动温馨提示'
+                          },
+                          {
+                            label:'活动交通'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                label: '产品线路费用说明'
+              }
+            ]
+          }]
+        }],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        },
+        value: '',
+        userName: '',
         formLabelWidth: '120px',
         total: 0,
         ImageURL: [],
-        restaurants:[],
+        restaurants: [],
+        isOff:true,
         productsID: '',//查询产品编号
         addAdminMerchantProductsDialog: false,//添加弹窗
         updateAdminMerchantProductsDialog: false,//修改弹窗
         isLoading: false,
-        userObj:{},
+        userObj: {},
         addOptions: {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
@@ -382,8 +447,8 @@
           "operateUserName": "",
           "pcName": "",
           "data": {
-            ts_tg_lowestPrice:'',
-            ta_tg_TradeName:'',
+            ts_tg_lowestPrice: '',
+            ta_tg_TradeName: '',
             "ta_tg_ID": "",
             "ta_tg_TradeID": "",
             "ta_tg_ItemInfoID": "",
@@ -415,7 +480,7 @@
       let sCity = {
         "areaPid": 3337
       };
-      this.$store.dispatch('initProvice',sCity)
+      this.$store.dispatch('initProvice', sCity)
       let obj = JSON.parse(sessionStorage.getItem('admin'));
       this.userObj = obj;
       this.productsID = obj.sm_ai_ID
@@ -423,8 +488,8 @@
     methods: {
       //选中省
       changeProvice(item){
-        let obj = this.proviceList.filter(v=>{
-          if(v.sm_af_AreaID==item){
+        let obj = this.proviceList.filter(v => {
+          if (v.sm_af_AreaID == item) {
             return true;
           }
           return false;
@@ -435,7 +500,7 @@
         let searchCity = {
           "areaPid": this.value
         }
-        this.$store.dispatch('initCityList',searchCity)
+        this.$store.dispatch('initCityList', searchCity)
       },
       //选中商家
       handleSelect(item){
@@ -445,7 +510,7 @@
         this.addOptions.data.ta_tg_TradeID = item.id;
       },
       loadAll(num, name) {
-        return new Promise((relove,reject)=>{
+        return new Promise((relove, reject) => {
           var _this = this;
           var GetAdminBusinessInformationList = {
             "loginUserID": "huileyou",
@@ -454,16 +519,16 @@
             "operateUserName": "",
             "pcName": "",
             "tbUserID": "",
-            "tbName": name?name:'',
+            "tbName": name ? name : '',
             "isDelete": 0,
-            "page": num?num:1,
+            "page": num ? num : 1,
             "rows": 5
           };
           //旅行社商户查询
-          this.$store.dispatch('AdminBusinessInformationSearch',GetAdminBusinessInformationList)
-          .then(data=>{
+          this.$store.dispatch('AdminBusinessInformationSearch', GetAdminBusinessInformationList)
+          .then(data => {
             relove(data)
-          },err=>{
+          }, err => {
             this.$message({
               message: err,
               type: 'error'
@@ -472,7 +537,7 @@
         })
       },
       querySearchAsync(queryString, cb) {
-        this.loadAll( 1,queryString).then(data => {
+        this.loadAll(1, queryString).then(data => {
           data = data.map(item => {
             return {
               id: item.ts_tb_UserID,
@@ -592,19 +657,19 @@
         this.addOptions.data.ta_tg_ShowImage = this.ImageURL.join(',');
         this.addOptions.data.ta_tg_TradeID = this.productsID
         this.addOptions.data.ta_tg_TradeName = this.userObj.sm_ai_GoodName
-        this.$store.dispatch('AddAdminMerchantProducts',this.addOptions)
-          .then(() => {
-            this.$notify({
-              message: '添加成功!',
-              type: 'success'
-            });
-            this.initData(this.productsID, 1);
-          }, err => {
-            this.$notify({
-              message: err,
-              type: 'error'
-            });
+        this.$store.dispatch('AddAdminMerchantProducts', this.addOptions)
+        .then(() => {
+          this.$notify({
+            message: '添加成功!',
+            type: 'success'
           });
+          this.initData(this.productsID, 1);
+        }, err => {
+          this.$notify({
+            message: err,
+            type: 'error'
+          });
+        });
         this.addAdminMerchantProductsDialog = false;
       },
       //修改
@@ -612,7 +677,7 @@
         this.$store.commit('setTranstionFalse');
         this.updateAdminMerchantProductsDialog = true;
         this.uploaNode();
-        this.$store.commit('initUpdateAdminMerchantProductsObj',id)
+        this.$store.commit('initUpdateAdminMerchantProductsObj', id)
       },
       //修改提交
       updateAdminMerchantProductsSubmit(){
@@ -625,7 +690,7 @@
           "data": {
             "ta_tg_ID": this.updateAdminMerchantProductsObj.ta_tg_ID,
             "ta_tg_TradeID": this.productsID,
-            ts_tg_lowestPrice:this.updateAdminMerchantProductsObj.ts_tg_lowestPrice,
+            ts_tg_lowestPrice: this.updateAdminMerchantProductsObj.ts_tg_lowestPrice,
             "ta_tg_ItemInfoID": this.updateAdminMerchantProductsObj.ta_tg_ItemInfoID,
             "ta_tg_Title": this.updateAdminMerchantProductsObj.ta_tg_Title,
             "ts_tg_Country": this.updateAdminMerchantProductsObj.ts_tg_Country,
@@ -634,26 +699,26 @@
             "ts_tg_GroupSite": this.updateAdminMerchantProductsObj.ts_tg_GroupSite,
             "ta_tg_Describe": this.updateAdminMerchantProductsObj.ta_tg_Describe,
             "ta_tg_ShowImage": this.ImageURL.join(','),
-            "ta_tg_IsDelete":this.updateAdminMerchantProductsObj.ta_tg_IsDelete,
+            "ta_tg_IsDelete": this.updateAdminMerchantProductsObj.ta_tg_IsDelete,
             "ta_tg_Remark": this.updateAdminMerchantProductsObj.ta_tg_Remark,
             "ts_tg_ShowTop": this.updateAdminMerchantProductsObj.ts_tg_ShowTop,
             "ts_tg_Special": this.updateAdminMerchantProductsObj.ts_tg_Special,
-            "ts_tg_LongOut":this.updateAdminMerchantProductsObj.ts_tg_LongOut
+            "ts_tg_LongOut": this.updateAdminMerchantProductsObj.ts_tg_LongOut
           }
         };
-        this.$store.dispatch('UpdateAdminMerchantProducts',updateOptions)
-          .then(() => {
-            this.$notify({
-              message: '修改成功!',
-              type: 'success'
-            });
-            this.initData(this.productsID, 1);
-          }, err => {
-            this.$notify({
-              message: err,
-              type: 'error'
-            });
+        this.$store.dispatch('UpdateAdminMerchantProducts', updateOptions)
+        .then(() => {
+          this.$notify({
+            message: '修改成功!',
+            type: 'success'
           });
+          this.initData(this.productsID, 1);
+        }, err => {
+          this.$notify({
+            message: err,
+            type: 'error'
+          });
+        });
         this.updateAdminMerchantProductsDialog = false;
       },
       //删除
@@ -666,7 +731,7 @@
           "pcName": "",
           "tgID": id
         };
-        this.$store.dispatch('DeleteAdminMerchantProducts',deleteOptions)
+        this.$store.dispatch('DeleteAdminMerchantProducts', deleteOptions)
         .then(() => {
           this.$notify({
             message: '删除成功!',
@@ -682,9 +747,9 @@
       },
       //点击跳转到产品线路管理
       productLineManagement(id){
-        this.$store.commit('adminProductLineManagementId',id);
-        this.$router.push({name:'AdminQueryProductInformation'})
-        sessionStorage.setItem('index','1')
+        this.$store.commit('adminProductLineManagementId', id);
+        this.$router.push({name: 'AdminQueryProductInformation'})
+        sessionStorage.setItem('index', '1')
       }
     },
     mounted(){

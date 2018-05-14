@@ -1,10 +1,24 @@
 <template>
   <div>
     <div id="wrap" class="clearfix">
+      <div>
+        <p style="font-weight: bold;font-size: 20px;margin-bottom: 20px">添加流程:</p>
+        <el-tree :data="data" :props="defaultProps" :default-expand-all="isOff"></el-tree>
+      </div>
+      <div style="margin: 30px 0 0 20px">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item @click.native="toMerch">商家产品</el-breadcrumb-item>
+          <el-breadcrumb-item>产品线路</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
       <h1 class="userClass">产品线路信息</h1>
+
       <!--查询栏-->
       <el-col :span="24" class="formSearch">
         <el-form :inline="true">
+          <el-form-item>
+
+          </el-form-item>
           <el-form-item>
             <span>产品筛选:</span>
           </el-form-item>
@@ -18,14 +32,14 @@
             ></el-autocomplete>
           </el-form-item>
           <!--<el-form-item>-->
-            <!--<el-select v-model="value" placeholder="请选择产品">-->
-              <!--<el-option-->
-                <!--v-for="item in adminTradeGoodList"-->
-                <!--:key="item.ta_tg_ID"-->
-                <!--:label="item.ta_tg_Title"-->
-                <!--:value="item.ta_tg_ID">-->
-              <!--</el-option>-->
-            <!--</el-select>-->
+          <!--<el-select v-model="value" placeholder="请选择产品">-->
+          <!--<el-option-->
+          <!--v-for="item in adminTradeGoodList"-->
+          <!--:key="item.ta_tg_ID"-->
+          <!--:label="item.ta_tg_Title"-->
+          <!--:value="item.ta_tg_ID">-->
+          <!--</el-option>-->
+          <!--</el-select>-->
           <!--</el-form-item>-->
           <el-form-item>
             <!--<el-button type="primary" @click="search">查询</el-button>-->
@@ -88,12 +102,12 @@
               产品线路详情
             </el-button>
             <!--<el-button-->
-              <!--size="mini"-->
-              <!--@click="productCharacteristicManagement(scope.row.ts_pt_ID)">产品特色管理-->
+            <!--size="mini"-->
+            <!--@click="productCharacteristicManagement(scope.row.ts_pt_ID)">产品特色管理-->
             <!--</el-button>-->
             <!--<el-button-->
-              <!--size="mini"-->
-              <!--@click="lineScheduleManagement(scope.row.ts_pt_ID)">线路日程管理-->
+            <!--size="mini"-->
+            <!--@click="lineScheduleManagement(scope.row.ts_pt_ID)">线路日程管理-->
             <!--</el-button>-->
           </template>
         </el-table-column>
@@ -163,6 +177,64 @@
     name: '',
     data() {
       return {
+        data: [{
+          label: '商家产品',
+          children: [{
+            label: '产品线路',
+            children: [
+              {
+                label: '产品线路出发城市'
+              },
+              {
+                label: '产品线路价格'
+              },
+              {
+                label: '产品线路特色'
+              },
+              {
+                label: '产品线路日程',
+                children:[
+                  {
+                    label: '日程时间',
+                    children:[
+                      {
+                        label: '时间活动',
+                        children:[
+                          {
+                            label:'活动用餐'
+                          },
+                          {
+                            label:'活动景点'
+                          },
+                          {
+                            label:'活动购物'
+                          },
+                          {
+                            label:'活动住宿'
+                          },
+                          {
+                            label:'活动温馨提示'
+                          },
+                          {
+                            label:'活动交通'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                label: '产品线路费用说明'
+              }
+            ]
+          }]
+        }],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        },
+        isOff:true,
         userID: '',
         userName: '',
         initSearch: '',//查询参数
@@ -187,8 +259,16 @@
     },
     created(){
 
+      let lineID = this.$route.query.lineID;
+      if (lineID) {
+        this.initData(lineID)
+      }
     },
     methods: {
+      toMerch(){
+        sessionStorage.setItem('index',0);
+        this.$router.push({name:'AdminMerchantProducts'})
+      },
 
       handleSelect(item) {
         this.value = item.id;
@@ -207,7 +287,7 @@
             "operateUserID": "",
             "operateUserName": "",
             "tradeID": obj.sm_ai_ID ? obj.sm_ai_ID : '',
-            goodTitle:name?name:'',
+            goodTitle: name ? name : '',
             "userID": "",
             "pcName": "",
             "ID": '',
@@ -228,7 +308,7 @@
       },
       querySearchAsync(queryString, cb) {
         this.loadAll(1, queryString).then(data => {
-          var  data = data.data
+          var data = data.data
           data = data.map(item => {
             return {
               id: item.ta_tg_ID,
@@ -252,14 +332,14 @@
         };
         this.isLoading = true;
         this.$store.dispatch('initAdminProductLine', GetProductLine)
-          .then(() => {
-            this.isLoading = false;
-          }, err => {
-            this.$notify({
-              message: err,
-              type: 'error'
-            });
-          })
+        .then(() => {
+          this.isLoading = false;
+        }, err => {
+          this.$notify({
+            message: err,
+            type: 'error'
+          });
+        })
       },
       //查询
       search() {
@@ -275,7 +355,7 @@
       },
       //查询初始化数据
       searchInitData() {
-        if(this.adminProductLineManagementId){
+        if (this.adminProductLineManagementId) {
           this.initData(this.adminProductLineManagementId)
         }
       },
@@ -288,18 +368,18 @@
       addAdminQueryProductInformationSubmit() {
         this.addOptions.data.ts_pt_GoodsListID = this.value;
         this.$store.dispatch('AddAdminQueryProductInformationSubmit', this.addOptions)
-          .then(() => {
-            this.$notify({
-              message: '添加成功!',
-              type: 'success'
-            });
-            this.initData(this.value)
-          }, err => {
-            this.$notify({
-              message: err,
-              type: 'error'
-            });
+        .then(() => {
+          this.$notify({
+            message: '添加成功!',
+            type: 'success'
           });
+          this.initData(this.value)
+        }, err => {
+          this.$notify({
+            message: err,
+            type: 'error'
+          });
+        });
         this.addAdminQueryProductInformationDialog = false;
       },
       //修改
@@ -324,18 +404,18 @@
           }
         };
         this.$store.dispatch('UpdateAdminQueryProductInformation', updateOptions)
-          .then(() => {
-            this.$notify({
-              message: '修改成功!',
-              type: 'success'
-            });
-            this.initData(this.updateAdminQueryProductInformationObj.ts_pt_GoodsListID)
-          }, err => {
-            this.$notify({
-              message: err,
-              type: 'error'
-            });
+        .then(() => {
+          this.$notify({
+            message: '修改成功!',
+            type: 'success'
           });
+          this.initData(this.updateAdminQueryProductInformationObj.ts_pt_GoodsListID)
+        }, err => {
+          this.$notify({
+            message: err,
+            type: 'error'
+          });
+        });
         this.updateAdminQueryProductInformationDialog = false;
       },
       //删除
@@ -349,18 +429,18 @@
           "ptID": id
         };
         this.$store.dispatch('DeleteAdminQueryProductInformation', deleteOptions)
-          .then(() => {
-            this.$notify({
-              message: '删除成功!',
-              type: 'success'
-            });
-            this.initData(this.value);
-          }, err => {
-            this.$notify({
-              message: err,
-              type: 'error'
-            });
+        .then(() => {
+          this.$notify({
+            message: '删除成功!',
+            type: 'success'
           });
+          this.initData(this.value);
+        }, err => {
+          this.$notify({
+            message: err,
+            type: 'error'
+          });
+        });
       },
       //点击跳转到产品特色管理
       productCharacteristicManagement(id) {

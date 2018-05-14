@@ -1,6 +1,15 @@
 <template>
   <div>
     <section id="wrap">
+      <div style="margin: 30px 0 30px 0px">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item to="AdminMerchantProducts">商家产品</el-breadcrumb-item>
+          <el-breadcrumb-item  @click.native="toLine">产品线路</el-breadcrumb-item>
+          <el-breadcrumb-item  @click.native="toDayLine">日程线路</el-breadcrumb-item>
+          <el-breadcrumb-item to="AdminScheduleTime">日程时间</el-breadcrumb-item>
+          <el-breadcrumb-item>时间活动</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
       <h1 class="userClass">时间活动信息</h1>
       <!--查询-->
       <el-col :span="24" class="formSearch">

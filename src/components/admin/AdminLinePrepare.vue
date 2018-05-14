@@ -497,6 +497,12 @@
         sessionStorage.setItem('index','3')
       }
     },
+    created(){
+      let timeID = this.$route.query.timeID;
+      if (timeID) {
+        this.initData(timeID)
+      }
+    },
     mounted(){
       this.searchInitData();
     }

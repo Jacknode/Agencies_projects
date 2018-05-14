@@ -1,11 +1,12 @@
 <template>
   <div id="wrap">
     <!--<div class="wrapper">-->
-      <!--<ul class="functionTypeList clearfix" id="functionTypeList" v-model="activeName">-->
-        <!--<li v-for="item,index in functionTypeList" :name="item.value" @click="clickChageType(index,item)">-->
-          <!--<router-link :to="'/home/adminAllFunction2/'+ item.link">{{item.name}}</router-link>-->
-        <!--</li>-->
-      <!--</ul>-->
+      <!--&lt;!&ndash;<ul class="functionTypeList clearfix" id="functionTypeList" v-model="activeName">&ndash;&gt;-->
+        <!--&lt;!&ndash;<li v-for="item,index in functionTypeList" :name="item.value" :class="{active:index==n}">&ndash;&gt;-->
+          <!--&lt;!&ndash;&lt;!&ndash;<router-link :to="'/home/adminAllFunction2/'+ item.link">{{item.name}}</router-link>&ndash;&gt;&ndash;&gt;-->
+          <!--&lt;!&ndash;<a href="javascript:;">{{item.name}}</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+      <!--&lt;!&ndash;</ul>&ndash;&gt;-->
     <!--</div>-->
     <div v-loading="isLoading">
       <router-view name="Content"></router-view>
@@ -15,17 +16,69 @@
 <script>
   import {mapGetters} from 'vuex'
   import BScroll from 'better-scroll'
+  import $ from 'jquery'
 
   export default {
     name: '',
     computed: mapGetters([
       'adminMerchantProductsId'
     ]),
-    created(){
-
-    },
     data() {
       return {
+        data: [{
+          label: '商家产品',
+          children: [{
+            label: '产品线路',
+            children: [
+              {
+                label: '产品线路出发城市'
+              },
+              {
+                label: '产品线路价格'
+              },
+              {
+                label: '产品线路特色'
+              },
+              {
+                label: '产品线路日程',
+                children:[
+                  {
+                    label: '日程时间',
+                    children:[
+                      {
+                        label: '时间活动',
+                        children:[
+                          {
+                            label:'活动用餐'
+                          },
+                          {
+                            label:'活动景点'
+                          },
+                          {
+                            label:'活动购物'
+                          },
+                          {
+                            label:'活动住宿'
+                          },
+                          {
+                            label:'活动温馨提示'
+                          },
+                          {
+                            label:'活动交通'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                label: '产品线路费用说明'
+              }
+            ]
+          }]
+        }],
+        n:0,
         functionTypeList: [
 //          {
 //            name: '商家信息管理',
@@ -90,8 +143,6 @@
         this.isLoading = false;
       },
     },
-    created() {
-    },
     updated(){
       let num = sessionStorage.getItem('index');
       let ulEle= document.getElementById('functionTypeList')
@@ -104,6 +155,25 @@
       }
     },
     mounted() {
+      let aIndex = sessionStorage.getItem('index');
+      if(Number(aIndex)<=0){
+        sessionStorage.setItem('index',0);
+        this.n = 0
+      }else{
+        this.n = aIndex
+      }
+      var _this = this;
+      if (window.history && window.history.pushState) {
+
+        $(window).on('popstate', function () {
+          let index = sessionStorage.getItem('index');
+          index--;
+          let newIndex = (Number(index))>0?(Number(index)):0;
+          sessionStorage.setItem('index',newIndex)
+          _this.n = newIndex;
+//          window.location.reload()
+        });
+      }
 //      let num = sessionStorage.getItem('index')
 //      var lis = document.getElementById('functionTypeList').children;
 //      lis[num].className = 'active';

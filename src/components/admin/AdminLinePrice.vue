@@ -156,7 +156,7 @@
       <el-dialog title="添加产品线路价格" :visible.sync="addAdminLinePriceDialog">
         <el-form :model="addOptions">
           <el-form-item label="请选择产品线路:" :label-width="formLabelWidth">
-            <el-select v-model="addOptions.productLineID" placeholder="请选择产品线路" @change="changeLine">
+            <el-select v-model="addOptions.productLineID" placeholder="请选择产品线路" @change="addChangeLine">
               <el-option
                 v-for="item in adminProductLine"
                 :key="item.ts_pt_ID"
@@ -381,6 +381,22 @@
           this.timeout = setTimeout(() => {
             cb(this.restaurants);
           }, 10);
+        })
+      },
+      addChangeLine(){
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "lineID":this.addOptions.productLineID,
+          page:1,
+          rows:5
+        };
+        this.$store.dispatch('initAdminRouteDepartureCity',options)
+        .then(total=>{
+          this.total = total;
         })
       },
       //选中线路

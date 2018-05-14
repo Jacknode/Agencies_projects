@@ -42,7 +42,6 @@
       >
         <el-table-column
           label="编号"
-          align="center"
           prop="ts_cc_ID">
         </el-table-column>
         <el-table-column
