@@ -324,3 +324,18 @@ export const getSeriesState = val=>{
       return '未知';
   }
 };
+
+
+//微电影审核表视频类型
+export const getFilmType = val=>{
+  switch (Number(val)) {
+    case 1:
+      return '广告';
+    case 2:
+      return '微电影';
+    case 3:
+      return '教育';
+    default:
+      return '未知';
+  }
+};

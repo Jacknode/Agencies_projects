@@ -4,7 +4,7 @@
       <h1 class="userClass">审核表</h1>
       <!--查询栏-->
       <el-col :span="24" class="formSearch">
-        <el-form :inline="true">
+        <el-form :inline="true" size="mini">
           <el-form-item label="电影类型筛选:">
             <el-select v-model="movieType" placeholder="请选择电影类型">
               <el-option label="广告" value="1"></el-option>
@@ -174,7 +174,7 @@
           </el-form-item>
           <el-form-item label="分类名称:" :label-width="formLabelWidth">
             <el-select v-model="addOptions.data.vf_ve_Content.vf_te_IDs" placeholder="请选择分类名称">
-              <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_Name" v-for="item in VMovieTypeList"></el-option>
+              <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_ID" v-for="item in VMovieTypeList"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="标题:" :label-width="formLabelWidth">
@@ -216,6 +216,8 @@
             <a href="javascript:;" class="file">上传视频
               <input type="file" name="" ref="upload1" multiple>
             </a>
+            <div id="myDiv" style="padding: 10px">选择视频上传:</div>
+
             <el-form-item size="large">
               <el-button type="primary" size="mini" @click="uploadFile">立即上传</el-button>
             </el-form-item>
@@ -306,7 +308,7 @@
 
     data() {
       return {
-        percentage:70,
+        percentage:0,
         videoData:{
           "vedioName":''
         },
@@ -449,39 +451,64 @@
         }
         ;
         this.uploaNode();
-        this.uploadFile();
+//        this.uploadoss();
         this.addDialog = true;
         this.$store.commit('setTranstionFalse');
       },
       //视频上传
       uploadFile() {
-/*        if(this.$refs.upload1){
-          var fd = new FormData();
-          console.log(1,this.$refs.upload1.files[0])
-          fd.append("fileUploadOss", this.$refs.upload1.files[0]);
+        var fd = new FormData();
+        if(this.$refs.upload1.files[0]){
+          //获取文件
+          var file =this.$refs.upload1.files[0];
+          //获取文件大小
+          var fileSize = this.$refs.upload1.files[0].size;
+          fileSize=parseInt(fileSize/1024*100/100); //单位为KB
+          this.addOptions.data.vf_ve_Content.vf_vo_Size=fileSize;
+          var str =this.$refs.upload1.files[0].name;
+          //获取文件名
+          this.addOptions.data.vf_ve_Content.vf_vo_Extend=str.split(".")[1];
+          fd.append("fileUploadOss",this.$refs.upload1.files[0]);
           var xhr = new XMLHttpRequest();
-          console.log(2,xhr)
-
-          xhr.upload.addEventListener("progress", this.uploadProgress, false);
-          console.log(3,xhr)
-          xhr.open("POST", "http://image.1000da.com.cn/PostImage/PostToOSS");
+          xhr.onreadystatechange = ()=>{
+            if (xhr.readyState == 4 && xhr.status == 200)
+              if(xhr.responseText){
+                let preData= JSON.parse(xhr.responseText).data;
+                this.videoData.vedioName=preData;
+                this.$store.dispatch("UploadVideo", this.videoData)
+                  .then((suc) => {
+                    this.$notify({
+                      message: suc,
+                      type: "success"
+                    }),
+                    this.percentage=100,
+                    this.addOptions.data.vf_ve_Content.vf_vo_FileURL=this.UploadVideoList;
+                    //获取时长
+                    var e =document.getElementById("addVideo");
+                    setTimeout(()=>{
+                      if(isNaN(e.duration)){
+                        this.addOptions.data.vf_ve_Content.vf_vo_Time = '';
+                      }else{
+                        this.addOptions.data.vf_ve_Content.vf_vo_Time=parseInt(e.duration).toString();
+                      }
+                    },1000);
+                  }, (err) => {
+                    this.$notify({
+                      message: err,
+                      type: "error"
+                    });
+                  });
+              }
+          }
+          xhr.open("POST", "http://image.1000da.com.cn/PostImage/PostToOSS",true);
           xhr.send(fd);
-        };*/
+        }else {
+          alert("请选择上传视频")
+      };
       },
-      uploadProgress(evt){
-        console.log(evt)
-        if (evt.lengthComputable) {
-          var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-          this.percentage = percentComplete.toString();
-        }
-        else {
-          console.log("err")
-        }
-      },
-
       addSubmit() {
         let date = new Date();
-        let day = date.getDay() - 1;
+        let day = date.getDay();
         let nowDate = date.getFullYear() + "/" + date.getMonth() + "/" + day + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         this.addOptions.data.vf_ve_Content.vf_vo_CreateTime = nowDate;
         this.$store.dispatch("addVMovieCheckTable", this.addOptions)
@@ -491,7 +518,7 @@
               type: "success"
             })
             // this.initData();
-            // window.location.reload()
+             window.location.reload()
           }, (err) => {
             this.$notify({
               message: err,

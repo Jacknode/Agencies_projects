@@ -4,7 +4,7 @@
       <h1 class="userClass">视频</h1>
       <!--查询栏-->
       <el-col :span="24" class="formSearch">
-        <el-form :inline="true">
+        <el-form :inline="true" size="small">
           <el-form-item>
             <span>视频:</span>
             <el-input type="text" v-model="movieType" auto-complete="off" placeholder="视频编号"  style="width: 250px"></el-input>
