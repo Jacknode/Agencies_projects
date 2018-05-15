@@ -638,8 +638,8 @@
       },
       //添加图片
       uploaNode() {
-        this.ImageURL = '';
-        this.updateImageURL = '';
+        this.ImageURL = [];
+        this.updateImageURL = [];
         setTimeout(() => {
           if (this.$refs.upload) {
             this.$refs.upload.addEventListener('change', data => {
@@ -650,6 +650,7 @@
                   })
                     .then(data => {
                       if (data) {
+                        console.log(data)
                         this.ImageURL.push(data.data);
                       } else {
                         this.$notify({

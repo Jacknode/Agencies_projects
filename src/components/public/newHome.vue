@@ -71,7 +71,9 @@
               <el-menu-item index="/home/hotelFacilitiesServicesFacilities">酒店设施服务设施信息</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="4"  v-show="userInfo.sm_ai_IsPass==1">
+
+          <!--v-show="userInfo.sm_ai_IsPass==1&&isTickets"-->
+          <el-submenu index="4"  >
             <template slot="title">
               <i class="icon-ticket" style="padding-right: 15px"></i>
               <span>门票后台管理</span>

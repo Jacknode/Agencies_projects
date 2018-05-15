@@ -774,21 +774,20 @@
       },
 //      修改提交
       updateAdminUserInfoSubmit() {
-
         //币种编号
         let sm_bc_ID = this.changeMineyTypeList.filter(item => {
-          if (item.sm_bc_Name == this.obj.agentInfo.sm_ai_BalanceCurrencyName) {
+          if (item.ts_jb_Name == this.obj.agentInfo.sm_ai_BalanceCurrencyName) {
             return true;
           }
           return false;
-        })[0].sm_bc_ID;
+        })[0].ts_jb_ID;
         //公司规模编号
         let sm_cs_ID = this.changeCompanyTypeList.filter(item => {
-          if (item.sm_cs_Persons == this.obj.agentInfo.sm_ai_CompanyPersons) {
+          if (item.ts_jb_Name == this.obj.agentInfo.sm_ai_CompanyPersons) {
             return true;
           }
           return false;
-        })[0].sm_cs_ID
+        })[0].ts_jb_ID
 
 //        合作类型
         let agentinfotype = [];
@@ -798,10 +797,18 @@
           }
           return false;
         })[0];
+        if( !agentinfotypeObj ){
+          this.$notify({
+            message: '请选择合作类型!!',
+            type: 'error'
+          });
+          return
+        }
         agentinfotype.push({
           "sm_cp_ID": agentinfotypeObj.sm_cp_ID,
           "sm_cp_PartnerTypeName": agentinfotypeObj.sm_cp_Name,
         })
+
 
         //经营范围
         let TypeOfCooperationArr = [];
