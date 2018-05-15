@@ -29,5 +29,8 @@ export default {
   UploadVideo(state, data) {
     state.UploadVideoList = data;
   },
+  initVMovieParentSorting(state, data) {
+    state.VMovieParentTypeList = data;
+  },
 
 }

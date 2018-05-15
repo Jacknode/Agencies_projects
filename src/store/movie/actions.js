@@ -454,7 +454,6 @@ export default {
     })
       .then(data => {
         var data = data.data;
-        // console.log(data.totalRows)
         if (Number(data.resultcode) == 200) {
           relove(Number(data.totalRows));
           commit('initVMovieSeriesCategories', data.data)
@@ -522,7 +521,7 @@ export default {
   })
 },
   /************************************************微电影分类********************************************************************/
-  //初始化（查询）微电影系列分类
+  //初始化（查询）微电影分类
   initVMovieSorting({commit}, data) {
     return new Promise(function (relove, reject) {
       axios.post('http://webservice.1000da.com.cn/Type/Select', JSON.stringify(data), {
@@ -532,10 +531,28 @@ export default {
       })
         .then(data => {
           var data = data.data;
-          // console.log(data.totalRows)
           if (Number(data.resultcode) == 200) {
             relove(Number(data.totalRows));
             commit('initVMovieSorting', data.data)
+          } else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  //查询微电影父分类
+  initVMovieParentSorting({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/Type/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(Number(data.totalRows));
+            commit('initVMovieParentSorting', data.data)
           } else {
             reject(data.resultcontent)
           }
