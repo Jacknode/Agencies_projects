@@ -337,16 +337,8 @@
       },
       Update(obj) {
         this.VMovieSeriesCategoriesUpdateObj.data=obj;
-        // console.log(obj)
-        // this.ImageURL1 = [];
-        // this.uploaNode();
         this.updateDialog = true;
         this.$store.commit('setTranstionFalse');
-        // this.VMovieCheckTableUpdateObj.data.vf_ve_Content = obj.vf_ve_Content;
-        // this.VMovieCheckTableUpdateObj.data.vf_ve_ID = obj.vf_ve_ID;
-        // this.VMovieCheckTableUpdateObj.data.vf_ve_Type = obj.vf_ve_Type;
-
-
       },
       updateSubmit() {
         console.log(this.VMovieSeriesCategoriesUpdateObj)

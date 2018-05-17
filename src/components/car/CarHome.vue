@@ -39,8 +39,17 @@
 
       <el-table-column
         label="租车须知"
-        align="center"
-        prop="cr_h_Notice">
+        align="center">
+        <template slot-scope="scope">
+          <el-popover
+            placement="top-start"
+            title="租车须知"
+            width="800"
+            trigger="hover"
+            :content="scope.row.cr_h_Notice">
+            <el-button slot="reference">移入查看租车须知</el-button>
+          </el-popover>
+        </template>
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">

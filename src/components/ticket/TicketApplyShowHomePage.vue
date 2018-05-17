@@ -36,9 +36,9 @@
               <el-form-item label="主题名称:">
                 <span>{{ props.row.tm_tt_Name }}</span>
               </el-form-item>
-              <el-form-item label="票种编号:">
-                <span>{{ props.row.tm_tm_ID }}</span>
-              </el-form-item>
+              <!--<el-form-item label="票种编号:">-->
+                <!--<span>{{ props.row.tm_tm_ID }}</span>-->
+              <!--</el-form-item>-->
               <el-form-item label="洲:">
                 <span>{{ props.row.tm_ts_GreatName }}</span>
               </el-form-item>

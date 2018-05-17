@@ -107,20 +107,20 @@
     methods: {
       //分页
       handleCurrentChange(num) {
-        this.initData('', num)
+        this.initData(num)
       },
-      initData(typeId,typeName,typeParentId, page) {
+      initData(page) {
         let options = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",//操作员编码
           "operateUserName": "",//操作员名称
           "pcName": "",
-          "vf_te_ID": typeId?typeId:"",//分类编号
-          "vf_te_Name": typeName?typeName:"",//分类名称
-          "vf_te_ParentID": typeParentId?typeParentId:"",//分类编号父编号
+          "vf_te_ID": "",//分类编号
+          "vf_te_Name": "",//分类名称
+          "vf_te_ParentID": "",//分类编号父编号
           "page": page?page:1,//页码
-          "rows": 5//条数
+          "rows": 5 //条数
         };
         this.$store.dispatch("initVMovieSorting", options)
           .then((total) => {
@@ -133,7 +133,8 @@
           });
       },
       search() {
-        this.initData('',this.typeName,'','',1);
+        this.initData();
+//        this.initData('',this.typeName,'','');
       },
     }
   }

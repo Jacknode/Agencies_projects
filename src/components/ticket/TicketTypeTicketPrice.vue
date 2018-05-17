@@ -62,24 +62,24 @@
               <el-form-item label="票价">
                 <span>{{ props.row.tm_tp_TicketPrice }}元</span>
               </el-form-item>
-              <el-form-item label="折价金额">
-                <span>{{ props.row.tm_tp_SalePrice }}元</span>
-              </el-form-item>
+              <!--<el-form-item label="折价金额">-->
+                <!--<span>{{ props.row.tm_tp_SalePrice }}元</span>-->
+              <!--</el-form-item>-->
               <el-form-item label="实际价格">
                 <span>{{ props.row.tm_tp_RealPrice }}元</span>
               </el-form-item>
-              <el-form-item label="退票手续费">
-                <span>{{ props.row.tm_tp_BackPriceFee }}元</span>
-              </el-form-item>
+              <!--<el-form-item label="退票手续费">-->
+                <!--<span>{{ props.row.tm_tp_BackPriceFee }}元</span>-->
+              <!--</el-form-item>-->
               <el-form-item label="日期">
                 <span>{{ props.row.tm_tp_Date }}</span>
               </el-form-item>
               <el-form-item label="限售张数">
                 <span>{{ props.row.tm_tp_Limit }}张</span>
               </el-form-item>
-              <el-form-item label="备注">
-                <span>{{ props.row.tm_tp_Remark }}</span>
-              </el-form-item>
+              <!--<el-form-item label="备注">-->
+                <!--<span>{{ props.row.tm_tp_Remark }}</span>-->
+              <!--</el-form-item>-->
             </el-form>
           </template>
         </el-table-column>
@@ -91,10 +91,10 @@
           label="限售张数(张)"
           prop="tm_tp_Limit">
         </el-table-column>
-        <el-table-column
-          label="退票手续费(元)"
-          prop="tm_tp_BackPriceFee">
-        </el-table-column>
+        <!--<el-table-column-->
+          <!--label="退票手续费(元)"-->
+          <!--prop="tm_tp_BackPriceFee">-->
+        <!--</el-table-column>-->
         <el-table-column
           label="日期"
           prop="tm_tp_Date">
@@ -251,12 +251,16 @@
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
-          "tsCode": "",    //景点编码
-          "tsName": '',//景点名称
-          "tradeInfoID": this.loginId.sm_ai_ID,//供应商编码
-          "isDelete": 0,//必须传
+          "tm_ts_Code": "",
+          "tm_ts_Name": "",
+          "tm_ts_TradeInfoID": this.loginId.sm_ai_ID,
+          "tm_ts_IsDelete": 0,
+          "tm_ts_IsPass": "",
+          "tm_ts_ShowTop": "",
+          "tm_ts_IsHot": "",
+          "tm_ts_ThemeTypeID": "",
           "page": 1,
-          "rows": 5
+          "rows": 1000
         };
         this.$store.dispatch('initTicketAttractions', options)
       },
@@ -272,7 +276,7 @@
           "tm_tt_TradeInfoID": this.loginId.sm_ai_ID,
           "tm_tt_IsDelete": 0,
           "page": 1,
-          "rows": 100
+          "rows": 1000
         };
         this.$store.dispatch('initTicketType', getTicketTypePriceList)
       },
@@ -305,7 +309,6 @@
       },
       //查询
       search() {
-        console.log(this.ticketTypeNumber)
         this.initData(this.ticketTypeNumber)
       },
       //添加按钮
@@ -355,7 +358,7 @@
           "dateFrom": this.deleteOptions.dateFrom,
           "dateTo": this.deleteOptions.dateTo
         };
-        this.$store.dispatch('deleteTicketTypeTicketPriceSubmit',deleteTicketTypePrice)
+        this.$store.dispatch('deleteTicketTypeTicketPriceSubmit', deleteTicketTypePrice)
           .then(suc => {
             this.$notify({
               message: suc,

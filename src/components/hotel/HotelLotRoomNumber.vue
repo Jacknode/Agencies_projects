@@ -1,5 +1,11 @@
 <template>
   <div id="wrap" class="clearfix">
+    <el-breadcrumb separator-class="el-icon-arrow-right"style="margin: 20px 0px 0px 20px" >
+      <el-breadcrumb-item  :to="{path:'/home/hotelRoom'}">房间</el-breadcrumb-item>
+      <el-breadcrumb-item  @click.native="goHotelRoomProduct">酒店房间产品</el-breadcrumb-item>
+      <el-breadcrumb-item >酒店批量生成房间</el-breadcrumb-item>
+
+    </el-breadcrumb>
     <h1 class="userClass" style="font-size: 20px;">酒店批量生成房间</h1>
     <el-col :span="24" class="formSearch">
       <el-form :inline="true">
@@ -160,6 +166,9 @@
       this.initData(1)
     },
     methods: {
+      goHotelRoomProduct(){
+        this.$router.push({name:'HotelRoomProduct',params:{id:1378}})
+      },
       //分页
       handleCurrentChange(num){
         this.initData(num);

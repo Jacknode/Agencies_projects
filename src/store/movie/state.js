@@ -11,5 +11,6 @@ export default {
   VMovieVideoSeriesCategoriesList: [],//微电影系列分类
   VMovieTypeList: [],//微电影列分类
   UploadVideoList: [],//微电影上传电影
+  VMovieParentTypeList: [],//微电影父分类
 
 }

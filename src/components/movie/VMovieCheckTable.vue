@@ -115,50 +115,6 @@
       <!--添加-->
       <el-dialog title="添加" :visible.sync="addDialog">
         <el-form :model="addOptions">
-
-<!--          <el-form-item label="电影类型筛选:" :label-width="formLabelWidth">
-            <el-select v-model="addOptions.data.vf_ve_Type" placeholder="请选择电影类型">
-              <el-option label="广告" value="1"></el-option>
-              <el-option label="微电影" value="2"></el-option>
-              <el-option label="教育" value="3"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="作者:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.data.vf_ve_Content.vf_vo_AuthorID" placeholder="作者"></el-input>
-          </el-form-item>
-          <el-form-item label="视频类型:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.data.vf_ve_Content.vf_vo_Type" placeholder="视频类型"></el-input>
-          </el-form-item>
-          <el-form-item label="分类名称:" :label-width="formLabelWidth">
-            <el-select v-model="addOptions.data.vf_ve_Content.vf_te_IDs" placeholder="请选择分类名称">
-              <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_Name" v-for="item in VMovieTypeList"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="标题:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.data.vf_ve_Content.vf_vo_Title" placeholder="标题"></el-input>
-          </el-form-item>
-          <el-form-item label="视频图片:" :label-width="formLabelWidth">
-            <a href="javascript:;" class="file">
-              视频图片上传
-              <input type="file" name="" ref="upload" accept="image/*">
-            </a>
-            <img v-lazy="addOptions.data.vf_ve_Content.vf_vo_ImageURL"
-                 v-show="addOptions.data.vf_ve_Content.vf_vo_ImageURL"
-                 style="width: 100px;height: 100px">
-          </el-form-item>
-          <el-form-item label="上传视频:" :label-width="formLabelWidth">
-            <a href="javascript:;" class="file">上传视频
-              <input type="file" name="" ref="upload1" multiple>
-            </a>
-            <video id="addVideo" :src="addOptions.data.vf_ve_Content.vf_vo_FileURL"  width="320" height="240" controls="controls"></video>
-          </el-form-item>
-          <el-form-item label="简介:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.data.vf_ve_Content.vf_vo_Introduce" placeholder="简介"></el-input>
-          </el-form-item>
-          <el-form-item label="详情:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.data.vf_ve_Content.vf_vo_Remark" placeholder="详情"></el-input>
-          </el-form-item>-->
-
           <el-form-item label="电影类型筛选:" :label-width="formLabelWidth">
             <el-select v-model="addOptions.data.vf_ve_Type" placeholder="请选择电影类型">
               <el-option label="广告" value="1"></el-option>
@@ -172,11 +128,26 @@
           <el-form-item label="视频类型:" :label-width="formLabelWidth">
             <el-input v-model="addOptions.data.vf_ve_Content.vf_vo_Type" placeholder="视频类型"></el-input>
           </el-form-item>
-          <el-form-item label="分类名称:" :label-width="formLabelWidth">
-            <el-select v-model="addOptions.data.vf_ve_Content.vf_te_IDs" placeholder="请选择分类名称">
-              <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_ID" v-for="item in VMovieTypeList"></el-option>
+          <el-form-item label="父分类名称:" :label-width="formLabelWidth">
+            <el-select v-model="parentTypeId" placeholder="请选择父分类名称" @change="parentChange">
+              <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_ID" v-for="item in VMovieParentTypeList"></el-option>
             </el-select>
           </el-form-item>
+
+
+          <el-form-item label="分类名称:" :label-width="formLabelWidth" v-show="isVisible">
+            <el-select v-model="value5" multiple placeholder="请选择">
+              <el-option
+                v-for="item in VMovieTypeList"
+                :key="item.vf_te_ID"
+                :label="item.vf_te_Name"
+                :value="item.vf_te_ID">
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+
+
           <el-form-item label="标题:" :label-width="formLabelWidth">
             <el-input v-model="addOptions.data.vf_ve_Content.vf_vo_Title" placeholder="标题"></el-input>
           </el-form-item>
@@ -189,30 +160,7 @@
                  v-show="addOptions.data.vf_ve_Content.vf_vo_ImageURL"
                  style="width: 100px;height: 100px">
           </el-form-item>
-<!--          <el-form-item label="上传视频:" :label-width="formLabelWidth">
-            <a href="javascript:;" class="file">上传视频
-              <input type="file" name="" ref="upload1" multiple>
-            </a>
-            <video id="addVideo" :src="addOptions.data.vf_ve_Content.vf_vo_FileURL"  width="320" height="240" controls="controls"></video>
-          </el-form-item>-->
           <el-form-item label="上传视频:" :label-width="formLabelWidth">
-
-
-<!--            <input type="file" id="f" />
-            <br />
-            &lt;!&ndash;<input type="button" value="up" onclick="up()" />&ndash;&gt;
-            <a href="javascript:;" class="file">上传视频
-              <input type="file" name="" ref="upload1" multiple>
-            </a>
-            <br />
-            &lt;!&ndash;进度条标签&ndash;&gt;
-            <progress value="0" max="100" id="progress" style="height: 20px; width: 100%"></progress>
-            <br />
-            &lt;!&ndash;div模拟进度条&ndash;&gt;
-            <div id="progressNumber" style="width: 0%; height: 20px; background-color: Red"></div>
-            <br />
-            <div id="result"></div>-->
-
             <a href="javascript:;" class="file">上传视频
               <input type="file" name="" ref="upload1" multiple>
             </a>
@@ -308,6 +256,27 @@
 
     data() {
       return {
+        value11: [],
+        value5:'',
+        options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }, {
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }],
+        parentTypeId:'',
+        typeId:'',
+        isVisible:false,
         percentage:0,
         videoData:{
           "vedioName":''
@@ -380,6 +349,7 @@
     },
     computed: mapGetters([
       'VMovieCheckTableList',
+      'VMovieParentTypeList',
       'UploadVideoList',
       'VMovieTypeList',
       // 'VMovieCheckTableListUpdateObj',
@@ -389,8 +359,48 @@
       this.initData();
     },
     methods: {
+      handleCheckAllChange(val) {
+        console.log(val)
+/*        this.checkedCities = val ? cityOptions : [];
+        this.isIndeterminate = false;*/
+      },
+      handleCheckedCitiesChange(value) {
+        console.log(value)
+/*        let checkedCount = value.length;
+        this.checkAll = checkedCount === this.cities.length;
+        this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;*/
+      },
 
-      //分页
+
+      parentChange(){
+//        this.value5="";
+        this.intTypeData(this.parentTypeId);
+        this.tylist=this.VMovieTypeList;
+        this.isVisible=true;
+      },
+      intParentTypeData(parentId){
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",//操作员编码
+          "operateUserName": "",//操作员名称
+          "pcName": "",
+          "vf_te_ID":"",//分类编号
+          "vf_te_Name":"",//分类名称
+          "vf_te_ParentID": parentId?parentId:0,//分类编号父编号
+          "page": 1,//页码
+          "rows": 5//条数
+        };
+        this.$store.dispatch("initVMovieParentSorting", options)
+          .then((total) => {
+            this.total = total;
+          }, (err) => {
+            this.$notify({
+              message: err,
+              type: "error"
+            });
+          });
+      },
       handleCurrentChange(num) {
         this.initData('', num)
       },
@@ -443,6 +453,7 @@
         this.initData(this.movieType);
       },
       Add() {
+        this.intParentTypeData();
         this.intTypeData();
         this.addOptions.data.vf_ve_Type = "";
         let content = this.addOptions.data.vf_ve_Content;
@@ -455,7 +466,6 @@
         this.addDialog = true;
         this.$store.commit('setTranstionFalse');
       },
-      //视频上传
       uploadFile() {
         var fd = new FormData();
         if(this.$refs.upload1.files[0]){
@@ -510,6 +520,7 @@
         let date = new Date();
         let day = date.getDay();
         let nowDate = date.getFullYear() + "/" + date.getMonth() + "/" + day + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        this.addOptions.data.vf_ve_Content.vf_te_IDs=this.value5.join(",");
         this.addOptions.data.vf_ve_Content.vf_vo_CreateTime = nowDate;
         this.$store.dispatch("addVMovieCheckTable", this.addOptions)
           .then((suc) => {
@@ -613,15 +624,15 @@
             })
       },
       Update(obj) {
+        console.log(obj)
         this.intTypeData();
         this.uploaNode();
-        this.uploaNode1();
         this.updateDialog = true;
         this.$store.commit('setTranstionFalse');
         this.VMovieCheckTableUpdateObj.data.vf_ve_Content = obj.vf_ve_Content;
         this.VMovieCheckTableUpdateObj.data.vf_ve_ID = obj.vf_ve_ID;
         this.VMovieCheckTableUpdateObj.data.vf_ve_Type = obj.vf_ve_Type;
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_FileURL = obj.vf_vo_FileURL;
+        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_FileURL = obj.vf_ve_Content.vf_vo_FileURL;
       },
       updateSubmit() {
         this.$store.dispatch("updateVMovieCheckTable", this.VMovieCheckTableUpdateObj)
