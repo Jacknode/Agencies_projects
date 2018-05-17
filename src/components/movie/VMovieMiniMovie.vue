@@ -4,18 +4,16 @@
       <h1 class="userClass">微电影</h1>
       <!--查询栏-->
       <el-col :span="24" class="formSearch">
-        <!--<el-form :inline="true">-->
-        <!--<el-form-item label="微电影筛选:">-->
-        <!--<el-select v-model="movieType" placeholder="请选择微电影">-->
-        <!--<el-option label="微电影" value="0"></el-option>-->
-        <!--<el-option label="广告视频" value="1"></el-option>-->
-        <!--<el-option label="教育视频" value="2"></el-option>-->
-        <!--</el-select>-->
-        <!--</el-form-item>-->
-        <!--<el-form-item>-->
-        <!--<el-button type="primary" @click="search">查询</el-button>-->
-        <!--</el-form-item>-->
-        <!--</el-form>-->
+        <el-form :inline="true">
+        <el-form-item label="视频名称筛选:">
+        <el-select v-model="videoName" placeholder="请选择视频名称">
+        <!--<el-option :label="" :value="" :value="" v-for=""></el-option>-->
+        </el-select>
+        </el-form-item>
+        <el-form-item>
+        <el-button type="primary" @click="search">查询</el-button>
+        </el-form-item>
+        </el-form>
       </el-col>
 
 
@@ -129,6 +127,10 @@
 
     data() {
       return {
+        videoData:{
+          "vedioName":''
+        },
+        videoName: '',
         //是否禁用
         isDisabled: true,
         ImageURL: '',
@@ -144,16 +146,44 @@
     },
     computed: mapGetters([
       'VMovieMiniVideoList',
-      // 'VMovieCheckTableListUpdateObj',
+      'VMovieVideoList',
     ]),
 
     created() {
       this.initData();
+      this.filmName();
     },
     methods: {
+      search(){
+        this.initData();
+      },
+      filmName(){
+        let options = {
+          "loginUserID": "huileyou",  //惠乐游用户ID
+          "loginUserPass": "123",  //惠乐游用户密码
+          "operateUserID": "",//操作员编码
+          "operateUserName": "",//操作员名称
+          "pcName": "",  //机器码
+          "vf_vo_ID":"",//视频编号
+          "vf_vo_Extend": "",//文件扩展名
+          "vf_vo_AuthorID": "",//作者
+          "vf_vo_Type": "",//视频类型
+          "vf_vo_Title": "",//标题
+          "vf_vo_PasserID":"",//审核人编码
+        };
+        this.$store.dispatch("initVMovieVideo", options)
+          .then((data) => {
+            this.total=data.totalRows;
+          }, (err) => {
+            this.$notify({
+              message: err,
+              type: "error"
+            });
+          });
+      },
       //分页
       handleCurrentChange(num) {
-        this.initData('', num)
+        this.initData('','','', num)
       },
       initData(id,fromDate,toDate, page) {
         let options = {
@@ -177,67 +207,6 @@
               type: "error"
             });
           });
-      },
-      search() {
-        this.initData(this.movieType);
-      },
-      uploadImg(file) {
-        return new Promise((relove, reject) => {
-          lrz(file)
-            .then(data => {
-              relove(data.base64.split(',')[1])
-            })
-        })
-      },
-      uploaNode() {
-        this.addOptions.data.vf_ve_Content.vf_vo_ImageURL = '';
-        this.ImageURL1 = [];
-        setTimeout(() => {
-          if (this.$refs.upload) {
-            this.$refs.upload.addEventListener('change', data => {
-              for (var i = 0; i < this.$refs.upload.files.length; i++) {
-                this.uploadImg(this.$refs.upload.files[i]).then(data => {
-                  this.$store.dispatch('VMovieCheckTableUploadnImgs', {
-                    imageData: data
-                  })
-                    .then(data => {
-                      this.addOptions.data.vf_ve_Content.vf_vo_ImageURL="";
-                      if (data) {
-                        this.addOptions.data.vf_ve_Content.vf_vo_ImageURL = data.data;
-                        // console.log(data.data)
-                      } else {
-                        this.$notify({
-                          message: '图片地址不存在!',
-                          type: 'error'
-                        });
-                      }
-                    })
-                })
-              }
-            })
-          }
-          if (this.$refs.upload1) {
-            this.$refs.upload1.addEventListener('change', data => {
-              for (var i = 0; i < this.$refs.upload1.files.length; i++) {
-                this.uploadImg(this.$refs.upload1.files[i]).then(data => {
-                  this.$store.dispatch('VMovieCheckTableUploadnImgs', {
-                    imageData: data
-                  })
-                    .then(data => {
-                      if (data) {
-                        this.ImageURL1.push(data.data);
-                      } else {
-                        this.$notify({
-                          message: '图片地址不存在!',
-                          type: 'error'
-                        });
-                      }
-                    })
-                })
-              }
-            })
-          }
-        }, 30)
       },
       Delete(id) {
         let deleteOption = {
