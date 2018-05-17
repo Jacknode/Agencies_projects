@@ -161,8 +161,6 @@
           "vf_te_ID":"",//分类编号
           "vf_te_Name":"",//分类名称
           "vf_te_ParentID": parentID?parentID:"",//分类编号父编号
-          "page": 1,//页码
-          "rows": 5//条数
         };
         this.$store.dispatch("initVMovieSorting", options)
           .then((total) => {

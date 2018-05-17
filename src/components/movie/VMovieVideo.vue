@@ -7,7 +7,7 @@
         <el-form :inline="true" size="small">
           <el-form-item>
             <span>视频:</span>
-            <el-input type="text" v-model="movieType" auto-complete="off" placeholder="视频编号"  style="width: 250px"></el-input>
+            <el-input type="text" v-model="movieName" auto-complete="off" placeholder="视频名称"  style="width: 250px"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="search">查询</el-button>
@@ -37,7 +37,7 @@
                 <span>{{props.row.vf_vo_Extend}}</span>
               </el-form-item>
               <el-form-item label="文件地址:">
-                <span>{{props.row.vf_vo_FileURL}}</span>
+                <video :src="VMovieVideoUpdateObj.data.vf_vo_FileURL" width="320" height="240" controls="controls"></video>
               </el-form-item>
               <el-form-item label="作者:">
                 <span>{{props.row.vf_vo_AuthorID}}</span>
@@ -49,7 +49,7 @@
                 <span>{{props.row.vf_vo_Title}}</span>
               </el-form-item>
               <el-form-item label="视频图片:">
-                <span>{{props.row.vf_vo_ImageURL}}</span>
+                <img :src="props.row.vf_vo_ImageURL" alt="" style="width: 100px;height: 100px">
               </el-form-item>
               <el-form-item label="创建时间:">
                 <span>{{props.row.vf_vo_CreateTime}}</span>
@@ -116,54 +116,41 @@
         <el-form :model="VMovieVideoUpdateObj">
 
           <el-form-item label="视频编号:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_ID" placeholder="视频编号" :disabled="isDisabled" >
-            </el-input>
-          </el-form-item>
-          <el-form-item label="时长:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_Time" placeholder="时长" >
-            </el-input>
-          </el-form-item>
-          <el-form-item label="大小:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_Size" placeholder="大小" >
-            </el-input>
-          </el-form-item>
-          <el-form-item label="文件扩展名:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_Extend" placeholder="文件扩展名" >
-            </el-input>
-          </el-form-item>
-          <el-form-item label="文件地址:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_FileURL" placeholder="文件地址" >
-            </el-input>
-          </el-form-item>
-          <el-form-item label="作者:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_AuthorID" placeholder="作者" >
-            </el-input>
-          </el-form-item>
-          <el-form-item label="视频类型:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_Type" placeholder="视频类型" >
-            </el-input>
-          </el-form-item>
-          <el-form-item label="标题:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_Title" placeholder="标题" >
-            </el-input>
+            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_ID" placeholder="视频编号" :disabled="isDisabled" ></el-input>
           </el-form-item>
           <el-form-item label="视频图片:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_ImageURL" placeholder="视频图片" >
-            </el-input>
+            <a href="javascript:;" class="file">
+              视频图片上传
+              <input type="file" name="" ref="upload3" accept="image/*">
+            </a>
+            <img v-lazy="VMovieVideoUpdateObj.data.vf_vo_ImageURL"
+                 v-show="VMovieVideoUpdateObj.data.vf_vo_ImageURL"
+                 style="width: 100px;height: 100px">
           </el-form-item>
-          <el-form-item label="审核人编码:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_PasserID" placeholder="审核人编码" >
-            </el-input>
+          <el-form-item label="上传视频:" :label-width="formLabelWidth">
+            <a href="javascript:;" class="file">上传视频
+              <input type="file" name="" ref="upload" multiple>
+            </a>
+            <video id="addVideo" :src="VMovieVideoUpdateObj.data.vf_vo_FileURL"  width="320" height="240" controls="controls"></video>
+          </el-form-item>
+          <el-form-item size="large" :label-width="formLabelWidth">
+            <el-button type="primary" size="mini" @click="uploadFile">立即上传</el-button>
+          </el-form-item>
+          <el-form-item label="作者:" :label-width="formLabelWidth">
+            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_AuthorID" placeholder="作者" ></el-input>
+          </el-form-item>
+          <el-form-item label="视频类型:" :label-width="formLabelWidth">
+            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_Type" placeholder="视频类型" ></el-input>
+          </el-form-item>
+          <el-form-item label="标题:" :label-width="formLabelWidth">
+            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_Title" placeholder="标题" ></el-input>
           </el-form-item>
           <el-form-item label="简介:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_Introduce" placeholder="简介" >
-            </el-input>
+            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_Introduce" placeholder="简介" ></el-input>
           </el-form-item>
           <el-form-item label="备注:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_Remark" placeholder="备注" >
-            </el-input>
+            <el-input v-model="VMovieVideoUpdateObj.data.vf_vo_Remark" placeholder="备注" ></el-input>
           </el-form-item>
-
 
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -182,6 +169,10 @@
 
     data() {
       return {
+
+        videoData:{
+          "vedioName":''
+        },
         //是否禁用
         isDisabled: true,
         //修改
@@ -193,7 +184,7 @@
         //分页
         total: 0,
         //查询
-        movieType: '',
+        movieName: '',
         //表单宽度
         formLabelWidth: '120px',
         VMovieVideoUpdateObj: {
@@ -221,35 +212,91 @@
     },
     computed: mapGetters([
       'VMovieVideoList',
+      'UploadVideoList',
     ]),
 
     created() {
       this.initData()
     },
     methods: {
+      uploadFile() {
+        var fd = new FormData();
+        //获取文件
+        var file =this.$refs.upload.files[0];
+        if(file){
+          //获取文件大小
+          var fileSize = file.size;
+          fileSize=parseInt(fileSize/1024*100/100); //单位为KB
+          this.VMovieVideoUpdateObj.data.vf_vo_Size=fileSize;
+          var str =file.name;
+          //获取文件名
+          this.VMovieVideoUpdateObj.data.vf_vo_Extend=str.split(".")[1];
+          fd.append("fileUploadOss",file);
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = ()=>{
+            if (xhr.readyState == 4 && xhr.status == 200)
+              if(xhr.responseText){
+                let preData= JSON.parse(xhr.responseText).data;
+                this.videoData.vedioName=preData;
+                this.$store.dispatch("UploadVideo", this.videoData)
+                  .then((suc) => {
+                    this.$notify({
+                      message: suc,
+                      type: "success"
+                    }),
+                      this.percentage=100,
+                      this.VMovieVideoUpdateObj.data.vf_vo_FileURL=this.UploadVideoList;
+                    //获取时长
+                    var e =document.getElementById("addVideo");
+                    setTimeout(()=>{
+                      if(isNaN(e.duration)){
+                        this.VMovieVideoUpdateObj.data.vf_vo_Time = '';
+                      }else{
+                        this.VMovieVideoUpdateObj.data.vf_vo_Time=parseInt(e.duration).toString();
+                      }
+                    },1000);
+                  }, (err) => {
+                    this.$notify({
+                      message: err,
+                      type: "error"
+                    });
+                  });
+              }
+          }
+          xhr.open("POST", "http://image.1000da.com.cn/PostImage/PostToOSS",true);
+          xhr.send(fd);
+        }else {
+          alert("请选择上传视频")
+        };
+      },
       //分页
       handleCurrentChange(num) {
-        this.initData('','','','','','',num)
+        this.initData('',num)
       },
-      initData(filmId,extend,author,type,title,passId, page) {
+      initData(title,page) {
         let options = {
           "loginUserID": "huileyou",  //惠乐游用户ID
           "loginUserPass": "123",  //惠乐游用户密码
           "operateUserID": "",//操作员编码
           "operateUserName": "",//操作员名称
           "pcName": "",  //机器码
-          "vf_vo_ID": filmId?filmId:"",//视频编号
-          "vf_vo_Extend": extend?extend:"",//文件扩展名
-          "vf_vo_AuthorID": author?author:"",//作者
-          "vf_vo_Type": type?type:"",//视频类型
+          "vf_vo_ID":"",//视频编号
+          "vf_vo_Extend": "",//文件扩展名
+          "vf_vo_AuthorID": "",//作者
+          "vf_vo_Type": "",//视频类型
           "vf_vo_Title": title?title:"",//标题
-          "vf_vo_PasserID": passId?passId:"",//审核人编码
+          "vf_vo_PasserID":"",//审核人编码
           "page": page?page:1,//页码
           "rows": 5//条数
         };
         this.$store.dispatch("initVMovieVideo", options)
-          .then((total) => {
-            this.total = total;
+          .then((data) => {
+          this.total=data.totalRows;
+            for(let fiveList in this.VMovieVideoList){
+            this.videoData.vedioName=this.VMovieVideoList[fiveList].vf_vo_FileURL;
+            this.$store.dispatch("UploadVideo", this.videoData);
+              this.VMovieVideoUpdateObj.data.vf_vo_FileURL=this.UploadVideoList;
+            };
           }, (err) => {
             this.$notify({
               message: err,
@@ -258,19 +305,19 @@
           });
       },
       search() {
-        this.initData(this.movieType);
+        this.initData(this.movieName);
       },
-      searchSeries(series,name,state,author,page){
+      searchSeries(name,page){
           let options = {
             "loginUserID": "huileyou",  //惠乐游用户ID
             "loginUserPass": "123",  //惠乐游用户密码
             "operateUserID": "",//操作员编码
             "operateUserName": "",//操作员名称
             "pcName": "",  //机器码
-            "vf_ss_ID": series?series:"",//系列编号
+            "vf_ss_ID": "",//系列编号
             "vf_ss_Name": name?name:"",//系列名称
-            "vf_ss_WriteState": state?state:"",//连载状态（0连载中1完结)
-            "vf_ss_AuthorID": author?author:"",//作者
+            "vf_ss_WriteState":"",//连载状态（0连载中1完结)
+            "vf_ss_AuthorID":"",//作者
             "page": page?page:1,//页码
             "rows": 5//条数
           };
@@ -293,16 +340,6 @@
         this.$store.commit('setTranstionFalse');
       },
       addSubmit() {
-
-        // console.log(this.addOptions)
-
-        // this.vf_ve_Content.vf_vo_ImageURL = this.ImageURL;
-        // let date = new Date();
-        // let day = date.getDay() - 1;
-        // let nowDate = date.getFullYear() + "/" + date.getMonth() + "/" + day + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-        // this.addOptions.data.vf_ve_Content.vf_vo_CreateTime = nowDate;
-        // this.addOptions.data.vf_ve_Content = JSON.stringify(this.addOptions.data.vf_ve_Content);
-        // console.log(this.addOptions)
         this.$store.dispatch("addVMovieVideoSeries", this.addOptions)
           .then((suc) => {
             this.$notify({
@@ -405,6 +442,9 @@
       },
       Update(obj) {
         this.VMovieVideoUpdateObj.data=obj;
+        this.videoData.vedioName=obj.vf_vo_FileURL;
+        this.$store.dispatch("UploadVideo", this.videoData);
+        this.VMovieVideoUpdateObj.data.vf_vo_FileURL=this.UploadVideoList;
         this.updateDialog = true;
         this.$store.commit('setTranstionFalse');
       },
