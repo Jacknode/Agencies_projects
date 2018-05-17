@@ -134,6 +134,9 @@
       <!--修改-->
       <el-dialog title="修改" :visible.sync="updateDialog">
         <el-form :model="VMovieSeriesUpdateObj">
+          <el-form-item label="系列编号:" :label-width="formLabelWidth">
+            <el-input v-model="VMovieSeriesUpdateObj.data.vf_ss_ID" placeholder="时长" :disabled="isDisabled"></el-input>
+          </el-form-item>
           <el-form-item label="系列名称:" :label-width="formLabelWidth">
             <el-input v-model="VMovieSeriesUpdateObj.data.vf_ss_Name" placeholder="时长"></el-input>
           </el-form-item>
@@ -142,8 +145,9 @@
           </el-form-item>
           <el-form-item label="连载状态:" :label-width="formLabelWidth">
             <el-select v-model="VMovieSeriesUpdateObj.data.vf_ss_WriteState" placeholder="请选择连载状态">
-              <el-option label="连载中" value="0"></el-option>
-              <el-option label="完结" value="1"></el-option>
+<!--              <el-option label="连载中" value="0"></el-option>
+              <el-option label="完结" value="1"></el-option>-->
+              <!--<el-option :label="item.label" :value="item.value" v-for="item in state"></el-option>-->
             </el-select>
           </el-form-item>
           <el-form-item label="更新时间:" :label-width="formLabelWidth">
@@ -174,6 +178,16 @@
 
     data() {
       return {
+        state:[
+          {
+            label:"连载中",
+            value:0
+          },
+          {
+            label:"完结",
+            value:1
+          }
+        ],
         //作者
         Author:'',
         //系列名称
@@ -276,7 +290,6 @@
         this.uploaNode();
       },
       addSubmit() {
-        // console.log(this.addOptions)
         this.$store.dispatch("addVMovieSeries", this.addOptions)
           .then((suc) => {
             this.$notify({
@@ -315,7 +328,6 @@
                       this.addOptions.data.vf_ss_SeriesImageURL="";
                       if (data) {
                         this.addOptions.data.vf_ss_SeriesImageURL = data.data;
-                        // console.log(data.data)
                       } else {
                         this.$notify({
                           message: '图片地址不存在!',
@@ -378,7 +390,6 @@
             })
       },
       Update(obj) {
-        console.log(obj)
         this.ImageURL1 = [];
         this.uploaNode();
         this.updateDialog = true;

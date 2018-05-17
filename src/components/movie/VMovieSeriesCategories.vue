@@ -30,13 +30,12 @@
         </el-table-column>
         <el-table-column
           label="系列名称"
-          prop="vf_te_Name">
+          prop="vf_ss_Name">
         </el-table-column>
         <el-table-column
           label="分类名称"
           prop="vf_te_Name">
         </el-table-column>
-
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
             <el-button
@@ -88,13 +87,17 @@
         <el-form :model="VMovieSeriesCategoriesUpdateObj">
 
           <el-form-item label="系列分类编号:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieSeriesCategoriesUpdateObj.data.vf_st_ID" placeholder="系列编号"></el-input>
+            <el-input v-model="VMovieSeriesCategoriesUpdateObj.data.vf_st_ID" placeholder="系列编号" :disabled="isDisabled"></el-input>
           </el-form-item>
-          <el-form-item label="系列编号:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieSeriesCategoriesUpdateObj.data.vf_st_SeriesID" placeholder="分类编号"></el-input>
+          <el-form-item label="系列名称:" :label-width="formLabelWidth">
+            <el-select v-model="VMovieSeriesCategoriesUpdateObj.data.vf_st_SeriesID" placeholder="请选择系列名称">
+              <el-option :key="item.vf_ss_ID" :label="item.vf_ss_Name" :value="item.vf_ss_ID" v-for="item in VMovieSeries"></el-option>
+            </el-select>
           </el-form-item>
-          <el-form-item label="分类编号:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieSeriesCategoriesUpdateObj.data.vf_st_SeriesTypeID" placeholder="详情"></el-input>
+          <el-form-item label="分类名称:" :label-width="formLabelWidth">
+            <el-select v-model="VMovieSeriesCategoriesUpdateObj.data.vf_st_SeriesTypeID" placeholder="请选择分类名称">
+              <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_ID" v-for="item in VMovieTypeList"></el-option>
+            </el-select>
           </el-form-item>
 
         </el-form>
@@ -157,12 +160,35 @@
     },
     computed: mapGetters([
       'VMovieVideoSeriesCategoriesList',
+      'VMovieSeries',
+      'VMovieTypeList',
     ]),
 
     created() {
       this.initData()
     },
     methods: {
+      typeName(){
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",//操作员编码
+          "operateUserName": "",//操作员名称
+          "pcName": "",
+          "vf_te_ID": "",//分类编号
+          "vf_te_Name": "",//分类名称
+          "vf_te_ParentID": "",//分类编号父编号
+        };
+        this.$store.dispatch("initVMovieSorting", options)
+          .then((total) => {
+            this.total = total;
+          }, (err) => {
+            this.$notify({
+              message: err,
+              type: "error"
+            });
+          });
+      },
       //分页
       handleCurrentChange(num) {
         this.initData('','', num)
@@ -193,6 +219,28 @@
       search() {
         this.initData();
       },
+      seriesName(){
+        let options = {
+          "loginUserID": "huileyou",  //惠乐游用户ID
+          "loginUserPass": "123",  //惠乐游用户密码
+          "operateUserID": "",//操作员编码
+          "operateUserName": "",//操作员名称
+          "pcName": "",  //机器码
+          "vf_ss_ID": "",//系列编号
+          "vf_ss_Name":"",//系列名称
+          "vf_ss_WriteState": "",//连载状态（0连载中1完结)
+          "vf_ss_AuthorID":"",//作者
+        };
+        this.$store.dispatch("initVMovieSeries", options)
+          .then((total) => {
+            this.total = total;
+          }, (err) => {
+            this.$notify({
+              message: err,
+              type: "error"
+            });
+          });
+      },
       searchSeries(seriesCategoriesId,seriesId,typeId,page){
           let options = {
             "loginUserID": "huileyou",  //惠乐游用户ID
@@ -217,10 +265,7 @@
             });
         },
       Add() {
-        // this.searchSeries('','','',1);
-        // for(let i in this.addOptions.data){
-        //   this.addOptions.data[i]=""
-        // };
+        this.seriesName();
         this.addDialog = true;
         this.$store.commit('setTranstionFalse');
       },
@@ -336,6 +381,8 @@
             })
       },
       Update(obj) {
+        this.seriesName();
+        this.typeName();
         this.VMovieSeriesCategoriesUpdateObj.data=obj;
         this.updateDialog = true;
         this.$store.commit('setTranstionFalse');

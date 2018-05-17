@@ -122,21 +122,19 @@
               <el-option label="教育" value="3"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="作者:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.data.vf_ve_Content.vf_vo_AuthorID" placeholder="作者"></el-input>
-          </el-form-item>
-          <el-form-item label="视频类型:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.data.vf_ve_Content.vf_vo_Type" placeholder="视频类型"></el-input>
-          </el-form-item>
+          <!--<el-form-item label="视频类型:" :label-width="formLabelWidth">-->
+            <!--<el-input v-model="addOptions.data.vf_ve_Content.vf_vo_Type" placeholder="视频类型"></el-input>-->
+            <!--<el-select v-model="addOptions.data.vf_ve_Content.vf_vo_Type">-->
+              <!--<option :key="" :label="栏目" :value="1" v-for="item in filmTypeList"></option>-->
+            <!--</el-select>-->
+          <!--</el-form-item>-->
           <el-form-item label="父分类名称:" :label-width="formLabelWidth">
             <el-select v-model="parentTypeId" placeholder="请选择父分类名称" @change="parentChange">
               <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_ID" v-for="item in VMovieParentTypeList"></el-option>
             </el-select>
           </el-form-item>
-
-
-          <el-form-item label="分类名称:" :label-width="formLabelWidth" v-show="isVisible">
-            <el-select v-model="value5" multiple placeholder="请选择">
+          <el-form-item label="子分类名称:" :label-width="formLabelWidth" v-show="isVisible">
+            <el-select v-model="value5" multiple placeholder="请选择子分类名称">
               <el-option
                 v-for="item in VMovieTypeList"
                 :key="item.vf_te_ID"
@@ -145,9 +143,6 @@
               </el-option>
             </el-select>
           </el-form-item>
-
-
-
           <el-form-item label="标题:" :label-width="formLabelWidth">
             <el-input v-model="addOptions.data.vf_ve_Content.vf_vo_Title" placeholder="标题"></el-input>
           </el-form-item>
@@ -160,12 +155,11 @@
                  v-show="addOptions.data.vf_ve_Content.vf_vo_ImageURL"
                  style="width: 100px;height: 100px">
           </el-form-item>
-          <el-form-item label="上传视频:" :label-width="formLabelWidth">
+          <el-form-item label="选择视频:" :label-width="formLabelWidth">
             <a href="javascript:;" class="file">上传视频
               <input type="file" name="" ref="upload1" multiple>
             </a>
             <div id="myDiv" style="padding: 10px">选择视频上传:</div>
-
             <el-form-item size="large">
               <el-button type="primary" size="mini" @click="uploadFile">立即上传</el-button>
             </el-form-item>
@@ -173,7 +167,6 @@
             <el-form-item size="large">
               <video id="addVideo" :src="addOptions.data.vf_ve_Content.vf_vo_FileURL"  width="320" height="240" controls="controls"></video>
             </el-form-item>
-
           </el-form-item>
           <el-form-item label="简介:" :label-width="formLabelWidth">
             <el-input v-model="addOptions.data.vf_ve_Content.vf_vo_Introduce" placeholder="简介"></el-input>
@@ -207,7 +200,7 @@
           </el-form-item>
           <el-form-item label="分类名称:" :label-width="formLabelWidth">
             <el-select v-model="VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_te_IDs" placeholder="请选择分类名称">
-              <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_Name" v-for="item in VMovieTypeList"></el-option>
+              <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_ID" v-for="item in VMovieTypeList"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="视频图片:" :label-width="formLabelWidth">
@@ -225,8 +218,8 @@
             </a>
             <video id="addVideo1" :src="VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_FileURL"  width="320" height="240" controls="controls"></video>
           </el-form-item>
-          <el-form-item label="作者:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_AuthorID" placeholder="作者"></el-input>
+          <el-form-item size="large" :label-width="formLabelWidth">
+            <el-button type="primary" size="mini" @click="uploadFileUpdate">立即上传</el-button>
           </el-form-item>
           <el-form-item label="标题:" :label-width="formLabelWidth">
             <el-input v-model="VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Title" placeholder="标题"></el-input>
@@ -308,11 +301,11 @@
               "vf_vo_Size": "",
               "vf_vo_Extend": "",
               "vf_vo_FileURL": "",
-              "vf_vo_AuthorID": "",
+              "vf_vo_AuthorID": "21",
               "vf_vo_Type": "",
               "vf_vo_Title": "",
               "vf_vo_ImageURL": "",
-              "vf_ve_CreateTime": "",
+              "vf_vo_CreateTime": "",
               "vf_vo_Introduce": "",
               "vf_vo_Remark": "",
               "vf_te_IDs": "",
@@ -335,7 +328,7 @@
               "vf_vo_Size": "",
               "vf_vo_Extend": "",
               "vf_vo_FileURL": "",
-              "vf_vo_AuthorID": "",
+              "vf_vo_AuthorID": "21",
               "vf_vo_Type": "",
               "vf_vo_Title": "",
               "vf_vo_ImageURL": "",
@@ -352,26 +345,112 @@
       'VMovieParentTypeList',
       'UploadVideoList',
       'VMovieTypeList',
-      // 'VMovieCheckTableListUpdateObj',
     ]),
 
     created() {
       this.initData();
     },
     methods: {
-      handleCheckAllChange(val) {
-        console.log(val)
-/*        this.checkedCities = val ? cityOptions : [];
-        this.isIndeterminate = false;*/
+      uploadFile() {
+        var fd = new FormData();
+        if(this.$refs.upload1.files[0]){
+          //获取文件
+          var file =this.$refs.upload1.files[0];
+          //获取文件大小
+          var fileSize = this.$refs.upload1.files[0].size;
+          fileSize=parseInt(fileSize/1024*100/100); //单位为KB
+          this.addOptions.data.vf_ve_Content.vf_vo_Size=fileSize;
+          var str =this.$refs.upload1.files[0].name;
+          //获取文件名
+          this.addOptions.data.vf_ve_Content.vf_vo_Extend=str.split(".")[1];
+          fd.append("fileUploadOss",this.$refs.upload1.files[0]);
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = ()=>{
+            if (xhr.readyState == 4 && xhr.status == 200)
+              if(xhr.responseText){
+                let preData= JSON.parse(xhr.responseText).data;
+                this.videoData.vedioName=preData;
+                this.$store.dispatch("UploadVideo", this.videoData)
+                  .then((suc) => {
+                    this.$notify({
+                      message: suc,
+                      type: "success"
+                    }),
+                      this.percentage=100,
+                      this.addOptions.data.vf_ve_Content.vf_vo_FileURL=this.UploadVideoList;
+                    //获取时长
+                    var e =document.getElementById("addVideo");
+                    setTimeout(()=>{
+                      if(isNaN(e.duration)){
+                        this.addOptions.data.vf_ve_Content.vf_vo_Time = '';
+                      }else{
+                        this.addOptions.data.vf_ve_Content.vf_vo_Time=parseInt(e.duration).toString();
+                      }
+                    },1000);
+                  }, (err) => {
+                    this.$notify({
+                      message: err,
+                      type: "error"
+                    });
+                  });
+              }
+          }
+          xhr.open("POST", "http://image.1000da.com.cn/PostImage/PostToOSS",true);
+          xhr.send(fd);
+        }else {
+          alert("请选择上传视频")
+        };
       },
-      handleCheckedCitiesChange(value) {
-        console.log(value)
-/*        let checkedCount = value.length;
-        this.checkAll = checkedCount === this.cities.length;
-        this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;*/
+      uploadFileUpdate() {
+        var fd = new FormData();
+        //获取文件
+        var file =this.$refs.upload4.files[0];
+        if(file){
+          //获取文件大小
+          var fileSize = file.size;
+          fileSize=parseInt(fileSize/1024*100/100); //单位为KB
+          this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Size=fileSize;
+          var str =file.name;
+          //获取文件名
+          this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Extend=str.split(".")[1];
+          fd.append("fileUploadOss",file);
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = ()=>{
+            if (xhr.readyState == 4 && xhr.status == 200)
+              if(xhr.responseText){
+                let preData= JSON.parse(xhr.responseText).data;
+                this.videoData.vedioName=preData;
+                this.$store.dispatch("UploadVideo", this.videoData)
+                  .then((suc) => {
+                    this.$notify({
+                      message: suc,
+                      type: "success"
+                    }),
+                      this.percentage=100,
+                      this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_FileURL=this.UploadVideoList;
+                    //获取时长
+                    var e =document.getElementById("addVideo1");
+                    setTimeout(()=>{
+                      if(isNaN(e.duration)){
+                        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Time = '';
+                      }else{
+                        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Time=parseInt(e.duration).toString();
+                      }
+                    },1000);
+                  }, (err) => {
+                    this.$notify({
+                      message: err,
+                      type: "error"
+                    });
+                  });
+              }
+          }
+          xhr.open("POST", "http://image.1000da.com.cn/PostImage/PostToOSS",true);
+          xhr.send(fd);
+        }else {
+          alert("请选择上传视频")
+        };
       },
-
-
       parentChange(){
 //        this.value5="";
         this.intTypeData(this.parentTypeId);
@@ -414,8 +493,6 @@
           "vf_te_ID":"",//分类编号
           "vf_te_Name":"",//分类名称
           "vf_te_ParentID": "",//分类编号父编号
-          "page": 1,//页码
-          "rows": 5//条数
         };
         this.$store.dispatch("initVMovieSorting", options)
           .then((total) => {
@@ -462,60 +539,10 @@
         }
         ;
         this.uploaNode();
-//        this.uploadoss();
         this.addDialog = true;
         this.$store.commit('setTranstionFalse');
       },
-      uploadFile() {
-        var fd = new FormData();
-        if(this.$refs.upload1.files[0]){
-          //获取文件
-          var file =this.$refs.upload1.files[0];
-          //获取文件大小
-          var fileSize = this.$refs.upload1.files[0].size;
-          fileSize=parseInt(fileSize/1024*100/100); //单位为KB
-          this.addOptions.data.vf_ve_Content.vf_vo_Size=fileSize;
-          var str =this.$refs.upload1.files[0].name;
-          //获取文件名
-          this.addOptions.data.vf_ve_Content.vf_vo_Extend=str.split(".")[1];
-          fd.append("fileUploadOss",this.$refs.upload1.files[0]);
-          var xhr = new XMLHttpRequest();
-          xhr.onreadystatechange = ()=>{
-            if (xhr.readyState == 4 && xhr.status == 200)
-              if(xhr.responseText){
-                let preData= JSON.parse(xhr.responseText).data;
-                this.videoData.vedioName=preData;
-                this.$store.dispatch("UploadVideo", this.videoData)
-                  .then((suc) => {
-                    this.$notify({
-                      message: suc,
-                      type: "success"
-                    }),
-                    this.percentage=100,
-                    this.addOptions.data.vf_ve_Content.vf_vo_FileURL=this.UploadVideoList;
-                    //获取时长
-                    var e =document.getElementById("addVideo");
-                    setTimeout(()=>{
-                      if(isNaN(e.duration)){
-                        this.addOptions.data.vf_ve_Content.vf_vo_Time = '';
-                      }else{
-                        this.addOptions.data.vf_ve_Content.vf_vo_Time=parseInt(e.duration).toString();
-                      }
-                    },1000);
-                  }, (err) => {
-                    this.$notify({
-                      message: err,
-                      type: "error"
-                    });
-                  });
-              }
-          }
-          xhr.open("POST", "http://image.1000da.com.cn/PostImage/PostToOSS",true);
-          xhr.send(fd);
-        }else {
-          alert("请选择上传视频")
-      };
-      },
+
       addSubmit() {
         let date = new Date();
         let day = date.getDay();
@@ -624,7 +651,6 @@
             })
       },
       Update(obj) {
-        console.log(obj)
         this.intTypeData();
         this.uploaNode();
         this.updateDialog = true;
