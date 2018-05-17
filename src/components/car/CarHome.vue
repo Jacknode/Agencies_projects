@@ -44,7 +44,7 @@
           <el-popover
             placement="top-start"
             title="租车须知"
-            width="800"
+            width="500"
             trigger="hover"
             :content="scope.row.cr_h_Notice">
             <el-button slot="reference">移入查看租车须知</el-button>
