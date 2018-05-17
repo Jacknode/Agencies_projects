@@ -38,4 +38,5 @@ export default {
   hotelRoomNumberList: state => state.hotelRoomNumberList,
   hotelLotRoomNumberList: state => state.hotelLotRoomNumberList,
   parentHotelQueryRecommendList: state => state.parentHotelQueryRecommendList,
+  showChildHotelQueryRecommendList: state => state.showChildHotelQueryRecommendList,
 }

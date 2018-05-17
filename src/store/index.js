@@ -2,6 +2,7 @@
  * Created by leibo on 18/1/2.
  */
 import Vue from 'vue'
+
 import Vuex from 'vuex'
 
 import hotel from './Hotel'

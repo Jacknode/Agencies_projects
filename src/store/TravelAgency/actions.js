@@ -2071,6 +2071,13 @@ export default {
                 //广告
                 commit('setIsAdvertising');
                 break;
+              case 7:
+                //微电影
+                commit('setIsMovie');
+                break;
+              default:
+                commit('setIsAll')
+                break;
             }
           }
           relove(data.resultcontent)

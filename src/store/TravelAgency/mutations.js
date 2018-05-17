@@ -26,6 +26,18 @@ export default {
   setIsAdvertising(state){
     state.isAdvertising = true;
   },
+  setIsMovie(state){
+    state.isMovie = true;
+  },
+  setIsAll(state){
+    state.isAgencies = true;
+    state.isFood = true;
+    state.isHotel = true;
+    state.isMovie = true;
+    state.isCar = true;
+    state.isTickets = true;
+    state.isAdvertising = true;
+  },
   //初始化动画
   setTranstionFalse(state) {
     state.transtionActive = {

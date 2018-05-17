@@ -9,6 +9,7 @@ export default {
   isHotel:false,
   isTickets:false,
   isCar:false,
+  isMovie:false,
   isAdvertising:false,
 
   //----------管理员----------

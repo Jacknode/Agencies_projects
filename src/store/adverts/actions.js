@@ -1,7 +1,7 @@
 /**
  * Created by LiuXiang on 18/04/09.
  */
-import axios from "axios/index";
+import axios from "axios";
 
 export default {
   /********************************************广告申请*********************************************************/

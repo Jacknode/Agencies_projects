@@ -1131,6 +1131,24 @@ export default {
         }
       })
     })
+  },
+  ////通过父类型查询子 下一级类型
+  initShowChildHotelQueryRecommend({commit},data){
+    return new Promise((relove, reject) => {
+      axios.post('http://webservice.1000da.com.cn/IntroduceType/Select',JSON.stringify(data),{
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(data=>{
+        var data = data.data;
+        if(Number(data.resultcode)==200){
+          commit('initShowChildHotelQueryRecommend',data.data);
+          relove(Number(data.totalrows))
+        }else{
+          reject(data.resultcontent)
+        }
+      })
+    })
   }
 }
 

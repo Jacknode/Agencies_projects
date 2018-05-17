@@ -129,11 +129,11 @@
       },
       //添加
       Add(){
-        this.addOptions.data.ht_hi_ImageID = '';
-//        let obj = this.addOptions.data;
-//        for(let attr in obj){
-//          this.addOptions.data[attr] = obj[attr] = ''
-//        }
+        let obj = this.addOptions.data
+        for(var attr in obj){
+          obj[attr] = ''
+        }
+//        this.addOptions.data.ht_hi_ImageID = '';
         this.$store.commit('setTranstionFalse');
         this.addDialog = true;
       },

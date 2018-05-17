@@ -134,6 +134,10 @@ import CarProduct from '@/components/car/CarProduct'
 import CarCompanyCar from '@/components/car/CarCompanyCar'
 //公司优惠政策
 import CarPreferentialPolicies from '@/components/car/CarPreferentialPolicies'
+//公司订单明细
+import CarOrderDetails from '@/components/car/CarOrderDetails'
+//公司确认订单
+import CarConfirmOrder from '@/components/car/CarConfirmOrder'
 
 /*------------------------------------V电影----------------------------------------*/
 //V电影审核表
@@ -204,6 +208,22 @@ export default [
           User:CarPreferentialPolicies
         },
         name: 'CarPreferentialPolicies'
+      },
+      {
+        path: 'carOrderDetails',
+        components: {
+          default:Home,
+          User:CarOrderDetails
+        },
+        name: 'CarOrderDetails'
+      },
+      {
+        path: 'carConfirmOrder',
+        components: {
+          default:Home,
+          User:CarConfirmOrder
+        },
+        name: 'CarConfirmOrder'
       },
       {
         path: 'carProduct',

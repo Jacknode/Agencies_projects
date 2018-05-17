@@ -160,5 +160,8 @@ export default {
   },
   initParentHotelQueryRecommend(state,data){
     state.parentHotelQueryRecommendList = data;
+  },
+  initShowChildHotelQueryRecommend(state,data){
+    state.showChildHotelQueryRecommendList = data;
   }
 }

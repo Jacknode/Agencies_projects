@@ -179,6 +179,11 @@
       },
       //添加
       Add(){
+        this.facilitiesTypeID = ''
+        let obj = this.addOptions.data
+        for(var attr in obj){
+          obj[attr] = ''
+        }
         this.$store.commit('setTranstionFalse');
         this.addDialog = true;
       },

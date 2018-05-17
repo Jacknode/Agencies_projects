@@ -10,6 +10,7 @@ export default {
   isTickets: state => state.isTickets,
   isCar: state => state.isCar,
   isAdvertising: state => state.isAdvertising,
+  isMovie: state => state.isMovie,
   adminTradeGoodList: state => state.adminTradeGoodList,
   queryUserOrderList: state => state.queryUserOrderList,
   searchUserOrderList: state => state.searchUserOrderList,

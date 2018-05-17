@@ -76,8 +76,8 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="推荐类型:" :label-width="formLabelWidth" v-show="showChild">
-            <el-select v-model="addOptions.data.ht_hi_IntroduceType" placeholder="请选择类型">
+          <el-form-item label="推荐类型:" :label-width="formLabelWidth" v-show="showChild"  >
+            <el-select v-model="TypeID" placeholder="请选择类型" @change="changeShowChild">
               <el-option
                 v-for="item in parentHotelQueryRecommendList"
                 :key="item.ht_it_ID"
@@ -86,7 +86,16 @@
               </el-option>
             </el-select>
           </el-form-item>
-
+          <el-form-item label="子类型:" :label-width="formLabelWidth" v-show="showChildChild">
+            <el-select v-model="addOptions.data.ht_hi_IntroduceType" placeholder="请选择类型">
+              <el-option
+                v-for="item in showChildHotelQueryRecommendList"
+                :key="item.ht_it_ID"
+                :label="item.ht_it_Name"
+                :value="item.ht_it_ID">
+              </el-option>
+            </el-select>
+          </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="addRecommendDialog = false">取 消</el-button>
@@ -105,10 +114,13 @@
       'hotelQueryRecommendList',
       'recommendTypeList',
       'hotelIntroduceTypeList',
-      'parentHotelQueryRecommendList'
+      'parentHotelQueryRecommendList',
+      'showChildHotelQueryRecommendList'
     ]),
     data() {
       return {
+        showChildChild:false,
+        TypeID:'',
         showChild:false,
         ParentID:'',
         isLoading:false,
@@ -166,6 +178,27 @@
               }
           })
       },
+      changeShowChild(){
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "操作员编码",
+          "operateUserName": "操作员名称",
+          "pcName": "",
+          "ht_it_ID": "",//推荐类型ID
+          "ht_it_Name": "",//推荐类型名称
+          "ht_it_ParentID": this.TypeID,//推荐类型父ID
+        };
+        this.$store.dispatch('initShowChildHotelQueryRecommend',options)
+        .then(total=>{
+          if(total){
+            this.showChildChild = true;
+          }else{
+            this.addOptions.data.ht_hi_IntroduceType =  this.TypeID;
+            this.showChildChild = false;
+          }
+        })
+      },
       //分页
       handleCurrentChange(num){
         this.initData(num)
@@ -198,6 +231,14 @@
       },
       //添加按钮
       addButton() {
+        this.TypeID = '';
+        this.ParentID = '';
+        this.showChild = false;
+        this.showChildChild = false;
+        let obj = this.addOptions.data
+        for(var attr in obj){
+          obj[attr] = ''
+        }
         this.$store.commit('setTranstionFalse');
         this.addRecommendDialog = true;
       },

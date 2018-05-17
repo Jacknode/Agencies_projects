@@ -39,4 +39,5 @@ export default {
   hotelRoomNumberList:[],//房间实体生成房间
   hotelLotRoomNumberList:[],//房间产品批量生成房间
   parentHotelQueryRecommendList:[],//通过父类型查询子 类型
+  showChildHotelQueryRecommendList:[],//如果还有子 类型
 }
