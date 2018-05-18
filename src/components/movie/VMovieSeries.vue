@@ -43,6 +43,9 @@
               <el-form-item label="系列名称:">
                 <span>{{props.row.vf_ss_Name}}</span>
               </el-form-item>
+              <el-form-item label="描述:">
+                <span>{{props.row.vf_ss_Describ}}</span>
+              </el-form-item>
               <el-form-item label="完载时间:">
                 <span>{{props.row.vf_ss_OverTime}}</span>
               </el-form-item>
@@ -104,9 +107,9 @@
           <el-form-item label="系列名称:" :label-width="formLabelWidth">
             <el-input v-model="addOptions.data.vf_ss_Name" placeholder="系列名称"></el-input>
           </el-form-item>
-          <!--<el-form-item label="作者:" :label-width="formLabelWidth">-->
-            <!--<el-input v-model="addOptions.data.vf_ss_AuthorID" placeholder="作者"></el-input>-->
-          <!--</el-form-item>-->
+          <el-form-item label="描述:" :label-width="formLabelWidth">
+            <el-input v-model="addOptions.data.vf_ss_Describ" placeholder="描述"></el-input>
+          </el-form-item>
           <el-form-item label="连载状态:" :label-width="formLabelWidth">
             <el-select v-model="addOptions.data.vf_ss_WriteState" placeholder="请选择连载状态">
               <el-option label="连载中" value="0"></el-option>
@@ -140,14 +143,13 @@
           <el-form-item label="系列名称:" :label-width="formLabelWidth">
             <el-input v-model="VMovieSeriesUpdateObj.data.vf_ss_Name" placeholder="时长"></el-input>
           </el-form-item>
-          <!--<el-form-item label="作者:" :label-width="formLabelWidth">-->
-            <!--<el-input v-model="VMovieSeriesUpdateObj.data.vf_ss_AuthorID" placeholder="作者"></el-input>-->
-          <!--</el-form-item>-->
+          <el-form-item label="描述:" :label-width="formLabelWidth">
+            <el-input v-model="VMovieSeriesUpdateObj.data.vf_ss_Describ" placeholder="描述"></el-input>
+          </el-form-item>
           <el-form-item label="连载状态:" :label-width="formLabelWidth">
             <el-select v-model="VMovieSeriesUpdateObj.data.vf_ss_WriteState" placeholder="请选择连载状态">
-<!--              <el-option label="连载中" value="0"></el-option>
-              <el-option label="完结" value="1"></el-option>-->
-              <!--<el-option :label="item.label" :value="item.value" v-for="item in state"></el-option>-->
+              <el-option label="连载中" value="0"></el-option>
+              <el-option label="完结" value="1"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="更新时间:" :label-width="formLabelWidth">
@@ -290,6 +292,7 @@
         this.uploaNode();
       },
       addSubmit() {
+        this.addOptions.data.vf_ss_AuthorID=22;
         this.$store.dispatch("addVMovieSeries", this.addOptions)
           .then((suc) => {
             this.$notify({
@@ -395,6 +398,7 @@
         this.updateDialog = true;
         this.$store.commit('setTranstionFalse');
         this.VMovieSeriesUpdateObj.data=obj;
+        this.VMovieSeriesUpdateObj.data.vf_ss_AuthorID=22;
       },
       updateSubmit() {
         this.$store.dispatch("updateVMovieSeries", this.VMovieSeriesUpdateObj)
