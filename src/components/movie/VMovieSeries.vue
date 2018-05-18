@@ -102,11 +102,11 @@
       <el-dialog title="添加" :visible.sync="addDialog">
         <el-form :model="addOptions">
           <el-form-item label="系列名称:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.data.vf_ss_Name" placeholder="时长"></el-input>
+            <el-input v-model="addOptions.data.vf_ss_Name" placeholder="系列名称"></el-input>
           </el-form-item>
-          <el-form-item label="作者:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.data.vf_ss_AuthorID" placeholder="作者"></el-input>
-          </el-form-item>
+          <!--<el-form-item label="作者:" :label-width="formLabelWidth">-->
+            <!--<el-input v-model="addOptions.data.vf_ss_AuthorID" placeholder="作者"></el-input>-->
+          <!--</el-form-item>-->
           <el-form-item label="连载状态:" :label-width="formLabelWidth">
             <el-select v-model="addOptions.data.vf_ss_WriteState" placeholder="请选择连载状态">
               <el-option label="连载中" value="0"></el-option>
@@ -140,9 +140,9 @@
           <el-form-item label="系列名称:" :label-width="formLabelWidth">
             <el-input v-model="VMovieSeriesUpdateObj.data.vf_ss_Name" placeholder="时长"></el-input>
           </el-form-item>
-          <el-form-item label="作者:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieSeriesUpdateObj.data.vf_ss_AuthorID" placeholder="作者"></el-input>
-          </el-form-item>
+          <!--<el-form-item label="作者:" :label-width="formLabelWidth">-->
+            <!--<el-input v-model="VMovieSeriesUpdateObj.data.vf_ss_AuthorID" placeholder="作者"></el-input>-->
+          <!--</el-form-item>-->
           <el-form-item label="连载状态:" :label-width="formLabelWidth">
             <el-select v-model="VMovieSeriesUpdateObj.data.vf_ss_WriteState" placeholder="请选择连载状态">
 <!--              <el-option label="连载中" value="0"></el-option>

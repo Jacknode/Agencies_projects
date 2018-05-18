@@ -24,6 +24,25 @@ export default {
         })
     })
   },
+  //初始化（查询）微电影分类
+  childTypeData({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/Type/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(Number(data.totalRows));
+            commit('childTypeData', data.data)
+          } else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
   //添加审核表
   addVMovieCheckTable(store, data) {
     return new Promise(function (relove, reject) {
@@ -542,6 +561,7 @@ export default {
         })
     })
   },
+
   //查询微电影父分类
   initVMovieParentSorting({commit}, data) {
     return new Promise(function (relove, reject) {

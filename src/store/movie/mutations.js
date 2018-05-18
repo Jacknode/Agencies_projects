@@ -5,6 +5,9 @@ export default {
   initVMovieCheckTable(state, data) {
     state.VMovieCheckTableList = data;
   },
+  childTypeData(state, data) {
+    state.VMovieChildTyeList = data;
+  },
   initVMovieSeries(state, data) {
     state.VMovieSeries = data;
   },

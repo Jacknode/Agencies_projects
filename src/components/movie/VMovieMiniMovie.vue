@@ -5,11 +5,26 @@
       <!--查询栏-->
       <el-col :span="24" class="formSearch">
         <el-form :inline="true">
+
         <el-form-item label="视频名称筛选:">
         <el-select v-model="videoName" placeholder="请选择视频名称">
-        <!--<el-option :label="" :value="" :value="" v-for=""></el-option>-->
+        <el-option  :key="item.vf_vo_ID" :label="item.vf_vo_Title"  :value="item.vf_vo_ID" v-for="item in VMovieVideoList"></el-option>
         </el-select>
         </el-form-item>
+
+        <el-form-item label="日期筛选:" >
+          <el-date-picker
+            style="width:400px"
+            v-model="date"
+            type="daterange"
+            range-separator="至"
+            value-format="yyyy-MM-dd">
+            start-placeholder="开始日期"
+            end-placeholder="结束日期">
+          </el-date-picker>
+        </el-form-item>
+
+
         <el-form-item>
         <el-button type="primary" @click="search">查询</el-button>
         </el-form-item>
@@ -37,8 +52,8 @@
               <el-form-item label="文件扩展名:">
                 <span>{{props.row.vf_vo_Extend}}</span>
               </el-form-item>
-              <el-form-item label="文件地址:">
-                <span>{{props.row.vf_vo_FileURL}}</span>
+              <el-form-item label="视频:">
+                <video id="addVideo" :src="props.row.vf_vo_TempFileURL"  width="320" height="240" controls="controls"></video>
               </el-form-item>
               <el-form-item label="作者:">
                 <span>{{props.row.vf_vo_AuthorID}}</span>
@@ -127,6 +142,7 @@
 
     data() {
       return {
+        date:'',
         videoData:{
           "vedioName":''
         },
@@ -155,7 +171,8 @@
     },
     methods: {
       search(){
-        this.initData();
+        console.log(this.date[0])
+        this.initData(this.videoName,this.date[0],this.date[1]);
       },
       filmName(){
         let options = {
