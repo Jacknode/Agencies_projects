@@ -112,12 +112,12 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="updateAdminMerchantProducts(scope.row.ta_tg_TradeID)">修改
+            @click="updateAdminMerchantProducts(scope.row.ta_tg_ID)">修改
           </el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="DeleteAdminMerchantProducts(scope.row.ta_tg_TradeID)">删除
+            @click="DeleteAdminMerchantProducts(scope.row.ta_tg_ID)">删除
           </el-button>
           <el-button
             size="mini"
@@ -729,7 +729,7 @@
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
-          "tgID": id
+          "ta_tg_ID": id
         };
         this.$store.dispatch('DeleteAdminMerchantProducts', deleteOptions)
         .then(() => {
