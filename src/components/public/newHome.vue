@@ -140,13 +140,13 @@
             </template>
             <el-menu-item-group>
               <el-menu-item index="/home/vMovieCheckTable">V电影审核表</el-menu-item>
+              <el-menu-item index="/home/vMovieVideo">V电影视频</el-menu-item>
               <el-menu-item index="/home/vMovieSeries">V电影系列</el-menu-item>
               <el-menu-item index="/home/vMovieVideoSeries">V电影视频系列</el-menu-item>
-              <el-menu-item index="/home/vMovieMiniMovie">V电影微电影</el-menu-item>
               <el-menu-item index="/home/vMovieSorting">V电影分类</el-menu-item>
               <el-menu-item index="/home/vMovieVideoCategories">V电影视频分类</el-menu-item>
-              <el-menu-item index="/home/vMovieVideo">V电影视频</el-menu-item>
-              <el-menu-item index="/home/vMovieSeriesCategories">V电影系列分类</el-menu-item>
+              <el-menu-item index="/home/vMovieMiniMovie">V电影微电影</el-menu-item>
+              <!--<el-menu-item index="/home/vMovieSeriesCategories">V电影系列分类</el-menu-item>-->
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
