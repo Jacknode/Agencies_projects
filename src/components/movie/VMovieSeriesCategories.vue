@@ -5,11 +5,14 @@
       <!--查询栏-->
       <el-col :span="24" class="formSearch">
         <el-form :inline="true" size="small">
-          <el-form-item label="电影类型筛选:">
-            <el-select v-model="movieType" placeholder="请选择电影类型">
-              <el-option label="微电影" value="0"></el-option>
-              <el-option label="广告视频" value="1"></el-option>
-              <el-option label="教育视频" value="2"></el-option>
+          <el-form-item label="系列名称筛选:">
+            <el-select v-model="seriesName" placeholder="请选择系列名称" >
+              <el-option :key="item.vf_ss_ID" :label="item.vf_ss_Name" :value="item.vf_ss_ID" v-for="item in VMovieSeries"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="分类名称筛选:">
+            <el-select v-model="parentTypeName" placeholder="请选择分类名称" >
+              <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_ID" v-for="item in VMovieTypeList"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -68,12 +71,17 @@
       <el-dialog title="添加" :visible.sync="addDialog">
         <el-form :model="addOptions">
 
-          <el-form-item label="系列编号:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.data.vf_st_SeriesID" placeholder="系列编号"></el-input>
+          <el-form-item label="系列名称:" :label-width="formLabelWidth">
+            <el-select v-model="addOptions.data.vf_st_SeriesID" placeholder="请选择系列名称">
+              <el-option :key="item.vf_ss_ID" :label="item.vf_ss_Name" :value="item.vf_ss_ID" v-for="item in VMovieSeries"></el-option>
+            </el-select>
           </el-form-item>
-          <el-form-item label="分类编号:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.data.vf_st_SeriesTypeID" placeholder="分类编号"></el-input>
+          <el-form-item label="分类名称:" :label-width="formLabelWidth">
+            <el-select v-model="addOptions.data.vf_st_SeriesTypeID" placeholder="请选择分类名称">
+              <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_ID" v-for="item in VMovieTypeList"></el-option>
+            </el-select>
           </el-form-item>
+
 
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -122,13 +130,13 @@
         //修改
         updateDialog: false,
         ImageURL: '',
+        seriesName: '',
+        parentTypeName: '',
         ImageURL1: [],
         //数据展示
         isLoading: false,
         //分页
         total: 0,
-        //查询
-        movieType: '',
         //添加
         addDialog: false,
         addOptions: {
@@ -162,13 +170,61 @@
       'VMovieVideoSeriesCategoriesList',
       'VMovieSeries',
       'VMovieTypeList',
+      'VMovieParentTypeList',
     ]),
 
     created() {
-      this.initData()
+      this.initData(),
+      this.initSeriesName(0),
+      this.initTypeName()
     },
     methods: {
-      typeName(){
+      initSeriesName(name){
+        let options = {
+          "loginUserID": "huileyou",  //惠乐游用户ID
+          "loginUserPass": "123",  //惠乐游用户密码
+          "operateUserID": "",//操作员编码
+          "operateUserName": "",//操作员名称
+          "pcName": "",  //机器码
+          "vf_ss_ID": "",//系列编号
+          "vf_ss_Name": name?name:"",//系列名称
+          "vf_ss_WriteState": "",//连载状态（0连载中1完结)
+          "vf_ss_AuthorID": "",//作者
+        };
+        this.$store.dispatch("initVMovieSeries", options)
+          .then((total) => {
+            this.total = total;
+          }, (err) => {
+            this.$notify({
+              message: err,
+              type: "error"
+            });
+          });
+      },
+/*      intParentTypeData(parentId){
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",//操作员编码
+          "operateUserName": "",//操作员名称
+          "pcName": "",
+          "vf_te_ID":"",//分类编号
+          "vf_te_Name":"",//分类名称
+          "vf_te_ParentID": parentId?parentId:0,//分类编号父编号
+          "page": 1,//页码
+          "rows": 5//条数
+        };
+        this.$store.dispatch("initVMovieParentSorting", options)
+          .then((total) => {
+            this.total = total;
+          }, (err) => {
+            this.$notify({
+              message: err,
+              type: "error"
+            });
+          });
+      },*/
+      initTypeName(){
         let options = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
@@ -195,16 +251,17 @@
       },
       initData(series,vedio, page) {
         let options = {
-          "loginUserID": "huileyou",
-          "loginUserPass": "123",
+          "loginUserID": "huileyou",  //惠乐游用户ID
+          "loginUserPass": "123",  //惠乐游用户密码
           "operateUserID": "",//操作员编码
           "operateUserName": "",//操作员名称
-          "pcName": "",
-          "vf_fs_ID": "",//系列编码
-          "vf_fs_SeriesID": series ? series : "",//系列编号
-          "vf_fs_VedioID": vedio ? vedio:"",//视频编号
-          "page": page ? page : 1,//页码
+          "pcName": "",  //机器码
+          "vf_st_ID": "",//系列分类编号
+          "vf_st_SeriesID": "",//系列编号
+          "vf_st_SeriesTypeID": "",//分类编号
+          "page": 1,//页码
           "rows": 5//条数
+
         };
         this.$store.dispatch("initVMovieSeriesCategories", options)
           .then((total) => {
@@ -217,9 +274,9 @@
           });
       },
       search() {
-        this.initData();
+        this.initData(this.seriesName,this.parentTypeName,"");
       },
-      seriesName(){
+/*      seriesName(){
         let options = {
           "loginUserID": "huileyou",  //惠乐游用户ID
           "loginUserPass": "123",  //惠乐游用户密码
@@ -240,8 +297,8 @@
               type: "error"
             });
           });
-      },
-      searchSeries(seriesCategoriesId,seriesId,typeId,page){
+      },*/
+/*      searchSeries(seriesCategoriesId,seriesId,typeId,page){
           let options = {
             "loginUserID": "huileyou",  //惠乐游用户ID
             "loginUserPass": "123",  //惠乐游用户密码
@@ -263,7 +320,7 @@
                 type: "error"
               });
             });
-        },
+        },*/
       Add() {
         this.seriesName();
         this.addDialog = true;

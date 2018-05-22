@@ -1190,7 +1190,7 @@
           "data": {
             "ta_tg_ID": id
           }
-        };
+        }
         this.$store.dispatch('DeleteAdminMerchantProducts', deleteOptions)
         .then(() => {
           this.$notify({

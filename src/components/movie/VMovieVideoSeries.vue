@@ -74,7 +74,7 @@
         <el-form :model="addOptions">
 
           <el-form-item label="系列名称:" :label-width="formLabelWidth">
-            <el-select v-model="addOptions.data.vf_fs_SeriesID" placeholder="请选择系列名称">
+            <el-select v-model="addOptions.data.vf_fs_SeriesID" placeholder="请选择系列名称" style="width:400px">
               <el-option
                 v-for="item in VMovieSeries"
                 :key="item.vf_ss_ID"
@@ -84,9 +84,16 @@
             </el-select>
           </el-form-item>
           <el-form-item label="视频名称:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.data.vf_fs_VedioID" placeholder="视频名称"></el-input>
+            <el-select v-model="addOptions.data.vf_fs_VedioID" placeholder="请选择视频名称"  style="width:400px">
+              <el-option
+                v-for="item in VMovieVideoList"
+                :key="item.vf_vo_ID"
+                :label="item.vf_vo_Title"
+                :value="item.vf_vo_ID">
+              </el-option>
+            </el-select>
           </el-form-item>
-          <el-form-item label="第几集:" :label-width="formLabelWidth">
+          <el-form-item label="第几集:" :label-width="formLabelWidth" style="width:300px">
             <el-input v-model="addOptions.data.vf_fs_Level" placeholder="第几集(只能输数字)"></el-input>
           </el-form-item>
 
@@ -101,8 +108,8 @@
       <el-dialog title="修改" :visible.sync="updateDialog">
         <el-form :model="VMovieVideoSeriesUpdateObj">
 
-          <el-form-item label="系列编码:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieVideoSeriesUpdateObj.data.vf_vt_ID" placeholder="系列编码" :disabled="isDisabled"></el-input>
+          <el-form-item label="视频系列编码:" :label-width="formLabelWidth">
+            <el-input v-model="VMovieVideoSeriesUpdateObj.data.vf_vt_ID" placeholder="视频系列编码" :disabled="isDisabled"></el-input>
           </el-form-item>
           <el-form-item label="系列名称:" :label-width="formLabelWidth">
             <el-select v-model="VMovieVideoSeriesUpdateObj.data.vf_fs_SeriesID" placeholder="请选择系列名称">
@@ -213,14 +220,6 @@
           "vf_vo_PasserID":"",//审核人编码
         };
         this.$store.dispatch("initVMovieVideo", options)
-          .then((total) => {
-            this.total = total;
-          }, (err) => {
-            this.$notify({
-              message: err,
-              type: "error"
-            });
-          });
       },
       //分页
       handleCurrentChange(num) {
@@ -275,6 +274,7 @@
             });
         },
       Add() {
+        this.film();
         this.searchSeries();
         for(let i in this.addOptions.data){
           this.addOptions.data[i]=""

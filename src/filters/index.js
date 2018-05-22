@@ -335,6 +335,10 @@ export const getFilmType = val=>{
       return '微电影';
     case 3:
       return '教育';
+    case 4:
+      return '栏目';
+    case 5:
+      return '首页大图';
     default:
       return '未知';
   }

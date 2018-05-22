@@ -107,7 +107,7 @@
           <el-form-item label="票种名称:" :label-width="formLabelWidth">
             <el-input v-model="addOptions.tm_tt_Name"></el-input>
           </el-form-item>
-          <el-form-item label="景点编码:" :label-width="formLabelWidth">
+          <el-form-item label="景点名称:" :label-width="formLabelWidth">
             <el-select v-model="addOptions.tm_ts_Code" placeholder="请选择">
               <el-option
                 v-for="item in ticketAttractionsList"

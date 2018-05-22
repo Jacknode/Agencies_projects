@@ -203,6 +203,13 @@
       },
       //初始化数据
       initData(id, num) {
+        if( id == '' ){
+          this.$notify({
+            message: '请先选择支付状态！',
+            type: 'error'
+          })
+          return
+        }
         let getTradeOrderInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
@@ -252,7 +259,7 @@
               message: suc,
               type: 'success'
             });
-            this.initData('',1)
+            this.initData(this.searchId,1)
           }, err => {
             this.$notify({
               message: err,
