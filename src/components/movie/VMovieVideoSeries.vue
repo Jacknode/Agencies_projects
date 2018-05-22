@@ -108,8 +108,8 @@
       <el-dialog title="修改" :visible.sync="updateDialog">
         <el-form :model="VMovieVideoSeriesUpdateObj">
 
-          <el-form-item label="系列编码:" :label-width="formLabelWidth">
-            <el-input v-model="VMovieVideoSeriesUpdateObj.data.vf_vt_ID" placeholder="系列编码" :disabled="isDisabled"></el-input>
+          <el-form-item label="视频系列编码:" :label-width="formLabelWidth">
+            <el-input v-model="VMovieVideoSeriesUpdateObj.data.vf_vt_ID" placeholder="视频系列编码" :disabled="isDisabled"></el-input>
           </el-form-item>
           <el-form-item label="系列名称:" :label-width="formLabelWidth">
             <el-select v-model="VMovieVideoSeriesUpdateObj.data.vf_fs_SeriesID" placeholder="请选择系列名称">

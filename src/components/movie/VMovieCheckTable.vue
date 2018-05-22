@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="wrap" class="clearfix">
-      <h1 class="userClass">审核表</h1>
+      <h1 class="userClass">待审核</h1>
       <!--查询栏-->
       <el-col :span="24" class="formSearch">
         <el-form :inline="true" size="mini">
@@ -35,11 +35,14 @@
               <el-form-item label="创建视频时间:">
                 <span>{{props.row.vf_ve_Content.vf_vo_CreateTime}}</span>
               </el-form-item>
-              <el-form-item label="分类编号:">
-                <span>{{props.row.vf_ve_Content.vf_te_IDs}}</span>
+              <el-form-item label="分类名称:">
+                <span>{{props.row.vf_ve_Content.vf_te_IDNames}}</span>
               </el-form-item>
               <el-form-item label="时长:">
                 <span>{{props.row.vf_ve_Content.vf_vo_Time}}</span>
+              </el-form-item>
+              <el-form-item label="首页大图:">
+                <img :src="props.row.vf_ve_Content.vf_vo_TomImageURL" alt="" style="width: 100px;height: 100px">
               </el-form-item>
               <el-form-item label="大小:">
                 <span>{{props.row.vf_ve_Content.vf_vo_Size}}</span>
@@ -115,6 +118,19 @@
       <!--添加-->
       <el-dialog title="添加" :visible.sync="addDialog">
         <el-form :model="addOptions">
+          <el-form-item label="选择视频:" :label-width="formLabelWidth">
+            <a href="javascript:;" class="file">选择视频
+              <input type="file" name="" ref="upload1" multiple>
+            </a>
+            <div id="myDiv" style="padding: 10px">选择视频上传:</div>
+            <el-form-item size="large">
+              <el-button type="primary" size="mini" @click="uploadFile">立即上传</el-button>
+            </el-form-item>
+            <el-progress :text-inside="true" :stroke-width="18" :percentage="percentage" status="exception"></el-progress>
+            <el-form-item size="large">
+              <video id="addVideo" :src="addOptions.data.vf_ve_Content.vf_vo_FileURL"  width="320" height="240" controls="controls"></video>
+            </el-form-item>
+          </el-form-item>
           <el-form-item label="电影类型筛选:" :label-width="formLabelWidth">
             <el-select v-model="parentTypeId" placeholder="请选择电影类型" @change="parentChange">
               <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_ID" v-for="item in VMovieTypeList"></el-option>
@@ -133,6 +149,15 @@
           <el-form-item label="标题:" :label-width="formLabelWidth">
             <el-input v-model="addOptions.data.vf_ve_Content.vf_vo_Title" placeholder="标题"></el-input>
           </el-form-item>
+          <el-form-item label="首页大图:" :label-width="formLabelWidth">
+            <a href="javascript:;" class="file">
+              首页大图上传
+              <input type="file" name="" ref="upload" accept="image/*">
+            </a>
+            <img v-lazy="addOptions.data.vf_ve_Content.vf_vo_TomImageURL"
+                 v-show="addOptions.data.vf_ve_Content.vf_vo_TomImageURL"
+                 style="width: 100px;height: 100px">
+          </el-form-item>
           <el-form-item label="视频图片:" :label-width="formLabelWidth">
             <a href="javascript:;" class="file">
               视频图片上传
@@ -141,19 +166,6 @@
             <img v-lazy="addOptions.data.vf_ve_Content.vf_vo_ImageURL"
                  v-show="addOptions.data.vf_ve_Content.vf_vo_ImageURL"
                  style="width: 100px;height: 100px">
-          </el-form-item>
-          <el-form-item label="选择视频:" :label-width="formLabelWidth">
-            <a href="javascript:;" class="file">上传视频
-              <input type="file" name="" ref="upload1" multiple>
-            </a>
-            <div id="myDiv" style="padding: 10px">选择视频上传:</div>
-            <el-form-item size="large">
-              <el-button type="primary" size="mini" @click="uploadFile">立即上传</el-button>
-            </el-form-item>
-            <el-progress :text-inside="true" :stroke-width="18" :percentage="percentage" status="exception"></el-progress>
-            <el-form-item size="large">
-              <video id="addVideo" :src="addOptions.data.vf_ve_Content.vf_vo_FileURL"  width="320" height="240" controls="controls"></video>
-            </el-form-item>
           </el-form-item>
           <el-form-item label="简介:" :label-width="formLabelWidth">
             <el-input v-model="addOptions.data.vf_ve_Content.vf_vo_Introduce" placeholder="简介"></el-input>
@@ -201,7 +213,15 @@
               </el-option>
             </el-select>
           </el-form-item>-->
-
+          <el-form-item label="首页大图:" :label-width="formLabelWidth">
+            <a href="javascript:;" class="file">
+              首页大图上传
+              <input type="file" name="" ref="upload" accept="image/*">
+            </a>
+            <img v-lazy="VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_TomImageURL"
+                 v-show="VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_TomImageURL"
+                 style="width: 100px;height: 100px">
+          </el-form-item>
           <el-form-item label="视频图片:" :label-width="formLabelWidth">
             <a href="javascript:;" class="file">
               视频图片上传
@@ -304,6 +324,7 @@
               "vf_vo_AuthorID": "21",
               "vf_vo_Type": "",
               "vf_vo_Title": "",
+              "vf_vo_TomImageURL": "",
               "vf_vo_ImageURL": "",
               "vf_vo_CreateTime": "",
               "vf_vo_Introduce": "",
@@ -331,6 +352,7 @@
               "vf_vo_AuthorID": "21",
               "vf_vo_Type": "",
               "vf_vo_Title": "",
+              "vf_vo_TomImageURL": "",
               "vf_vo_ImageURL": "",
               "vf_vo_CreateTime": "",
               "vf_vo_Introduce": "",
@@ -386,6 +408,7 @@
                         this.addOptions.data.vf_ve_Content.vf_vo_Time = '';
                       }else{
                         this.addOptions.data.vf_ve_Content.vf_vo_Time=parseInt(e.duration).toString();
+                        console.log(this.addOptions.data.vf_ve_Content.vf_vo_Time)
                       }
                     },1000);
                   }, (err) => {
@@ -542,17 +565,19 @@
       addSubmit() {
         let date = new Date();
         let day = date.getDay();
-        let nowDate = date.getFullYear() + "/" + date.getMonth() + "/" + day + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        let newDate = date.getFullYear() + "/" + date.getMonth() + "/" + day + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         this.addOptions.data.vf_ve_Content.vf_te_IDs=this.value5.join(",");
-        this.addOptions.data.vf_ve_Content.vf_vo_CreateTime = nowDate;
+        this.addOptions.data.vf_ve_Type=this.parentTypeId;
+        this.addOptions.data.vf_ve_Content.vf_vo_CreateTime = newDate;
+        this.addOptions.data.vf_ve_Content.vf_vo_AuthorID = "21";//
         this.$store.dispatch("addVMovieCheckTable", this.addOptions)
           .then((suc) => {
             this.$notify({
               message: suc,
               type: "success"
             })
-            // this.initData();
-             window.location.reload()
+             this.initData();
+//             window.location.reload()
           }, (err) => {
             this.$notify({
               message: err,
@@ -666,7 +691,7 @@
                 message: suc,
                 type: "success"
               });
-              this.initData(this.movieType);
+              this.initData();
             }
             , (err) => {
               this.$notify({

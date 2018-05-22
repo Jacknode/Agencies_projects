@@ -44,7 +44,7 @@
                 <span>{{props.row.vf_vo_ID}}</span>
               </el-form-item>
               <el-form-item label="时长:">
-                <span>{{props.row.vf_vo_Time}}</span>
+                <span>{{props.row.vf_vo_Time}}秒</span>
               </el-form-item>
               <el-form-item label="大小:">
                 <span>{{props.row.vf_vo_Size}}</span>
