@@ -5,11 +5,9 @@
       <!--查询栏-->
       <el-col :span="24" class="formSearch">
         <el-form :inline="true" size="mini">
-          <el-form-item label="电影类型筛选:">
-            <el-select v-model="movieType" placeholder="请选择电影类型">
-              <el-option label="广告" value="1"></el-option>
-              <el-option label="微电影" value="2"></el-option>
-              <el-option label="教育" value="3"></el-option>
+          <el-form-item label="电影类型筛选:" :label-width="formLabelWidth">
+            <el-select v-model="movieType" placeholder="请选择电影类型" >
+              <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_ID" v-for="item in VMovieTypeList"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -51,7 +49,7 @@
                 <span>{{props.row.vf_ve_Content.vf_vo_Extend}}</span>
               </el-form-item>
               <el-form-item label="作者:">
-                <span>{{props.row.vf_ve_Content.vf_vo_AuthorID}}</span>
+                <span>{{props.row.vf_ve_Content.vf_vo_AuthorName}}</span>
               </el-form-item>
               <el-form-item label="标题:">
                 <span>{{props.row.vf_ve_Content.vf_vo_Title}}</span>
@@ -321,7 +319,7 @@
               "vf_vo_Size": "",
               "vf_vo_Extend": "",
               "vf_vo_FileURL": "",
-              "vf_vo_AuthorID": "21",
+              "vf_vo_AuthorID": "1",
               "vf_vo_Type": "",
               "vf_vo_Title": "",
               "vf_vo_TomImageURL": "",
@@ -349,7 +347,7 @@
               "vf_vo_Size": "",
               "vf_vo_Extend": "",
               "vf_vo_FileURL": "",
-              "vf_vo_AuthorID": "21",
+              "vf_vo_AuthorID": "1",
               "vf_vo_Type": "",
               "vf_vo_Title": "",
               "vf_vo_TomImageURL": "",
@@ -372,6 +370,7 @@
 
     created() {
       this.initData();
+      this.intTypeData();
     },
     methods: {
       uploadFile() {
@@ -532,6 +531,7 @@
           "operateUserName": "",//操作员名称
           "pcName": "",
           "vf_ve_ID": "",//审核表编号
+          "vf_vo_AuthorID": "1",//作者ID
           "vf_ve_Type": name ? name : "",//视频类型
           "page": page ? page : 1,//页码
           "rows": 5//条数
@@ -551,7 +551,7 @@
       },
       Add() {
 //        this.intParentTypeData();
-        this.intTypeData();
+
         this.addOptions.data.vf_ve_Type = "";
         let content = this.addOptions.data.vf_ve_Content;
         for (let i in content) {
@@ -569,7 +569,7 @@
         this.addOptions.data.vf_ve_Content.vf_te_IDs=this.value5.join(",");
         this.addOptions.data.vf_ve_Type=this.parentTypeId;
         this.addOptions.data.vf_ve_Content.vf_vo_CreateTime = newDate;
-        this.addOptions.data.vf_ve_Content.vf_vo_AuthorID = "21";//
+        this.addOptions.data.vf_ve_Content.vf_vo_AuthorID = "1";//
         this.$store.dispatch("addVMovieCheckTable", this.addOptions)
           .then((suc) => {
             this.$notify({
@@ -672,7 +672,6 @@
             })
       },
       Update(obj) {
-        this.intTypeData();
         this.uploaNode();
         this.updateDialog = true;
         this.$store.commit('setTranstionFalse');
