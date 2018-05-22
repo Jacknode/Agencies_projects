@@ -26,9 +26,9 @@
         <el-tab-pane label="线路日程" name="线路日程">
           <adminLinePrepare></adminLinePrepare>
         </el-tab-pane>
-        <el-tab-pane label="费用说明" name="费用说明">
-          <adminCostsOf></adminCostsOf>
-        </el-tab-pane>
+        <!--<el-tab-pane label="费用说明" name="费用说明">-->
+          <!--<adminCostsOf></adminCostsOf>-->
+        <!--</el-tab-pane>-->
       </el-tabs>
     </div>
   </div>

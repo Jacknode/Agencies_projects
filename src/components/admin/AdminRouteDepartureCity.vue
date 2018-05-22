@@ -49,11 +49,11 @@
           align="center"
           prop="ts_cc_LineID">
         </el-table-column>
-        <el-table-column
-          label="城市编号"
-          align="center"
-          prop="ts_cc_Code">
-        </el-table-column>
+        <!--<el-table-column-->
+          <!--label="城市编号"-->
+          <!--align="center"-->
+          <!--prop="ts_cc_Code">-->
+        <!--</el-table-column>-->
         <el-table-column
           label="城市名称"
           align="center"
@@ -98,9 +98,9 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="城市编码:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.data.ts_cc_Code" placeholder="请输入城市编码"></el-input>
-          </el-form-item>
+          <!--<el-form-item label="城市编码:" :label-width="formLabelWidth">-->
+            <!--<el-input v-model="addOptions.data.ts_cc_Code" placeholder="请输入城市编码"></el-input>-->
+          <!--</el-form-item>-->
           <el-form-item label="城市:" :label-width="formLabelWidth">
             <el-select v-model="provice" placeholder="请选择省份" @change="changeProvice">
               <el-option
@@ -139,8 +139,8 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="城市编码:" :label-width="formLabelWidth">
-            <el-input v-model="updateAdminRouteDepartureCityObj.ts_cc_Code" placeholder="请输入城市编码"></el-input>
+          <!--<el-form-item label="城市编码:" :label-width="formLabelWidth">-->
+            <!--<el-input v-model="updateAdminRouteDepartureCityObj.ts_cc_Code" placeholder="请输入城市编码"></el-input>-->
           </el-form-item>
           <el-form-item label="城市:" :label-width="formLabelWidth">
             <el-select v-model="provice" placeholder="请选择省份" @change="changeProvice">
@@ -195,7 +195,7 @@
           "pcName": "",
           "data": {
             "ts_cc_LineID": '',
-            "ts_cc_Code": '',
+//            "ts_cc_Code": '',
             "ts_cc_Name": ""
           }
         }

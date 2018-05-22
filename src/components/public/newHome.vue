@@ -476,6 +476,7 @@
         this.$store.dispatch('initThemeType', getThemeTypeList)
         .then(suc => {
         }, err => {
+          console.log(err)
         })
       }
     },
@@ -497,7 +498,7 @@
     min-height: 1400px;
   }
   .el-loading-spinner .circular {
-    margin-left: 50%;
+    /*margin-left: 50%;*/
   }
 
   .edui-default {

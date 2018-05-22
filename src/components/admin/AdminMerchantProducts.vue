@@ -112,12 +112,12 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="updateAdminMerchantProducts(scope.row.ta_tg_TradeID)">修改
+            @click="updateAdminMerchantProducts(scope.row)">修改
           </el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="DeleteAdminMerchantProducts(scope.row.ta_tg_TradeID)">删除
+            @click="DeleteAdminMerchantProducts(scope.row.ta_tg_ID)">删除
           </el-button>
           <el-button
             size="mini"
@@ -140,9 +140,9 @@
     <!--添加产品-->
     <el-dialog title="添加产品" :visible.sync="addAdminMerchantProductsDialog">
       <el-form :model="addOptions">
-        <el-form-item label="产品编号:" :label-width="formLabelWidth">
-          <el-input v-model="addOptions.data.ta_tg_ID" placeholder="请输入产品编号"></el-input>
-        </el-form-item>
+        <!--<el-form-item label="产品编号:" :label-width="formLabelWidth">-->
+          <!--<el-input v-model="addOptions.data.ta_tg_ID" placeholder="请输入产品编号"></el-input>-->
+        <!--</el-form-item>-->
         <el-form-item label="跟团游栏目:" :label-width="formLabelWidth">
           <el-select v-model="addOptions.data.ta_tg_ItemInfoID" placeholder="请选择跟团游栏目">
             <el-option
@@ -191,6 +191,61 @@
         <el-form-item label="产品描述:" :label-width="formLabelWidth">
           <el-input v-model="addOptions.data.ta_tg_Describe" placeholder="请输入产品描述"></el-input>
         </el-form-item>
+        <el-form-item label="产品推荐理由:" :label-width="formLabelWidth">
+          <el-button type="primary" size="small" @click="RecommendedReason">添加推荐理由</el-button>
+          <div v-show="buyReason.length" v-for="item,index in buyReason">
+            <span style="margin: 10px 20px 10px 0">推荐理由{{index+1}} : {{item.ts_gi_Name}}</span>
+            <el-button type="success" size="small" @click="updateBuyReason(item,index)">修改</el-button>
+            <el-button type="danger" size="small" @click="deleteBuyReason(index)">删除</el-button>
+          </div>
+        </el-form-item>
+        <el-form-item label="产品介绍:" :label-width="formLabelWidth">
+          <el-button type="primary" size="small" @click="addGoodIntroduce">添加产品介绍</el-button>
+          <div v-show="goodIntroduce.length" v-for="item,index in goodIntroduce">
+            <span style="margin: 10px 20px 10px 0">产品介绍{{index+1}} : {{item.ts_gi_Name}}</span>
+            <el-button type="success" size="small" @click="updateGoodIntroduce(item,index)">修改</el-button>
+            <el-button type="danger" size="small" @click="deleteGoodIntroduce(index)">删除</el-button>
+          </div>
+        </el-form-item>
+
+        <el-form-item label="产品费用包含:" :label-width="formLabelWidth">
+          <el-button type="primary" size="small" @click="addFeeInfoList">添加费用包含</el-button>
+          <div v-show="feeInfoList.length" v-for="item,index in feeInfoList">
+            <span style="margin: 10px 20px 10px 0">费用包含{{index+1}} : {{item.ts_gi_Name}}</span>
+            <el-button type="success" size="small" @click="updateFeeInfoList(item,index)">修改</el-button>
+            <el-button type="danger" size="small" @click="deleteFeeInfoList(index)">删除</el-button>
+          </div>
+        </el-form-item>
+
+        <el-form-item label="产品费用不包含:" :label-width="formLabelWidth">
+          <el-button type="primary" size="small" @click="addFeeNotInList">添加费用不包含</el-button>
+          <div v-show="feeNotInList.length" v-for="item,index in feeNotInList">
+            <span style="margin: 10px 20px 10px 0">费用不包含{{index+1}} : {{item.ts_gi_Name}}</span>
+            <el-button type="success" size="small" @click="updateFeeNotInList(item,index)">修改</el-button>
+            <el-button type="danger" size="small" @click="deleteFeeNotInList(index)">删除</el-button>
+          </div>
+        </el-form-item>
+
+
+        <el-form-item label="产品预订须知:" :label-width="formLabelWidth">
+          <el-button type="primary" size="small" @click="addBookList">添加预订须知</el-button>
+          <div v-show="bookList.length" v-for="item,index in bookList">
+            <span style="margin: 10px 20px 10px 0">预订须知{{index+1}} : {{item.ts_gi_Name}}</span>
+            <el-button type="success" size="small" @click="updateBookList(item,index)">修改</el-button>
+            <el-button type="danger" size="small" @click="deleteBookList(index)">删除</el-button>
+          </div>
+        </el-form-item>
+
+        <el-form-item label="产品退改政策:" :label-width="formLabelWidth">
+          <el-button type="primary" size="small" @click="addBackRuleList">添加退改政策</el-button>
+          <div v-show="backRuleList.length" v-for="item,index in backRuleList">
+            <span style="margin: 10px 20px 10px 0">退改政策{{index+1}} : {{item.ts_gi_Name}}</span>
+            <el-button type="success" size="small" @click="updateBackRuleList(item,index)">修改</el-button>
+            <el-button type="danger" size="small" @click="deleteBackRuleList(index)">删除</el-button>
+          </div>
+        </el-form-item>
+
+
         <el-form-item label="成团地点:" :label-width="formLabelWidth">
           <el-input v-model="addOptions.data.ts_tg_GroupSite" placeholder="请输入成团地点"></el-input>
         </el-form-item>
@@ -203,18 +258,6 @@
           </a>
           <p v-for="item in ImageURL" v-show="ImageURL.length">{{item?item:""}}</p>
         </el-form-item>
-        <!--<el-form-item label="是否展示首页:" :label-width="formLabelWidth">-->
-        <!--<el-select v-model="addOptions.data.ts_tg_ShowTop" placeholder="请选择是否展示首页">-->
-        <!--<el-option-->
-        <!--label="是"-->
-        <!--value="1">-->
-        <!--</el-option>-->
-        <!--<el-option-->
-        <!--label="否"-->
-        <!--value="0">-->
-        <!--</el-option>-->
-        <!--</el-select>-->
-        <!--</el-form-item>-->
         <el-form-item label="是否精选:" :label-width="formLabelWidth">
           <el-select v-model="addOptions.data.ts_tg_Special" placeholder="请选择是否精选">
             <el-option
@@ -363,6 +406,159 @@
         <el-button type="primary" @click="updateAdminMerchantProductsSubmit">确 定</el-button>
       </div>
     </el-dialog>
+
+
+    <!--推荐理由弹窗-->
+    <el-dialog title="添加推荐理由" :visible.sync="addBuyReasonDialog">
+      <el-form>
+        <el-form-item label="推荐理由:" :label-width="formLabelWidth">
+          <el-input v-model="recommendedReasonContent" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addBuyReasonDialog = false">取 消</el-button>
+        <el-button type="primary" @click="addBuyReasonSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="修改推荐理由" :visible.sync="updateBuyReasonDialog">
+      <el-form :model="updateBuyReasonObj">
+        <el-form-item label="推荐理由:" :label-width="formLabelWidth">
+          <el-input v-model="updateBuyReasonObj.ts_gi_Name" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="updateBuyReasonDialog = false">取 消</el-button>
+        <el-button type="primary" @click="updateBuyReasonSubmit(updateBuyReasonObj)">确 定</el-button>
+      </div>
+    </el-dialog>
+
+
+    <!--产品介绍弹窗-->
+    <el-dialog title="添加产品介绍" :visible.sync="addGoodIntroduceDialog">
+      <el-form>
+        <el-form-item label="产品介绍:" :label-width="formLabelWidth">
+          <el-input v-model="goodIntroduceContent" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addGoodIntroduceDialog = false">取 消</el-button>
+        <el-button type="primary" @click="addGoodIntroduceSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="修改产品介绍" :visible.sync="updateGoodIntroduceDialog">
+      <el-form :model="updateGoodIntroduceContentObj">
+        <el-form-item label="产品介绍:" :label-width="formLabelWidth">
+          <el-input v-model="updateGoodIntroduceContentObj.ts_gi_Name" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="updateGoodIntroduceDialog = false">取 消</el-button>
+        <el-button type="primary" @click="updateGoodIntroduceSubmit(updateGoodIntroduceContentObj)">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!--费用包含弹窗-->
+    <el-dialog title="添加费用包含" :visible.sync="addFeeInfoListDialog">
+      <el-form>
+        <el-form-item label="费用包含:" :label-width="formLabelWidth">
+          <el-input v-model="feeInfoListContent" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addFeeInfoListDialog = false">取 消</el-button>
+        <el-button type="primary" @click="addFeeInfoListSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="修改费用包含" :visible.sync="updateFeeInfoListDialog">
+      <el-form :model="updateFeeInfoListContentObj">
+        <el-form-item label="费用包含:" :label-width="formLabelWidth">
+          <el-input v-model="updateFeeInfoListContentObj.ts_gi_Name" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="updateFeeInfoListDialog = false">取 消</el-button>
+        <el-button type="primary" @click="updateFeeInfoListSubmit(updateFeeInfoListContentObj)">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!--费用不包含弹窗-->
+    <el-dialog title="添加费用不包含" :visible.sync="addFeeInNotListDialog">
+      <el-form>
+        <el-form-item label="费用不包含:" :label-width="formLabelWidth">
+          <el-input v-model="feeNotInListContent" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addFeeInNotListDialog = false">取 消</el-button>
+        <el-button type="primary" @click="addFeeInNotListSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="修改费用不包含" :visible.sync="updateFeeInNotListDialog">
+      <el-form :model="updateFeeNotInListContentObj">
+        <el-form-item label="费用不包含:" :label-width="formLabelWidth">
+          <el-input v-model="updateFeeNotInListContentObj.ts_gi_Name" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="updateFeeInNotListDialog = false">取 消</el-button>
+        <el-button type="primary" @click="updateFeeInNotListSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!--预订须知弹窗-->
+    <el-dialog title="添加预订须知" :visible.sync="addBookListDialog">
+      <el-form>
+        <el-form-item label="预订须知:" :label-width="formLabelWidth">
+          <el-input v-model="bookListContent" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addBookListDialog = false">取 消</el-button>
+        <el-button type="primary" @click="addBookListSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="修改预订须知" :visible.sync="updateBookListDialog">
+      <el-form :model="updateBookListContentObj">
+        <el-form-item label="预订须知:" :label-width="formLabelWidth">
+          <el-input v-model="updateBookListContentObj.ts_gi_Name" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="updateBookListDialog = false">取 消</el-button>
+        <el-button type="primary" @click="updateBookListSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <!--退改政策弹窗-->
+    <el-dialog title="添加退改政策" :visible.sync="addBackRuleListDialog">
+      <el-form>
+        <el-form-item label="退改政策:" :label-width="formLabelWidth">
+          <el-input v-model="backRuleListContent" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addBackRuleListDialog = false">取 消</el-button>
+        <el-button type="primary" @click="addBackRuleListSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="修改退改政策" :visible.sync="updateBackRuleListDialog">
+      <el-form :model="updateBackRuleListContentObj">
+        <el-form-item label="退改政策:" :label-width="formLabelWidth">
+          <el-input v-model="updateBackRuleListContentObj.ts_gi_Name" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="updateBackRuleListDialog = false">取 消</el-button>
+        <el-button type="primary" @click="updateBackRuleListSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </section>
 </template>
 <script>
@@ -371,6 +567,12 @@
     name: '',
     data(){
       return {
+        recommendedReasonContent:'',//添加推荐理由内容
+        goodIntroduceContent:'',
+        feeInfoListContent:'',//费用包含
+        updateGoodIntroduceContentObj:{},
+        updateBuyReasonObj:{},
+        recommendedReasonList:[],
         data: [{
           label: '商家产品',
           children: [{
@@ -434,22 +636,42 @@
         total: 0,
         ImageURL: [],
         restaurants: [],
-        isOff:true,
+        isOff:false,
         productsID: '',//查询产品编号
         addAdminMerchantProductsDialog: false,//添加弹窗
         updateAdminMerchantProductsDialog: false,//修改弹窗
+        addBuyReasonDialog: false,//添加推荐理由弹窗
+        updateBuyReasonDialog:false,
+        addGoodIntroduceDialog:false,//添加产品介绍弹窗
+        updateGoodIntroduceDialog:false,//修改产品介绍弹窗
+        addFeeInfoListDialog:false,//添加费用包含弹窗
+        updateFeeInfoListDialog:false,//添加费用包含弹窗
         isLoading: false,
         userObj: {},
+        feeInfoList:[],
+        feeNotInList:[],
+        bookList:[],
+        buyReason:[],
+        goodIntroduce:[],
+        updateAdminMerchantProductsObj:{},
         addOptions: {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
+          "feeIn": [],
+          "feeNotIn": [],
+          "bookKnow": [],
+          "backRule": [],
+          "stayRecom": [],
+          "tourSiteRecom": [],
+          buyReason:[],
+          goodIntroduce:[],
           "data": {
             ts_tg_lowestPrice: '',
             ta_tg_TradeName: '',
-            "ta_tg_ID": "",
+//            "ta_tg_ID": "",
             "ta_tg_TradeID": "",
             "ta_tg_ItemInfoID": "",
             "ta_tg_Title": "",
@@ -464,13 +686,28 @@
             "ts_tg_Special": '',
             "ts_tg_LongOut": '',
           }
-        }
+        },
+        updateFeeInfoListContentObj:{},
+        feeNotInListContent:'',
+        addFeeInNotListDialog:false,
+        updateFeeInNotListDialog:false,
+        updateFeeNotInListContentObj:{},
+        bookListContent:'',
+        addBookListDialog:false,//添加预订须知弹窗
+        updateBookListDialog:false,//修改预订须知弹窗
+        updateBookListContentObj:{},
+        backRuleList:[],
+        num:0,
+        backRuleListContent:'',
+        addBackRuleListDialog:false,
+        updateBackRuleListDialog:false,
+        updateBackRuleListContentObj:{}
       }
     },
     computed: mapGetters([
       'adminTradeGoodList',
       'homeAdminGroupTourList',
-      'updateAdminMerchantProductsObj',
+//      'updateAdminMerchantProductsObj',
       'adminMerchantProductsId',
       'proviceList',
       'cityList'
@@ -486,6 +723,216 @@
       this.productsID = obj.sm_ai_ID
     },
     methods: {
+      //添加退改政策
+      addBackRuleList(){
+        this.backRuleListContent = '';
+        this.$store.commit('setTranstionFalse');
+        this.addBackRuleListDialog = true;
+      },
+      //添加退改政策提交
+      addBackRuleListSubmit(){
+        this.backRuleList.push({
+          ts_gi_Name:this.backRuleListContent
+        });
+        this.addBackRuleListDialog = false;
+      },
+      //修改退改政策
+      updateBackRuleList(item,index){
+        item.index = index;
+        this.updateBackRuleListContentObj = item;
+        this.$store.commit('setTranstionFalse');
+        this.updateBackRuleListDialog = true;
+      },
+      //修改退改政策提交
+      updateBackRuleListSubmit(){
+        this.updateBackRuleListDialog = false;
+      },
+      //删除退改政策
+      deleteBackRuleList(index){
+        this.backRuleList = this.backRuleList.filter((item,v)=>{
+          if(index==v){
+            return false;
+          }
+          return true;
+        })
+      },
+
+
+
+
+      //添加预订须知多个须知
+      addBookList(){
+        this.bookListContent = '';
+        this.$store.commit('setTranstionFalse');
+        this.addBookListDialog = true;
+      },
+      //添加预订须知提交
+      addBookListSubmit(){
+        this.bookList.push({
+          ts_gi_Name:this.bookListContent
+        });
+        this.addBookListDialog = false;
+      },
+      //修改预订须知
+      updateBookList(item,index){
+        item.index = index;
+        this.updateBookListContentObj = item;
+        this.$store.commit('setTranstionFalse');
+        this.updateBookListDialog = true;
+      },
+      //修改预订须知提交
+      updateBookListSubmit(){
+        this.updateBookListDialog = false;
+      },
+      //删除预订须知
+      deleteBookList(index){
+        this.bookList = this.bookList.filter((item,v)=>{
+          if(index==v){
+            return false;
+          }
+          return true;
+        })
+      },
+
+
+      //添加费用不包含多个费用
+      addFeeNotInList(){
+        this.feeNotInListContent = '';
+        this.$store.commit('setTranstionFalse');
+        this.addFeeInNotListDialog = true;
+      },
+      //添加费用不包含提交
+      addFeeInNotListSubmit(){
+        this.feeNotInList.push({
+          ts_gi_Name:this.feeNotInListContent
+        });
+        this.addFeeInNotListDialog = false;
+      },
+      //修改费用不包含
+      updateFeeNotInList(item,index){
+        item.index = index;
+        this.updateFeeNotInListContentObj = item;
+        this.$store.commit('setTranstionFalse');
+        this.updateFeeInNotListDialog = true;
+      },
+      //修改费用不包含提交
+      updateFeeInNotListSubmit(){
+        this.updateFeeInNotListDialog = false;
+      },
+      //删除费用不包含
+      deleteFeeNotInList(index){
+        this.feeNotInList = this.feeNotInList.filter((item,v)=>{
+          if(index==v){
+            return false;
+          }
+          return true;
+        })
+      },
+
+
+
+
+
+      //添加费用包含多个费用
+      addFeeInfoList(){
+        this.feeInfoListContent = '';
+        this.$store.commit('setTranstionFalse');
+        this.addFeeInfoListDialog = true;
+      },
+      //添加费用包含提交
+      addFeeInfoListSubmit(){
+        this.feeInfoList.push({
+          ts_gi_Name:this.feeInfoListContent
+        });
+        this.addFeeInfoListDialog = false;
+      },
+      //修改费用包含
+      updateFeeInfoList(item,index){
+        item.index = index;
+        this.updateFeeInfoListContentObj = item;
+        this.$store.commit('setTranstionFalse');
+        this.updateFeeInfoListDialog = true;
+      },
+      //修改费用包含提交
+      updateFeeInfoListSubmit(){
+        this.updateFeeInfoListDialog = false;
+      },
+      //删除费用包含
+      deleteFeeInfoList(index){
+        this.feeInfoList = this.feeInfoList.filter((item,v)=>{
+          if(index==v){
+            return false;
+          }
+          return true;
+        })
+      },
+      //添加产品多个介绍
+      addGoodIntroduce(){
+        this.goodIntroduceContent = '';
+        this.$store.commit('setTranstionFalse');
+        this.addGoodIntroduceDialog = true;
+      },
+      //添加产品介绍提交
+      addGoodIntroduceSubmit(){
+        this.goodIntroduce.push({
+          ts_gi_Name:this.goodIntroduceContent
+        });
+        this.addGoodIntroduceDialog = false;
+      },
+      //修改产品介绍
+      updateGoodIntroduce(item,index){
+        item.index = index;
+        this.updateGoodIntroduceContentObj = item;
+        this.$store.commit('setTranstionFalse');
+        this.updateGoodIntroduceDialog = true;
+      },
+      //修改产品介绍提交
+      updateGoodIntroduceSubmit(item){
+        this.updateGoodIntroduceDialog = false;
+      },
+      //删除产品介绍
+      deleteGoodIntroduce(index){
+        this.goodIntroduce = this.goodIntroduce.filter((item,v)=>{
+          if(index==v){
+            return false;
+          }
+          return true;
+        })
+      },
+
+      //添加推荐理由
+      RecommendedReason(){
+        this.recommendedReasonContent = '';
+        this.$store.commit('setTranstionFalse');
+        this.addBuyReasonDialog = true;
+      },
+      //添加推荐理由提交
+      addBuyReasonSubmit(){
+        this.buyReason.push({
+          ts_gi_Name:this.recommendedReasonContent
+        });
+        this.addBuyReasonDialog = false;
+      },
+      //修改推荐理由
+      updateBuyReason(item,index){
+        item.index = index;
+        this.updateBuyReasonObj = item;
+        this.$store.commit('setTranstionFalse');
+        this.updateBuyReasonDialog = true;
+      },
+      //修改推荐理由提交
+      updateBuyReasonSubmit(item){
+        this.updateBuyReasonDialog = false;
+      },
+      //删除推荐理由
+      deleteBuyReason(index){
+        this.buyReason = this.buyReason.filter((item,v)=>{
+          if(index==v){
+            return false;
+          }
+          return true;
+        })
+      },
       //选中省
       changeProvice(item){
         let obj = this.proviceList.filter(v => {
@@ -621,6 +1068,9 @@
           "page": page ? page : 1,
           "rows": 5
         };
+        if(this.num){
+          options.page = this.num;
+        }
         this.isLoading = true;
         this.$store.dispatch('initAdminTradeGoodList', options)
         .then((data) => {
@@ -644,6 +1094,7 @@
 
       //分页
       handleCurrentChange(num){
+        this.num = num;
         this.initData(this.productsID, num);
       },
       //添加
@@ -655,6 +1106,12 @@
       //添加提交
       addAdminMerchantProductsSubmit(){
         this.addOptions.data.ta_tg_ShowImage = this.ImageURL.join(',');
+        this.addOptions.buyReason = this.buyReason;
+        this.addOptions.feeIn = this.feeInfoList;
+        this.addOptions.feeNotIn = this.feeNotInList;
+        this.addOptions.bookKnow = this.bookList;
+        this.addOptions.backRule = this.backRuleList;
+        this.addOptions.goodIntroduce = this.goodIntroduce
         this.addOptions.data.ta_tg_TradeID = this.productsID
         this.addOptions.data.ta_tg_TradeName = this.userObj.sm_ai_GoodName
         this.$store.dispatch('AddAdminMerchantProducts', this.addOptions)
@@ -673,11 +1130,12 @@
         this.addAdminMerchantProductsDialog = false;
       },
       //修改
-      updateAdminMerchantProducts(id){
+      updateAdminMerchantProducts(obj){
+        this.updateAdminMerchantProductsObj = obj;
         this.$store.commit('setTranstionFalse');
         this.updateAdminMerchantProductsDialog = true;
         this.uploaNode();
-        this.$store.commit('initUpdateAdminMerchantProductsObj', id)
+//        this.$store.commit('initUpdateAdminMerchantProductsObj', id)
       },
       //修改提交
       updateAdminMerchantProductsSubmit(){
@@ -729,7 +1187,9 @@
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
-          "tgID": id
+          "data": {
+            "ta_tg_ID": id
+          }
         };
         this.$store.dispatch('DeleteAdminMerchantProducts', deleteOptions)
         .then(() => {

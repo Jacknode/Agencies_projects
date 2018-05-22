@@ -517,7 +517,7 @@ export default {
         .then(data => {
           var data = data.data;
           if (Number(data.resultcode) == 200) {
-            relove();
+            relove(data.resultcontent);
           } else {
             reject(data.resultcontent);
           }
@@ -743,7 +743,7 @@ export default {
         .then(data => {
           var data = data.data;
           if (Number(data.resultcode) == 200) {
-            relove();
+            relove(data.resultcontent);
           } else {
             reject(data.resultcontent);
           }

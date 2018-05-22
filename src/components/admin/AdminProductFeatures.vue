@@ -64,13 +64,13 @@
       >
         <template slot-scope="scope">
           <el-popover
-            ref="popover2"
+            ref="popover"
             placement="top-start"
             width="400"
             trigger="hover"
             :content="scope.row.ts_gs_Content">
           </el-popover>
-          <el-button v-popover:popover2 size="small">移入查看</el-button>
+          <el-button v-popover:popover size="small">移入查看</el-button>
         </template>
       </el-table-column>
       <el-table-column
