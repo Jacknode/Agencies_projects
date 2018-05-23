@@ -556,5 +556,24 @@ export default {
           }
         })
     })
+  },
+  //导览
+  initTicketMap({commit},data){
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/Site/Select',JSON.stringify(data),{
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(data=>{
+        var data = data.data;
+        if (Number(data.resultcode) == 200) {
+          commit('initTicketMap',data.data)
+          relove(Number(data.totalrows))
+        } else {
+          reject(data.resultcontent)
+        }
+      })
+    })
   }
 }

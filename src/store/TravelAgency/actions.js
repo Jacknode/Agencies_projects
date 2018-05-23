@@ -321,7 +321,7 @@ export default {
             for (var i = 0; i < resulte.length; i++) {
               resulte[i].ta_tg_ShowImages = resulte[i].ta_tg_ShowImage.split(',')
             }
-            commit('initAdminTradeGoodList', resulte);
+            commit('initAdminTradeGoodList', resulte.data);
             relove(data)
           } else {
             reject(data.resultcontent)

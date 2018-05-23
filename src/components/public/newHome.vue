@@ -51,6 +51,9 @@
             <el-menu-item-group>
               <el-menu-item index="/home/adminAllFunction2">产品信息</el-menu-item>
             </el-menu-item-group>
+            <el-menu-item-group>
+              <el-menu-item index="/home/adminOrderDetail">订单明细信息</el-menu-item>
+            </el-menu-item-group>
           </el-submenu>
           <el-submenu index="3"  v-show="userInfo.sm_ai_IsPass==1&&isHotel">
             <template slot="title">

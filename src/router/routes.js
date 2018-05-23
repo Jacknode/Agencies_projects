@@ -32,6 +32,9 @@ import AdminSystemMenu from '@/components/admin/AdminSystemMenu'
 import AdminBusinessLicense from '@/components/admin/AdminBusinessLicense'
 //评论类型
 import AdminCommentsType from '@/components/admin/AdminCommentsType'
+
+//订单明细
+import AdminOrderDetail from '@/components/admin/AdminOrderDetail'
 //交通信息
 import TicketTrafficInformation from '@/components/ticket/TicketTrafficInformation'
 
@@ -80,6 +83,8 @@ import HotelRoomEntity from '@/components/hotel/HotelRoomEntity'
 /*------------------------------------门票----------------------------------------*/
 //门票景点
 import TicketAttractions from '@/components/ticket/TicketAttractions'
+//地图导览
+import TicketMap from '@/components/ticket/TicketMap'
 //预定须知
 import TicketPredeterminedInstructions from '@/components/ticket/TicketPredeterminedInstructions'
 //交通信息
@@ -326,6 +331,15 @@ export default [
         },
         name: 'AdminUserInfo'
       },
+      //旅行社订单明细
+      {
+        path: 'adminOrderDetail',
+        components: {
+          default: Home,
+          User: AdminOrderDetail
+        },
+        name: 'AdminOrderDetail'
+      },
       //个人收益
       {
         path: 'adminPersonalBenefits',
@@ -535,6 +549,15 @@ export default [
           User: TicketAttractions
         },
         name: 'TicketAttractions',
+      },
+      //地图导览
+      {
+        path: 'ticketMap',
+        components: {
+          default: Home,
+          User: TicketMap
+        },
+        name: 'TicketMap',
       },
       //预定须知
       {

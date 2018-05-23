@@ -130,6 +130,10 @@
               type="danger"
               @click="deleteTicketAttractions(scope.row.tm_ts_Code)">删除
             </el-button>
+            <el-button
+              size="mini"
+              @click="AddMap(scope.row.tm_ts_Code)">添加地图导览
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -619,6 +623,10 @@
       }, {enableHighAccuracy: true})
     },
     methods: {
+      //添加地图导览
+      AddMap(id){
+        this.$router.push({name:'TicketMap',query:{id:id}})
+      },
       clickGo(id) {
         if (this.value == 0) {
           this.goPredeterminedInstructions(id);

@@ -68,6 +68,24 @@
             <el-form-item label="成团地点:">
               <span>{{ props.row.ts_tg_GroupSite }}</span>
             </el-form-item>
+            <el-form-item label="费用包含:">
+              <p v-for="item,index in props.row.feeIn">({{index+1}}):{{item.ts_gi_Name}}</p>
+            </el-form-item>
+            <el-form-item label="费用不包含:">
+              <p v-for="item,index in props.row.feeNotIn">({{index+1}}):{{item.ts_gi_Name}}</p>
+            </el-form-item>
+            <el-form-item label="推荐理由:">
+              <p v-for="item,index in props.row.buyReason">({{index+1}}):{{item.ts_gi_Name}}</p>
+            </el-form-item>
+            <el-form-item label="产品介绍:">
+              <p v-for="item,index in props.row.goodIntroduce">({{index+1}}):{{item.ts_gi_Name}}</p>
+            </el-form-item>
+            <el-form-item label="预订须知:">
+              <p v-for="item,index in props.row.bookKnow">({{index+1}}):{{item.ts_gi_Name}}</p>
+            </el-form-item>
+            <el-form-item label="退订政策:">
+              <p v-for="item,index in props.row.backRule">({{index+1}}):{{item.ts_gi_Name}}</p>
+            </el-form-item>
             <el-form-item label="展示图片地址:">
               <img :src="item" alt="" v-for="item in props.row.ta_tg_ShowImages"
                    style="width: 100px;height: 100px;margin-right: 10px">
@@ -138,7 +156,7 @@
       </el-pagination>
     </div>
     <!--添加产品-->
-    <el-dialog title="添加产品" :visible.sync="addAdminMerchantProductsDialog">
+    <el-dialog title="添加产品" :visible.sync="addAdminMerchantProductsDialog" width="60%">
       <el-form :model="addOptions">
         <!--<el-form-item label="产品编号:" :label-width="formLabelWidth">-->
           <!--<el-input v-model="addOptions.data.ta_tg_ID" placeholder="请输入产品编号"></el-input>-->
@@ -191,6 +209,7 @@
         <el-form-item label="产品描述:" :label-width="formLabelWidth">
           <el-input v-model="addOptions.data.ta_tg_Describe" placeholder="请输入产品描述"></el-input>
         </el-form-item>
+
         <el-form-item label="产品推荐理由:" :label-width="formLabelWidth">
           <el-button type="primary" size="small" @click="RecommendedReason">添加推荐理由</el-button>
           <div v-show="buyReason.length" v-for="item,index in buyReason">
@@ -199,6 +218,7 @@
             <el-button type="danger" size="small" @click="deleteBuyReason(index)">删除</el-button>
           </div>
         </el-form-item>
+
         <el-form-item label="产品介绍:" :label-width="formLabelWidth">
           <el-button type="primary" size="small" @click="addGoodIntroduce">添加产品介绍</el-button>
           <div v-show="goodIntroduce.length" v-for="item,index in goodIntroduce">
@@ -225,7 +245,6 @@
             <el-button type="danger" size="small" @click="deleteFeeNotInList(index)">删除</el-button>
           </div>
         </el-form-item>
-
 
         <el-form-item label="产品预订须知:" :label-width="formLabelWidth">
           <el-button type="primary" size="small" @click="addBookList">添加预订须知</el-button>
@@ -292,6 +311,8 @@
         <el-button type="primary" @click="addAdminMerchantProductsSubmit">确 定</el-button>
       </div>
     </el-dialog>
+
+
     <!--修改产品-->
     <el-dialog title="修改产品" :visible.sync="updateAdminMerchantProductsDialog">
       <el-form :model="updateAdminMerchantProductsObj">
@@ -307,6 +328,24 @@
               :value="item.ii_ID">
             </el-option>
           </el-select>
+        </el-form-item>
+
+        <el-form-item label="产品推荐理由:" :label-width="formLabelWidth">
+          <el-button type="primary" size="small" @click="RecommendedReason">添加推荐理由</el-button>
+          <div v-show="updateAdminMerchantProductsObj.buyReason.length" v-for="item,index in updateAdminMerchantProductsObj.buyReason">
+            <span style="margin: 10px 20px 10px 0">推荐理由{{index+1}} : {{item.ts_gi_Name}}</span>
+            <el-button type="success" size="small" @click="updateBuyReason(item,index)">修改</el-button>
+            <el-button type="danger" size="small" @click="deleteBuyReason(index)">删除</el-button>
+          </div>
+        </el-form-item>
+
+        <el-form-item label="产品介绍:" :label-width="formLabelWidth">
+          <el-button type="primary" size="small" @click="addGoodIntroduce">添加产品介绍</el-button>
+          <div v-show="updateAdminMerchantProductsObj.goodIntroduce.length" v-for="item,index in updateAdminMerchantProductsObj.goodIntroduce">
+            <span style="margin: 10px 20px 10px 0">产品介绍{{index+1}} : {{item.ts_gi_Name}}</span>
+            <el-button type="success" size="small" @click="updateGoodIntroduce(item,index)">修改</el-button>
+            <el-button type="danger" size="small" @click="deleteGoodIntroduce(index)">删除</el-button>
+          </div>
         </el-form-item>
         <!--<el-form-item label="商家名称" :label-width="formLabelWidth">-->
         <!--<el-autocomplete-->
@@ -874,9 +913,16 @@
       },
       //添加产品介绍提交
       addGoodIntroduceSubmit(){
-        this.goodIntroduce.push({
-          ts_gi_Name:this.goodIntroduceContent
-        });
+        if(this.updateAdminMerchantProductsObj.goodIntroduce){
+          this.updateAdminMerchantProductsObj.goodIntroduce.push({
+            ts_gi_Name:this.goodIntroduceContent
+          });
+        }else{
+          this.goodIntroduce.push({
+            ts_gi_Name:this.goodIntroduceContent
+          });
+        }
+
         this.addGoodIntroduceDialog = false;
       },
       //修改产品介绍
@@ -892,12 +938,22 @@
       },
       //删除产品介绍
       deleteGoodIntroduce(index){
-        this.goodIntroduce = this.goodIntroduce.filter((item,v)=>{
-          if(index==v){
-            return false;
-          }
-          return true;
-        })
+        if(this.updateAdminMerchantProductsObj.goodIntroduce){
+          this.updateAdminMerchantProductsObj.goodIntroduce = this.updateAdminMerchantProductsObj.goodIntroduce.filter((item,v)=>{
+            if(index==v){
+              return false;
+            }
+            return true;
+          })
+        }else{
+          this.goodIntroduce = this.goodIntroduce.filter((item,v)=>{
+            if(index==v){
+              return false;
+            }
+            return true;
+          })
+        }
+
       },
 
       //添加推荐理由
@@ -908,9 +964,16 @@
       },
       //添加推荐理由提交
       addBuyReasonSubmit(){
-        this.buyReason.push({
-          ts_gi_Name:this.recommendedReasonContent
-        });
+        if(this.updateAdminMerchantProductsObj.buyReason){
+          this.updateAdminMerchantProductsObj.buyReason.push({
+            ts_gi_Name:this.recommendedReasonContent
+          });
+        }else{
+          this.buyReason.push({
+            ts_gi_Name:this.recommendedReasonContent
+          });
+        }
+
         this.addBuyReasonDialog = false;
       },
       //修改推荐理由
@@ -926,12 +989,22 @@
       },
       //删除推荐理由
       deleteBuyReason(index){
-        this.buyReason = this.buyReason.filter((item,v)=>{
-          if(index==v){
-            return false;
-          }
-          return true;
-        })
+        if(this.updateAdminMerchantProductsObj.buyReason){
+          this.updateAdminMerchantProductsObj.buyReason = this.updateAdminMerchantProductsObj.buyReason.filter((item,v)=>{
+            if(index==v){
+              return false;
+            }
+            return true;
+          })
+        }else{
+          this.buyReason = this.buyReason.filter((item,v)=>{
+            if(index==v){
+              return false;
+            }
+            return true;
+          })
+        }
+
       },
       //选中省
       changeProvice(item){
@@ -1074,7 +1147,7 @@
         this.isLoading = true;
         this.$store.dispatch('initAdminTradeGoodList', options)
         .then((data) => {
-          this.total = data.totalrows;
+          this.total = data.data.totalRows;
           this.isLoading = false;
         }, err => {
           this.$notify({

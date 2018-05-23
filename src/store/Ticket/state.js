@@ -18,4 +18,5 @@ export default {
   updateTicketTypeObj: {},//修改票种类型
   ticketTypeTicketPriceList: [],//票种票价数据
   ticketQueryOrderList: [],//商户订单信息数据
+  ticketMapList:[],//导图
 }

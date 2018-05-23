@@ -77,5 +77,8 @@ export default {
   },
   initTicketQueryOrder(state, data) {
     state.ticketQueryOrderList = data;
+  },
+  initTicketMap(state,data){
+    state.ticketMapList = data;
   }
 }
