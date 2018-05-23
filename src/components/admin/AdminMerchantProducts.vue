@@ -350,6 +350,34 @@
             <el-button type="danger" size="small" @click="deleteFeeInfoList(item,index)">删除</el-button>
           </div>
         </el-form-item>
+
+        <el-form-item label="产品费用不包含:" :label-width="formLabelWidth">
+          <el-button type="primary" size="small" @click="addFeeNotInList">添加费用不包含</el-button>
+          <div v-show="updateAdminMerchantProductsObj.feeNotIn.length" v-for="item,index in updateAdminMerchantProductsObj.feeNotIn">
+            <span style="margin: 10px 20px 10px 0">费用不包含{{index+1}} : {{item.ts_gi_Name}}</span>
+            <el-button type="success" size="small" @click="updateFeeNotInList(item,index)">修改</el-button>
+            <el-button type="danger" size="small" @click="deleteFeeNotInList(item,index)">删除</el-button>
+          </div>
+        </el-form-item>
+
+        <el-form-item label="产品预订须知:" :label-width="formLabelWidth">
+          <el-button type="primary" size="small" @click="addBookList">添加预订须知</el-button>
+          <div v-show="updateAdminMerchantProductsObj.bookKnow.length" v-for="item,index in updateAdminMerchantProductsObj.bookKnow">
+            <span style="margin: 10px 20px 10px 0">预订须知{{index+1}} : {{item.ts_gi_Name}}</span>
+            <el-button type="success" size="small" @click="updateBookList(item,index)">修改</el-button>
+            <el-button type="danger" size="small" @click="deleteBookList(item,index)">删除</el-button>
+          </div>
+        </el-form-item>
+
+        <el-form-item label="产品退改政策:" :label-width="formLabelWidth">
+          <el-button type="primary" size="small" @click="addBackRuleList">添加退改政策</el-button>
+          <div v-show="updateAdminMerchantProductsObj.backRule.length" v-for="item,index in updateAdminMerchantProductsObj.backRule">
+            <span style="margin: 10px 20px 10px 0">退改政策{{index+1}} : {{item.ts_gi_Name}}</span>
+            <el-button type="success" size="small" @click="updateBackRuleList(item,index)">修改</el-button>
+            <el-button type="danger" size="small" @click="deleteBackRuleList(item,index)">删除</el-button>
+          </div>
+        </el-form-item>
+
         <el-form-item label="产品标题:" :label-width="formLabelWidth">
           <el-input v-model="updateAdminMerchantProductsObj.ta_tg_Title" placeholder="请输入产品标题"></el-input>
         </el-form-item>
@@ -538,7 +566,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="updateFeeInNotListDialog = false">取 消</el-button>
-        <el-button type="primary" @click="updateFeeInNotListSubmit">确 定</el-button>
+        <el-button type="primary" @click="updateFeeInNotListSubmit(updateFeeNotInListContentObj)">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -563,7 +591,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="updateBookListDialog = false">取 消</el-button>
-        <el-button type="primary" @click="updateBookListSubmit">确 定</el-button>
+        <el-button type="primary" @click="updateBookListSubmit(updateBookListContentObj)">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -588,10 +616,9 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="updateBackRuleListDialog = false">取 消</el-button>
-        <el-button type="primary" @click="updateBackRuleListSubmit">确 定</el-button>
+        <el-button type="primary" @click="updateBackRuleListSubmit(updateBackRuleListContentObj)">确 定</el-button>
       </div>
     </el-dialog>
-
   </section>
 </template>
 <script>
@@ -777,9 +804,33 @@
       },
       //添加退改政策提交
       addBackRuleListSubmit(){
-        this.backRuleList.push({
-          ts_gi_Name:this.backRuleListContent
-        });
+        if(this.updateAdminMerchantProductsObj.backRule){
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": {
+              "ts_gi_GoodID": this.updateAdminMerchantProductsObj.ta_tg_ID,//产品编号
+              "ts_gi_ParentID": "6",//父编码 1.推荐理由 2.产品介绍  3.费用包含 4.费用不包含 5.预定须知 6.退订政策 7活动内容 8活动图片
+              "ts_gi_Name": this.backRuleListContent,//类型名称
+            }
+          };
+          this.$store.dispatch('AddRecommendedReason',options)
+          .then(()=>{
+            this.selectInitData(this.updateAdminMerchantProductsObj.ta_tg_ID,6)
+            .then(data=>{
+              this.updateAdminMerchantProductsObj.backRule = data
+            })
+          },err=>{
+            console.log(err)
+          })
+        }else{
+          this.backRuleList.push({
+            ts_gi_Name:this.backRuleListContent
+          });
+        }
         this.addBackRuleListDialog = false;
       },
       //修改退改政策
@@ -790,17 +841,52 @@
         this.updateBackRuleListDialog = true;
       },
       //修改退改政策提交
-      updateBackRuleListSubmit(){
-        this.updateBackRuleListDialog = false;
+      updateBackRuleListSubmit(item){
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "data": item
+        };
+        this.$store.dispatch('UpdateRecommendedReason',options)
+        .then(()=>{
+          this.updateBackRuleListDialog = false;
+        },err=>{
+          console.log(err)
+        })
       },
       //删除退改政策
-      deleteBackRuleList(index){
-        this.backRuleList = this.backRuleList.filter((item,v)=>{
-          if(index==v){
-            return false;
+      deleteBackRuleList(item,index){
+        if(this.updateAdminMerchantProductsObj.backRule){
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": {
+              "ts_gi_ID": item.ts_gi_ID,//产品信息ID
+            }
           }
-          return true;
-        })
+          this.$store.dispatch('DeleteRecommendedReason',options)
+          .then(()=>{
+            this.selectInitData(this.updateAdminMerchantProductsObj.ta_tg_ID,6)
+            .then(data=>{
+              this.updateAdminMerchantProductsObj.backRule = data
+            })
+          },err=>{
+            console.log(err)
+          })
+        }else{
+          this.backRuleList = this.backRuleList.filter((item,v)=>{
+            if(index==v){
+              return false;
+            }
+            return true;
+          })
+        }
       },
 
 
@@ -814,9 +900,33 @@
       },
       //添加预订须知提交
       addBookListSubmit(){
-        this.bookList.push({
-          ts_gi_Name:this.bookListContent
-        });
+        if(this.updateAdminMerchantProductsObj.bookKnow) {
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": {
+              "ts_gi_GoodID": this.updateAdminMerchantProductsObj.ta_tg_ID,//产品编号
+              "ts_gi_ParentID": "5",//父编码 1.推荐理由 2.产品介绍  3.费用包含 4.费用不包含 5.预定须知 6.退订政策 7活动内容 8活动图片
+              "ts_gi_Name": this.bookListContent,//类型名称
+            }
+          };
+          this.$store.dispatch('AddRecommendedReason',options)
+          .then(()=>{
+            this.selectInitData(this.updateAdminMerchantProductsObj.ta_tg_ID,5)
+            .then(data=>{
+              this.updateAdminMerchantProductsObj.bookKnow = data
+            })
+          },err=>{
+            console.log(err)
+          })
+        }else{
+          this.bookList.push({
+            ts_gi_Name:this.bookListContent
+          });
+        }
         this.addBookListDialog = false;
       },
       //修改预订须知
@@ -827,17 +937,53 @@
         this.updateBookListDialog = true;
       },
       //修改预订须知提交
-      updateBookListSubmit(){
-        this.updateBookListDialog = false;
+      updateBookListSubmit(item){
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "data": item
+        };
+        this.$store.dispatch('UpdateRecommendedReason',options)
+        .then(()=>{
+          this.updateBookListDialog = false;
+        },err=>{
+          console.log(err)
+        })
       },
       //删除预订须知
-      deleteBookList(index){
-        this.bookList = this.bookList.filter((item,v)=>{
-          if(index==v){
-            return false;
+      deleteBookList(item,index){
+        if(this.updateAdminMerchantProductsObj.bookKnow) {
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": {
+              "ts_gi_ID": item.ts_gi_ID,//产品信息ID
+            }
           }
-          return true;
-        })
+          this.$store.dispatch('DeleteRecommendedReason',options)
+          .then(()=>{
+            this.selectInitData(this.updateAdminMerchantProductsObj.ta_tg_ID,5)
+            .then(data=>{
+              this.updateAdminMerchantProductsObj.bookKnow = data
+            })
+          },err=>{
+            console.log(err)
+          })
+        }
+        else{
+          this.bookList = this.bookList.filter((item,v)=>{
+            if(index==v){
+              return false;
+            }
+            return true;
+          })
+        }
       },
 
 
@@ -849,9 +995,34 @@
       },
       //添加费用不包含提交
       addFeeInNotListSubmit(){
-        this.feeNotInList.push({
-          ts_gi_Name:this.feeNotInListContent
-        });
+
+        if(this.updateAdminMerchantProductsObj.feeNotIn) {
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": {
+              "ts_gi_GoodID": this.updateAdminMerchantProductsObj.ta_tg_ID,//产品编号
+              "ts_gi_ParentID": "4",//父编码 1.推荐理由 2.产品介绍  3.费用包含 4.费用不包含 5.预定须知 6.退订政策 7活动内容 8活动图片
+              "ts_gi_Name": this.feeNotInListContent,//类型名称
+            }
+          };
+          this.$store.dispatch('AddRecommendedReason',options)
+          .then(()=>{
+            this.selectInitData(this.updateAdminMerchantProductsObj.ta_tg_ID,4)
+            .then(data=>{
+              this.updateAdminMerchantProductsObj.feeNotIn = data
+            })
+          },err=>{
+            console.log(err)
+          })
+        }else{
+          this.feeNotInList.push({
+            ts_gi_Name:this.feeNotInListContent
+          });
+        }
         this.addFeeInNotListDialog = false;
       },
       //修改费用不包含
@@ -862,17 +1033,52 @@
         this.updateFeeInNotListDialog = true;
       },
       //修改费用不包含提交
-      updateFeeInNotListSubmit(){
-        this.updateFeeInNotListDialog = false;
+      updateFeeInNotListSubmit(item){
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "data": item
+        };
+        this.$store.dispatch('UpdateRecommendedReason',options)
+        .then(()=>{
+          this.updateFeeInNotListDialog = false;
+        },err=>{
+          console.log(err)
+        })
       },
       //删除费用不包含
-      deleteFeeNotInList(index){
-        this.feeNotInList = this.feeNotInList.filter((item,v)=>{
-          if(index==v){
-            return false;
+      deleteFeeNotInList(item,index){
+        if(this.updateAdminMerchantProductsObj.feeNotIn) {
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": {
+              "ts_gi_ID": item.ts_gi_ID,//产品信息ID
+            }
           }
-          return true;
-        })
+          this.$store.dispatch('DeleteRecommendedReason',options)
+          .then(()=>{
+            this.selectInitData(this.updateAdminMerchantProductsObj.ta_tg_ID,4)
+            .then(data=>{
+              this.updateAdminMerchantProductsObj.feeNotIn = data
+            })
+          },err=>{
+            console.log(err)
+          })
+        }else{
+          this.feeNotInList = this.feeNotInList.filter((item,v)=>{
+            if(index==v){
+              return false;
+            }
+            return true;
+          })
+        }
       },
 
 
@@ -956,7 +1162,7 @@
           }
           this.$store.dispatch('DeleteRecommendedReason',options)
           .then(()=>{
-            this.selectInitData(this.updateAdminMerchantProductsObj.ta_tg_ID,2)
+            this.selectInitData(this.updateAdminMerchantProductsObj.ta_tg_ID,3)
             .then(data=>{
               this.updateAdminMerchantProductsObj.feeIn = data
             })
@@ -1096,6 +1302,7 @@
             console.log(err)
           })
         }else{
+          console.log(1)
           this.buyReason.push({
             ts_gi_Name:this.recommendedReasonContent
           });
