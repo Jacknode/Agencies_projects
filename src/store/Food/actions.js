@@ -1,4 +1,3 @@
-import axios from 'axios';
 
 export default {
   //美食房间图片上传

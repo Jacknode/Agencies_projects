@@ -1,4 +1,3 @@
-import axios from 'axios';
 
 export default {
   //惠乐游酒店主题类别

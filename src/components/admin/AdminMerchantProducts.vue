@@ -314,11 +314,8 @@
 
 
     <!--修改产品-->
-    <el-dialog title="修改产品" :visible.sync="updateAdminMerchantProductsDialog">
+    <el-dialog title="修改产品" :visible.sync="updateAdminMerchantProductsDialog" width="60%">
       <el-form :model="updateAdminMerchantProductsObj">
-        <el-form-item label="产品编号:" :label-width="formLabelWidth">
-          <el-input v-model="updateAdminMerchantProductsObj.ta_tg_ID" placeholder="请输入产品编号"></el-input>
-        </el-form-item>
         <el-form-item label="跟团游栏目:" :label-width="formLabelWidth">
           <el-select v-model="updateAdminMerchantProductsObj.ta_tg_ItemInfoID" placeholder="请选择跟团游栏目">
             <el-option
@@ -329,33 +326,30 @@
             </el-option>
           </el-select>
         </el-form-item>
-
         <el-form-item label="产品推荐理由:" :label-width="formLabelWidth">
           <el-button type="primary" size="small" @click="RecommendedReason">添加推荐理由</el-button>
           <div v-show="updateAdminMerchantProductsObj.buyReason.length" v-for="item,index in updateAdminMerchantProductsObj.buyReason">
             <span style="margin: 10px 20px 10px 0">推荐理由{{index+1}} : {{item.ts_gi_Name}}</span>
             <el-button type="success" size="small" @click="updateBuyReason(item,index)">修改</el-button>
-            <el-button type="danger" size="small" @click="deleteBuyReason(index)">删除</el-button>
+            <el-button type="danger" size="small" @click="deleteBuyReason(item,index)">删除</el-button>
           </div>
         </el-form-item>
-
         <el-form-item label="产品介绍:" :label-width="formLabelWidth">
           <el-button type="primary" size="small" @click="addGoodIntroduce">添加产品介绍</el-button>
           <div v-show="updateAdminMerchantProductsObj.goodIntroduce.length" v-for="item,index in updateAdminMerchantProductsObj.goodIntroduce">
             <span style="margin: 10px 20px 10px 0">产品介绍{{index+1}} : {{item.ts_gi_Name}}</span>
             <el-button type="success" size="small" @click="updateGoodIntroduce(item,index)">修改</el-button>
-            <el-button type="danger" size="small" @click="deleteGoodIntroduce(index)">删除</el-button>
+            <el-button type="danger" size="small" @click="deleteGoodIntroduce(item,index)">删除</el-button>
           </div>
         </el-form-item>
-        <!--<el-form-item label="商家名称" :label-width="formLabelWidth">-->
-        <!--<el-autocomplete-->
-        <!--v-model="userName"-->
-        <!--:fetch-suggestions="querySearchAsync"-->
-        <!--placeholder="请输入商家"-->
-        <!--@select="handleSelect"-->
-        <!--&gt;</el-autocomplete>-->
-        <!--<span style="color: #f60;">(模糊搜索)</span>-->
-        <!--</el-form-item>-->
+        <el-form-item label="产品费用包含:" :label-width="formLabelWidth">
+          <el-button type="primary" size="small" @click="addFeeInfoList">添加费用包含</el-button>
+          <div v-show="updateAdminMerchantProductsObj.feeIn.length" v-for="item,index in updateAdminMerchantProductsObj.feeIn">
+            <span style="margin: 10px 20px 10px 0">费用包含{{index+1}} : {{item.ts_gi_Name}}</span>
+            <el-button type="success" size="small" @click="updateFeeInfoList(item,index)">修改</el-button>
+            <el-button type="danger" size="small" @click="deleteFeeInfoList(item,index)">删除</el-button>
+          </div>
+        </el-form-item>
         <el-form-item label="产品标题:" :label-width="formLabelWidth">
           <el-input v-model="updateAdminMerchantProductsObj.ta_tg_Title" placeholder="请输入产品标题"></el-input>
         </el-form-item>
@@ -762,6 +756,19 @@
       this.productsID = obj.sm_ai_ID
     },
     methods: {
+      //查询很多
+      selectInitData(id,ParentID){
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "ts_gi_GoodID": id,//产品编号
+          "ts_gi_ParentID":ParentID?ParentID:''
+        }
+        return this.$store.dispatch('initSelectInitAllData',options)
+      },
       //添加退改政策
       addBackRuleList(){
         this.backRuleListContent = '';
@@ -880,9 +887,34 @@
       },
       //添加费用包含提交
       addFeeInfoListSubmit(){
-        this.feeInfoList.push({
-          ts_gi_Name:this.feeInfoListContent
-        });
+        if(this.updateAdminMerchantProductsObj.feeIn){
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": {
+              "ts_gi_GoodID": this.updateAdminMerchantProductsObj.ta_tg_ID,//产品编号
+              "ts_gi_ParentID": "3",//父编码 1.推荐理由 2.产品介绍  3.费用包含 4.费用不包含 5.预定须知 6.退订政策 7活动内容 8活动图片
+              "ts_gi_Name": this.feeInfoListContent,//类型名称
+            }
+          };
+          this.$store.dispatch('AddRecommendedReason',options)
+          .then(()=>{
+            this.selectInitData(this.updateAdminMerchantProductsObj.ta_tg_ID,3)
+            .then(data=>{
+              this.updateAdminMerchantProductsObj.feeIn = data
+            })
+          },err=>{
+            console.log(err)
+          })
+        }else{
+          this.feeInfoList.push({
+            ts_gi_Name:this.feeInfoListContent
+          });
+        }
+
         this.addFeeInfoListDialog = false;
       },
       //修改费用包含
@@ -893,17 +925,52 @@
         this.updateFeeInfoListDialog = true;
       },
       //修改费用包含提交
-      updateFeeInfoListSubmit(){
-        this.updateFeeInfoListDialog = false;
+      updateFeeInfoListSubmit(item){
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "data": item
+        };
+        this.$store.dispatch('UpdateRecommendedReason',options)
+        .then(()=>{
+          this.updateFeeInfoListDialog = false;
+        },err=>{
+          console.log(err)
+        })
       },
       //删除费用包含
-      deleteFeeInfoList(index){
-        this.feeInfoList = this.feeInfoList.filter((item,v)=>{
-          if(index==v){
-            return false;
+      deleteFeeInfoList(item,index){
+        if(this.updateAdminMerchantProductsObj.feeIn) {
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": {
+              "ts_gi_ID": item.ts_gi_ID,//产品信息ID
+            }
           }
-          return true;
-        })
+          this.$store.dispatch('DeleteRecommendedReason',options)
+          .then(()=>{
+            this.selectInitData(this.updateAdminMerchantProductsObj.ta_tg_ID,2)
+            .then(data=>{
+              this.updateAdminMerchantProductsObj.feeIn = data
+            })
+          },err=>{
+            console.log(err)
+          })
+        }else{
+          this.feeInfoList = this.feeInfoList.filter((item,v)=>{
+            if(index==v){
+              return false;
+            }
+            return true;
+          })
+        }
       },
       //添加产品多个介绍
       addGoodIntroduce(){
@@ -914,15 +981,32 @@
       //添加产品介绍提交
       addGoodIntroduceSubmit(){
         if(this.updateAdminMerchantProductsObj.goodIntroduce){
-          this.updateAdminMerchantProductsObj.goodIntroduce.push({
-            ts_gi_Name:this.goodIntroduceContent
-          });
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": {
+              "ts_gi_GoodID": this.updateAdminMerchantProductsObj.ta_tg_ID,//产品编号
+              "ts_gi_ParentID": "2",//父编码 1.推荐理由 2.产品介绍  3.费用包含 4.费用不包含 5.预定须知 6.退订政策 7活动内容 8活动图片
+              "ts_gi_Name": this.goodIntroduceContent,//类型名称
+            }
+          };
+          this.$store.dispatch('AddRecommendedReason',options)
+          .then(()=>{
+            this.selectInitData(this.updateAdminMerchantProductsObj.ta_tg_ID,2)
+            .then(data=>{
+              this.updateAdminMerchantProductsObj.goodIntroduce = data
+            })
+          },err=>{
+            console.log(err)
+          })
         }else{
           this.goodIntroduce.push({
             ts_gi_Name:this.goodIntroduceContent
           });
         }
-
         this.addGoodIntroduceDialog = false;
       },
       //修改产品介绍
@@ -934,16 +1018,42 @@
       },
       //修改产品介绍提交
       updateGoodIntroduceSubmit(item){
-        this.updateGoodIntroduceDialog = false;
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "data": item
+        };
+        this.$store.dispatch('UpdateRecommendedReason',options)
+        .then(()=>{
+          this.updateGoodIntroduceDialog = false;
+        },err=>{
+          console.log(err)
+        })
       },
       //删除产品介绍
-      deleteGoodIntroduce(index){
+      deleteGoodIntroduce(item,index){
         if(this.updateAdminMerchantProductsObj.goodIntroduce){
-          this.updateAdminMerchantProductsObj.goodIntroduce = this.updateAdminMerchantProductsObj.goodIntroduce.filter((item,v)=>{
-            if(index==v){
-              return false;
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": {
+              "ts_gi_ID": item.ts_gi_ID,//产品信息ID
             }
-            return true;
+          }
+          this.$store.dispatch('DeleteRecommendedReason',options)
+          .then(()=>{
+            this.selectInitData(this.updateAdminMerchantProductsObj.ta_tg_ID,2)
+            .then(data=>{
+              this.updateAdminMerchantProductsObj.goodIntroduce = data
+            })
+          },err=>{
+            console.log(err)
           })
         }else{
           this.goodIntroduce = this.goodIntroduce.filter((item,v)=>{
@@ -953,7 +1063,6 @@
             return true;
           })
         }
-
       },
 
       //添加推荐理由
@@ -965,9 +1074,27 @@
       //添加推荐理由提交
       addBuyReasonSubmit(){
         if(this.updateAdminMerchantProductsObj.buyReason){
-          this.updateAdminMerchantProductsObj.buyReason.push({
-            ts_gi_Name:this.recommendedReasonContent
-          });
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": {
+              "ts_gi_GoodID": this.updateAdminMerchantProductsObj.ta_tg_ID,//产品编号
+              "ts_gi_ParentID": "1",//父编码 1.推荐理由 2.产品介绍  3.费用包含 4.费用不包含 5.预定须知 6.退订政策 7活动内容 8活动图片
+              "ts_gi_Name": this.recommendedReasonContent,//类型名称
+            }
+          };
+          this.$store.dispatch('AddRecommendedReason',options)
+          .then(()=>{
+            this.selectInitData(this.updateAdminMerchantProductsObj.ta_tg_ID,1)
+            .then(data=>{
+              this.updateAdminMerchantProductsObj.buyReason = data
+            })
+          },err=>{
+            console.log(err)
+          })
         }else{
           this.buyReason.push({
             ts_gi_Name:this.recommendedReasonContent
@@ -985,16 +1112,42 @@
       },
       //修改推荐理由提交
       updateBuyReasonSubmit(item){
-        this.updateBuyReasonDialog = false;
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "data": item
+        };
+        this.$store.dispatch('UpdateRecommendedReason',options)
+        .then(()=>{
+          this.updateBuyReasonDialog = false;
+        },err=>{
+          console.log(err)
+        })
       },
       //删除推荐理由
-      deleteBuyReason(index){
+      deleteBuyReason(item,index){
         if(this.updateAdminMerchantProductsObj.buyReason){
-          this.updateAdminMerchantProductsObj.buyReason = this.updateAdminMerchantProductsObj.buyReason.filter((item,v)=>{
-            if(index==v){
-              return false;
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": {
+              "ts_gi_ID": item.ts_gi_ID,//产品信息ID
             }
-            return true;
+          }
+          this.$store.dispatch('DeleteRecommendedReason',options)
+          .then(()=>{
+            this.selectInitData(this.updateAdminMerchantProductsObj.ta_tg_ID,1)
+            .then(data=>{
+              this.updateAdminMerchantProductsObj.buyReason = data
+            })
+          },err=>{
+            console.log(err)
           })
         }else{
           this.buyReason = this.buyReason.filter((item,v)=>{

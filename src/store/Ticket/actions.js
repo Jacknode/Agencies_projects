@@ -1,7 +1,6 @@
 /**
  * Created by leibo on 18/3/29.
  */
-import axios from 'axios'
 
 export default {
   //查询景点主题分类信息

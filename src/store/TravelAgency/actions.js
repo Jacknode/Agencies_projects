@@ -1,7 +1,6 @@
 /**
  * Created by leibo on 18/1/2.
  */
-import axios from 'axios';
 import {postPromise} from '@/assets/public'
 
 export default {
@@ -2082,6 +2081,78 @@ export default {
           }
           relove(data.resultcontent)
         } else {
+          reject(data.resultcontent)
+        }
+      })
+    })
+  },
+  //添加1.推荐理由 2.产品介绍  3.费用包含 4.费用不包含 5.预定须知 6.退订政策 7活动内容 8活动图片
+  AddRecommendedReason(store,data){
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/GoodInfo/Insert', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(data => {
+        var data = data.data;
+        if (Number(data.resultcode) == 200) {
+          relove(data.resultcontent)
+        }else{
+          reject(data.resultcontent)
+        }
+      })
+    })
+  },
+  //修改1.推荐理由 2.产品介绍  3.费用包含 4.费用不包含 5.预定须知 6.退订政策 7活动内容 8活动图片
+  UpdateRecommendedReason(store,data){
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/GoodInfo/Update', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(data => {
+        var data = data.data;
+        if (Number(data.resultcode) == 200) {
+          relove(data.resultcontent)
+        }else{
+          reject(data.resultcontent)
+        }
+      })
+    })
+  },
+  //删除1.推荐理由 2.产品介绍  3.费用包含 4.费用不包含 5.预定须知 6.退订政策 7活动内容 8活动图片
+  DeleteRecommendedReason(store,data){
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/GoodInfo/Delete', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(data => {
+        var data = data.data;
+        if (Number(data.resultcode) == 200) {
+          relove(data.resultcontent)
+        }else{
+          reject(data.resultcontent)
+        }
+      })
+    })
+  },
+  //查询单个
+  initSelectInitAllData(store,data){
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/GoodInfo/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then(data => {
+        var data = data.data;
+        if (Number(data.resultcode) == 200) {
+          relove(data.data)
+        }else{
           reject(data.resultcontent)
         }
       })

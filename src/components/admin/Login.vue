@@ -58,7 +58,7 @@
               "agentID": this.ruleForm2.account,
               "agentPassword": this.ruleForm2.checkPass,
             };
-            this.$http.post('http://webservice.1000da.com.cn/AgentInfo/Login',JSON.stringify(loginParams),{
+            axios.post('http://webservice.1000da.com.cn/AgentInfo/Login',JSON.stringify(loginParams),{
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
               }
