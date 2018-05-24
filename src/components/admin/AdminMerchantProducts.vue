@@ -215,7 +215,7 @@
           <div v-show="buyReason.length" v-for="item,index in buyReason">
             <span style="margin: 10px 20px 10px 0">推荐理由{{index+1}} : {{item.ts_gi_Name}}</span>
             <el-button type="success" size="small" @click="updateBuyReason(item,index)">修改</el-button>
-            <el-button type="danger" size="small" @click="deleteBuyReason(index)">删除</el-button>
+            <el-button type="danger" size="small" @click="deleteBuyReason(item,index)">删除</el-button>
           </div>
         </el-form-item>
 
@@ -224,7 +224,7 @@
           <div v-show="goodIntroduce.length" v-for="item,index in goodIntroduce">
             <span style="margin: 10px 20px 10px 0">产品介绍{{index+1}} : {{item.ts_gi_Name}}</span>
             <el-button type="success" size="small" @click="updateGoodIntroduce(item,index)">修改</el-button>
-            <el-button type="danger" size="small" @click="deleteGoodIntroduce(index)">删除</el-button>
+            <el-button type="danger" size="small" @click="deleteGoodIntroduce(item,index)">删除</el-button>
           </div>
         </el-form-item>
 
@@ -233,7 +233,7 @@
           <div v-show="feeInfoList.length" v-for="item,index in feeInfoList">
             <span style="margin: 10px 20px 10px 0">费用包含{{index+1}} : {{item.ts_gi_Name}}</span>
             <el-button type="success" size="small" @click="updateFeeInfoList(item,index)">修改</el-button>
-            <el-button type="danger" size="small" @click="deleteFeeInfoList(index)">删除</el-button>
+            <el-button type="danger" size="small" @click="deleteFeeInfoList(item,index)">删除</el-button>
           </div>
         </el-form-item>
 
@@ -242,7 +242,7 @@
           <div v-show="feeNotInList.length" v-for="item,index in feeNotInList">
             <span style="margin: 10px 20px 10px 0">费用不包含{{index+1}} : {{item.ts_gi_Name}}</span>
             <el-button type="success" size="small" @click="updateFeeNotInList(item,index)">修改</el-button>
-            <el-button type="danger" size="small" @click="deleteFeeNotInList(index)">删除</el-button>
+            <el-button type="danger" size="small" @click="deleteFeeNotInList(item,index)">删除</el-button>
           </div>
         </el-form-item>
 
@@ -251,7 +251,7 @@
           <div v-show="bookList.length" v-for="item,index in bookList">
             <span style="margin: 10px 20px 10px 0">预订须知{{index+1}} : {{item.ts_gi_Name}}</span>
             <el-button type="success" size="small" @click="updateBookList(item,index)">修改</el-button>
-            <el-button type="danger" size="small" @click="deleteBookList(index)">删除</el-button>
+            <el-button type="danger" size="small" @click="deleteBookList(item,index)">删除</el-button>
           </div>
         </el-form-item>
 
@@ -260,7 +260,7 @@
           <div v-show="backRuleList.length" v-for="item,index in backRuleList">
             <span style="margin: 10px 20px 10px 0">退改政策{{index+1}} : {{item.ts_gi_Name}}</span>
             <el-button type="success" size="small" @click="updateBackRuleList(item,index)">修改</el-button>
-            <el-button type="danger" size="small" @click="deleteBackRuleList(index)">删除</el-button>
+            <el-button type="danger" size="small" @click="deleteBackRuleList(item,index)">删除</el-button>
           </div>
         </el-form-item>
 
@@ -842,20 +842,24 @@
       },
       //修改退改政策提交
       updateBackRuleListSubmit(item){
-        let options = {
-          "loginUserID": "huileyou",
-          "loginUserPass": "123",
-          "operateUserID": "",
-          "operateUserName": "",
-          "pcName": "",
-          "data": item
-        };
-        this.$store.dispatch('UpdateRecommendedReason',options)
-        .then(()=>{
+        if(this.updateAdminMerchantProductsObj.backRule){
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": item
+          };
+          this.$store.dispatch('UpdateRecommendedReason',options)
+          .then(()=>{
+            this.updateBackRuleListDialog = false;
+          },err=>{
+            console.log(err)
+          })
+        }else{
           this.updateBackRuleListDialog = false;
-        },err=>{
-          console.log(err)
-        })
+        }
       },
       //删除退改政策
       deleteBackRuleList(item,index){
@@ -938,20 +942,24 @@
       },
       //修改预订须知提交
       updateBookListSubmit(item){
-        let options = {
-          "loginUserID": "huileyou",
-          "loginUserPass": "123",
-          "operateUserID": "",
-          "operateUserName": "",
-          "pcName": "",
-          "data": item
-        };
-        this.$store.dispatch('UpdateRecommendedReason',options)
-        .then(()=>{
+        if(this.updateAdminMerchantProductsObj.bookKnow) {
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": item
+          };
+          this.$store.dispatch('UpdateRecommendedReason',options)
+          .then(()=>{
+            this.updateBookListDialog = false;
+          },err=>{
+            console.log(err)
+          })
+        }else{
           this.updateBookListDialog = false;
-        },err=>{
-          console.log(err)
-        })
+        }
       },
       //删除预订须知
       deleteBookList(item,index){
@@ -1034,20 +1042,24 @@
       },
       //修改费用不包含提交
       updateFeeInNotListSubmit(item){
-        let options = {
-          "loginUserID": "huileyou",
-          "loginUserPass": "123",
-          "operateUserID": "",
-          "operateUserName": "",
-          "pcName": "",
-          "data": item
-        };
-        this.$store.dispatch('UpdateRecommendedReason',options)
-        .then(()=>{
+        if(this.updateAdminMerchantProductsObj.feeNotIn){
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": item
+          };
+          this.$store.dispatch('UpdateRecommendedReason',options)
+          .then(()=>{
+            this.updateFeeInNotListDialog = false;
+          },err=>{
+            console.log(err)
+          })
+        }else{
           this.updateFeeInNotListDialog = false;
-        },err=>{
-          console.log(err)
-        })
+        }
       },
       //删除费用不包含
       deleteFeeNotInList(item,index){
@@ -1132,20 +1144,25 @@
       },
       //修改费用包含提交
       updateFeeInfoListSubmit(item){
-        let options = {
-          "loginUserID": "huileyou",
-          "loginUserPass": "123",
-          "operateUserID": "",
-          "operateUserName": "",
-          "pcName": "",
-          "data": item
-        };
-        this.$store.dispatch('UpdateRecommendedReason',options)
-        .then(()=>{
+        if(this.updateAdminMerchantProductsObj.feeIn){
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": item
+          };
+          this.$store.dispatch('UpdateRecommendedReason',options)
+          .then(()=>{
+            this.updateFeeInfoListDialog = false;
+          },err=>{
+            console.log(err)
+          })
+        }else{
           this.updateFeeInfoListDialog = false;
-        },err=>{
-          console.log(err)
-        })
+        }
+
       },
       //删除费用包含
       deleteFeeInfoList(item,index){
@@ -1224,20 +1241,25 @@
       },
       //修改产品介绍提交
       updateGoodIntroduceSubmit(item){
-        let options = {
-          "loginUserID": "huileyou",
-          "loginUserPass": "123",
-          "operateUserID": "",
-          "operateUserName": "",
-          "pcName": "",
-          "data": item
-        };
-        this.$store.dispatch('UpdateRecommendedReason',options)
-        .then(()=>{
+        if(this.updateAdminMerchantProductsObj.goodIntroduce){
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": item
+          };
+          this.$store.dispatch('UpdateRecommendedReason',options)
+          .then(()=>{
+            this.updateGoodIntroduceDialog = false;
+          },err=>{
+            console.log(err)
+          })
+        }else{
           this.updateGoodIntroduceDialog = false;
-        },err=>{
-          console.log(err)
-        })
+        }
+
       },
       //删除产品介绍
       deleteGoodIntroduce(item,index){
@@ -1302,7 +1324,6 @@
             console.log(err)
           })
         }else{
-          console.log(1)
           this.buyReason.push({
             ts_gi_Name:this.recommendedReasonContent
           });
@@ -1319,20 +1340,24 @@
       },
       //修改推荐理由提交
       updateBuyReasonSubmit(item){
-        let options = {
-          "loginUserID": "huileyou",
-          "loginUserPass": "123",
-          "operateUserID": "",
-          "operateUserName": "",
-          "pcName": "",
-          "data": item
-        };
-        this.$store.dispatch('UpdateRecommendedReason',options)
-        .then(()=>{
+        if(this.updateAdminMerchantProductsObj.buyReason){
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": item
+          };
+          this.$store.dispatch('UpdateRecommendedReason',options)
+          .then(()=>{
+            this.updateBuyReasonDialog = false;
+          },err=>{
+            console.log(err)
+          })
+        }else{
           this.updateBuyReasonDialog = false;
-        },err=>{
-          console.log(err)
-        })
+        }
       },
       //删除推荐理由
       deleteBuyReason(item,index){
@@ -1364,6 +1389,7 @@
             return true;
           })
         }
+
 
       },
       //选中省

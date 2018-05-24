@@ -15,8 +15,6 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
-  import BScroll from 'better-scroll'
-  import $ from 'jquery'
 
   export default {
     name: '',

@@ -16,9 +16,9 @@
   .login-container[data-v-ef68022e]{
     margin: 0 auto !important;
   }
-  input[type="file"] {
-    display: none !important;
-  }
+  /*input[type="file"] {*/
+    /*display: none !important;*/
+  /*}*/
 
   #app {
     position: absolute;
