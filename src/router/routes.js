@@ -2,127 +2,177 @@
  * Created by leibo on 18/1/2.
  */
 //------------------------------------------------管理员------------------------------------------
-import AdminAllFunction2 from '@/components/admin/AdminAllFunction2'
-import Home from '@/components/public/newHome'
+// import AdminAllFunction2 from '@/components/admin/AdminAllFunction2'
+// import Home from '@/components/public/newHome'
+const Home = resolve => require.ensure([], () => resolve(require('@/components/public/newHome')));
+const AdminAllFunction2 = resolve => require.ensure([], () => resolve(require('@/components/admin/AdminAllFunction2')));
 // const Home = () => import('@/components/public/Home')
 // const newHome = () => import('@/components/public/newHome')
 //登录
-import adminLogin from '@/components/admin/Login'
+const adminLogin = resolve => require.ensure([], () => resolve(require('@/components/admin/Login')));
+// import adminLogin from '@/components/admin/Login'
 //时间活动
-import AdminTimeActivities from '@/components/admin/AdminTimeActivities'
+const AdminTimeActivities = resolve => require.ensure([], () => resolve(require('@/components/admin/AdminTimeActivities')));
+// import AdminTimeActivities from '@/components/admin/AdminTimeActivities'
 //日程时间
-import AdminScheduleTime from '@/components/admin/AdminScheduleTime'
+const AdminScheduleTime = resolve => require.ensure([], () => resolve(require('@/components/admin/AdminScheduleTime')));
+// import AdminScheduleTime from '@/components/admin/AdminScheduleTime'
 //产品线路
-import AdminQueryProductInformation from '@/components/admin/AdminQueryProductInformation'
+const AdminQueryProductInformation = resolve => require.ensure([], () => resolve(require('@/components/admin/AdminQueryProductInformation')));
+// import AdminQueryProductInformation from '@/components/admin/AdminQueryProductInformation'
 //商家产品
-import AdminMerchantProducts from '@/components/admin/AdminMerchantProducts'
+const AdminMerchantProducts = resolve => require.ensure([], () => resolve(require('@/components/admin/AdminMerchantProducts')));
+// import AdminMerchantProducts from '@/components/admin/AdminMerchantProducts'
 //跟团游栏目
-import AdminGroupTour from '@/components/admin/AdminGroupTour'
+const AdminGroupTour = resolve => require.ensure([], () => resolve(require('@/components/admin/AdminGroupTour')));
+// import AdminGroupTour from '@/components/admin/AdminGroupTour'
 //商家信息
-import AdminBusinessInformation from '@/components/admin/AdminBusinessInformation'
+const AdminBusinessInformation = resolve => require.ensure([], () => resolve(require('@/components/admin/AdminBusinessInformation')));
+// import AdminBusinessInformation from '@/components/admin/AdminBusinessInformation'
 //查询菜单
-import AdminProductMenu from '@/components/admin/AdminProductMenu'
 //产品线路下的所有内容
-import AdminQueryProductInformationList from '@/components/admin/AdminQueryProductInformationList'
+const AdminQueryProductInformationList = resolve => require.ensure([], () => resolve(require('@/components/admin/AdminQueryProductInformationList')));
+// import AdminQueryProductInformationList from '@/components/admin/AdminQueryProductInformationList'
 //时间活动下的所有内容
-import AdminTimeActivitiesList from '@/components/admin/AdminTimeActivitiesList'
+const AdminTimeActivitiesList = resolve => require.ensure([], () => resolve(require('@/components/admin/AdminTimeActivitiesList')));
+// import AdminTimeActivitiesList from '@/components/admin/AdminTimeActivitiesList'
 //系统菜单
-import AdminSystemMenu from '@/components/admin/AdminSystemMenu'
 //商家营业执照管理
-import AdminBusinessLicense from '@/components/admin/AdminBusinessLicense'
+const AdminBusinessLicense = resolve => require.ensure([], () => resolve(require('@/components/admin/AdminBusinessLicense')));
+// import AdminBusinessLicense from '@/components/admin/AdminBusinessLicense'
 //评论类型
-import AdminCommentsType from '@/components/admin/AdminCommentsType'
+const AdminCommentsType = resolve => require.ensure([], () => resolve(require('@/components/admin/AdminCommentsType')));
+// import AdminCommentsType from '@/components/admin/AdminCommentsType'
 
 //订单明细
-import AdminOrderDetail from '@/components/admin/AdminOrderDetail'
+const AdminOrderDetail = resolve => require.ensure([], () => resolve(require('@/components/admin/AdminOrderDetail')));
+// import AdminOrderDetail from '@/components/admin/AdminOrderDetail'
 //交通信息
-import TicketTrafficInformation from '@/components/ticket/TicketTrafficInformation'
+const TicketTrafficInformation = resolve => require.ensure([], () => resolve(require('@/components/ticket/TicketTrafficInformation')));
+// import TicketTrafficInformation from '@/components/ticket/TicketTrafficInformation'
 
 //供应商信息
-import AdminUserInfo from '@/components/admin/AdminUserInfo'
+const AdminUserInfo = resolve => require.ensure([], () => resolve(require('@/components/admin/AdminUserInfo')));
+// import AdminUserInfo from '@/components/admin/AdminUserInfo'
 //个人收益
-import AdminPersonalBenefits from '@/components/admin/AdminPersonalBenefits'
+const AdminPersonalBenefits = resolve => require.ensure([], () => resolve(require('@/components/admin/AdminPersonalBenefits')));
+// import AdminPersonalBenefits from '@/components/admin/AdminPersonalBenefits'
 
 /*------------------------------------酒店----------------------------------------*/
 //酒店管理系统
 
 //酒店详情页
-import HotelDetil from '@/components/hotel/HotelDetil'
+const HotelDetil = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelDetil')));
+// import HotelDetil from '@/components/hotel/HotelDetil'
 //酒店推荐信息
-import HotelQueryRecommend from '@/components/hotel/HotelQueryRecommend'
+const HotelQueryRecommend = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelQueryRecommend')));
+// import HotelQueryRecommend from '@/components/hotel/HotelQueryRecommend'
 //酒店图片信息
-import HotelImage from '@/components/hotel/HotelImage'
+const HotelImage = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelImage')));
+// import HotelImage from '@/components/hotel/HotelImage'
 //酒店图片政策
-import HotelPolicy from '@/components/hotel/HotelPolicy'
+const HotelPolicy = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelPolicy')));
+// import HotelPolicy from '@/components/hotel/HotelPolicy'
 //酒店主题
-import HotelTheme from '@/components/hotel/HotelTheme'
+const HotelTheme = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelTheme')));
+// import HotelTheme from '@/components/hotel/HotelTheme'
 //酒店图标
-import HotelIcon from '@/components/hotel/HotelIcon'
+const HotelIcon = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelIcon')));
+// import HotelIcon from '@/components/hotel/HotelIcon'
 //酒店房间
-import HotelRoom from '@/components/hotel/HotelRoom'
+const HotelRoom = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelRoom')));
+// import HotelRoom from '@/components/hotel/HotelRoom'
 //酒店设施服务
-import HotelFacilitiesServices from '@/components/hotel/HotelFacilitiesServices'
+const HotelFacilitiesServices = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelFacilitiesServices')));
+// import HotelFacilitiesServices from '@/components/hotel/HotelFacilitiesServices'
 //酒店设施服务设施
-import HotelFacilitiesServicesFacilities from '@/components/hotel/HotelFacilitiesServicesFacilities'
+const HotelFacilitiesServicesFacilities = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelFacilitiesServicesFacilities')));
+// import HotelFacilitiesServicesFacilities from '@/components/hotel/HotelFacilitiesServicesFacilities'
 //酒店房间产品
-import HotelRoomProduct from '@/components/hotel/HotelRoomProduct'
+const HotelRoomProduct = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelRoomProduct')));
+// import HotelRoomProduct from '@/components/hotel/HotelRoomProduct'
 //酒店房间房间设施
-import HotelRoomRoomFacilities from '@/components/hotel/HotelRoomRoomFacilities'
+const HotelRoomRoomFacilities = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelRoomRoomFacilities')));
+// import HotelRoomRoomFacilities from '@/components/hotel/HotelRoomRoomFacilities'
 //酒店订单明细
-import HotelOrderDetails from '@/components/hotel/HotelOrderDetails'
+const HotelOrderDetails = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelOrderDetails')));
+// import HotelOrderDetails from '@/components/hotel/HotelOrderDetails'
 //酒店确认订单
-import HotelConfirmOrder from '@/components/hotel/HotelConfirmOrder'
+const HotelConfirmOrder = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelConfirmOrder')));
+// import HotelConfirmOrder from '@/components/hotel/HotelConfirmOrder'
 //酒店生成房间
-import HotelRoomNumber from '@/components/hotel/HotelRoomNumber'
+const HotelRoomNumber = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelRoomNumber')));
+// import HotelRoomNumber from '@/components/hotel/HotelRoomNumber'
 //酒店批量生成房间
-import HotelLotRoomNumber from '@/components/hotel/HotelLotRoomNumber'
+const HotelLotRoomNumber = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelLotRoomNumber')));
+// import HotelLotRoomNumber from '@/components/hotel/HotelLotRoomNumber'
 //酒店房间实体
-import HotelRoomEntity from '@/components/hotel/HotelRoomEntity'
+const HotelRoomEntity = resolve => require.ensure([], () => resolve(require('@/components/hotel/HotelRoomEntity')));
+// import HotelRoomEntity from '@/components/hotel/HotelRoomEntity'
 
 
 /*------------------------------------门票----------------------------------------*/
 //门票景点
-import TicketAttractions from '@/components/ticket/TicketAttractions'
+const TicketAttractions = resolve => require.ensure([], () => resolve(require('@/components/ticket/TicketAttractions')));
+// import TicketAttractions from '@/components/ticket/TicketAttractions'
 //地图导览
-import TicketMap from '@/components/ticket/TicketMap'
+const TicketMap = resolve => require.ensure([], () => resolve(require('@/components/ticket/TicketMap')));
+// import TicketMap from '@/components/ticket/TicketMap'
 //预定须知
-import TicketPredeterminedInstructions from '@/components/ticket/TicketPredeterminedInstructions'
+const TicketPredeterminedInstructions = resolve => require.ensure([], () => resolve(require('@/components/ticket/TicketPredeterminedInstructions')));
+// import TicketPredeterminedInstructions from '@/components/ticket/TicketPredeterminedInstructions'
 //交通信息
 //票种管理
-import TicketType from '@/components/ticket/TicketType'
+const TicketType = resolve => require.ensure([], () => resolve(require('@/components/ticket/TicketType')));
+// import TicketType from '@/components/ticket/TicketType'
 //票种票价管理
-import TicketTypeTicketPrice from '@/components/ticket/TicketTypeTicketPrice'
+const TicketTypeTicketPrice = resolve => require.ensure([], () => resolve(require('@/components/ticket/TicketTypeTicketPrice')));
+// import TicketTypeTicketPrice from '@/components/ticket/TicketTypeTicketPrice'
 //查询商户订单
-import TicketQueryOrder from '@/components/ticket/TicketQueryOrder'
+const TicketQueryOrder = resolve => require.ensure([], () => resolve(require('@/components/ticket/TicketQueryOrder')));
+// import TicketQueryOrder from '@/components/ticket/TicketQueryOrder'
 //申请显示在首页
-import TicketApplyShowHomePage from '@/components/ticket/TicketApplyShowHomePage'
+const TicketApplyShowHomePage = resolve => require.ensure([], () => resolve(require('@/components/ticket/TicketApplyShowHomePage')));
+// import TicketApplyShowHomePage from '@/components/ticket/TicketApplyShowHomePage'
 
 /*------------------------------------美食----------------------------------------*/
 
 //店面信息
-import FoodStoreInformation from '@/components/food/FoodStoreInformation'
+const FoodStoreInformation = resolve => require.ensure([], () => resolve(require('@/components/food/FoodStoreInformation')));
+// import FoodStoreInformation from '@/components/food/FoodStoreInformation'
 //店面房间
-import FoodStoreRoom  from '@/components/food/FoodStoreRoom'
+const FoodStoreRoom = resolve => require.ensure([], () => resolve(require('@/components/food/FoodStoreRoom')));
+// import FoodStoreRoom  from '@/components/food/FoodStoreRoom'
 //店面产品
-import FoodStoreProduct from '@/components/food/FoodStoreProduct'
+const FoodStoreProduct = resolve => require.ensure([], () => resolve(require('@/components/food/FoodStoreProduct')));
+// import FoodStoreProduct from '@/components/food/FoodStoreProduct'
 //房间图片
-import FoodRoomPicture from '@/components/food/FoodRoomPicture'
+const FoodRoomPicture = resolve => require.ensure([], () => resolve(require('@/components/food/FoodRoomPicture')));
+// import FoodRoomPicture from '@/components/food/FoodRoomPicture'
 //店面图片
-import FoodStorePicture from '@/components/food/FoodStorePicture'
+const FoodStorePicture = resolve => require.ensure([], () => resolve(require('@/components/food/FoodStorePicture')));
+// import FoodStorePicture from '@/components/food/FoodStorePicture'
 //店面产品图片
-import FoodStoreProductPicture from '@/components/food/FoodStoreProductPicture'
+const FoodStoreProductPicture = resolve => require.ensure([], () => resolve(require('@/components/food/FoodStoreProductPicture')));
+// import FoodStoreProductPicture from '@/components/food/FoodStoreProductPicture'
 //房间餐桌
-import FoodStoreRoomTabel from '@/components/food/FoodStoreRoomTabel'
+const FoodStoreRoomTabel = resolve => require.ensure([], () => resolve(require('@/components/food/FoodStoreRoomTabel')));
+// import FoodStoreRoomTabel from '@/components/food/FoodStoreRoomTabel'
 //推荐菜
-import FoodStoreRecommend from '@/components/food/FoodStoreRecommend'
+const FoodStoreRecommend = resolve => require.ensure([], () => resolve(require('@/components/food/FoodStoreRecommend')));
+// import FoodStoreRecommend from '@/components/food/FoodStoreRecommend'
 //店面每天可锁桌时间
-import FoodStoreTableTime from '@/components/food/FoodStoreTableTime'
+const FoodStoreTableTime = resolve => require.ensure([], () => resolve(require('@/components/food/FoodStoreTableTime')));
+// import FoodStoreTableTime from '@/components/food/FoodStoreTableTime'
 //店面可订餐时间
-import FoodStoreOrderingTime from '@/components/food/FoodStoreOrderingTime'
+const FoodStoreOrderingTime = resolve => require.ensure([], () => resolve(require('@/components/food/FoodStoreOrderingTime')));
+// import FoodStoreOrderingTime from '@/components/food/FoodStoreOrderingTime'
 //查询订单
-import FoodStoreConfirmOrder from '@/components/food/FoodStoreConfirmOrder'
+const FoodStoreConfirmOrder = resolve => require.ensure([], () => resolve(require('@/components/food/FoodStoreConfirmOrder')));
+// import FoodStoreConfirmOrder from '@/components/food/FoodStoreConfirmOrder'
 //停车场
-import  FoodStoppingPlace from '@/components/food/FoodStoppingPlace'
+const FoodStoppingPlace = resolve => require.ensure([], () => resolve(require('@/components/food/FoodStoppingPlace')));
+// import  FoodStoppingPlace from '@/components/food/FoodStoppingPlace'
 
 
 
@@ -130,37 +180,53 @@ import  FoodStoppingPlace from '@/components/food/FoodStoppingPlace'
 
 /*------------------------------------广告----------------------------------------*/
 //广告申请管理
-import AdApply from '@/components/adverts/AdApply'
+const AdApply = resolve => require.ensure([], () => resolve(require('@/components/adverts/AdApply')));
+const CarHome = resolve => require.ensure([], () => resolve(require('@/components/car/CarHome')));
+const CarStore = resolve => require.ensure([], () => resolve(require('@/components/car/CarStore')));
+const CarProduct = resolve => require.ensure([], () => resolve(require('@/components/car/CarProduct')));
+// import AdApply from '@/components/adverts/AdApply'
 
-import CarHome from '@/components/car/CarHome'
-import CarStore from '@/components/car/CarStore'
-import CarProduct from '@/components/car/CarProduct'
+// import CarHome from '@/components/car/CarHome'
+// import CarStore from '@/components/car/CarStore'
+// import CarProduct from '@/components/car/CarProduct'
 //公司汽车
-import CarCompanyCar from '@/components/car/CarCompanyCar'
+const CarCompanyCar = resolve => require.ensure([], () => resolve(require('@/components/car/CarCompanyCar')));
+// import CarCompanyCar from '@/components/car/CarCompanyCar'
 //公司优惠政策
-import CarPreferentialPolicies from '@/components/car/CarPreferentialPolicies'
+const CarPreferentialPolicies = resolve => require.ensure([], () => resolve(require('@/components/car/CarPreferentialPolicies')));
+// import CarPreferentialPolicies from '@/components/car/CarPreferentialPolicies'
 //公司订单明细
-import CarOrderDetails from '@/components/car/CarOrderDetails'
+const CarOrderDetails = resolve => require.ensure([], () => resolve(require('@/components/car/CarOrderDetails')));
+// import CarOrderDetails from '@/components/car/CarOrderDetails'
 //公司确认订单
-import CarConfirmOrder from '@/components/car/CarConfirmOrder'
+const CarConfirmOrder = resolve => require.ensure([], () => resolve(require('@/components/car/CarConfirmOrder')));
+// import CarConfirmOrder from '@/components/car/CarConfirmOrder'
 
 /*------------------------------------V电影----------------------------------------*/
 //V电影审核表
-import  VMovieCheckTable from '@/components/movie/VMovieCheckTable'
+const VMovieCheckTable = resolve => require.ensure([], () => resolve(require('@/components/movie/VMovieCheckTable')));
+// import  VMovieCheckTable from '@/components/movie/VMovieCheckTable'
 //V电影系列
-import  VMovieSeries from '@/components/movie/VMovieSeries'
+const VMovieSeries = resolve => require.ensure([], () => resolve(require('@/components/movie/VMovieSeries')));
+// import  VMovieSeries from '@/components/movie/VMovieSeries'
 //V电影视频系列
-import  VMovieVideoSeries from '@/components/movie/VMovieVideoSeries'
+const VMovieVideoSeries = resolve => require.ensure([], () => resolve(require('@/components/movie/VMovieVideoSeries')));
+// import  VMovieVideoSeries from '@/components/movie/VMovieVideoSeries'
 //V电影微电影
-import  VMovieMiniMovie from '@/components/movie/VMovieMiniMovie'
+const VMovieMiniMovie = resolve => require.ensure([], () => resolve(require('@/components/movie/VMovieMiniMovie')));
+// import  VMovieMiniMovie from '@/components/movie/VMovieMiniMovie'
 //V电影分类
-import  VMovieSorting from '@/components/movie/VMovieSorting'
+const VMovieSorting = resolve => require.ensure([], () => resolve(require('@/components/movie/VMovieSorting')));
+// import  VMovieSorting from '@/components/movie/VMovieSorting'
 //V电影视频分类
-import  VMovieVideoCategories from '@/components/movie/VMovieVideoCategories'
+const VMovieVideoCategories = resolve => require.ensure([], () => resolve(require('@/components/movie/VMovieVideoCategories')));
+// import  VMovieVideoCategories from '@/components/movie/VMovieVideoCategories'
 //V电影视频
-import  VMovieVideo from '@/components/movie/VMovieVideo'
+const VMovieVideo = resolve => require.ensure([], () => resolve(require('@/components/movie/VMovieVideo')));
+// import  VMovieVideo from '@/components/movie/VMovieVideo'
 //V电影系列分类
-import  VMovieSeriesCategories from '@/components/movie/VMovieSeriesCategories'
+const VMovieSeriesCategories = resolve => require.ensure([], () => resolve(require('@/components/movie/VMovieSeriesCategories')));
+// import  VMovieSeriesCategories from '@/components/movie/VMovieSeriesCategories'
 
 
 
@@ -360,15 +426,6 @@ export default [
         name: 'AdminGroupTour'
       },
 
-      //查询菜单
-      {
-        path: 'adminProductMenu',
-        components: {
-          default: Home,
-          User: AdminProductMenu
-        },
-        name: 'AdminProductMenu'
-      },
 
       //查询菜单
       {
@@ -379,15 +436,7 @@ export default [
         },
         name: 'AdminBusinessLicense'
       },
-      //系统菜单
-      {
-        path: 'adminSystemMenu',
-        components: {
-          default: Home,
-          User: AdminSystemMenu
-        },
-        name: 'AdminSystemMenu'
-      },
+
       {
         path: 'adminCommentsType',
         components: {

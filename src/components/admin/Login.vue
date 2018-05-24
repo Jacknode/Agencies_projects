@@ -79,7 +79,7 @@
 //                  }
 //                }
                 this.$router.push({name:'AdminUserInfo'});
-                window.location.reload()
+
               }else{
                 this.$message({
                   message: data.resultcontent,

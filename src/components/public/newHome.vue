@@ -36,7 +36,7 @@
           active-text-color="#ffd04b">
           <el-submenu index="1">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="fa fa-map-marker"></i>
               <span>供应商信息</span>
             </template>
             <el-menu-item-group>
@@ -45,7 +45,7 @@
           </el-submenu>
           <el-submenu index="2"  v-show="userInfo.sm_ai_IsPass==1&&isAgencies">
             <template slot="title">
-              <i class="icon-home" style="padding-right: 15px"></i>
+              <i class="fa fa-flag" style="padding-right: 15px"></i>
               <span>旅行社后台管理</span>
             </template>
             <el-menu-item-group>
@@ -57,7 +57,7 @@
           </el-submenu>
           <el-submenu index="3"  v-show="userInfo.sm_ai_IsPass==1&&isHotel">
             <template slot="title">
-              <i class="icon-office" style="padding-right: 15px"></i>
+              <i class="fa fa-hotel" style="padding-right: 15px"></i>
               <span>酒店后台管理</span>
             </template>
             <el-menu-item-group>
@@ -76,7 +76,7 @@
           </el-submenu>
           <el-submenu index="4"  v-show="userInfo.sm_ai_IsPass==1&&isTickets">
             <template slot="title">
-              <i class="icon-ticket" style="padding-right: 15px"></i>
+              <i class="fa fa-ticket" style="padding-right: 15px"></i>
               <span>门票后台管理</span>
             </template>
             <el-menu-item-group>
@@ -92,7 +92,7 @@
 
           <el-submenu index="5"  v-show="userInfo.sm_ai_IsPass==1&&isFood">
             <template slot="title">
-              <i class="icon-office" style="padding-right: 15px"></i>
+              <i class="fa fa-cutlery" style="padding-right: 15px"></i>
               <span>美食后台管理</span>
             </template>
             <el-menu-item-group>
@@ -113,7 +113,7 @@
 
           <el-submenu index="6"  v-show="userInfo.sm_ai_IsPass==1&&isAdvertising">
             <template slot="title">
-              <i class="icon-twitter" style="padding-right: 15px"></i>
+              <i class="fa fa-tags" style="padding-right: 15px"></i>
               <span>广告后台管理</span>
             </template>
             <el-menu-item-group>
@@ -123,7 +123,7 @@
 
           <el-submenu index="7"  v-show="userInfo.sm_ai_IsPass==1&&isCar">
             <template slot="title">
-              <i class="icon-car" style="padding-right: 15px"></i>
+              <i class="fa fa-car" style="padding-right: 15px"></i>
               <span>租车后台管理</span>
             </template>
             <el-menu-item-group>
@@ -138,7 +138,7 @@
 
           <el-submenu index="8"  v-show="userInfo.sm_ai_IsPass==1&&isMovie">
             <template slot="title">
-              <i class="icon-movie" style="padding-right: 15px"></i>
+              <i class="fa fa-video-camera" style="padding-right: 15px"></i>
               <span>V电影后台管理</span>
             </template>
             <el-menu-item-group>

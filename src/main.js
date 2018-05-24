@@ -4,7 +4,7 @@
 // import ElementUI from 'element-ui'
 import '@/assets/css/reset.css'
 import '@/assets/css/animate.css'
-import '@/assets/css/icons/icomoon/styles.css'
+// import '@/assets/css/icons/icomoon/styles.css'
 // import 'element-ui/lib/theme-chalk/index.css'
 import App from './App'
 import router from './router'
