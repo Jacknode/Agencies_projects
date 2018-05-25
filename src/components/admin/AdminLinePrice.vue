@@ -370,7 +370,7 @@
       },
       querySearchAsync(queryString, cb) {
         this.loadAll(1, queryString).then(data => {
-          var  data = data
+          var  data = data.data
           data = data.map(item => {
             return {
               id: item.ta_tg_ID,

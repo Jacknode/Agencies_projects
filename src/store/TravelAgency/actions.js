@@ -321,7 +321,7 @@ export default {
               resulte[i].ta_tg_ShowImages = resulte[i].ta_tg_ShowImage.split(',')
             }
             commit('initAdminTradeGoodList', resulte.data);
-            relove(resulte.data)
+            relove(resulte)
           } else {
             reject(data.resultcontent)
           }
