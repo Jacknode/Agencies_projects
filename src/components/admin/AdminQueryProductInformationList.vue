@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div>
-      <p style="font-weight: bold;font-size: 20px;margin-bottom: 20px">添加流程:</p>
-      <el-tree :data="data" :props="defaultProps" :default-expand-all="isOff"></el-tree>
-    </div>
+    <!--<div>-->
+      <!--<p style="font-weight: bold;font-size: 20px;margin-bottom: 20px">添加流程:</p>-->
+      <!--<el-tree :data="data" :props="defaultProps" :default-expand-all="isOff"></el-tree>-->
+    <!--</div>-->
     <div class="contentBox">
       <div style="margin: 30px 0 30px 0px">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item to="AdminMerchantProducts">商家产品</el-breadcrumb-item>
-          <el-breadcrumb-item  @click.native="toLine">产品线路</el-breadcrumb-item>
+          <el-breadcrumb-item  @click.native="toLine" style="cursor: pointer;color: #000;font-weight: bold;">产品线路</el-breadcrumb-item>
           <el-breadcrumb-item>{{name}}</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -20,9 +20,9 @@
         <el-tab-pane label="产品线路价格" name="产品线路价格">
           <adminLinePrice></adminLinePrice>
         </el-tab-pane>
-        <el-tab-pane label="产品线路特色" name="产品线路特色">
-          <adminProductFeatures></adminProductFeatures>
-        </el-tab-pane>
+        <!--<el-tab-pane label="产品线路特色" name="产品线路特色">-->
+          <!--<adminProductFeatures></adminProductFeatures>-->
+        <!--</el-tab-pane>-->
         <el-tab-pane label="线路日程" name="线路日程">
           <adminLinePrepare></adminLinePrepare>
         </el-tab-pane>

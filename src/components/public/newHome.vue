@@ -13,8 +13,8 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理员 <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li @click="getUser"><a href="javascript:;"><i class="icon-user-plus" style="padding-right: 10px"></i>{{qiankeUser ? qiankeUser : ''}}</a></li>
-                <li @click="Quit"><a href="javascript:;"><i class="icon-switch2" style="padding-right: 10px"></i>退出</a></li>
+                <li @click="getUser"><a href="javascript:;"><i class="fa fa-user" style="padding-right: 10px"></i>{{qiankeUser ? qiankeUser : ''}}</a></li>
+                <li @click="Quit"><a href="javascript:;"><i class="fa fa-reply" style="padding-right: 10px"></i>退出</a></li>
               </ul>
             </li>
           </ul>
@@ -288,6 +288,17 @@
     },
     methods: {
       async initData() {
+        let userOptions = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          sm_ai_Name: '',
+          "sm_ai_ID": this.userInfo.sm_ai_ID,
+          "page": 1,
+          "rows": 5,
+        };
+        await this.$store.dispatch('initSetCooperationType',userOptions)
         //惠乐游推荐类型
         let options = {
           "loginUserID": "huileyou",
@@ -457,17 +468,7 @@
         };
         await this.$store.dispatch('initFoodStoreInformtion', selectStoreFrontInfo)
 
-        let userOptions = {
-          "loginUserID": "huileyou",
-          "loginUserPass": "123",
-          "operateUserID": "",
-          "operateUserName": "",
-          sm_ai_Name: '',
-          "sm_ai_ID": this.userInfo.sm_ai_ID,
-          "page": 1,
-          "rows": 5,
-        };
-        await this.$store.dispatch('initSetCooperationType',userOptions)
+
       },
       //退出
       Quit() {

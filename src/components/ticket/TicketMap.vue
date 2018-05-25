@@ -161,6 +161,8 @@
     },
   }
 </script>
-<style scoped>
-
+<style>
+  .el-upload__input{
+  display: none !important;
+  }
 </style>

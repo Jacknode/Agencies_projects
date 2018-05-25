@@ -10,6 +10,7 @@
           <el-form-item>
             <el-autocomplete
               style="width: 250px"
+              size="small"
               v-model="userName"
               :fetch-suggestions="querySearchAsync"
               placeholder="请选择产品"
@@ -17,7 +18,7 @@
             ></el-autocomplete>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="userSearchID" placeholder="请选择产品线路">
+            <el-select v-model="userSearchID" placeholder="请选择产品线路" size="small">
               <el-option
                 v-for="item in adminProductLine"
                 :key="item.ts_pt_ID"
@@ -27,10 +28,10 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="search">查询</el-button>
+            <el-button type="primary" @click="search" size="small">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="addAdminLinePrepare">新增</el-button>
+            <el-button type="primary" @click="addAdminLinePrepare" size="small">新增</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -45,6 +46,19 @@
             <el-form label-position="left" inline class="demo-table-expand">
               <el-form-item label="主键编号:">
                 <span>{{ props.row.ts_pt_ID }}</span>
+              </el-form-item>
+              <el-form-item label="活动内容:">
+                <el-popover
+                  ref="popover1"
+                  placement="top-start"
+                  trigger="hover">
+                  <p v-for="item,index in props.row.activityContentList" style="padding: 20px;width: 500px">({{index+1}}):{{item.ts_gi_Name}}</p>
+                </el-popover>
+                <el-button v-popover:popover1 size="small">移入查看</el-button>
+                  <!--<p v-for="item in props.row.activityContentList">{{item.ts_gi_Name}}</p>-->
+              </el-form-item>
+              <el-form-item label="活动图片:">
+                <img :src="item.ts_gi_Name" alt="" v-for="item in props.row.activityImage" style="width: 100px;height: 100px;margin-right: 10px">
               </el-form-item>
               <el-form-item label="线路编号:">
                 <span>{{ props.row.ts_pt_Product_LineID }}</span>
@@ -93,6 +107,7 @@
           align="center"
           prop="ts_pt_Day">
         </el-table-column>
+
         <el-table-column
           align="center"
           label="备注">
@@ -103,7 +118,7 @@
               trigger="hover"
               :content="props.row.ts_pt_Remark">
             </el-popover>
-            <el-button v-popover:popover1>移入查看</el-button>
+            <el-button v-popover:popover1 size="small">移入查看</el-button>
           </template>
 
         </el-table-column>
@@ -111,17 +126,17 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="updateAdminLinePrepare(scope.row.ts_pt_ID)">修改
+              @click="updateAdminLinePrepare(scope.row)">修改
             </el-button>
             <el-button
               size="mini"
               type="danger"
               @click="deleteAdminLinePrepare(scope.row.ts_pt_ID)">删除
             </el-button>
-            <el-button
-              size="mini"
-              @click="scheduleTimeManagement(scope.row.ts_pt_ID)">日程时间管理
-            </el-button>
+            <!--<el-button-->
+              <!--size="mini"-->
+              <!--@click="scheduleTimeManagement(scope.row.ts_pt_ID)">日程时间管理-->
+            <!--</el-button>-->
           </template>
         </el-table-column>
       </el-table>
@@ -148,8 +163,31 @@
             </a>
             <p v-for="item in ImageURL" v-show="ImageURL.length">{{item?item:""}}</p>
           </el-form-item>
+          <el-form-item label="活动图片:" :label-width="formLabelWidth">
+            <a href="javascript:;" class="file">活动图片上传
+              <input type="file" name="" ref="upload2" accept="image/*" multiple>
+            </a>
+            <img v-lazy="item.ts_gi_Name" v-for="item in ImageURL2"  width="128" height="80">
+          </el-form-item>
+          <el-form-item label="活动内容:" :label-width="formLabelWidth">
+            <el-button type="primary" size="small" @click="addActivityContent">添加</el-button>
+            <div v-show="addOptions.activityContent.length" v-for="item,index in addOptions.activityContent">
+              <span style="margin: 10px 20px 10px 0">活动内容{{index+1}} : {{item.ts_gi_Name}}</span>
+              <el-button type="success" size="small" @click="updateActivityContent(item,index)">修改</el-button>
+              <el-button type="danger" size="small" @click="deleteActivityContent(item,index)">删除</el-button>
+            </div>
+          </el-form-item>
+
           <el-form-item label="第几天日程:" :label-width="formLabelWidth">
-            <el-input v-model="addOptions.data.ts_pt_Day" placeholder="请输入第几天日程"></el-input>
+            <el-select v-model="addOptions.data.ts_pt_Day" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.value"
+                :value="item.value">
+              </el-option>
+            </el-select>
+            <!--<el-input v-model="addOptions.data.ts_pt_Day" placeholder="请输入第几天日程"></el-input>-->
           </el-form-item>
           <el-form-item label="产品描述:" :label-width="formLabelWidth">
             <el-input v-model="addOptions.data.ts_pt_Describe" placeholder="请输入产品描述" type="textarea"
@@ -182,6 +220,24 @@
           <el-form-item label="日程名称:" :label-width="formLabelWidth">
             <el-input v-model="updateAdminLinePrepareObj.ts_pt_Name" placeholder="请输入日程名称"></el-input>
           </el-form-item>
+          <el-form-item label="活动内容:" :label-width="formLabelWidth">
+            <el-button type="primary" size="small" @click="addActivityContent">添加</el-button>
+            <div v-show="updateAdminLinePrepareObj.activityContentList.length" v-for="item,index in updateAdminLinePrepareObj.activityContentList">
+              <span style="margin: 10px 20px 10px 0">活动内容{{index+1}} : {{item.ts_gi_Name}}</span>
+              <el-button type="success" size="small" @click="updateActivityContent(item,index)">修改</el-button>
+              <el-button type="danger" size="small" @click="deleteActivityContent(item,index)">删除</el-button>
+            </div>
+          </el-form-item>
+
+          <el-form-item label="活动图片:" :label-width="formLabelWidth">
+            <a href="javascript:;" class="file">添加图片
+              <input type="file" name="" ref="upload3" accept="image/*" multiple>
+            </a>
+            <div v-show="updateAdminLinePrepareObj.activityImage.length" v-for="item,index in updateAdminLinePrepareObj.activityImage">
+              <img v-lazy="item.ts_gi_Name"  width="128" height="80">
+              <el-button type="danger" size="small" @click="deleteActivityImage(item,index)">删除</el-button>
+            </div>
+          </el-form-item>
           <el-form-item label="展示图片:" :label-width="formLabelWidth">
             <a href="javascript:;" class="file">展示图片上传
               <input type="file" name="" ref="upload1" accept="image/*" multiple>
@@ -207,6 +263,31 @@
         </div>
       </el-dialog>
     </section>
+
+    <!--活动内容弹窗-->
+    <el-dialog title="添加活动内容" :visible.sync="addActivityContentDialog">
+      <el-form>
+        <el-form-item label="推荐理由:" :label-width="formLabelWidth">
+          <el-input v-model="activityContent" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addActivityContentDialog = false">取 消</el-button>
+        <el-button type="primary" @click="addActivityContentSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="修改活动内容" :visible.sync="updateActivityContentDialog">
+      <el-form :model="updateActivityContentObj">
+        <el-form-item label="推荐理由:" :label-width="formLabelWidth">
+          <el-input v-model="updateActivityContentObj.ts_gi_Name" auto-complete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="updateActivityContentDialog = false">取 消</el-button>
+        <el-button type="primary" @click="updateActivityContentSubmit(updateActivityContentObj)">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -215,21 +296,30 @@
     name: '',
     data(){
       return {
+        options:[],
+        updateActivityContentObj:{},
+        addActivityContentDialog:false,
+        updateActivityContentDialog:false,
+        activityContent:'',
         GoodId: '',
         LineID: '',
         userName: '',
         ImageURL: [],
+        ImageURL2:[],
         isLoading: false,
         userSearchID: '',
         formLabelWidth: '120px',
         addAdminLinePrepareDialog:false,
         updateAdminLinePrepareDialog:false,
+        updateAdminLinePrepareObj:{},
         addOptions:{
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
+          activityContent:[],
+          activityImage:[],
           "data": {
             "ts_pt_Product_LineID": "",
             "ts_pt_Name": "",
@@ -246,7 +336,7 @@
       'adminProductLine',
       'adminQueryProductList',
       'adminLinePrepare',
-      'updateAdminLinePrepareObj',
+//      'updateAdminLinePrepareObj',
       'adminLineScheduleManagementId'
     ]),
     methods: {
@@ -303,9 +393,203 @@
               }
             })
           }
+          if (this.$refs.upload2) {
+            this.$refs.upload2.addEventListener('change', data => {
+              for (var i = 0; i < this.$refs.upload2.files.length; i++) {
+                this.uploadImg(this.$refs.upload2.files[i]).then(data => {
+                  this.$store.dispatch('uploadAdminImgs', {
+                    imageData: data
+                  })
+                  .then(data => {
+                    if (data) {
+                      this.ImageURL2.push({
+                        ts_gi_Name:data.data
+                      });
+                    } else {
+                      this.$notify({
+                        message: '图片地址不存在!',
+                        type: 'error'
+                      });
+                    }
+                  })
+                })
+              }
+            })
+          }
+          if (this.$refs.upload3) {
+            this.$refs.upload3.addEventListener('change', data => {
+              for (var i = 0; i < this.$refs.upload3.files.length; i++) {
+                this.uploadImg(this.$refs.upload3.files[i]).then(data => {
+                  this.$store.dispatch('uploadAdminImgs', {
+                    imageData: data
+                  })
+                  .then(data => {
+                    if (data) {
+                      let options = {
+                        "loginUserID": "huileyou",
+                        "loginUserPass": "123",
+                        "operateUserID": "",
+                        "operateUserName": "",
+                        "pcName": "",
+                        "data": {
+                          "ts_gi_GoodID": this.updateAdminLinePrepareObj.ts_pt_ID,//产品编号
+                          "ts_gi_ParentID": "8",//父编码 1.推荐理由 2.产品介绍  3.费用包含 4.费用不包含 5.预定须知 6.退订政策 7活动内容 8活动图片
+                          "ts_gi_Name": data.data//类型名称
+                        }
+                      };
+                      this.$store.dispatch('AddRecommendedReason',options)
+                      .then(()=>{
+                        this.selectInitData(this.updateAdminLinePrepareObj.ts_pt_ID,8)
+                        .then(data=>{
+                          this.updateAdminLinePrepareObj.activityImage = data
+                        })
+                      },err=>{
+                        console.log(err)
+                      })
+                    } else {
+                      this.$notify({
+                        message: '图片地址不存在!',
+                        type: 'error'
+                      });
+                    }
+                  })
+                })
+              }
+            })
+          }
         }, 30)
       },
+      //删除活动图片
+      deleteActivityImage(item,index){
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "data": {
+            "ts_gi_ID": item.ts_gi_ID//产品信息ID
+          }
+        }
+        this.$store.dispatch('DeleteRecommendedReason',options)
+        .then(()=>{
+          this.selectInitData(this.updateAdminLinePrepareObj.ts_pt_ID,8)
+          .then(data=>{
+            this.updateAdminLinePrepareObj.activityImage = data
+          })
+        },err=>{
+          console.log(err)
+        })
+      },
+      //查询很多
+      selectInitData(id,ParentID){
+        let options = {
+          "loginUserID": "huileyou",
+          "loginUserPass": "123",
+          "operateUserID": "",
+          "operateUserName": "",
+          "pcName": "",
+          "ts_gi_GoodID": id,//产品编号
+          "ts_gi_ParentID":ParentID?ParentID:''
+        }
+        return this.$store.dispatch('initSelectInitAllData',options)
+      },
+      //添加活动内容
+      addActivityContent(){
+        this.activityContent = '';
+        this.$store.commit('setTranstionFalse');
+        this.addActivityContentDialog = true;
+      },
+      //添加活动内容提交
+      addActivityContentSubmit(){
+        if(this.updateAdminLinePrepareObj.activityContentList){
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": {
+              "ts_gi_GoodID": this.updateAdminLinePrepareObj.ts_pt_ID,//产品编号
+              "ts_gi_ParentID": "7",//父编码 1.推荐理由 2.产品介绍  3.费用包含 4.费用不包含 5.预定须知 6.退订政策 7活动内容 8活动图片
+              "ts_gi_Name": this.activityContent,
+            }
+          };
+          this.$store.dispatch('AddRecommendedReason',options)
+          .then(()=>{
+            this.selectInitData(this.updateAdminLinePrepareObj.ts_pt_ID,7)
+            .then(data=>{
+              this.updateAdminLinePrepareObj.activityContentList = data
+            })
+          },err=>{
+            console.log(err)
+          })
+        }else{
+          this.addOptions.activityContent.push({
+            ts_gi_Name:this.activityContent
+          });
+        }
+        this.addActivityContentDialog = false;
+      },
+      //修改活动内容
+      updateActivityContent(item,index){
+        this.updateActivityContentObj = item;
+        this.$store.commit('setTranstionFalse');
+        this.updateActivityContentDialog = true;
+      },
+      //修改活动内容提交
+      updateActivityContentSubmit(item){
+        if(this.updateAdminLinePrepareObj.activityContentList){
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": item
+          };
+          this.$store.dispatch('UpdateRecommendedReason',options)
+          .then(()=>{
+            this.updateActivityContentDialog = false;
+          },err=>{
+            console.log(err)
+          })
+        }else{
+          this.updateActivityContentDialog = false;
+        }
 
+      },
+      //删除活动内容
+      deleteActivityContent(item,index){
+        if(this.updateAdminLinePrepareObj.activityContentList){
+          let options = {
+            "loginUserID": "huileyou",
+            "loginUserPass": "123",
+            "operateUserID": "",
+            "operateUserName": "",
+            "pcName": "",
+            "data": {
+              "ts_gi_ID": item.ts_pt_ID,//产品信息ID
+            }
+          }
+          this.$store.dispatch('DeleteRecommendedReason',options)
+          .then(()=>{
+            this.selectInitData(this.updateAdminLinePrepareObj.ts_pt_ID,7)
+            .then(data=>{
+              this.updateAdminLinePrepareObj.activityContentList = data
+            })
+          },err=>{
+            console.log(err)
+          })
+        }else{
+          this.addOptions.activityContent =  this.addOptions.activityContent.filter((item,v)=>{
+            if(index==v){
+              return false;
+            }
+            return true;
+          })
+        }
+      },
       //选中产品
       handleSelect(item) {
 //        this.addOptions.data.ts_pt_Product_LineID = item.id;
@@ -334,7 +618,7 @@
             "ID": '',
             'isDelete': 0,
             "page": 1,
-            "rows": 100
+            "rows": 40
           };
           this.$store.dispatch('initAdminTradeGoodList', options)
           .then((data) => {
@@ -349,7 +633,7 @@
       },
       querySearchAsync(queryString, cb) {
         this.loadAll(1, queryString).then(data => {
-          var  data = data.data
+          var  data = data
           data = data.map(item => {
             return {
               id: item.ta_tg_ID,
@@ -409,6 +693,7 @@
       },
       //添加提交
       addAdminLinePrepareSubmit(){
+        this.addOptions.activityImage =  this.ImageURL2;
         this.addOptions.data.ts_pt_ShowImage =  this.ImageURL.join(',');
         this.$store.dispatch('AddAdminLinePrepare',this.addOptions)
           .then(() => {
@@ -426,11 +711,12 @@
         this.addAdminLinePrepareDialog = false;
       },
       //修改
-      updateAdminLinePrepare(id){
+      updateAdminLinePrepare(obj){
+        this.updateAdminLinePrepareObj = obj
         this.$store.commit('setTranstionFalse');
         this.updateAdminLinePrepareDialog = true;
         this.uploaNode();
-        this.$store.commit('initUpdateAdminLinePrepareObj',id)
+//        this.$store.commit('initUpdateAdminLinePrepareObj',id)
       },
       //修改提交
       updateAdminLinePrepareSubmit(){
@@ -498,6 +784,11 @@
       }
     },
     created(){
+      for(var i=1;i<21;i++){
+        this.options.push({
+          value:i
+        })
+      }
       let timeID = this.$route.query.timeID;
       if (timeID) {
         this.initData(timeID)

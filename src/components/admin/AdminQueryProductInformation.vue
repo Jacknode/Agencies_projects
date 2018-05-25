@@ -1,13 +1,13 @@
 <template>
   <div>
     <div id="wrap" class="clearfix">
-      <div>
-        <p style="font-weight: bold;font-size: 20px;margin-bottom: 20px">添加流程:</p>
-        <el-tree :data="data" :props="defaultProps" :default-expand-all="isOff"></el-tree>
-      </div>
+      <!--<div>-->
+        <!--<p style="font-weight: bold;font-size: 20px;margin-bottom: 20px">添加流程:</p>-->
+        <!--<el-tree :data="data" :props="defaultProps" :default-expand-all="isOff"></el-tree>-->
+      <!--</div>-->
       <div style="margin: 30px 0 0 20px">
         <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item @click.native="toMerch">商家产品</el-breadcrumb-item>
+          <el-breadcrumb-item @click.native="toMerch" style="cursor: pointer;color: #000;font-weight: bold;">商家产品</el-breadcrumb-item>
           <el-breadcrumb-item>产品线路</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -83,6 +83,11 @@
           align="center"
           label="产品编号"
           prop="ts_pt_GoodsListID">
+        </el-table-column>
+        <el-table-column
+          align="center"
+          label="行程名称"
+          prop="ts_pt_Name">
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
@@ -308,7 +313,7 @@
       },
       querySearchAsync(queryString, cb) {
         this.loadAll(1, queryString).then(data => {
-          var data = data.data
+          var data = data
           data = data.map(item => {
             return {
               id: item.ta_tg_ID,

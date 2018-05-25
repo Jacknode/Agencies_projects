@@ -13,11 +13,12 @@
               v-model="userName"
               :fetch-suggestions="querySearchAsync"
               placeholder="请选择产品"
+              size="small"
               @select="handleSelect"
             ></el-autocomplete>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="userSearchID" placeholder="请选择产品线路" @change="changeLine">
+            <el-select v-model="userSearchID" placeholder="请选择产品线路" @change="changeLine" size="small">
               <el-option
                 v-for="item in adminProductLine"
                 :key="item.ts_pt_ID"
@@ -27,7 +28,7 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="departureCityID" placeholder="请选择出发城市">
+            <el-select v-model="departureCityID" placeholder="请选择出发城市" size="small">
               <el-option
                 v-for="item in adminRouteDepartureCity"
                 :key="item.ts_cc_Name"
@@ -37,10 +38,10 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="search">查询</el-button>
+            <el-button type="primary" @click="search" size="small">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="addAdminLinePrice">新增</el-button>
+            <el-button type="primary" @click="addAdminLinePrice" size="small">新增</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -369,7 +370,7 @@
       },
       querySearchAsync(queryString, cb) {
         this.loadAll(1, queryString).then(data => {
-          var  data = data.data
+          var  data = data
           data = data.map(item => {
             return {
               id: item.ta_tg_ID,

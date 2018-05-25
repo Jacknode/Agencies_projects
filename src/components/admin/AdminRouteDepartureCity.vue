@@ -11,13 +11,14 @@
             <el-autocomplete
               style="width: 250px"
               v-model="userName"
+              size="small"
               :fetch-suggestions="querySearchAsync"
               placeholder="请选择产品"
               @select="handleSelect"
             ></el-autocomplete>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="userSearchID" placeholder="请选择产品线路">
+            <el-select v-model="userSearchID" placeholder="请选择产品线路" size="small">
               <el-option
                 v-for="item in adminProductLine"
                 :key="item.ts_pt_ID"
@@ -27,10 +28,10 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="search">查询</el-button>
+            <el-button type="primary" @click="search" size="small">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="addAdminRouteDepartureCity">新增</el-button>
+            <el-button type="primary" @click="addAdminRouteDepartureCity" size="small">新增</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -295,7 +296,7 @@
       },
       querySearchAsync(queryString, cb) {
         this.loadAll(1, queryString).then(data => {
-          var  data = data.data
+          var  data = data
           data = data.map(item => {
             return {
               id: item.ta_tg_ID,

@@ -1,9 +1,9 @@
 <template>
   <section id="wrap">
-    <div>
-      <p style="font-weight: bold;font-size: 20px;margin-bottom: 20px">添加流程:</p>
-      <el-tree :data="data" :props="defaultProps" :default-expand-all="isOff"></el-tree>
-    </div>
+    <!--<div>-->
+      <!--<p style="font-weight: bold;font-size: 20px;margin-bottom: 20px">添加流程:</p>-->
+      <!--<el-tree :data="data" :props="defaultProps" :default-expand-all="isOff"></el-tree>-->
+    <!--</div>-->
 
     <h1 class="userClass">商家产品信息</h1>
     <el-col :span="24" class="formSearch">
@@ -21,7 +21,7 @@
         <!--</el-form-item>-->
         <el-form-item style="float: right;">
           <!--<el-button type="primary" @click="search">查询</el-button>-->
-          <el-button type="primary" @click="addAdminMerchantProducts">新增</el-button>
+          <el-button type="primary" @click="addAdminMerchantProducts" size="small">新增</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -69,22 +69,61 @@
               <span>{{ props.row.ts_tg_GroupSite }}</span>
             </el-form-item>
             <el-form-item label="费用包含:">
-              <p v-for="item,index in props.row.feeIn">({{index+1}}):{{item.ts_gi_Name}}</p>
+              <el-popover
+                ref="popover1"
+                placement="top-start"
+                trigger="hover"
+              >
+                <p v-for="item,index in props.row.feeIn" style="padding: 20px;width: 500px">({{index+1}}):{{item.ts_gi_Name}}</p>
+              </el-popover>
+              <el-button v-popover:popover1 size="small">移入查看</el-button>
             </el-form-item>
             <el-form-item label="费用不包含:">
-              <p v-for="item,index in props.row.feeNotIn">({{index+1}}):{{item.ts_gi_Name}}</p>
+              <el-popover
+                ref="popover1"
+                placement="top-start"
+                trigger="hover">
+                <p v-for="item,index in props.row.feeNotIn" style="padding: 20px;width: 500px">({{index+1}}):{{item.ts_gi_Name}}</p>
+              </el-popover>
+              <el-button v-popover:popover1 size="small">移入查看</el-button>
+
             </el-form-item>
             <el-form-item label="推荐理由:">
-              <p v-for="item,index in props.row.buyReason">({{index+1}}):{{item.ts_gi_Name}}</p>
+              <el-popover
+                ref="popover1"
+                placement="top-start"
+                trigger="hover">
+                <p v-for="item,index in props.row.buyReason" style="padding: 20px;width: 500px">({{index+1}}):{{item.ts_gi_Name}}</p>
+              </el-popover>
+              <el-button v-popover:popover1 size="small">移入查看</el-button>
             </el-form-item>
             <el-form-item label="产品介绍:">
-              <p v-for="item,index in props.row.goodIntroduce">({{index+1}}):{{item.ts_gi_Name}}</p>
+              <el-popover
+                ref="popover1"
+                placement="top-start"
+                trigger="hover">
+                <p v-for="item,index in props.row.goodIntroduce" style="padding: 20px;width: 500px">({{index+1}}):{{item.ts_gi_Name}}</p>
+              </el-popover>
+              <el-button v-popover:popover1 size="small">移入查看</el-button>
             </el-form-item>
             <el-form-item label="预订须知:">
-              <p v-for="item,index in props.row.bookKnow">({{index+1}}):{{item.ts_gi_Name}}</p>
+              <el-popover
+                ref="popover1"
+                placement="top-start"
+                trigger="hover"
+              >
+                <p v-for="item,index in props.row.bookKnow" style="padding: 20px;width: 500px">({{index+1}}):{{item.ts_gi_Name}}</p>
+              </el-popover>
+              <el-button v-popover:popover1 size="small">移入查看</el-button>
             </el-form-item>
             <el-form-item label="退订政策:">
-              <p v-for="item,index in props.row.backRule">({{index+1}}):{{item.ts_gi_Name}}</p>
+              <el-popover
+                ref="popover1"
+                placement="top-start"
+                trigger="hover">
+                <p v-for="item,index in props.row.backRule" style="padding: 20px;width: 500px">({{index+1}}):{{item.ts_gi_Name}}</p>
+              </el-popover>
+              <el-button v-popover:popover1 size="small">移入查看</el-button>
             </el-form-item>
             <el-form-item label="展示图片地址:">
               <img :src="item" alt="" v-for="item in props.row.ta_tg_ShowImages"
@@ -1302,6 +1341,8 @@
       //添加推荐理由提交
       addBuyReasonSubmit(){
         if(this.updateAdminMerchantProductsObj.buyReason){
+          console.log(1)
+          return
           let options = {
             "loginUserID": "huileyou",
             "loginUserPass": "123",
@@ -1533,7 +1574,7 @@
         this.isLoading = true;
         this.$store.dispatch('initAdminTradeGoodList', options)
         .then((data) => {
-          this.total = data.data.totalRows;
+          this.total = data.totalRows;
           this.isLoading = false;
         }, err => {
           this.$notify({
