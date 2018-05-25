@@ -325,6 +325,18 @@ export const getSeriesState = val=>{
   }
 };
 
+//微电影系列连载状态
+export const getMoneyState = val=>{
+  switch (Number(val)) {
+    case 0:
+      return '未确认';
+    case 1:
+      return '已确认';
+    default:
+      return '已取消';
+  }
+};
+
 
 //微电影审核表视频类型
 export const getFilmType = val=>{

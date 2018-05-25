@@ -2171,7 +2171,26 @@ export default {
           var data = data.data;
           if (Number(data.resultcode) == 200) {
             commit('initTravelAgencyOrder', data.data);
-            relove()
+            relove(data.totalrows)
+          } else {
+            reject(data.resultcontent)
+          }
+        })
+
+    })
+  },
+  //确认订单
+  confirmTravelAgencyOrder(store,data){
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/TravelOrder/OutOrder', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(data.resultcontent)
           } else {
             reject(data.resultcontent)
           }
