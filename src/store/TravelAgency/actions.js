@@ -2157,5 +2157,26 @@ export default {
         }
       })
     })
-  }
+  },
+  //------------------------------------------旅行社--------------------------------------------------
+  //初始化旅行社
+  initTravelAgencyOrder({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/TravelOrder/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            commit('initTravelAgencyOrder', data.data);
+            relove()
+          } else {
+            reject(data.resultcontent)
+          }
+        })
+
+    })
+  },
 }

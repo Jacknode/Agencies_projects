@@ -54,6 +54,9 @@
             <el-menu-item-group>
               <el-menu-item index="/home/adminOrderDetail">订单明细信息</el-menu-item>
             </el-menu-item-group>
+            <el-menu-item-group>
+              <el-menu-item index="/home/TravelAgencyOrder">旅行社订单</el-menu-item>
+            </el-menu-item-group>
           </el-submenu>
           <el-submenu index="3"  v-show="userInfo.sm_ai_IsPass==1&&isHotel">
             <template slot="title">
@@ -142,7 +145,7 @@
               <span>V电影后台管理</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/home/vMovieCheckTable">V电影审核表</el-menu-item>
+              <el-menu-item index="/home/vMovieCheckTable">V电影待审核</el-menu-item>
               <el-menu-item index="/home/vMovieVideo">V电影视频</el-menu-item>
               <el-menu-item index="/home/vMovieSeries">V电影系列</el-menu-item>
               <el-menu-item index="/home/vMovieVideoSeries">V电影视频系列</el-menu-item>

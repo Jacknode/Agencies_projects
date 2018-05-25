@@ -1,6 +1,7 @@
 /**
  * Created by liuxiang on 18/05/03.
  */
+import axios from 'axios'
 
 export default {
   /************************************************微电影审核表********************************************************************/
@@ -53,7 +54,25 @@ export default {
           var data = data.data;
           if (Number(data.resultcode) == 200) {
             relove(Number(data.totalRows));
-            commit('childTypeData', data.data)
+            commit('childTypeData', data.data2)
+          } else {
+            reject(data.resultcontent)
+          }
+        })
+    })
+  },
+  childTypeData2({commit}, data) {
+    return new Promise(function (relove, reject) {
+      axios.post('http://webservice.1000da.com.cn/Type/Select', JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+        .then(data => {
+          var data = data.data;
+          if (Number(data.resultcode) == 200) {
+            relove(Number(data.totalRows));
+            commit('childTypeData2', data.data)
           } else {
             reject(data.resultcontent)
           }
@@ -63,7 +82,6 @@ export default {
   //添加审核表
   addVMovieCheckTable(store, data) {
     return new Promise(function (relove, reject) {
-      console.log(data)
       axios.post('http://webservice.1000da.com.cn/Validate/Insert', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -72,7 +90,6 @@ export default {
         .then(data => {
           var data = data.data;
           if (Number(data.resultcode) == 200) {
-            console.log(data)
             relove(data.resultcontent);
           } else {
             reject(data.resultcontent)
@@ -571,7 +588,7 @@ export default {
           var data = data.data;
           if (Number(data.resultcode) == 200) {
             relove(Number(data.totalRows));
-            commit('initVMovieSorting', data.data)
+            commit('initVMovieSorting', data.data2)
           } else {
             reject(data.resultcontent)
           }
