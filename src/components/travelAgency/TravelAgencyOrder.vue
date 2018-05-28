@@ -1,19 +1,20 @@
 <template>
   <div id="wrap" class="clearfix">
-    <h1 class="userClass not-print" >旅行社订单</h1>
- <!--   <el-col :span="24" class="formSearch not-print">
+    <h1 class="userClass not-print">旅行社订单</h1>
+    <el-col :span="24" class="formSearch not-print">
       <el-form :inline="true">
         <el-form-item>
-          <span>筛选:</span>
+          <span>订单号:</span>
         </el-form-item>
         <el-form-item>
-          <el-input type="text" v-model="orderID" auto-complete="off" placeholder="筛选" size="small" style="width: 250px"></el-input>
+          <el-input type="text" v-model="orderID" auto-complete="off" placeholder="筛选" size="small"
+                    style="width: 250px"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search" size="small">查询</el-button>
         </el-form-item>
       </el-form>
-    </el-col>-->
+    </el-col>
     <!--数据展示-->
     <el-table
       :data="TravelAgencyOrderList"
@@ -22,7 +23,7 @@
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="订单ID:">
+            <el-form-item label="订单号:">
               <span>{{props.row.ts_to_OrderID}}</span>
             </el-form-item>
             <el-form-item label="订单支付时间:">
@@ -31,15 +32,15 @@
             <el-form-item label="是否结算:">
               <span>{{props.row.ts_to_IsBalance}}</span>
             </el-form-item>
-<!--            <el-form-item label="未知3:">
-              <span>{{props.row.ts_to_LeaveMessage}}</span>
-            </el-form-item>-->
+            <!--            <el-form-item label="未知3:">
+                          <span>{{props.row.ts_to_LeaveMessage}}</span>
+                        </el-form-item>-->
             <el-form-item label="电子邮件:">
               <span>{{props.row.ts_to_Email}}</span>
             </el-form-item>
-<!--            <el-form-item label="未知5:">
-              <span>{{props.row.ts_to_AreaCode}}</span>
-            </el-form-item>-->
+            <!--            <el-form-item label="未知5:">
+                          <span>{{props.row.ts_to_AreaCode}}</span>
+                        </el-form-item>-->
             <el-form-item label="全票数:">
               <span>{{props.row.ts_to_FullCount}}</span>
             </el-form-item>
@@ -59,7 +60,7 @@
               <span>{{props.row.ts_to_FromPlace}}</span>
             </el-form-item>
             <!--<el-form-item label="是否删除:">-->
-              <!--<span>{{props.row.ts_to_IsDelete}}</span>-->
+            <!--<span>{{props.row.ts_to_IsDelete}}</span>-->
             <!--</el-form-item>-->
             <el-form-item label="发起订单时间:">
               <span>{{props.row.ts_to_CreateTime}}</span>
@@ -143,19 +144,19 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <!--                    :type="scope.row.ts_to_OutStatus == 0 ? 'primary':'success'  "-->
-              <template slot-scope="scope">
-                <el-button
-                  size="mini"
-                  :type="scope.row.ts_to_OutStatus == 0 ? confirmState1:confirmState2  "
-                  @click="ConfirmOrder(scope.row)">{{scope.row.ts_to_OutStatus | getMoneyState}}
-                </el-button>
-<!--                <el-button
-                  size="mini"
-                  type="danger"
-                  @click="Delete(scope.row.vf_ve_ID)">删除
-                </el-button>-->
-              </template>
-            </el-table-column>
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            :type="scope.row.ts_to_OutStatus == 0 ? confirmState1:confirmState2  "
+            @click="ConfirmOrder(scope.row)">{{scope.row.ts_to_OutStatus | getMoneyState}}
+          </el-button>
+          <!--                <el-button
+                            size="mini"
+                            type="danger"
+                            @click="Delete(scope.row.vf_ve_ID)">删除
+                          </el-button>-->
+        </template>
+      </el-table-column>
     </el-table>
 
     <!--分页-->
@@ -177,12 +178,12 @@
     name: '',
     data(){
       return {
-        orderID:'',
-        confirmState1:'primary',
-        confirmState2:'success',
-        confirmOderOrOreadyOrder:'确认订单',
+        orderID: '',
+        confirmState1: 'primary',
+        confirmState2: 'success',
+        confirmOderOrOreadyOrder: '确认订单',
         total: 0,
-        num:0,
+        num: 0,
         isLoading: false,
       }
     },
@@ -195,40 +196,40 @@
     methods: {
       handleCurrentChange(num){
         this.num = num;
-        this.initData('',num)
+        this.initData('', num)
       },
-      initData(orderID,page){
+      initData(orderID, page){
         let options = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
-          ts_to_OrderID:orderID?orderID:'',
-          "page": page?page:1,
+          ts_to_OrderID: orderID ? orderID : '',
+          "page": page ? page : 1,
           "rows": 10
         };
-        if(this.num){
+        if (this.num) {
           options.page = this.num;
         }
         this.isLoading = true
-        this.$store.dispatch("initTravelAgencyOrder",options)
-          .then((total) => {
-            this.total = total;
-            this.isLoading = false;
-          }, (err) => {
-            this.$notify({
-              message: err,
-              type: "error"
-            });
+        this.$store.dispatch("initTravelAgencyOrder", options)
+        .then((total) => {
+          this.total = total;
+          this.isLoading = false;
+        }, (err) => {
+          this.$notify({
+            message: err,
+            type: "error"
           });
+        });
       },
       //查询
       search(){
         this.initData(this.orderID.trim())
       },
       ConfirmOrder(row){
-        let confirmID={
+        let confirmID = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
@@ -237,20 +238,20 @@
           "orderID": row.ts_to_OrderID,
         };
         this.isLoading = true;
-        this.$store.dispatch("confirmTravelAgencyOrder",confirmID)
-          .then((suc)=>{
-            this.isLoading = false;
-            this.$notify({
-              message: suc,
-              type: "success"
-            });
-            this.initData('',1)
-          },(err)=>{
-            this.$notify({
-              message: err,
-              type: "error"
-            });
+        this.$store.dispatch("confirmTravelAgencyOrder", confirmID)
+        .then((suc) => {
+          this.isLoading = false;
+          this.$notify({
+            message: suc,
+            type: "success"
           });
+          this.initData('', 1)
+        }, (err) => {
+          this.$notify({
+            message: err,
+            type: "error"
+          });
+        });
       }
     },
   }

@@ -8,8 +8,8 @@
     <h1 class="userClass">商家产品信息</h1>
     <el-col :span="24" class="formSearch">
       <el-form :inline="true">
-        <el-form-item>
-
+        <el-form-item label="产品标题:">
+          <el-input v-model="title" size="small"></el-input>
         </el-form-item>
         <!--<el-form-item>-->
         <!--<el-autocomplete-->
@@ -19,8 +19,8 @@
         <!--@select="handleSelect"-->
         <!--&gt;</el-autocomplete>-->
         <!--</el-form-item>-->
-        <el-form-item style="float: right;">
-          <!--<el-button type="primary" @click="search">查询</el-button>-->
+        <el-form-item >
+          <el-button type="primary" @click="search" size="small">查询</el-button>
           <el-button type="primary" @click="addAdminMerchantProducts" size="small">新增</el-button>
         </el-form-item>
       </el-form>
@@ -666,6 +666,7 @@
     name: '',
     data(){
       return {
+        title:'',
         recommendedReasonContent:'',//添加推荐理由内容
         goodIntroduceContent:'',
         feeInfoListContent:'',//费用包含
@@ -1552,13 +1553,14 @@
         }, 30)
       },
       //初始化数据
-      initData(id, page){
+      initData(id, page,title){
         let options = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
           "operateUserName": "",
           "tradeID": id ? id : '',
+          "goodTitle":title?title:'',
           "userID": "",
           "pcName": "",
           "ID": '',
@@ -1583,7 +1585,7 @@
       },
       //查询
       search(){
-        this.initData(this.productsID, 1)
+        this.initData(this.productsID, 1,this.title)
       },
       //查询初始化数据
       searchInitData(){
