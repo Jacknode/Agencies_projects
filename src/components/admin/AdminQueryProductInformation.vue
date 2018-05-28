@@ -431,7 +431,9 @@
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
-          "ptID": id
+          "data":{
+            "ts_pt_ID":id
+          }
         };
         this.$store.dispatch('DeleteAdminQueryProductInformation', deleteOptions)
         .then(() => {

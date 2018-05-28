@@ -67,14 +67,13 @@
                 <span>{{ props.row.ts_pt_Name }}</span>
               </el-form-item>
               <el-form-item label="产品描述:">
-                <!--<span>{{ props.row.ta_tg_Describe }}</span>-->
                 <el-popover
-                  ref="popover1"
+                  ref="popover2"
                   placement="top-start"
-                  trigger="hover"
-                  :content="props.row.ts_pt_Describe">
+                  trigger="hover">
+                  <p  style="padding: 20px;width: 500px">{{props.row.ts_pt_Describe}}</p>
                 </el-popover>
-                <el-button v-popover:popover1 size="small">移入查看</el-button>
+                <el-button v-popover:popover2 size="small">移入查看</el-button>
               </el-form-item>
               <el-form-item label="展示图片地址:">
                 <img :src="item" alt="" v-for="item in props.row.ts_pt_ShowImage" style="width: 100px;height: 100px;margin-right: 10px">
@@ -267,7 +266,7 @@
     <!--活动内容弹窗-->
     <el-dialog title="添加活动内容" :visible.sync="addActivityContentDialog">
       <el-form>
-        <el-form-item label="推荐理由:" :label-width="formLabelWidth">
+        <el-form-item label="活动内容:" :label-width="formLabelWidth">
           <el-input v-model="activityContent" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
@@ -279,7 +278,7 @@
 
     <el-dialog title="修改活动内容" :visible.sync="updateActivityContentDialog">
       <el-form :model="updateActivityContentObj">
-        <el-form-item label="推荐理由:" :label-width="formLabelWidth">
+        <el-form-item label="活动内容:" :label-width="formLabelWidth">
           <el-input v-model="updateActivityContentObj.ts_gi_Name" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
@@ -686,7 +685,15 @@
       },
       //添加
       addAdminLinePrepare(){
-//        addOptions.data.ts_pt_Product_LineID
+        this.ImageURL =[];
+        this.ImageURL1 = [];
+        let obj = this.addOptions.data;
+        this.addOptions.activityContent = [];
+        this.addOptions.activityImage = [];
+        for(var attr in obj){
+          obj[attr] = ''
+        }
+
         this.$store.commit('setTranstionFalse');
         this.addAdminLinePrepareDialog = true;
         this.uploaNode()

@@ -1341,8 +1341,6 @@
       //添加推荐理由提交
       addBuyReasonSubmit(){
         if(this.updateAdminMerchantProductsObj.buyReason){
-          console.log(1)
-          return
           let options = {
             "loginUserID": "huileyou",
             "loginUserPass": "123",
