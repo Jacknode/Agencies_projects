@@ -1,7 +1,7 @@
 <template>
   <div id="wrap" class="clearfix">
     <h1 class="userClass not-print" >旅行社订单</h1>
-    <el-col :span="24" class="formSearch not-print">
+ <!--   <el-col :span="24" class="formSearch not-print">
       <el-form :inline="true">
         <el-form-item>
           <span>筛选:</span>
@@ -13,8 +13,7 @@
           <el-button type="primary" @click="search" size="small">查询</el-button>
         </el-form-item>
       </el-form>
-    </el-col>
-
+    </el-col>-->
     <!--数据展示-->
     <el-table
       :data="TravelAgencyOrderList"
