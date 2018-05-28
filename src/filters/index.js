@@ -355,3 +355,16 @@ export const getFilmType = val=>{
       return '未知';
   }
 };
+//支付状态
+export const getPayState = val=>{
+  switch (Number(val)) {
+    case 0:
+      return '未支付';
+    case 1:
+      return '已支付';
+    case 2:
+      return '已退票';
+    default:
+      return '未知';
+  }
+}

@@ -59,9 +59,9 @@
             <el-form-item label="出发地点:">
               <span>{{props.row.ts_to_FromPlace}}</span>
             </el-form-item>
-            <el-form-item label="是否删除:">
-              <span>{{props.row.ts_to_IsDelete}}</span>
-            </el-form-item>
+            <!--<el-form-item label="是否删除:">-->
+              <!--<span>{{props.row.ts_to_IsDelete}}</span>-->
+            <!--</el-form-item>-->
             <el-form-item label="发起订单时间:">
               <span>{{props.row.ts_to_CreateTime}}</span>
             </el-form-item>
@@ -75,7 +75,7 @@
               <span>{{props.row.ts_to_UserID}}</span>
             </el-form-item>
             <el-form-item label="出票状态:">
-              <span>{{props.row.ts_to_OutStatus}}</span>
+              <span>{{props.row.ts_to_OutStatus | getOutStatus}}</span>
             </el-form-item>
             <el-form-item label="用户名称:">
               <span>{{props.row.ts_to_UserName}}</span>
@@ -90,7 +90,7 @@
               <span>{{props.row.ts_to_PayParam}}</span>
             </el-form-item>
             <el-form-item label="订单状态:">
-              <span>{{props.row.ts_to_PayState}}</span>
+              <span>{{props.row.ts_to_PayState | getPayState}}</span>
             </el-form-item>
             <el-form-item label="总张数:">
               <span>{{props.row.ts_to_TicketCount}}</span>
@@ -183,6 +183,7 @@
         confirmState2:'success',
         confirmOderOrOreadyOrder:'确认订单',
         total: 0,
+        num:0,
         isLoading: false,
       }
     },
@@ -194,21 +195,28 @@
     },
     methods: {
       handleCurrentChange(num){
-        this.initData(num)
+        this.num = num;
+        this.initData('',num)
       },
-      initData(page){
+      initData(orderID,page){
         let options = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "operateUserID": "",
           "operateUserName": "",
           "pcName": "",
+          ts_to_OrderID:orderID?orderID:'',
           "page": page?page:1,
           "rows": 10
         };
+        if(this.num){
+          options.page = this.num;
+        }
+        this.isLoading = true
         this.$store.dispatch("initTravelAgencyOrder",options)
           .then((total) => {
             this.total = total;
+            this.isLoading = false;
           }, (err) => {
             this.$notify({
               message: err,
@@ -218,7 +226,7 @@
       },
       //查询
       search(){
-        this.initData()
+        this.initData(this.orderID.trim())
       },
       ConfirmOrder(row){
         let confirmID={
@@ -229,13 +237,15 @@
           "pcName": "",
           "orderID": row.ts_to_OrderID,
         };
+        this.isLoading = true;
         this.$store.dispatch("confirmTravelAgencyOrder",confirmID)
           .then((suc)=>{
+            this.isLoading = false;
             this.$notify({
               message: suc,
               type: "success"
             });
-            window.location.reload()
+            this.initData('',1)
           },(err)=>{
             this.$notify({
               message: err,
