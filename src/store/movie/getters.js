@@ -13,5 +13,6 @@ export default {
   UploadVideoList: state => state.UploadVideoList,
   VMovieParentTypeList: state => state.VMovieParentTypeList,
   VMovieChildTyeList: state => state.VMovieChildTyeList,
+  VMovieChildTyeList2: state => state.VMovieChildTyeList2,
 
 }

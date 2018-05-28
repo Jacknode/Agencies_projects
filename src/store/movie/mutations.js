@@ -8,6 +8,9 @@ export default {
   childTypeData(state, data) {
     state.VMovieChildTyeList = data;
   },
+  childTypeData2(state, data) {
+    state.VMovieChildTyeList2 = data;
+  },
   initVMovieSeries(state, data) {
     state.VMovieSeries = data;
   },

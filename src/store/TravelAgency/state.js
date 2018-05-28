@@ -75,6 +75,8 @@ export default {
   countyDataList:[],//获取县
   carCityPlaceList:[], //租车级联城市
 
+  //旅行社
+  TravelAgencyOrderList: [],//旅行社订单
 
   //参数
   adminMerchantProductsId: '',
@@ -84,4 +86,7 @@ export default {
   adminScheduleTimeManagementId: '',
   adminTimeActivityManagementId: '',
   adminActivityMealManagementId: '',
+
+
+
 }

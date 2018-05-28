@@ -58,7 +58,6 @@ const AdminUserInfo = resolve => require.ensure([], () => resolve(require('@/com
 const AdminPersonalBenefits = resolve => require.ensure([], () => resolve(require('@/components/admin/AdminPersonalBenefits')));
 // import AdminPersonalBenefits from '@/components/admin/AdminPersonalBenefits'
 
-/*------------------------------------酒店----------------------------------------*/
 //酒店管理系统
 
 //酒店详情页
@@ -229,7 +228,10 @@ const VMovieSeriesCategories = resolve => require.ensure([], () => resolve(requi
 // import  VMovieSeriesCategories from '@/components/movie/VMovieSeriesCategories'
 
 
-
+/*------------------------------------旅行社----------------------------------------*/
+//订单
+const TravelAgencyOrder = resolve => require.ensure([], () => resolve(require('@/components/travelAgency/TravelAgencyOrder')));
+/*------------------------------------酒店----------------------------------------*/
 
 
 export default [
@@ -254,6 +256,15 @@ export default [
           User:AdApply
         },
         name: 'AdApply'
+      },
+// <------------------------------------旅行社------------------------------------------------------>
+      {
+        path: 'TravelAgencyOrder',
+        components: {
+          default:Home,
+          User:TravelAgencyOrder
+        },
+        name: 'TravelAgencyOrder'
       },
 // <------------------------------------租车------------------------------------------------------>
       {

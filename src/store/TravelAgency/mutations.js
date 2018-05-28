@@ -383,5 +383,9 @@ export default {
   },
   initCarCityPlace(state,data){
     state.carCityPlaceList = data;
+  },
+//  旅行社
+  initTravelAgencyOrder(state,data){
+    state.TravelAgencyOrderList = data;
   }
 };
