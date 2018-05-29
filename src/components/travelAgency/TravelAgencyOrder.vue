@@ -147,9 +147,11 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            :type="scope.row.ts_to_OutStatus == 0 ? confirmState1:confirmState2  "
-            @click="ConfirmOrder(scope.row)">{{scope.row.ts_to_OutStatus | getMoneyState}}
+            type="primary"
+            v-if="scope.row.ts_to_OutStatus == 0"
+            @click="ConfirmOrder(scope.row)">确认订单
           </el-button>
+          <span v-else style="font-size: 12px;font-weight: bold;"> 已出单</span>
           <!--                <el-button
                             size="mini"
                             type="danger"
@@ -180,7 +182,7 @@
       return {
         orderID: '',
         confirmState1: 'primary',
-        confirmState2: 'success',
+        confirmState2: 'primary',
         confirmOderOrOreadyOrder: '确认订单',
         total: 0,
         num: 0,

@@ -222,9 +222,9 @@
          .then((total) => {
            if(total){
              this.showAdd = false;
-             this.total = total
-             this.isLoading  = false
            }
+           this.total = total
+           this.isLoading  = false
          }, err => {
            this.$notify({
              message: err,
