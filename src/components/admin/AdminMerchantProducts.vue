@@ -1517,6 +1517,7 @@
                   })
                   .then(data => {
                     if (data) {
+                      this.ImageURL = [];
                       this.ImageURL.push(data.data);
                     } else {
                       this.$notify({
@@ -1538,6 +1539,7 @@
                   })
                   .then(data => {
                     if (data) {
+                      this.ImageURL = [];
                       this.ImageURL.push(data.data);
                     } else {
                       this.$notify({
@@ -1639,6 +1641,7 @@
       },
       //修改提交
       updateAdminMerchantProductsSubmit(){
+
         let updateOptions = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
@@ -1656,7 +1659,7 @@
             "ts_tg_City": this.updateAdminMerchantProductsObj.ts_tg_City,
             "ts_tg_GroupSite": this.updateAdminMerchantProductsObj.ts_tg_GroupSite,
             "ta_tg_Describe": this.updateAdminMerchantProductsObj.ta_tg_Describe,
-            "ta_tg_ShowImage": this.ImageURL.join(','),
+            "ta_tg_ShowImage": '',
             "ta_tg_IsDelete": this.updateAdminMerchantProductsObj.ta_tg_IsDelete,
             "ta_tg_Remark": this.updateAdminMerchantProductsObj.ta_tg_Remark,
             "ts_tg_ShowTop": this.updateAdminMerchantProductsObj.ts_tg_ShowTop,
@@ -1664,6 +1667,11 @@
             "ts_tg_LongOut": this.updateAdminMerchantProductsObj.ts_tg_LongOut
           }
         };
+        if(this.ImageURL.length){
+          updateOptions.data.ta_tg_ShowImage = this.ImageURL.join(',')
+        }else{
+          updateOptions.data.ta_tg_ShowImage = this.updateAdminMerchantProductsObj.ta_tg_ShowImage
+        }
         this.$store.dispatch('UpdateAdminMerchantProducts', updateOptions)
         .then(() => {
           this.$notify({

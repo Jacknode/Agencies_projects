@@ -317,8 +317,9 @@ export default {
           var data = data.data;
           if (Number(data.resultcode) == 200) {
             var resulte = data.data;
-            for (var i = 0; i < resulte.length; i++) {
-              resulte[i].ta_tg_ShowImages = resulte[i].ta_tg_ShowImage.split(',')
+            let value = resulte.data;
+            for (var i = 0; i < value.length; i++) {
+              value[i].ta_tg_ShowImages = value[i].ta_tg_ShowImage.split(',')
             }
             commit('initAdminTradeGoodList', resulte.data);
             relove(resulte)
