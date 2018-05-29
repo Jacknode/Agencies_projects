@@ -1,22 +1,24 @@
 <template>
   <div id="wrap" class="clearfix">
     <h1 class="userClass not-print" >旅行社订单</h1>
- <!--   <el-col :span="24" class="formSearch not-print">
+    <el-col :span="24" class="formSearch not-print">
       <el-form :inline="true">
         <el-form-item>
-          <span>筛选:</span>
+          <span>订单筛选:</span>
         </el-form-item>
         <el-form-item>
-          <el-input type="text" v-model="orderID" auto-complete="off" placeholder="筛选" size="small" style="width: 250px"></el-input>
+          <el-input type="text" v-model="orderID" auto-complete="off" placeholder="订单筛选" size="small" style="width: 250px"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="search" size="small">查询</el-button>
+          <el-button type="primary" @click="search" size="small">订单查询</el-button>
         </el-form-item>
       </el-form>
-    </el-col>-->
+    </el-col>
     <!--数据展示-->
     <el-table
       :data="TravelAgencyOrderList"
+      :summary-method="getSummaries"
+      show-summary
       v-loading="isLoading"
       style="width: 100%">
       <el-table-column type="expand">
@@ -41,10 +43,10 @@
               <span>{{props.row.ts_to_AreaCode}}</span>
             </el-form-item>-->
             <el-form-item label="全票数:">
-              <span>{{props.row.ts_to_FullCount}}</span>
+              <span>{{props.row.ts_to_FullCount}}张</span>
             </el-form-item>
             <el-form-item label="儿童票数:">
-              <span>{{props.row.ts_to_ChildCount}}</span>
+              <span>{{props.row.ts_to_ChildCount}}张</span>
             </el-form-item>
             <el-form-item label="产品编码:">
               <span>{{props.row.ts_to_GoodsListID}}</span>
@@ -65,10 +67,10 @@
               <span>{{props.row.ts_to_CreateTime}}</span>
             </el-form-item>
             <el-form-item label="全票价:">
-              <span>{{props.row.ts_to_FullPrice}}</span>
+              <span>{{props.row.ts_to_FullPrice}}元</span>
             </el-form-item>
             <el-form-item label="儿童价:">
-              <span>{{props.row.ts_to_ChildPrice}}</span>
+              <span>{{props.row.ts_to_ChildPrice}}元</span>
             </el-form-item>
             <el-form-item label="用户编码:">
               <span>{{props.row.ts_to_UserID}}</span>
@@ -92,7 +94,7 @@
               <span>{{props.row.ts_to_PayState | getPayState}}</span>
             </el-form-item>
             <el-form-item label="总张数:">
-              <span>{{props.row.ts_to_TicketCount}}</span>
+              <span>{{props.row.ts_to_TicketCount}}张</span>
             </el-form-item>
             <el-form-item label="备注:">
               <span>{{props.row.ts_to_Remark}}</span>
@@ -107,7 +109,7 @@
               <span>{{props.row.ts_to_SellName}}</span>
             </el-form-item>
             <el-form-item label="总金额:">
-              <span>{{props.row.ts_to_SumPrice}}</span>
+              <span>{{props.row.ts_to_SumPrice}}元</span>
             </el-form-item>
             <el-form-item label="总的网售手续费:">
               <span>{{props.row.ts_to_SumService}}</span>
@@ -132,14 +134,22 @@
         prop="ts_to_OrderID">
       </el-table-column>
       <el-table-column
-        label="旅行社编码">
+        label="出票状态">
         <template slot-scope="scope">
-          {{ scope.row.ts_to_TouristTraderID }}
+          {{ scope.row.ts_to_OutStatus | getOutStatus }}
         </template>
       </el-table-column>
       <el-table-column
-        label="凭证码"
-        prop="ts_to_Password">
+        label="总金额"
+        prop="ts_to_SumPrice">
+      </el-table-column>
+      <el-table-column
+        label="全票价(元)"
+        prop="ts_to_FullPrice">
+      </el-table-column>
+      <el-table-column
+        label="儿童价(元)"
+        prop="ts_to_ChildPrice">
       </el-table-column>
       <el-table-column label="操作" align="center">
         <!--                    :type="scope.row.ts_to_OutStatus == 0 ? 'primary':'success'  "-->
@@ -196,6 +206,31 @@
       this.initData()
     },
     methods: {
+      getSummaries(param) {
+        const { columns, data } = param;
+        const sums = [];
+        columns.forEach((column, index) => {
+          if (index === 0) {
+            sums[index] = '总价';
+            return;
+          }
+          const values = data.map(item => Number(item[column.property]));
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return parseInt(prev + curr);
+              } else {
+                return parseInt(prev);
+              }
+            }, 0);
+            sums[index] += ' 元';
+          } else {
+            sums[index] = 'N/A';
+          }
+        });
+        return sums;
+      },
       handleCurrentChange(num){
         this.num = num;
         this.initData('',num)
