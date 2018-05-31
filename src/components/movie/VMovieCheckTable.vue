@@ -326,7 +326,7 @@
               "vf_vo_CreateTime": "",  //创建时间
               "vf_vo_Introduce": "",  //简介
               "vf_vo_Remark": "",  //详情
-              "vf_te_IDs": ""
+              "vf_te_IDs": ""//子分类们
 
             },
           }
@@ -595,8 +595,7 @@
         this.initData(this.movieType);
       },
       Add() {
-//        this.intParentTypeData();
-
+        this.intTypeData();
         this.addOptions.data.vf_ve_Type = "";
         let content = this.addOptions.data.vf_ve_Content;
         for (let i in content) {
@@ -621,7 +620,6 @@
               type: "success"
             })
              this.initData();
-             window.location.reload()
           }, (err) => {
             this.$notify({
               message: err,
@@ -737,62 +735,11 @@
               })
             })
       },
-      clearnUpdateObj(){
-        /*       VMovieCheckTableUpdateObj: {
-         "loginUserID": "huileyou",  //惠乐游用户ID
-           "loginUserPass": "123",  //惠乐游用户密码
-           "operateUserID": "",//操作员编码
-           "operateUserName": "",//操作员名称
-           "pcName": "",  //机器码
-           "data": {
-             "vf_ve_ID": "",  //审核表编号
-             "vf_ve_Type": "",//视频类型1广告2微电影3教育
-             "vf_ve_Content": {  //审核表内容
-             "vf_vo_ID": "",//视频编号（添加视频时传空，修改视频时传入视频编号）
-               "vf_vo_Time": "",  //时长（秒）
-               "vf_vo_Size": "",  //大小（MB）
-               "vf_vo_Extend": "",  //文件扩展名
-               "vf_vo_FileURL": "",  //文件地址
-               "vf_vo_AuthorID": "",  //作者
-               "vf_vo_Title": "",  //标题
-               "vf_vo_ImageURL": "",  //视频图片
-               "vf_vo_TomImageURL": "",  //首页大图
-               "vf_vo_CreateTime": "",  //创建时间
-               "vf_vo_Introduce": "",  //简介
-               "vf_vo_Remark": "",  //详情
-               "vf_te_IDs": ""//分类编号s
-           },
-         }
-       },*/
-        /*清空*/
-        console.log(11,this.VMovieCheckTableUpdateObj);
-        if(this.VMovieCheckTableUpdateObj){
-        this.VMovieCheckTableUpdateObj.data.vf_ve_ID='';
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Type='';
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_ID='';
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Time='';
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Size='';
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Extend='';
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_FileURL='';
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_AuthorID='';
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Title='';
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_ImageURL='';
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_TomImageURL='';
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_CreateTime='';
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Introduce='';
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Remark='';
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_te_IDs='';
-          console.log(22,this.VMovieCheckTableUpdateObj);
-        };
-
-      },
       Update(obj) {
-        /*清空*/
-
-        console.log(111,this.VMovieCheckTableUpdateObj);
         this.VMovieCheckTableUpdateObj.data.vf_ve_ID = obj.vf_ve_ID; //审核编码
         this.VMovieCheckTableUpdateObj.data.vf_ve_Type=obj.vf_ve_Type;//原来的视频类型编号
         /*电影类型筛选(-start-)*/
+        this.updateFilmType=[];//清空电影类型
         this.intTypeData();
         var updateTypeList = obj.vf_ve_Type.split(",");
         for(let item in updateTypeList){
@@ -800,9 +747,10 @@
         };
         /*电影类型筛选(-end-)*/
         /*分类名称(-start-)*/
+        this.updateCategoriesName=[];//清空子分类名称
         this.childTypeData(obj.vf_ve_Type); //调取当前行的子分类
         var IDsList = obj.vf_ve_Content.vf_te_IDs.split(",");
-        //数组字符串转化成数组数字
+        //字符串数组转化成数字数组
         for(let item in IDsList){
           this.updateCategoriesName.push(Number(IDsList[item]))//子分类显示当前行的分类名称
         };

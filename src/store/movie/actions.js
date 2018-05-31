@@ -608,7 +608,7 @@ export default {
           var data = data.data;
           if (Number(data.resultcode) == 200) {
             relove(Number(data.totalRows));
-            commit('initVMovieParentSorting', data.data)
+            commit('initVMovieParentSorting', data.data2)
           } else {
             reject(data.resultcontent)
           }

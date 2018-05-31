@@ -152,6 +152,8 @@
 
     data() {
       return {
+        //当前页
+        num:'',
         //是否禁用
         isDisabled: true,
         //修改
@@ -224,6 +226,7 @@
       //分页
       handleCurrentChange(num) {
         this.initData('','', num)
+        this.num = num;
       },
       initData(series,vedio, page) {
         let options = {
@@ -400,7 +403,7 @@
                 message: suc,
                 type: "success"
               });
-              this.initData(this.movieType);
+              initData(this.movieType,'', this.num);
             }
             , (err) => {
               this.$notify({
