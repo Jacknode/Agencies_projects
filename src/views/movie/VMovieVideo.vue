@@ -7,8 +7,7 @@
         <el-form :inline="true" size="small">
           <el-form-item>
             <span>视频:</span>
-            <el-input type="text" v-model="movieName" auto-complete="off" placeholder="视频名称"
-                      style="width: 250px"></el-input>
+            <el-input type="text" v-model="movieName" auto-complete="off" placeholder="视频名称" style="width: 250px"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="search">查询</el-button>
@@ -165,9 +164,9 @@
           <el-form-item size="large" :label-width="formLabelWidth">
             <el-button type="primary" size="mini" @click="uploadFilm">立即上传</el-button>
           </el-form-item>
-          <el-form-item label="作者:" :label-width="formLabelWidth">
+<!--          <el-form-item label="作者:" :label-width="formLabelWidth">
             <el-input v-model="VMovieVideoUpdateObj.data.vf_ve_Content.vf_vo_AuthorID" placeholder="作者"></el-input>
-          </el-form-item>
+          </el-form-item>-->
           <el-form-item label="视频类型:" :label-width="formLabelWidth">
             <el-input v-model="VMovieVideoUpdateObj.data.vf_ve_Type" placeholder="视频类型"></el-input>
           </el-form-item>
@@ -210,6 +209,8 @@
         //修改
         updateDialog: false,
         ImageURL: '',
+        //当前页
+        num: '',
         parentTypeId: [],
         categoriesName: [],
         ImageURL1: [],
@@ -380,7 +381,7 @@
                     });
                   });
               }
-          }
+          };
           xhr.open("POST", "http://image.1000da.com.cn/PostImage/PostToOSS", true);
           xhr.send(fd);
         } else {
@@ -390,7 +391,8 @@
       },
       //分页
       handleCurrentChange(num) {
-        this.initData('', num)
+        this.initData('', num);
+        this.num = num;
       },
       initData(title, page) {
         let options = {
@@ -467,7 +469,7 @@
               message: suc,
               type: "success"
             })
-            this.initData('', '', 1)
+            this.initData('', 1)
           }, (err) => {
             this.$notify({
               message: err,
@@ -550,7 +552,7 @@
                 message: suc,
                 type: "success"
               });
-              this.initData(this.movieType);
+              this.initData(this.movieType,this.num);
             }
             , (err) => {
               this.$notify({
@@ -560,7 +562,9 @@
             })
       },
       Update(obj) {
-        //点击修改前的数据处理
+        //清空
+        this.parentTypeId=[];
+        this.categoriesName=[];
         this.uploaNode();
         this.childTypeData(obj.vf_vo_Type);
         for (let i = 0; i < obj.vf_te_IDs.split(",").length; i++) {
@@ -597,8 +601,7 @@
                 message: suc,
                 type: "success"
               });
-                this.initData();
-//                window.location.reload()
+              this.initData(this.movieType,this.num);
             }
             , (err) => {
               this.$notify({

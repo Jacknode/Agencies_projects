@@ -6,11 +6,24 @@
       <el-col :span="24" class="formSearch">
         <el-form :inline="true">
 
-        <el-form-item label="视频名称筛选:">
+<!--        <el-form-item label="视频名称筛选:">
         <el-select v-model="videoName" placeholder="请选择视频名称">
         <el-option  :key="item.vf_vo_ID" :label="item.vf_vo_Title"  :value="item.vf_vo_ID" v-for="item in VMovieVideoList"></el-option>
         </el-select>
-        </el-form-item>
+        </el-form-item>-->
+
+          <el-form-item>
+            <span>视频名称筛选:</span>
+          </el-form-item>
+          <el-form-item>
+            <el-autocomplete
+              style="width: 250px"
+              v-model="filmName"
+              :fetch-suggestions="querySearchAsync"
+              placeholder="请选择视频名称"
+              @select="handleSelect"
+            ></el-autocomplete>
+          </el-form-item>
 
         <el-form-item label="日期筛选:" >
           <el-date-picker
@@ -102,12 +115,12 @@
           prop="vf_vo_ID">
         </el-table-column>
         <el-table-column
-          label="作者"
-          prop="vf_vo_AuthorID">
+          label="标题"
+          prop="vf_vo_Title">
         </el-table-column>
         <el-table-column
-          label="视频类型"
-          prop="vf_vo_Type">
+          label="视频类型名称"
+          prop="vf_vo_TypeName">
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
@@ -147,6 +160,8 @@
           "vedioName":''
         },
         videoName: '',
+        filmName: '',
+        filmID: '',
         //是否禁用
         isDisabled: true,
         ImageURL: '',
@@ -167,14 +182,105 @@
 
     created() {
       this.initData();
-      this.filmName();
+      this.initFilmName();
     },
     methods: {
-      search(){
-        console.log(this.date[0])
-        this.initData(this.videoName,this.date[0],this.date[1]);
+      //初始化视频
+      initFilmData(title){
+        let options = {
+          "loginUserID": "huileyou",  //惠乐游用户ID
+          "loginUserPass": "123",  //惠乐游用户密码
+          "operateUserID": "",//操作员编码
+          "operateUserName": "",//操作员名称
+          "pcName": "",  //机器码
+          "vf_vo_ID": "",//视频编号
+          "vf_vo_Extend": "",//文件扩展名
+          "vf_vo_AuthorID": "",//作者
+          "vf_vo_Type": "",//视频类型
+          "vf_vo_Title": title ? title : "",//标题
+          "vf_vo_PasserID": "",//审核人编码
+        };
+        this.$store.dispatch("initVMovieVideo", options)
+          .then(() => {
+            for(var i=0;i<this.VMovieVideoList.length;i++){
+              let loadAllFilmTypeListObj={};
+              loadAllFilmTypeListObj.value=this.VMovieVideoList[i].vf_vo_ID;
+              loadAllFilmTypeListObj.address=this.VMovieVideoList[i].vf_vo_Title;
+//              this.loadAllFilmTypeList.push(loadAllFilmTypeListObj);
+            }
+          }, (err) => {
+            this.$notify({
+              message: err,
+              type: "error"
+            });
+          });
       },
-      filmName(){
+      /*搜索视频名称*/
+
+      //加载所有数据
+      loadAll(filmName) {
+        return new Promise((relove, reject) => {
+          let options = {
+            "loginUserID": "huileyou",  //惠乐游用户ID
+            "loginUserPass": "123",  //惠乐游用户密码
+            "operateUserID": "",//操作员编码
+            "operateUserName": "",//操作员名称
+            "pcName": "",  //机器码
+            "vf_vo_ID": "",//视频编号
+            "vf_vo_Extend": "",//文件扩展名
+            "vf_vo_AuthorID": "",//作者
+            "vf_vo_Type": "",//视频类型
+            "vf_vo_Title": filmName?filmName:"",//标题
+            "vf_vo_PasserID": "",//审核人编码
+          };
+          this.$store.dispatch('initVMovieVideo', options)
+            .then((data) => {
+              relove(data)
+            }, err => {
+              this.$notify({
+                message: err,
+                type: 'error'
+              });
+            })
+        })
+      },
+      //搜索初始化数据
+      searchInitData() {
+        this.initFilmData(this.filmName)
+      },
+      //异步查询搜索
+      querySearchAsync(queryString, cb) {
+        this.loadAll(queryString)
+          .then(data => {
+            var data = data.data;
+            data = data.map(item => {
+              return {
+                id: item.vf_vo_ID,
+                value: item.vf_vo_Title
+              }
+            });
+            this.restaurants = data;
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+              cb(this.restaurants);
+            }, 10);
+          })
+      },
+      //选择的这条数据
+      handleSelect(item) {
+        this.value = item.id;
+        this.filmName = item.value;
+        this.filmID = item.id;
+        this.userID = item.id;
+        this.initFilmData(this.filmName)
+      },
+
+
+       /*微电影搜索*/
+      search(){
+        this.initData(this.filmID,this.date[0],this.date[1]);
+      },
+      initFilmName(){
         let options = {
           "loginUserID": "huileyou",  //惠乐游用户ID
           "loginUserPass": "123",  //惠乐游用户密码
@@ -190,7 +296,6 @@
         };
         this.$store.dispatch("initVMovieVideo", options)
           .then((data) => {
-            this.total=data.totalRows;
           }, (err) => {
             this.$notify({
               message: err,
@@ -254,6 +359,10 @@
       },
 
 
+    },
+    //改变时请求
+    mounted(){
+      this.searchInitData()
     }
   }
 

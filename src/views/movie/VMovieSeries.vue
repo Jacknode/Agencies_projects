@@ -148,8 +148,7 @@
           </el-form-item>
           <el-form-item label="连载状态:" :label-width="formLabelWidth">
             <el-select v-model="VMovieSeriesUpdateObj.data.vf_ss_WriteState" placeholder="请选择连载状态">
-              <el-option label="连载中" value="0"></el-option>
-              <el-option label="完结" value="1"></el-option>
+              <el-option v-for="item in SerialState" :key="item.value" :label="item.label" :value="item.value"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="更新时间:" :label-width="formLabelWidth">
@@ -180,13 +179,16 @@
 
     data() {
       return {
-        state:[
+        //当前页
+        num:'',
+        //连载状态
+        SerialState:[
           {
             label:"连载中",
             value:0
           },
           {
-            label:"完结",
+            label:"已完结",
             value:1
           }
         ],
@@ -254,6 +256,7 @@
       //分页
       handleCurrentChange(num) {
         this.initData('','','',num)
+        this.num = num;
       },
       initData(name,state,author,page) {
         let options = {
@@ -408,7 +411,7 @@
                 message: suc,
                 type: "success"
               });
-              this.initData(this.movieType);
+              this.initData(this.movieType,'','',this.num)
             }
             , (err) => {
               this.$notify({
