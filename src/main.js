@@ -11,6 +11,7 @@ import router from './router'
 import store from './store/index'
 // import axios from 'axios'
 import * as filters from './filters'
+import '@/permission'
 // import qs from 'qs';
 // import '../static/UE/ueditor.config.js'
 // import '../static/UE/ueditor.all.min.js'
@@ -38,6 +39,20 @@ Vue.use(VueLazyLoad,{
 // Vue.prototype.$http = axios;
 
 /* eslint-disable no-new */
+// axios.interceptors.request.use(function (config) {  //配置发送请求的信息
+//   NProgress.start();
+//   return config;
+// }, function (error) {
+//   return Promise.reject(error);
+// });
+// axios.interceptors.response.use(function (response) { //配置请求回来的信息
+//   NProgress.done();
+//   return response;
+// }, function (error) {
+//
+//   return Promise.reject(error);
+// });
+
 new Vue({
   el: '#app',
   router,

@@ -55,10 +55,10 @@
               "operateUserID": "",
               "operateUserName": "",
               "pcName": "",
-              "agentID": this.ruleForm2.account,
-              "agentPassword": this.ruleForm2.checkPass,
+              "userID": this.ruleForm2.account,
+              "password": this.ruleForm2.checkPass,
             };
-            axios.post('http://webservice.1000da.com.cn/AgentInfo/Login',JSON.stringify(loginParams),{
+            axios.post('http://webservice.1000da.com.cn/UserInfo/Login',JSON.stringify(loginParams),{
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
               }
@@ -68,7 +68,7 @@
               var data = data.data;
               if(Number(data.resultcode)==200){
                 this.$store.commit('showAdmin');
-                sessionStorage.setItem('admin',JSON.stringify(data.data.agentInfo));
+                sessionStorage.setItem('admin',JSON.stringify(data.data));
 //                let arr = data.data.agentInfoTypeList
 //                for(var i=0;i<arr.length;i++){
 //                  switch (arr[i].sm_cp_ID){

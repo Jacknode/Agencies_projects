@@ -597,7 +597,7 @@
           "priceFrom": "",//人均价格大于
           "priceTo": "",//人均价格小于
           "fd_sf_Phone": "",//联系电话
-          "fd_sf_TradeID": this.userInfo.sm_ai_ID,//供应商编码
+          "fd_sf_TradeID": this.userInfo.sm_ui_ID,//供应商编码
           "page": 1,
           "rows": 10000,
         };
@@ -609,7 +609,7 @@
           "operateUserID": "",
           "operateUserName": "",
           sm_ai_Name: '',
-          "sm_ai_ID": this.userInfo.sm_ai_ID,
+          "sm_ai_ID": this.userInfo.sm_ui_ID,
           "page": 1,
           "rows": 5,
         };

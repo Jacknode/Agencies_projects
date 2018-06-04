@@ -43,7 +43,7 @@
               <el-menu-item index="/home/adminUserInfo">供应商信息</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="2"  v-show="userInfo.sm_ai_IsPass==1&&isAgencies">
+          <el-submenu index="2"  v-show="userInfo.sm_ui_PassState==1&&isAgencies">
             <template slot="title">
               <i class="fa fa-flag" style="padding-right: 15px"></i>
               <span>旅行社后台管理</span>
@@ -58,7 +58,7 @@
               <el-menu-item index="/home/TravelAgencyOrder">旅行社订单</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="3"  v-show="userInfo.sm_ai_IsPass==1&&isHotel">
+          <el-submenu index="3"  v-show="userInfo.sm_ui_PassState==1&&isHotel">
             <template slot="title">
               <i class="fa fa-hotel" style="padding-right: 15px"></i>
               <span>酒店后台管理</span>
@@ -77,7 +77,7 @@
               <el-menu-item index="/home/hotelFacilitiesServicesFacilities">酒店设施服务设施信息</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="4"  v-show="userInfo.sm_ai_IsPass==1&&isTickets">
+          <el-submenu index="4"  v-show="userInfo.sm_ui_PassState==1&&isTickets">
             <template slot="title">
               <i class="fa fa-ticket" style="padding-right: 15px"></i>
               <span>门票后台管理</span>
@@ -93,7 +93,7 @@
             </el-menu-item-group>
           </el-submenu>
 
-          <el-submenu index="5"  v-show="userInfo.sm_ai_IsPass==1&&isFood">
+          <el-submenu index="5"  v-show="userInfo.sm_ui_PassState==1&&isFood">
             <template slot="title">
               <i class="fa fa-cutlery" style="padding-right: 15px"></i>
               <span>美食后台管理</span>
@@ -114,7 +114,7 @@
             </el-menu-item-group>
           </el-submenu>
 
-          <el-submenu index="6"  v-show="userInfo.sm_ai_IsPass==1&&isAdvertising">
+          <el-submenu index="6"  v-show="userInfo.sm_ui_PassState==1&&isAdvertising">
             <template slot="title">
               <i class="fa fa-tags" style="padding-right: 15px"></i>
               <span>广告后台管理</span>
@@ -124,7 +124,7 @@
             </el-menu-item-group>
           </el-submenu>
 
-          <el-submenu index="7"  v-show="userInfo.sm_ai_IsPass==1&&isCar">
+          <el-submenu index="7"  v-show="userInfo.sm_ui_PassState==1&&isCar">
             <template slot="title">
               <i class="fa fa-car" style="padding-right: 15px"></i>
               <span>租车后台管理</span>
@@ -139,7 +139,7 @@
             </el-menu-item-group>
           </el-submenu>
 
-          <el-submenu index="8"  v-show="userInfo.sm_ai_IsPass==1&&isMovie">
+          <el-submenu index="8"  v-show="userInfo.sm_ui_PassState==1&&isMovie">
             <template slot="title">
               <i class="fa fa-video-camera" style="padding-right: 15px"></i>
               <span>V电影后台管理</span>
@@ -220,7 +220,7 @@
     created() {
 
       this.userInfo = JSON.parse(sessionStorage.getItem('admin'));
-      this.status = this.userInfo.sm_ai_IsPass;
+      this.status = this.userInfo.sm_ui_PassState;
       let status = localStorage.getItem('status')
       if (!status) {
         this.dialogVisible = false;
@@ -249,19 +249,7 @@
         this.$router.push({name: 'Login'})
         return
       }
-      this.qiankeUser = user.sm_ai_Name;
-      let options = {
-        "loginUserID": "huileyou",
-        "loginUserPass": "123",
-        "operateUserID": "",
-        "operateUserName": "",
-        "tradeID": user.ts_tb_UserID ? user.ts_tb_UserID : '',
-        "userID": "",
-        "pcName": "",
-        "ID": "",
-        "page": 1,
-        "rows": 10
-      };
+      this.qiankeUser = user.sm_ui_Name;
       //跟团游栏目
       let AdminOptions = {
         "loginUserID": "huileyou",
@@ -297,7 +285,7 @@
           "operateUserID": "",
           "operateUserName": "",
           sm_ai_Name: '',
-          "sm_ai_ID": this.userInfo.sm_ai_ID,
+          "sm_ai_ID": this.userInfo.sm_ui_ID,
           "page": 1,
           "rows": 5,
         };
@@ -465,7 +453,7 @@
           "priceFrom": "",//人均价格大于
           "priceTo": "",//人均价格小于
           "fd_sf_Phone": "",//联系电话
-          "fd_sf_TradeID": this.userInfo.sm_ai_ID,//供应商编码
+          "fd_sf_TradeID": this.userInfo.sm_ui_ID,//供应商编码
           "page": 1,
           "rows": 10000,
         };
