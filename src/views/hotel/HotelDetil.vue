@@ -359,11 +359,11 @@
     methods: {
       //初始化数据
       initData() {
-        let sm_ai_AgentID = JSON.parse(sessionStorage.getItem('admin')).sm_ai_AgentID;
+        let sm_ui_ID = JSON.parse(sessionStorage.getItem('admin')).sm_ui_ID;
         let HotelDetailInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
-          "sm_ai_AgentInfoID": sm_ai_AgentID,
+          "sm_ai_AgentInfoID": sm_ui_ID,
         };
         this.isLoading = true;
         this.$store.dispatch('initMyHotelDetails', HotelDetailInfo)

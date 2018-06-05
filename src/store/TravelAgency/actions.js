@@ -1819,7 +1819,7 @@ export default {
   //获取省
   initProvinceData({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://hly.lxs.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
+      axios.post('http://webservice.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -1827,7 +1827,7 @@ export default {
         .then(data => {
           var data = data.data;
           if (Number(data.resultcode) == 200) {
-            commit('initProvinceData', data.checkFlowList)
+            commit('initProvinceData', data.data)
             relove(data.resultcontent)
           } else {
             reject(data.resultcontent)
@@ -1838,7 +1838,7 @@ export default {
   //供应商查看审核流程
   initLookList({commit}, data) {
     return new Promise(function (relove, reject) {
-        axios.post('http://webservice.1000da.com.cn/ProxyInfo/GetCheckInfo', JSON.stringify(data), {
+        axios.post('http://webservice.1000da.com.cn/AgentInfo/GetCheckInfo', JSON.stringify(data), {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
@@ -1846,7 +1846,7 @@ export default {
             .then(data => {
               var data = data.data;
               if (Number(data.resultcode) == 200) {
-                commit('initLookList', data.checkFlowList)
+                commit('initLookList', data.data)
                 relove()
               }else{
                 reject(data.resultcontent)
@@ -1856,7 +1856,7 @@ export default {
   },
   initCityData({commit}, data){
     return new Promise(function (relove, reject) {
-      axios.post('http://hly.lxs.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
+      axios.post('http://webservice.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -1875,7 +1875,7 @@ export default {
   //获取县
   initCountyData({commit}, data){
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/CarRentalWebPage/GetCarRentCity', JSON.stringify(data), {
+      axios.post('http://webservice.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -2045,9 +2045,8 @@ export default {
         var data = data.data;
         if (Number(data.resultcode) == 200) {
           let arr = data.data;
-          console.log(arr)
           for(var i=0;i<arr.length;i++){
-            switch (arr[i].sm_ai_CPropertyID){
+            switch (arr[i].sm_ai_PPropertyID){
               case 1:
                 //餐饮
                 commit('setIsFood');

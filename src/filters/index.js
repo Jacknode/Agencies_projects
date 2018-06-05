@@ -196,11 +196,11 @@ export const getUseTime = val=>{
 //办理状态
 export const getDoStatus = val=>{
   switch (Number(val)) {
-    case 1:
+    case 0:
       return '待审核';
-    case 2:
+    case 1:
       return '已通过';
-    case 3:
+    case 2:
       return '未通过';
     default:
       return '未知';

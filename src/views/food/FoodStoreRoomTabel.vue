@@ -41,6 +41,7 @@
 
       <el-table
         :data="foodStoreRoomTabelList"
+        v-loading="isLoading"
         style="width: 100%">
 
         <el-table-column
@@ -160,6 +161,7 @@
     ]),
     data() {
       return {
+        isLoading:false,
         storeId: '',
         roomId: '',
         formLabelWidth: '120px',
@@ -234,8 +236,10 @@
           "page": num ? num : 1,//允许占用时间
           "rows": "10",//备注
         }
+        this.isLoading = true;
         this.$store.dispatch('initFoodStoreRoomTabel', selectRoomTableInfo)
           .then(total => {
+            this.isLoading = false;
             this.total = total;
           }, err => {
             this.$notify({

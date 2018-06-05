@@ -31,6 +31,7 @@
 
       <el-table
         :data="foodStoreRecommendList"
+        v-loading="isLoading"
         style="width: 100%">
 
         <el-table-column
@@ -150,6 +151,7 @@
     ]),
     data() {
       return {
+        isLoading:false,
         storeId: '',
         total: 0,
         formLabelWidth: '120px',
@@ -193,8 +195,9 @@
           "rows": "10000",
         };
         this.$store.dispatch('initFoodStoreProduct', selectStoreFrontProductInfo)
-          .then(() => {}, err => {
-            $notify({
+          .then(() => {
+          }, err => {
+            this.$notify({
               message: err,
               type: 'error'
             })
@@ -226,8 +229,10 @@
           "page": "1",
           "rows":"10",
         };
+        this.isLoading = true;
         this.$store.dispatch('initFoodStoreRecommend', selectIntroduceFoodInfo)
           .then(total => {
+            this.isLoading = false;
             this.total = total;
           }, err => {
             this.$notify({

@@ -30,6 +30,7 @@
     <!--数据展示-->
     <el-table
       :data="foodStoreRoomList"
+      v-loading="isLoading"
       style="width: 100%">
 
       <el-table-column
@@ -157,6 +158,7 @@
         storeId: '',
         total: 0,
         updateObj: {},
+        isLoading:false,
         updateDialog: false,
       }
     },
@@ -185,9 +187,11 @@
           "fd_sfr_RoomName": "",//房间名称
           "page": "1",
           "rows": "10",
-        }
+        };
+        this.isLoading = true;
         this.$store.dispatch('initFoodStoreRoom', initStoreRoom).then(
           total => {
+            this.isLoading = false;
             this.total = total;
           }, err => {
             this.$notify({

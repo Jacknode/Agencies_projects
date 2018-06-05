@@ -29,7 +29,7 @@
 
       <!--数据展示-->
       <el-table
-
+        v-loading="isLoading"
         :data="foodStoppingPlaceList"
         style="width: 100%">
         <el-table-column
@@ -155,6 +155,7 @@
         isOff: true,
         foodStoreName: "",
         updateObj: {},
+        isLoading:false,
         addDialog: false,
         formLabelWidth: '120px',
         updateDialog: false,
@@ -212,8 +213,10 @@
           "fd_sc_LockStatus": "",//锁定状态
 
         };
+        this.isLoading = true;
         this.$store.dispatch('initFoodStoppingPlace', selectFoodStoppingPlace)
           .then(total => {
+            this.isLoading = false;
             this.total = total;
           }, err => {
             this.$notify({

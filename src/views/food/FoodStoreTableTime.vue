@@ -31,6 +31,7 @@
 
       <el-table
         :data="foodStoreTableTimeList"
+        v-loading="isLoading"
         style="width: 100%">
         <el-table-column
           prop="fd_clt_ID"
@@ -162,6 +163,7 @@
     ]),
     data() {
       return {
+        isLoading:false,
         storeId: '',
         total: 0,
         formLabelWidth: '120px',
@@ -200,8 +202,10 @@
           "fd_clt_FrontID": id,//店面编号
           "fd_clt_CanSellTime": "",//可售时间
         };
+        this.isLoading = true;
         this.$store.dispatch('initFoodStoreTableTime', selectCanLockTimeInfo)
           .then(total => {
+            this.isLoading = false;
             this.total = total;
           }, err => {
             this.$notify({

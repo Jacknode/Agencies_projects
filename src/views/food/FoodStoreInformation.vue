@@ -21,6 +21,7 @@
       <!--数据展示-->
       <el-table
         :data="foodStoreInformtionList"
+        v-loading="isLoading"
         style="width: 100%">
         <el-table-column type="expand">
           <template slot-scope="props">
@@ -328,6 +329,7 @@
         proviceId: '',
         roomName: '',
         updateObj: {},
+        isLoading:false
       }
     },
     methods: {
@@ -376,8 +378,10 @@
           "page": num ? num : 1,
           "rows": "5",
         };
+        this.isLoading = true;
         this.$store.dispatch('initFoodStoreInformtion', selectStoreFrontInfo)
           .then(total => {
+            this.isLoading = false
             this.total = total;
           }, err => {
             this.$notify({

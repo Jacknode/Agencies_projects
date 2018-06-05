@@ -41,6 +41,7 @@
 
       <el-table
         :data="foodStoreProductPictureList"
+        v-loading="isLoading"
         style="width: 100%">
 
         <el-table-column
@@ -155,6 +156,7 @@
     ]),
     data() {
       return {
+        isLoading: false,
         storeId: '',
         productId: '',
         formLabelWidth: '120px',
@@ -174,9 +176,9 @@
       uploadImg(file) {
         return new Promise(function (relove, reject) {
           lrz(file)
-            .then(data => {
-              relove(data.base64.split(',')[1])
-            })
+          .then(data => {
+            relove(data.base64.split(',')[1])
+          })
         })
       },
 
@@ -190,16 +192,16 @@
                   this.$store.dispatch('foodUploadAdminImgs', {
                     imageData: data
                   })
-                    .then(data => {
-                      if (data) {
-                        this.addOptions.fd_gi_GoodImage = data.data;
-                      } else {
-                        this.$notify({
-                          message: '图片地址不存在!',
-                          type: 'error'
-                        });
-                      }
-                    })
+                  .then(data => {
+                    if (data) {
+                      this.addOptions.fd_gi_GoodImage = data.data;
+                    } else {
+                      this.$notify({
+                        message: '图片地址不存在!',
+                        type: 'error'
+                      });
+                    }
+                  })
                 })
               }
             })
@@ -234,13 +236,13 @@
           "rows": "10000",
         };
         this.$store.dispatch('initFoodStoreProduct', selectStoreFrontProductInfo)
-          .then(() => {
-          }, err => {
-            $notify({
-              message: err,
-              type: 'error'
-            })
+        .then(() => {
+        }, err => {
+          $notify({
+            message: err,
+            type: 'error'
           })
+        })
       },
       //初始化数据
       initData(id) {
@@ -262,14 +264,16 @@
           "fd_gi_ID": "",//商品图片编码
           "fd_gi_GoodID": id,//店面产品编码
         };
+        this.isLoading = true;
         this.$store.dispatch('initFoodStoreProductPicture', selectGoodImageInfo)
-          .then(() => {
-          }, err => {
-            this.$notify({
-              message: err,
-              type: 'error'
-            })
+        .then(() => {
+          this.isLoading = false;
+        }, err => {
+          this.$notify({
+            message: err,
+            type: 'error'
           })
+        })
       },
       //查询
       search() {
@@ -298,18 +302,18 @@
           "data": this.addOptions
         };
         this.$store.dispatch('addFoodStoreProductPicture', insertGoodImageInfo)
-          .then(suc => {
-            this.$notify({
-              message: suc,
-              type: 'success'
-            })
-            this.initData(this.productId);
-          }, err => {
-            this.$notify({
-              message: err,
-              type: 'error'
-            })
+        .then(suc => {
+          this.$notify({
+            message: suc,
+            type: 'success'
           })
+          this.initData(this.productId);
+        }, err => {
+          this.$notify({
+            message: err,
+            type: 'error'
+          })
+        })
         this.addDialog = false;
       },
       //修改
@@ -333,18 +337,18 @@
           "data": this.updateObj
         };
         this.$store.dispatch('updateFoodStoreProductPicture', updateGoodImageInfo)
-          .then(suc => {
-            this.$notify({
-              message: suc,
-              type: 'success'
-            })
-            this.initData(this.productId);
-          }, err => {
-            this.$notify({
-              message: err,
-              type: 'error'
-            })
+        .then(suc => {
+          this.$notify({
+            message: suc,
+            type: 'success'
           })
+          this.initData(this.productId);
+        }, err => {
+          this.$notify({
+            message: err,
+            type: 'error'
+          })
+        })
         this.updateDialog = false;
       },
       //删除
@@ -360,18 +364,18 @@
           }
         }
         this.$store.dispatch('deleteFoodStoreProductPicture', deleteGoodImageInfo)
-          .then(suc => {
-            this.$notify({
-              message: suc,
-              type: 'success'
-            })
-            this.initData(this.productId);
-          }, err => {
-            this.$notify({
-              message: err,
-              type: 'error'
-            })
+        .then(suc => {
+          this.$notify({
+            message: suc,
+            type: 'success'
           })
+          this.initData(this.productId);
+        }, err => {
+          this.$notify({
+            message: err,
+            type: 'error'
+          })
+        })
       },
     },
   }

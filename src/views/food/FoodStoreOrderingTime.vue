@@ -46,6 +46,7 @@
       <el-table
         :data="foodStoreOrderingTimeList"
         style="width: 100%"
+        v-loading="isLoading"
         @selection-change="selete"
       >
         <el-table-column
@@ -204,6 +205,7 @@
           "dateTo": "",//日期范围
         },
         formLabelWidth: '120px',
+        isLoading:false,
         deleteObj: {},
         deleteData: [],
         pickerOptions: {
@@ -237,8 +239,10 @@
           "fd_rtt_TableState": "",//餐桌锁定状态
           "fd_rtt_FrontID": id ? id : ''//店面编码
         };
+        this.isLoading = true;
         this.$store.dispatch('initFoodStoreOrderingTime', selectRoomTableTimeInfo)
           .then(total => {
+            this.isLoading = false;
             this.total = total;
           }, err => {
             this.$notify({

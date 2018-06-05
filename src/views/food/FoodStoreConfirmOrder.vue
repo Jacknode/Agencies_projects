@@ -38,6 +38,7 @@
 
       <el-table
         :data="foodStoreConfirnOrderList"
+        v-loading="isLoading"
         style="width: 100%">
         <el-table-column type="expand">
           <template slot-scope="props">
@@ -176,6 +177,7 @@
     ]),
     data() {
       return {
+        isLoading:false,
         userInfo: {},
         payState: [
           {
@@ -238,8 +240,10 @@
           "rows": 5,
           "page": num ? num : 1
         };
+        this.isLoading = true;
         this.$store.dispatch('initFoodStoreConfirnOrder', selectOrderInfo)
           .then(total => {
+            this.isLoading = false;
             this.total = total;
           }, err => {
             this.$notify({

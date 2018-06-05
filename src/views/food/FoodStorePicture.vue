@@ -31,6 +31,7 @@
 
       <el-table
         :data="foodProductPictureList"
+        v-loading="isLoading"
         style="width: 100%">
 
         <el-table-column
@@ -152,6 +153,7 @@
     ]),
     data() {
       return {
+        isLoading:false,
         storeId: '',
         addDialog: false,
         formLabelWidth: '120px',
@@ -213,6 +215,7 @@
           })
           return
         }
+        this.isLoading = true;
         let selectProductImageInfo = {
           "loginUserID": "huileyou",
           "loginUserPass": "123",
@@ -224,6 +227,7 @@
         };
         this.$store.dispatch('initFoodProductPicture', selectProductImageInfo)
           .then(() => {
+          this.isLoading = false;
           }, err => {
             this.$notify({
               message: err,

@@ -1615,7 +1615,7 @@
         this.addOptions.backRule = this.backRuleList;
         this.addOptions.goodIntroduce = this.goodIntroduce
         this.addOptions.data.ta_tg_TradeID = this.productsID
-        this.addOptions.data.ta_tg_TradeName = this.userObj.sm_ai_GoodName
+//        this.addOptions.data.ta_tg_TradeName = this.userObj.sm_ai_GoodName
         this.$store.dispatch('AddAdminMerchantProducts', this.addOptions)
         .then(() => {
           this.$notify({

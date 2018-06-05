@@ -39,6 +39,7 @@
 
       <el-table
         :data="foodRoomPictureList"
+        v-loading="isLoading"
         style="width: 100%">
 
         <el-table-column
@@ -167,6 +168,7 @@
     ]),
     data() {
       return {
+        isLoading:false,
         storeId: '',
         roomId: '',
         formLabelWidth: '120px',
@@ -276,9 +278,13 @@
           "fd_ri_ID": "",//房间图片编码
           "fd_ri_RoomID": id,//店面房间编号
         }
+        this.isLoading = true;
         this.$store.dispatch('initFoodRoomPicture', selectRoomImageInfo)
           .then(total => {
+            this.isLoading = false;
             this.total = total;
+          },err=>{
+            console.log(err)
           })
       },
       //查询

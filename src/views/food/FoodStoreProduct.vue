@@ -29,6 +29,7 @@
 
       <el-table
         :data="foodStoreProductList"
+        v-loading="isLoading"
         style="width: 100%">
         <el-table-column
           prop="fd_sf_ProductName"
@@ -165,6 +166,7 @@
     data() {
       return {
         storeId: '',
+        isLoading:false,
         addDialog: false,
         addOptions: {
           "fd_sfp_StoreFrontID": "",//店面编号
@@ -206,8 +208,10 @@
           "page": num ? num : 1,
           "rows": "5",
         };
+        this.isLoading = true;
         this.$store.dispatch('initFoodStoreProduct', selectStoreFrontProductInfo)
           .then(total => {
+            this.isLoading = false;
             this.total = total;
           }, err => {
             $notify({
