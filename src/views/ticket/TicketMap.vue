@@ -319,24 +319,51 @@
         }
       },
       //图片上传
-      upload(item){
-        var fd = new FormData();
-        fd.append("fileToUpload", item.file);
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://image.1000da.com.cn/PostImage/PostFile");
-        xhr.send(fd);
-        xhr.onreadystatechange = ()=>{
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            let obj = JSON.parse(xhr.responseText);
-            this.fileList.push({
-              url:obj.data
-            })
-            this.addOptions.data.tm_se_Image=obj.data;
-            this.updateOptions.data.tm_se_Image=obj.data;
-            item.onSuccess('配时文件上传成功')
-            console.log(obj)
+      // upload(item){
+      //   var fd = new FormData();
+      //   fd.append("fileToUpload", item.file);
+      //   var xhr = new XMLHttpRequest();
+      //   xhr.open("POST", "http://image.1000da.com.cn/PostImage/PostFile");
+      //   xhr.send(fd);
+      //   xhr.onreadystatechange = ()=>{
+      //     if (xhr.readyState == 4 && xhr.status == 200) {
+      //       let obj = JSON.parse(xhr.responseText);
+      //       this.fileList.push({
+      //         url:obj.data
+      //       })
+      //       this.addOptions.data.tm_se_Image=obj.data;
+      //       this.updateOptions.data.tm_se_Image=obj.data;
+      //       item.onSuccess('配时文件上传成功')
+      //       console.log(obj)
+      //     }
+      //   }
+      // },
+      uploadToOSS(item) {
+        return new Promise((relove,reject)=>{
+          var fd = new FormData();
+          fd.append("fileToUpload", item.file);
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", "http://webservice.1000da.com.cn/OSSFile/PostToOSS");
+          xhr.send(fd);
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              let obj = JSON.parse(xhr.responseText);
+              this.fileList.push({
+                url:obj.data
+              })
+              this.addOptions.data.tm_se_Image=obj.data;
+              this.updateOptions.data.tm_se_Image=obj.data;
+              item.onSuccess('配时文件上传成功')
+              console.log(obj)
+            }else{
+              console.log(xhr.responseText)
+//               if (xhr.responseText) {
+//                 var data = xhr.responseText;
+//                 reject(JSON.parse(data).resultcontent)
+//               }
+            }
           }
-        }
+        })
       },
       handleRemove(file) {
         this.fileList = this.fileList.filter(item=>{
