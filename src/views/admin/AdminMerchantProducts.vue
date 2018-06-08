@@ -1561,7 +1561,7 @@
                 //   this.$store.dispatch('uploadAdminImgs', {
                 //     imageData: data
                 //   })
-                this.uploadToOSS(this.$refs.upload.files[i])
+                this.uploadToOSS(this.$refs.upload1.files[i])
                   .then(data => {
                     if (data) {
                       this.ImageURL = [];
