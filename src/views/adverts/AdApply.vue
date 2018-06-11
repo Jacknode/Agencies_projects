@@ -362,7 +362,7 @@
       'adPositionAllList'
     ]),
     created(){
-      this.userInfo = JSON.parse(sessionStorage.getItem('admin')).sm_ai_AgentID;
+      this.userInfo = JSON.parse(sessionStorage.getItem('admin')).sm_ui_ID;
       this.initData()
       this.adPositionAll()
       this.initAdTypeAllList()

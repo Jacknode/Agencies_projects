@@ -176,7 +176,7 @@
       'carOrderDetailsList'
     ]),
     created(){
-      this.traderID = JSON.parse(sessionStorage.getItem('admin')).sm_ai_AgentID;
+      this.traderID = JSON.parse(sessionStorage.getItem('admin')).sm_ui_ID;
       this.initData('',1)
     },
     methods: {

@@ -366,7 +366,7 @@
           "loginUserID": "huileyou",
           "loginUserPass": "123",
           "tm_ts_Code": id ? id : '',
-          "tm_tt_TradeInfoID": this.loginId.sm_ai_ID,
+          "tm_tt_TradeInfoID": this.loginId.sm_ui_ID,
           "tm_tt_IsDelete": 0,
           "page": num ? num : 1,
           "rows": 5
@@ -394,7 +394,7 @@
       },
       //添加提交
       addSubmit() {
-        this.addOptions.tm_tt_TradeInfoID = this.loginId.sm_ai_ID;
+        this.addOptions.tm_tt_TradeInfoID = this.loginId.sm_ui_ID;
         this.addOptions.tm_tt_Image = this.ImageURL.join(',');
         let insertTicketType = {
           "loginUserID": "huileyou",
