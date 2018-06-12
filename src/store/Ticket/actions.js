@@ -476,7 +476,7 @@ export default {
   //查询商户订单
   initTicketQueryOrder({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/TmOrder/GetOrderInfo', JSON.stringify(data), {
+      axios.post(getNewStr+'/TmOrder/GetOrderInfo', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
