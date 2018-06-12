@@ -17,6 +17,7 @@
 </template>
 
 <script>
+  import {getNewStr} from '@/assets/public'
   export default {
     data() {
       return {
@@ -58,7 +59,7 @@
               "userID": this.ruleForm2.account,
               "password": this.ruleForm2.checkPass,
             };
-            axios.post('http://webservice.1000da.com.cn/UserInfo/Login',JSON.stringify(loginParams),{
+            axios.post(getNewStr+'/UserInfo/Login',JSON.stringify(loginParams),{
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
               }

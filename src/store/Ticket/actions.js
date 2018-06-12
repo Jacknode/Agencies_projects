@@ -1,12 +1,13 @@
 /**
  * Created by leibo on 18/3/29.
  */
+import {getNewStr} from '@/assets/public'
 
 export default {
   //查询景点主题分类信息
   initThemeType({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/TmThemeType/GetThemeTypeList', JSON.stringify(data), {
+      axios.post(getNewStr+'/TmThemeType/GetThemeTypeList', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -25,7 +26,7 @@ export default {
   //初始化商家景点信息
   initTicketAttractions({commit}, data) {
     return new Promise((relove, reject) => {
-      axios.post('http://webservice.1000da.com.cn/TourSite/GetTourSite', JSON.stringify(data), {
+      axios.post(getNewStr+'/TourSite/GetTourSite', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -70,7 +71,7 @@ export default {
   //添加景点信息
   addTicletInformation({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/TourSite/Insert', JSON.stringify(data), {
+      axios.post(getNewStr+'/TourSite/Insert', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -88,7 +89,7 @@ export default {
   //洲
   initTicketGreat({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
+      axios.post(getNewStr+'/AreaFull/SelectProvice', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -107,7 +108,7 @@ export default {
   //国家
   initTicketCountrie({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
+      axios.post(getNewStr+'/AreaFull/SelectProvice', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -126,7 +127,7 @@ export default {
   //省
   initTicketProvice({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
+      axios.post(getNewStr+'/AreaFull/SelectProvice', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -145,7 +146,7 @@ export default {
   //市
   initTicketCity({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
+      axios.post(getNewStr+'/AreaFull/SelectProvice', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -164,7 +165,7 @@ export default {
   //县
   initTicketContry({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/AreaFull/SelectProvice', JSON.stringify(data), {
+      axios.post(getNewStr+'/AreaFull/SelectProvice', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -183,7 +184,7 @@ export default {
   //修改景点信息
   updateTicketAttractionsSubmit({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/TourSite/Update', JSON.stringify(data), {
+      axios.post(getNewStr+'/TourSite/Update', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -201,7 +202,7 @@ export default {
   //删除景点信息
   deleteTicketAttractions({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/TourSite/Delete', JSON.stringify(data), {
+      axios.post(getNewStr+'/TourSite/Delete', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -219,7 +220,7 @@ export default {
   //初始化预定须知数据
   initPredeterminedInstructions({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/BookKnow/Select', JSON.stringify(data), {
+      axios.post(getNewStr+'/BookKnow/Select', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -238,7 +239,7 @@ export default {
   //添加预定须知
   addPredeterminedInstructionsSubmit({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/BookKnow/Insert', JSON.stringify(data), {
+      axios.post(getNewStr+'/BookKnow/Insert', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -256,7 +257,7 @@ export default {
   //修改预定须知
   updatePredeterminedInstructionsSubmit({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/BookKnow/Update', JSON.stringify(data), {
+      axios.post(getNewStr+'/BookKnow/Update', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -274,7 +275,7 @@ export default {
   //初始化交通信息
   initTrafficInformation({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/Transport/Select', JSON.stringify(data), {
+      axios.post(getNewStr+'/Transport/Select', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -293,7 +294,7 @@ export default {
   //添加交通信息
   addTrafficInformationSubmit({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/Transport/Insert', JSON.stringify(data), {
+      axios.post(getNewStr+'/Transport/Insert', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -311,7 +312,7 @@ export default {
   //修改交通信息
   updateTrafficInformationSubmit({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/Transport/Update', JSON.stringify(data), {
+      axios.post(getNewStr+'/Transport/Update', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -329,7 +330,7 @@ export default {
   //删除交通信息
   deleteTrafficInformation({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/Transport/Delete', JSON.stringify(data), {
+      axios.post(getNewStr+'/Transport/Delete', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -347,7 +348,7 @@ export default {
   //初始化票种类型
   initTicketType({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/TicketType/Select', JSON.stringify(data), {
+      axios.post(getNewStr+'/TicketType/Select', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -366,7 +367,7 @@ export default {
   //添加票种类型
   addTicketTypeSubmit({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/TicketType/Insert', JSON.stringify(data), {
+      axios.post(getNewStr+'/TicketType/Insert', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -384,7 +385,7 @@ export default {
   //修改票种类型
   updateTicketTypeSubmit({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/TicketType/Update', JSON.stringify(data), {
+      axios.post(getNewStr+'/TicketType/Update', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -402,7 +403,7 @@ export default {
   //删除票种类型
   deleteTicketType({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/TicketType/Delete', JSON.stringify(data), {
+      axios.post(getNewStr+'/TicketType/Delete', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -420,7 +421,7 @@ export default {
   //初始化票种票价
   initTicketTypeTicketPrice({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/TicketTypePrice/GetTicketTypePriceList', JSON.stringify(data), {
+      axios.post(getNewStr+'/TicketTypePrice/GetTicketTypePriceList', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -439,7 +440,7 @@ export default {
   //添加票种票价
   addTicketTypeTicketPriceSubmit({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/TicketTypePrice/Insert', JSON.stringify(data), {
+      axios.post(getNewStr+'/TicketTypePrice/Insert', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -457,7 +458,7 @@ export default {
   //删除提交
   deleteTicketTypeTicketPriceSubmit({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/TicketTypePrice/Delete', JSON.stringify(data), {
+      axios.post(getNewStr+'/TicketTypePrice/Delete', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -523,7 +524,7 @@ export default {
   //申请展示首页
   applyShowHomePage({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/TourSite/IsShowTop', JSON.stringify(data), {
+      axios.post(getNewStr+'/TourSite/IsShowTop', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -541,7 +542,7 @@ export default {
   //确认订单
   ticketConfirmOrder({commit}, data) {
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/TmOrder/ReSureOrder',JSON.stringify(data),{
+      axios.post(getNewStr+'/TmOrder/ReSureOrder',JSON.stringify(data),{
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -559,7 +560,7 @@ export default {
   //导览
   initTicketMap({commit},data){
     return new Promise(function (relove, reject) {
-      axios.post('http://webservice.1000da.com.cn/Site/Select',JSON.stringify(data),{
+      axios.post(getNewStr+'/Site/Select',JSON.stringify(data),{
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
