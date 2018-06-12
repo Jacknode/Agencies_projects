@@ -160,6 +160,7 @@
 <script>
   import {mapGetters} from 'vuex'
 
+  import {getNewStr} from '@/assets/public'
   export default {
     computed: mapGetters([
       'foodStoreInformtionList',
@@ -186,21 +187,12 @@
       }
     },
     methods: {
-      //图片转二进制
-      uploadImg(file) {
-        return new Promise(function (relove, reject) {
-          lrz(file)
-            .then(data => {
-              relove(data.base64.split(',')[1])
-            })
-        })
-      },
       uploadToOSS(file) {
         return new Promise((relove,reject)=>{
           var fd = new FormData();
           fd.append("fileToUpload", file);
           var xhr = new XMLHttpRequest();
-          xhr.open("POST", "http://webservice.1000da.com.cn/OSSFile/PostToOSS");
+          xhr.open("POST", getNewStr+"/OSSFile/PostToOSS");
           xhr.send(fd);
           xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {

@@ -10,7 +10,7 @@
             <span>支付状态筛选:</span>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="searchId" placeholder="请选择">
+            <el-select v-model="searchId" placeholder="请选择"  size="mini">
               <el-option
                 v-for="item in searchArr"
                 :key="item.value"
@@ -20,7 +20,7 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="search">查询</el-button>
+            <el-button type="primary" @click="search" size="mini">查询</el-button>
           </el-form-item>
         </el-form>
       </el-col>

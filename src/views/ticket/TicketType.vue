@@ -11,11 +11,11 @@
             <span>票种编码筛选:</span>
           </el-form-item>
           <el-form-item>
-            <el-input v-model="siteId"></el-input>
+            <el-input v-model="siteId" size="mini"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="search">查询</el-button>
-            <el-button type="primary" @click="Add">新增</el-button>
+            <el-button type="primary" @click="search" size="mini">查询</el-button>
+            <el-button type="primary" @click="Add" size="mini">新增</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -241,6 +241,7 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
+  import {getNewStr} from '@/assets/public'
 
   export default {
     computed: mapGetters([
@@ -288,7 +289,7 @@
           var fd = new FormData();
           fd.append("fileToUpload", file);
           var xhr = new XMLHttpRequest();
-          xhr.open("POST", "http://webservice.1000da.com.cn/OSSFile/PostToOSS");
+          xhr.open("POST", getNewStr+"/OSSFile/PostToOSS");
           xhr.send(fd);
           xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {

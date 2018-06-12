@@ -10,7 +10,7 @@
           <el-form-item>
             <span>票种编码筛选:</span>
           </el-form-item>
-          <el-select v-model="scenicNumber" placeholder="请选择景点" @change="changeScenicNumber">
+          <el-select v-model="scenicNumber" placeholder="请选择景点" @change="changeScenicNumber" size="mini" style="margin-top:7px;">
             <el-option
               v-for="item in ticketAttractionsList"
               :key="item.tm_ts_Code"
@@ -18,7 +18,7 @@
               :value="item.tm_ts_Code">
             </el-option>
           </el-select>
-          <el-select v-model="ticketTypeNumber" placeholder="请选择票种">
+          <el-select v-model="ticketTypeNumber" placeholder="请选择票种" size="mini">
             <el-option
               v-for="item in ticketTypeList"
               :key="item.tm_tt_ID"
@@ -29,6 +29,7 @@
           <el-form-item>
             <div class="block">
               <el-date-picker
+                size="mini"
                 v-model="searchTime"
                 type="date"
                 placeholder="选择日期(默认为本月)"
@@ -38,9 +39,9 @@
             </div>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="search">查询</el-button>
-            <el-button type="primary" @click="Add">新增</el-button>
-            <el-button type="danger" @click="deleteBtn">删除</el-button>
+            <el-button type="primary" @click="search" size="mini">查询</el-button>
+            <el-button type="primary" @click="Add" size="mini">新增</el-button>
+            <el-button type="danger" @click="deleteBtn" size="mini">删除</el-button>
           </el-form-item>
         </el-form>
       </el-col>
