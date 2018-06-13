@@ -414,13 +414,6 @@
             });
           })
       },
-      //新增
-      addMap(){
-        this.$store.dispatch('addTicketMap',this.addOptions)
-          .then(suc=>{
-            this.initData();
-          })
-      },
       //删除
       deleteMap(id){
         let deleteOption={
@@ -453,7 +446,10 @@
       //新增提交
       AddSubmit(){
         this.addOptions.data.tm_se_Image=this.ImageURL.join(",");
-        this.addMap();
+        this.$store.dispatch('addTicketMap',this.addOptions)
+          .then(suc=>{
+            this.initData();
+          })
         this.addDialog = false;
       },
       //修改提交
