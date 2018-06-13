@@ -253,6 +253,7 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
+  import {getNewStr} from '@/assets/public'
 
   export default {
 
@@ -382,7 +383,9 @@
         this.childTypeData(this.parentTypeId.join(','));
         this.isVisible=true;
       },
+      //添加上传视频
       uploadFile() {
+        this.addVideoSrc='';
         var fd = new FormData();
         if(this.$refs.upload1.files[0]){
           //获取文件
@@ -394,40 +397,26 @@
           var str =this.$refs.upload1.files[0].name;
           //获取文件名
           this.addOptions.data.vf_ve_Content.vf_vo_Extend=str.split(".")[1];
-          fd.append("fileUploadOss",this.$refs.upload1.files[0]);
+          fd.append("fileToUpload",this.$refs.upload1.files[0]);
           var xhr = new XMLHttpRequest();
           xhr.onreadystatechange = ()=>{
             if (xhr.readyState == 4 && xhr.status == 200)
-              if(xhr.responseText){
-                let preData= JSON.parse(xhr.responseText).data;
-                this.videoData.vedioName=preData;
-                this.addOptions.data.vf_ve_Content.vf_vo_FileURL=this.videoData.vedioName;
-                this.$store.dispatch("UploadVideo", this.videoData)
-                  .then((suc) => {
-                    this.$notify({
-                      message: suc,
-                      type: "success"
-                    }),
-                      this.percentage=100,
-                      this.addVideoSrc=this.UploadVideoList;
-                    //获取时长
-                    var e =document.getElementById("addVideo");
-                    setTimeout(()=>{
-                      if(isNaN(e.duration)){
-                        this.addOptions.data.vf_ve_Content.vf_vo_Time = '';
-                      }else{
-                        this.addOptions.data.vf_ve_Content.vf_vo_Time=parseInt(e.duration).toString();
-                      }
-                    },1000);
-                  }, (err) => {
-                    this.$notify({
-                      message: err,
-                      type: "error"
-                    });
-                  });
+            //给视频赋值
+            if(xhr.responseText){
+              this.addVideoSrc=JSON.parse(xhr.responseText).data;
+              this.addOptions.data.vf_ve_Content.vf_vo_FileURL=this.addVideoSrc;
+            };
+            //获取时长
+            var e =document.getElementById("addVideo");
+            setTimeout(()=>{
+              if(isNaN(e.duration)){
+                this.addOptions.data.vf_ve_Content.vf_vo_Time = '';
+              }else{
+                this.addOptions.data.vf_ve_Content.vf_vo_Time=parseInt(e.duration).toString();
               }
-          }
-          xhr.open("POST", "http://image.1000da.com.cn/PostImage/PostToOSS",true);
+            },1000);
+          };
+          xhr.open("POST", getNewStr+"/OSSFile/PostToOSS",true);
           xhr.send(fd);
         }else {
           alert("请选择上传视频")
@@ -478,7 +467,7 @@
                   });
               }
           }
-          xhr.open("POST", "http://image.1000da.com.cn/PostImage/PostToOSS",true);
+          xhr.open("POST", getNewStr+"/OSSFile/PostToOSS",true);
           xhr.send(fd);
           //上传成功后获取最新上传视频时间
           Date.prototype.Format = function (fmt) {
@@ -594,6 +583,7 @@
       search() {
         this.initData(this.movieType);
       },
+      //新增
       Add() {
         this.intTypeData();
         this.addOptions.data.vf_ve_Type = "";
@@ -605,6 +595,7 @@
         this.addDialog = true;
         this.$store.commit('setTranstionFalse');
       },
+      //新增提交
       addSubmit() {
         let date = new Date();
         let day = date.getDay();
@@ -613,6 +604,7 @@
         this.addOptions.data.vf_ve_Type=this.parentTypeId.join(",");
         this.addOptions.data.vf_ve_Content.vf_vo_CreateTime = newDate;
         this.addOptions.data.vf_ve_Content.vf_vo_AuthorID = "1";//
+        console.log(this.addOptions)
         this.$store.dispatch("addVMovieCheckTable", this.addOptions)
           .then((suc) => {
             this.$notify({
@@ -629,29 +621,21 @@
         this.initData();
         this.addDialog = false;
       },
-      uploadImg(file) {
-        return new Promise((relove, reject) => {
-          lrz(file)
-            .then(data => {
-              relove(data.base64.split(',')[1])
-            })
-        })
-      },
+      //上传图片
       uploadToOSS(file) {
         return new Promise((relove,reject)=>{
           var fd = new FormData();
           fd.append("fileToUpload", file);
           var xhr = new XMLHttpRequest();
-          xhr.open("POST", "http://webservice.1000da.com.cn/OSSFile/PostToOSS");
+          xhr.open("POST", getNewStr+"/OSSFile/PostToOSS");
           xhr.send(fd);
           xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
               if (xhr.responseText) {
-                var data = xhr.responseText
+                var data = xhr.responseText;
                 relove(JSON.parse(data))
               }
             }else{
-              console.log(xhr.responseText)
 //               if (xhr.responseText) {
 //                 var data = xhr.responseText;
 //                 reject(JSON.parse(data).resultcontent)
@@ -712,11 +696,6 @@
           if (this.$refs.addBigImgUpload) {
             this.$refs.addBigImgUpload.addEventListener('change', data => {
               for (var i = 0; i < this.$refs.addBigImgUpload.files.length; i++) {
-                // this.uploadImg(this.$refs.addBigImgUpload.files[i])
-                //   .then(data => {
-                //   this.$store.dispatch('UploadnImgs', {
-                //     imageData: data
-                //   })
                 this.uploadToOSS(this.$refs.addBigImgUpload.files[i])
                     .then(data => {
                       if (data) {
@@ -728,7 +707,6 @@
                         });
                       }
                     })
-                // })
               }
             })
           }
