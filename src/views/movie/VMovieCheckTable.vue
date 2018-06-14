@@ -5,13 +5,13 @@
       <!--查询栏-->
       <el-col :span="24" class="formSearch">
         <el-form :inline="true" size="mini">
-          <el-form-item label="电影类型筛选:" :label-width="formLabelWidth">
-            <el-select v-model="movieType" placeholder="请选择电影类型" >
-              <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_ID" v-for="item in VMovieTypeList"></el-option>
-            </el-select>
-          </el-form-item>
+          <!--<el-form-item label="电影类型筛选:" :label-width="formLabelWidth">-->
+            <!--<el-select v-model="movieType" placeholder="请选择电影类型" >-->
+              <!--<el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_ID" v-for="item in VMovieTypeList"></el-option>-->
+            <!--</el-select>-->
+          <!--</el-form-item>-->
           <el-form-item>
-            <el-button type="primary" @click="search">查询</el-button>
+            <!--<el-button type="primary" @click="search">查询</el-button>-->
             <el-button type="primary" @click="Add">新增</el-button>
           </el-form-item>
         </el-form>
@@ -23,7 +23,7 @@
         style="width: 100%">
         <el-table-column type="expand">
           <template slot-scope="props">
-            <el-form label-position="left" inline class="demo-table-expand">
+            <el-form label-position="left" inline class="demo-table-expand" label-width="100px">
               <el-form-item label="审核表编号:">
                 <span>{{props.row.vf_ve_ID}}</span>
               </el-form-item>
@@ -64,7 +64,7 @@
                 <span>{{props.row.vf_ve_Content.vf_vo_Remark}}</span>
               </el-form-item>
               <el-form-item label="视频:">
-                <video :src="props.row.vf_ve_Content.vf_vo_TempFileURL"  width="320" height="240" controls="controls"></video>
+                <video :src="props.row.vf_ve_Content.vf_vo_FileURL"  width="320" height="240" controls="controls"></video>
               </el-form-item>
             </el-form>
           </template>
@@ -99,7 +99,6 @@
           </template>
         </el-table-column>
       </el-table>
-
       <!--分页-->
       <div class="block" style="text-align: right">
         <el-pagination
@@ -111,7 +110,6 @@
         >
         </el-pagination>
       </div>
-
       <!--添加-->
       <el-dialog title="添加" :visible.sync="addDialog">
         <el-form :model="addOptions">
@@ -159,7 +157,7 @@
           <el-form-item label="视频图片:" :label-width="formLabelWidth">
             <a href="javascript:;" class="file">
               视频图片上传
-              <input type="file" name="" ref="upload" accept="image/*">
+              <input type="file" name="" ref="addFilmImg" accept="image/*">
             </a>
             <img v-lazy="addOptions.data.vf_ve_Content.vf_vo_ImageURL"
                  v-show="addOptions.data.vf_ve_Content.vf_vo_ImageURL"
@@ -179,7 +177,6 @@
           <el-button type="primary" @click="addSubmit">确 定</el-button>
         </div>
       </el-dialog>
-
       <!--修改-->
       <el-dialog title="修改" :visible.sync="updateDialog">
         <el-form :model="VMovieCheckTableUpdateObj">
@@ -207,7 +204,7 @@
           <el-form-item label="首页大图:" :label-width="formLabelWidth">
             <a href="javascript:;" class="file">
               首页大图上传
-              <input type="file" name="" ref="upload" accept="image/*">
+              <input type="file" name="" ref="updateBigImg" accept="image/*">
             </a>
             <img v-lazy="VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_TomImageURL"
                  v-show="VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_TomImageURL"
@@ -216,17 +213,17 @@
           <el-form-item label="视频图片:" :label-width="formLabelWidth">
             <a href="javascript:;" class="file">
               视频图片上传
-              <input type="file" name="" ref="upload3" accept="image/*">
+              <input type="file" name="" ref="updateFilmImg" accept="image/*">
             </a>
             <img v-lazy="VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_ImageURL"
                  v-show="VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_ImageURL"
                  style="width: 100px;height: 100px">
           </el-form-item>
           <el-form-item label="上传视频:" :label-width="formLabelWidth">
-            <a href="javascript:;" class="file">上传视频
-              <input type="file" name="" ref="upload4" multiple>
+            <a href="javascript:;" class="file">选择视频
+              <input type="file" name="" ref="updateFilm" multiple>
             </a>
-            <video id="addVideo1" :src="VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_TempFileURL"  width="320" height="240" controls="controls"></video>
+            <video id="addVideo1" :src="updateVideo"  width="320" height="240" controls="controls"></video>
           </el-form-item>
           <el-form-item size="large" :label-width="formLabelWidth">
             <el-button type="primary" size="mini" @click="uploadFileUpdate">立即上传</el-button>
@@ -283,6 +280,7 @@
           label: '北京烤鸭'
         }],
         parentTypeId:'',
+        updateVideo:'',//修改视频播放
         addVideoSrc:'',
         num:'',
         updateMovieType:'',
@@ -304,6 +302,8 @@
         total: 0,
         //查询
         movieType: '',
+        //修改上传的视频文件
+        updateFilmfile: [],
         //添加
         addDialog: false,
         addOptions: {
@@ -313,14 +313,14 @@
           "operateUserName": "",//操作员名称
           "pcName": "",
           "data": {
-            "vf_ve_Type": "",//视频类型
+            "vf_ve_Type": "2",//视频类型(微电影)
             "vf_ve_Content": {
               "vf_vo_ID":"",//视频编号（添加视频时传空，修改视频时传入视频编号）
               "vf_vo_Time": "",  //时长（秒）
               "vf_vo_Size": "",  //大小（MB）
               "vf_vo_Extend": "mp4",  //文件扩展名
               "vf_vo_FileURL": "",  //文件地址
-              "vf_vo_AuthorID": "",  //作者
+              "vf_vo_AuthorID": JSON.parse(sessionStorage.getItem('admin')).sm_ui_ID +'',  //作者
               "vf_vo_Title": "",  //标题
               "vf_vo_ImageURL": "",  //视频图片
               "vf_vo_TomImageURL": "",  //首页大图
@@ -342,14 +342,14 @@
           "pcName": "",  //机器码
           "data": {
             "vf_ve_ID": "",  //审核表编号
-            "vf_ve_Type": "",//视频类型1广告2微电影3教育
+            "vf_ve_Type": "2",//视频类型1广告2微电影3教育
             "vf_ve_Content": {  //审核表内容
               "vf_vo_ID": "",//视频编号（添加视频时传空，修改视频时传入视频编号）
               "vf_vo_Time": "",  //时长（秒）
               "vf_vo_Size": "",  //大小（MB）
               "vf_vo_Extend": "",  //文件扩展名
               "vf_vo_FileURL": "",  //文件地址
-              "vf_vo_AuthorID": "",  //作者
+              "vf_vo_AuthorID": JSON.parse(sessionStorage.getItem('admin')).sm_ui_ID +'',  //作者
               "vf_vo_Title": "",  //标题
               "vf_vo_ImageURL": "",  //视频图片
               "vf_vo_TomImageURL": "",  //首页大图
@@ -382,6 +382,10 @@
       addParentChange() {
         this.childTypeData(this.parentTypeId.join(','));
         this.isVisible=true;
+        //如果父分类选择首页大图则没有子选项
+        if(this.parentTypeId=='5'||this.parentTypeId==''){
+          this.isVisible=false;
+        };
       },
       //添加上传视频
       uploadFile() {
@@ -418,74 +422,6 @@
           };
           xhr.open("POST", getNewStr+"/OSSFile/PostToOSS",true);
           xhr.send(fd);
-        }else {
-          alert("请选择上传视频")
-        };
-      },
-      uploadFileUpdate() {
-        var fd = new FormData();
-        //获取文件
-        var file =this.$refs.upload4.files[0];
-        if(file){
-          //获取最新文件大小
-          var fileSize = file.size;
-          fileSize=parseInt(fileSize/1024*100/100); //单位为KB
-          this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Size=fileSize;
-          var str =file.name;
-          //获取最新文件扩展名
-          this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Extend=str.split(".")[1];
-          fd.append("fileUploadOss",file);
-          var xhr = new XMLHttpRequest();
-          xhr.onreadystatechange = ()=>{
-            if (xhr.readyState == 4 && xhr.status == 200)
-              if(xhr.responseText){
-                let preData= JSON.parse(xhr.responseText).data;
-                this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_FileURL=preData;//获取最新视频真实地址
-                this.videoData.vedioName=preData;
-                this.$store.dispatch("UploadVideo", this.videoData)
-                  .then((suc) => {
-                    this.$notify({
-                      message: suc,
-                      type: "success"
-                    }),
-                      this.percentage=100,
-                      this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_TempFileURL=this.UploadVideoList;
-                    //获取时长
-                    var e =document.getElementById("addVideo1");
-                    setTimeout(()=>{
-                      if(isNaN(e.duration)){
-                        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Time = '';
-                      }else{
-                        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Time=parseInt(e.duration).toString();
-                      }
-                    },1000);
-                  }, (err) => {
-                    this.$notify({
-                      message: err,
-                      type: "error"
-                    });
-                  });
-              }
-          }
-          xhr.open("POST", getNewStr+"/OSSFile/PostToOSS",true);
-          xhr.send(fd);
-          //上传成功后获取最新上传视频时间
-          Date.prototype.Format = function (fmt) {
-            var o = {
-              "M+": this.getMonth() + 1, //月份
-              "d+": this.getDate(), //日
-              "h+": this.getHours(), //小时
-              "m+": this.getMinutes(), //分
-              "s+": this.getSeconds(), //秒
-              "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-              "S": this.getMilliseconds() //毫秒
-            };
-            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            for (var k in o)
-              if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-            return fmt;
-          };
-          this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_CreateTime = new Date().Format("yyyy/MM/dd hh:mm:ss");
         }else {
           alert("请选择上传视频")
         };
@@ -532,10 +468,12 @@
             });
           });
       },
+      //分页
       handleCurrentChange(num) {
         this.initData('', num)
         this.num=num;
       },
+      //初始化类型
       intTypeData(typeName,typeParentName){
         let options = {
           "loginUserID": "huileyou",
@@ -557,6 +495,7 @@
             });
           });
       },
+      //初始化数据
       initData(name, page) {
         let options = {
           "loginUserID": "huileyou",
@@ -565,8 +504,8 @@
           "operateUserName": "",//操作员名称
           "pcName": "",
           "vf_ve_ID": "",//审核表编号
-          "vf_vo_AuthorID": "1",//作者ID
-          "vf_ve_Type": name ? name : "",//视频类型
+          "vf_vo_AuthorID": JSON.parse(sessionStorage.getItem('admin')).sm_ui_ID +'',//作者ID
+          "vf_ve_Type": name ? name : "2",//视频类型
           "page": page ? page : 1,//页码
           "rows": 5//条数
         };
@@ -580,18 +519,23 @@
             });
           });
       },
+      //查询
       search() {
         this.initData(this.movieType);
       },
       //新增
       Add() {
+        this.categoriesName='';
+        this.parentTypeId='';
+        this.addVideoSrc='';
         this.intTypeData();
-        this.addOptions.data.vf_ve_Type = "";
+//        this.addOptions.data.vf_ve_Type = "";
         let content = this.addOptions.data.vf_ve_Content;
         for (let i in content) {
           content[i] = "";
         };
-        this.uploaNode();
+        //上传图片
+        this.uploadNode();
         this.addDialog = true;
         this.$store.commit('setTranstionFalse');
       },
@@ -601,10 +545,9 @@
         let day = date.getDay();
         let newDate = date.getFullYear() + "/" + date.getMonth() + "/" + day + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         this.addOptions.data.vf_ve_Content.vf_te_IDs=this.categoriesName.join(",");
-        this.addOptions.data.vf_ve_Type=this.parentTypeId.join(",");
+//        this.addOptions.data.vf_ve_Type=this.parentTypeId.join(",");
+        this.addOptions.data.vf_ve_Content.vf_vo_AuthorID=JSON.parse(sessionStorage.getItem('admin')).sm_ui_ID +'';
         this.addOptions.data.vf_ve_Content.vf_vo_CreateTime = newDate;
-        this.addOptions.data.vf_ve_Content.vf_vo_AuthorID = "1";//
-        console.log(this.addOptions)
         this.$store.dispatch("addVMovieCheckTable", this.addOptions)
           .then((suc) => {
             this.$notify({
@@ -644,17 +587,19 @@
           }
         })
       },
-      uploaNode() {
+      //图片上传
+      uploadNode() {
         this.addOptions.data.vf_ve_Content.vf_vo_ImageURL = '';
         setTimeout(() => {
-          if (this.$refs.upload) {
-            this.$refs.upload.addEventListener('change', data => {
-              for (var i = 0; i < this.$refs.upload.files.length; i++) {
+          //新增图片上传
+          if (this.$refs.addFilmImg) {
+            this.$refs.addFilmImg.addEventListener('change', data => {
+              for (var i = 0; i < this.$refs.addFilmImg.files.length; i++) {
                 // this.uploadImg(this.$refs.upload.files[i]).then(data => {
                 //   this.$store.dispatch('UploadnImgs', {
                 //     imageData: data
                 //   })
-                this.uploadToOSS(this.$refs.upload.files[i])
+                this.uploadToOSS(this.$refs.addFilmImg.files[i])
                     .then(data => {
                       this.addOptions.data.vf_ve_Content.vf_vo_ImageURL = "";
                       if (data) {
@@ -670,29 +615,7 @@
               }
             })
           }
-          if (this.$refs.upload3) {
-            this.$refs.upload3.addEventListener('change', data => {
-              for (var i = 0; i < this.$refs.upload3.files.length; i++) {
-                // this.uploadImg(this.$refs.upload3.files[i])
-                //   .then(data => {
-                //   this.$store.dispatch('UploadnImgs', {
-                //     imageData: data
-                //   })
-                this.uploadToOSS(this.$refs.upload3.files[i])
-                    .then(data => {
-                      if (data) {
-                        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_ImageURL=data.data;
-                      } else {
-                        this.$notify({
-                          message: '图片地址不存在!',
-                          type: 'error'
-                        });
-                      }
-                    })
-                // })
-              }
-            })
-          }
+          //新增首页大图上传
           if (this.$refs.addBigImgUpload) {
             this.$refs.addBigImgUpload.addEventListener('change', data => {
               for (var i = 0; i < this.$refs.addBigImgUpload.files.length; i++) {
@@ -710,8 +633,106 @@
               }
             })
           }
+          //修改图片上传
+          if (this.$refs.updateFilmImg) {
+            this.$refs.updateFilmImg.addEventListener('change', data => {
+              for (var i = 0; i < this.$refs.updateFilmImg.files.length; i++) {
+                this.uploadToOSS(this.$refs.updateFilmImg.files[i])
+                  .then(data => {
+                    if (data) {
+                      this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_ImageURL=data.data;
+                    } else {
+                      this.$notify({
+                        message: '图片地址不存在!',
+                        type: 'error'
+                      });
+                    }
+                  })
+                // })
+              }
+            })
+          }
+          //修改首页大图上传,updateBigImg,vf_vo_TomImageURL
+          if (this.$refs.updateBigImg) {
+            this.$refs.updateBigImg.addEventListener('change', data => {
+              for (var i = 0; i < this.$refs.updateBigImg.files.length; i++) {
+                this.uploadToOSS(this.$refs.updateBigImg.files[i])
+                  .then(data => {
+                    if (data) {
+                      this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_TomImageURL=data.data;
+                    } else {
+                      this.$notify({
+                        message: '图片地址不存在!',
+                        type: 'error'
+                      });
+                    }
+                  })
+                // })
+              }
+            })
+          }
         }, 30)
       },
+      //修改视频上传
+      uploadFileUpdate() {
+        //清空视频文件
+
+        var fd = new FormData();
+        //获取要上传的视频
+        var file =this.$refs.updateFilm.files[0];
+        if(file){
+          //获取最新文件大小
+          var fileSize = file.size;
+          fileSize=parseInt(fileSize/1024*100/100); //单位为KB
+          this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Size=fileSize;
+          var str =file.name;
+          //获取最新文件扩展名
+          this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Extend=str.split(".")[1];
+          fd.append("fileToUpload",file);
+          file.xhr =new XMLHttpRequest();
+          file.xhr.onreadystatechange = ()=>{
+            if (file.xhr.readyState == 4 && file.xhr.status == 200)
+              if(file.xhr.responseText){
+                //上传成功后返回的视频地址
+                let filmData= JSON.parse(file.xhr.responseText).data;
+                //给视频赋值
+                this.updateVideo=filmData;
+                this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_FileURL=this.updateVideo;
+                //获取时长
+                var e =document.getElementById("addVideo1");
+                setTimeout(()=>{
+                  if(isNaN(e.duration)){
+                    this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Time = '';
+                  }else{
+                    this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Time=parseInt(e.duration).toString();
+                  }
+                },1000);
+              }
+          };
+          file.xhr.open("POST", getNewStr+"/OSSFile/PostToOSS",true);
+          file.xhr.send(fd);
+          //上传成功后获取最新上传视频时间
+          Date.prototype.Format = function (fmt) {
+            var o = {
+              "M+": this.getMonth() + 1, //月份
+              "d+": this.getDate(), //日
+              "h+": this.getHours(), //小时
+              "m+": this.getMinutes(), //分
+              "s+": this.getSeconds(), //秒
+              "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+              "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+              if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+          };
+          this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_CreateTime = new Date().Format("yyyy/MM/dd hh:mm:ss");
+        }else {
+          alert("请选择上传视频")
+        };
+      },
+      //删除
       Delete(id) {
         let deleteOption = {
           "loginUserID": "huileyou",
@@ -739,9 +760,12 @@
               })
             })
       },
+      //修改
       Update(obj) {
+        //修改图片
+        this.uploadNode();
         this.VMovieCheckTableUpdateObj.data.vf_ve_ID = obj.vf_ve_ID; //审核编码
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Type=obj.vf_ve_Type;//原来的视频类型编号
+//        this.VMovieCheckTableUpdateObj.data.vf_ve_Type=obj.vf_ve_Type;//原来的视频类型编号
         /*电影类型筛选(-start-)*/
         this.updateFilmType=[];//清空电影类型
         this.intTypeData();
@@ -762,11 +786,11 @@
         /*分类名称(-end-)*/
         this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_TomImageURL=obj.vf_ve_Content.vf_vo_TomImageURL;//首页大图
         this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_ImageURL=obj.vf_ve_Content.vf_vo_ImageURL;//视频图片
-        this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_TempFileURL=obj.vf_ve_Content.vf_vo_TempFileURL;//显示视频
+        this.updateVideo=obj.vf_ve_Content.vf_vo_FileURL;//显示视频
         this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Title=obj.vf_ve_Content.vf_vo_Title;//标题
         this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Introduce=obj.vf_ve_Content.vf_vo_Introduce; //简介
         this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_Remark=obj.vf_ve_Content.vf_vo_Remark;//详情
-        /*下面是未显示部分但要传*/
+        /*下面是未显示部分但要上传*/
         this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_AuthorID=obj.vf_ve_Content.vf_vo_AuthorID;//作者(不变)
         this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_ID=obj.vf_ve_Content.vf_vo_ID//原来的视频编号(不变)
         this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_vo_FileURL=obj.vf_ve_Content.vf_vo_FileURL;//原来的视频真实地址
@@ -777,6 +801,7 @@
         this.updateDialog = true;
         this.$store.commit('setTranstionFalse');
       },
+      //修改提交
       updateSubmit() {
         this.VMovieCheckTableUpdateObj.data.vf_ve_Content.vf_te_IDs=this.updateCategoriesName.join(",");//最新子分类名称
         this.$store.dispatch("updateVMovieCheckTable", this.VMovieCheckTableUpdateObj)
