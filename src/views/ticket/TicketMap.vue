@@ -1,5 +1,4 @@
 <template>
-  <!--查询完成、删除完成、新增完成、修改完成/修改中的视频上传完成,添加未知有没有成功,或许已经成功了-->
   <div id="wrap" class="clearfix">
     <h1 class="userClass">导览信息</h1>
     <!--查询栏-->
@@ -24,49 +23,45 @@
       <el-form :model="addOptions">
 
         <el-form-item label="小景点名称:" :label-width="formLabelWidth">
-          <el-input v-model="addOptions.data.tm_se_Name" auto-complete="off"></el-input>
+          <el-input v-model="addOptions.tm_se_Name" auto-complete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="手绘图的横坐标:" :label-width="formLabelWidth">
-          <el-input v-model="addOptions.data.tm_se_HandX" auto-complete="off"></el-input>
+          <el-input v-model="addOptions.tm_se_HandX" auto-complete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="手绘图的纵坐标:" :label-width="formLabelWidth">
-          <el-input v-model="addOptions.data.tm_se_HandY" auto-complete="off"></el-input>
+          <el-input v-model="addOptions.tm_se_HandY" auto-complete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="小景点介绍:" :label-width="formLabelWidth">
-          <el-input v-model="addOptions.data.tm_se_Intro" auto-complete="off"></el-input>
+          <el-input v-model="addOptions.tm_se_Intro" auto-complete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="小景点备注:" :label-width="formLabelWidth">
-          <el-input v-model="addOptions.data.tm_se_Remark" auto-complete="off"></el-input>
+          <el-input v-model="addOptions.tm_se_Remark" auto-complete="off"></el-input>
         </el-form-item>
 
         <el-form-item label="小景点图片:" :label-width="formLabelWidth">
-          <el-upload
-            class="upload-demo"
-            action="string"
-            :on-remove="handleRemove"
-            :file-list="fileList"
-            list-type="picture">
-            <el-button size="small" type="primary">点击上传</el-button>
-          </el-upload>
+          <a href="javascript:;" class="file">上传图片
+            <input type="file" name="" ref="upload" accept="image/*" multiple>
+          </a>
+          <img src="" alt="" v-lazy="item"  v-show="ImageURL.length" v-for="item in ImageURL" style="width: 100px;height: 100px">
         </el-form-item>
 
         <el-form-item label="小景点音频:" :label-width="formLabelWidth">
-          <a href="javascript:;" class="flie">
-            <input type="file" name="" ref="audio" multiple>
+          <a href="javascript:;" class="file">选择音频
+            <input type="file" name="" ref="audios" multiple>
           </a>
           <span style="display: inline-block;height: 30px;margin-left:40px;font-size: 18px;">{{AudioNews}}</span>
           <el-form-item size="large">
-            <el-button type="primary" size="mini" @click="uploadaudio">立即上传</el-button>
+            <el-button type="primary" size="mini" @click="uploadAudio">立即上传</el-button>
           </el-form-item>
         </el-form-item>
 
         <el-form-item label="小景点视频:" :label-width="formLabelWidth">
           <a href="javascript:;" class="file">选择视频
-            <input type="file" name="" ref="UpLoad" multiple>
+            <input type="file" name="" ref="videos" multiple>
           </a>
           <span style="display: inline-block;height: 30px;margin-left:40px;font-size: 18px;">{{VideoNameObj}}</span>
           <el-form-item size="large">
@@ -105,29 +100,25 @@
         </el-form-item>
 
         <el-form-item label="小景点图片:" :label-width="formLabelWidth">
-          <el-upload
-            class="upload-demo"
-            action="string"
-            :on-remove="handleRemove"
-            :file-list="fileList"
-            list-type="picture">
-            <el-button size="small" type="primary">点击上传</el-button>
-          </el-upload>
+          <a href="javascript:;" class="file">上传图片
+            <input type="file" name="" ref="upload1" accept="image/*" multiple>
+          </a>
+          <img src="" alt="" v-lazy="item"  v-show="ImageURL1.length" v-for="item in ImageURL1" style="width: 100px;height: 100px">
         </el-form-item>
 
         <el-form-item label="小景点音频:" :label-width="formLabelWidth">
-          <a href="javascript:;" class="flie">
-            <input type="file" name="" ref="audio" multiple>
+          <a href="javascript:;" class="file">选择音频
+            <input type="file" name="" ref="audios1" multiple>
           </a>
           <span style="display: inline-block;height: 30px;margin-left:40px;font-size: 18px;">{{AudioNews}}</span>
           <el-form-item size="large">
-            <el-button type="primary" size="mini" @click="uploadaudio">立即上传</el-button>
+            <el-button type="primary" size="mini" @click="uploadAudio">立即上传</el-button>
           </el-form-item>
         </el-form-item>
 
         <el-form-item label="小景点视频:" :label-width="formLabelWidth">
           <a href="javascript:;" class="file">选择视频
-            <input type="file" name="" ref="UpLoad" multiple>
+            <input type="file" name="" ref="videos1" multiple>
           </a>
           <span style="display: inline-block;height: 30px;margin-left:40px;font-size: 18px;">{{VideoNameObj}}</span>
           <el-form-item size="small">
@@ -216,11 +207,14 @@
 </template>
 <script>
   import {mapGetters} from 'vuex'
+  import {getNewStr} from '@/assets/public'
   export default{
     name: '',
     data(){
       return {
         tableData:[],
+        ImageURL:[],
+        ImageURL1:[],
         formLabelWidth:'120px',
         total: 0,
         siteName: '',
@@ -231,12 +225,6 @@
         AudioNews:"",
         //添加
         addOptions: {
-          "loginUserID": "huileyou",    //惠乐游用户ID
-          "loginUserPass": "123",    //惠乐游用户密码
-          "operateUserID": "",    //操作员编码
-          "operateUserName": "",    //操作员名称
-          "pcName": "",    //机器码
-          "data": {
             "tm_se_Code": "002",  //景点编号
             "tm_se_Name": "",  //小景点名称
             "tm_se_HandX": "",  //位于手绘图X
@@ -246,7 +234,6 @@
             "tm_se_Intro": "",  //小景点介绍
             "tm_se_Image": "",  //小景点图片
             "tm_se_Remark": "",  //备注
-          }
         },
         //修改
         updateOptions:{
@@ -268,7 +255,6 @@
             "tm_se_Remark": ""  //备注
           }
         },
-        fileList:[],
         "Imgs":"",
       }
     },
@@ -282,79 +268,52 @@
     methods: {
       //视频上传
       UpLoadvideo() {
-        var fd = new FormData();
-        fd.append("fileUploadOss", this.$refs.UpLoad.files[0])
-        console.log(2331,this.$refs.UpLoad.files[0])
-        let VideoName=this.$refs.UpLoad.files[0].name
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://image.1000da.com.cn/PostImage/PostToOSS");
-        xhr.send(fd);
-        xhr.onreadystatechange = ()=>{
-          if (xhr.readyState == 4 && xhr.status == 200){
-            //类型转换,获取视频地址
-            let VideoObj=JSON.parse(xhr.responseText);
-            this.addOptions.data.tm_se_Vedio=VideoObj.data;
-            this.updateOptions.data.tm_se_Vedio=VideoObj.data;
-            this.VideoNameObj=VideoName;
-          }
-        }
+        if(this.$refs.videos){
+          this.uploadToOSS(this.$refs.videos.files[0])
+            .then(data =>{
+              this.updateOptions.data.tm_se_Vedio = data.data;
+              console.log(211,this.updateOptions.data.tm_se_Vedio)
+            })
+        };
+        if(this.$refs.videos1){
+          this.uploadToOSS(this.$refs.videos1.files[0])
+            .then(data =>{
+              this.updateOptions.data.tm_se_Vedio = data.data;
+              console.log(211,this.updateOptions.data.tm_se_Vedio)
+            })
+        };
       },
       //音频上传
-      uploadaudio(){
-        var fd =new FormData();
-        fd.append('fileUpLoad',this.$refs.audio.files[0])
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST","http://image.1000da.com.cn/PostImage/PostFile");
-        xhr.send(fd);
-        xhr.onreadystatechange = ()=>{
-          if (xhr.readyState == 4 && xhr.status == 200){
-            //类型转换,获取视频地址
-            let AudioObj=JSON.parse(xhr.responseText);
-            this.addOptions.data.tm_se_Sound=AudioObj.data;
-            this.updateOptions.data.tm_se_Sound=AudioObj.data;
-            this.AudioNews="上传成功"
-          }
+      uploadAudio(){
+        if(this.$refs.audios){
+          this.uploadToOSS(this.$refs.audios.files[0])
+            .then(data =>{
+              this.addOptions.tm_se_Sound = data.data;
+            })
+        };
+        if(this.$refs.audios1){
+          this.uploadToOSS(this.$refs.audios1.files[0])
+            .then(data =>{
+              this.updateOptions.data.tm_se_Sound = data.data;
+            })
         }
       },
-      //图片上传
-      // upload(item){
-      //   var fd = new FormData();
-      //   fd.append("fileToUpload", item.file);
-      //   var xhr = new XMLHttpRequest();
-      //   xhr.open("POST", "http://image.1000da.com.cn/PostImage/PostFile");
-      //   xhr.send(fd);
-      //   xhr.onreadystatechange = ()=>{
-      //     if (xhr.readyState == 4 && xhr.status == 200) {
-      //       let obj = JSON.parse(xhr.responseText);
-      //       this.fileList.push({
-      //         url:obj.data
-      //       })
-      //       this.addOptions.data.tm_se_Image=obj.data;
-      //       this.updateOptions.data.tm_se_Image=obj.data;
-      //       item.onSuccess('配时文件上传成功')
-      //       console.log(obj)
-      //     }
-      //   }
-      // },
-      uploadToOSS(item) {
+      //上传
+      uploadToOSS(file) {
         return new Promise((relove,reject)=>{
           var fd = new FormData();
-          fd.append("fileToUpload", item.file);
+          fd.append("fileToUpload", file);
           var xhr = new XMLHttpRequest();
-          xhr.open("POST", "http://webservice.1000da.com.cn/OSSFile/PostToOSS");
+          xhr.open("POST", getNewStr+"/OSSFile/PostToOSS");
           xhr.send(fd);
           xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
-              let obj = JSON.parse(xhr.responseText);
-              this.fileList.push({
-                url:obj.data
-              })
-              this.addOptions.data.tm_se_Image=obj.data;
-              this.updateOptions.data.tm_se_Image=obj.data;
-              item.onSuccess('配时文件上传成功')
-              console.log(obj)
+              if (xhr.responseText) {
+                var data = xhr.responseText
+                relove(JSON.parse(data))
+              }
             }else{
-              console.log(xhr.responseText)
+              // console.log(xhr.responseText)
 //               if (xhr.responseText) {
 //                 var data = xhr.responseText;
 //                 reject(JSON.parse(data).resultcontent)
@@ -363,13 +322,48 @@
           }
         })
       },
-      handleRemove(file) {
-        this.fileList = this.fileList.filter(item=>{
-          if(item.uid==file.uid){
-            return false;
+      uploaNode() {
+        this.ImageURL = [];
+        this.ImageURL1 = [];
+        setTimeout(() => {
+              if (this.$refs.upload) {
+                this.$refs.upload.addEventListener('change', data => {
+                  for (var i = 0; i < this.$refs.upload.files.length; i++) {
+                    this.uploadToOSS(this.$refs.upload.files[i])
+                      .then(data => {
+                        if (data) {
+                          this.ImageURL = [];
+                          this.ImageURL.push(data.data);
+                          console.log(111,data.data)
+                        } else {
+                          this.$notify({
+                            message: '图片地址不存在!',
+                            type: 'error'
+                          });
+                        }
+                      })
+                  }
+                })
+              };
+          if (this.$refs.upload1) {
+            this.$refs.upload1.addEventListener('change', data => {
+              for (var i = 0; i < this.$refs.upload1.files.length; i++) {
+                this.uploadToOSS(this.$refs.upload1.files[i])
+                  .then(data => {
+                    if (data) {
+                      this.ImageURL1 = [];
+                      this.ImageURL1.push(data.data);
+                    } else {
+                      this.$notify({
+                        message: '图片地址不存在!',
+                        type: 'error'
+                      });
+                    }
+                  })
+              }
+            })
           }
-          return true;
-        })
+        }, 30)
       },
       //分页
       handleCurrentChange(num){
@@ -401,13 +395,6 @@
             });
           })
       },
-      //新增
-      addMap(){
-        this.$store.dispatch('addTicketMap',this.addOptions)
-          .then(suc=>{
-            this.initData();
-          })
-      },
       //删除
       deleteMap(id){
         let deleteOption={
@@ -425,13 +412,6 @@
             this.initData();
           })
       },
-      //修改
-      upDateMap(){
-        this.$store.dispatch('upDateTicketMap',this.updateOptions)
-          .then(suc=>{
-            this.initData();
-          })
-      },
       //查询
       search(){
         this.initData(this.siteName)
@@ -440,27 +420,43 @@
       Add(){
         this.$store.commit('setTranstionFalse');
         this.addDialog = true;
+        this.uploaNode();
+        this.ImageURL = [];
+        this.ImageURL1 = [];
       },
       //新增提交
       AddSubmit(){
-        this.addMap();
+        this.addOptions.tm_se_Image=this.ImageURL.join(",");
+        let Options ={
+          "loginUserID": "huileyou",    //惠乐游用户ID
+          "loginUserPass": "123",    //惠乐游用户密码
+          "operateUserID": "",    //操作员编码
+          "operateUserName": "",    //操作员名称
+          "pcName": "",    //机器码
+          "data":this.addOptions
+        }
+        this.$store.dispatch('addTicketMap',Options)
+          .then(suc=>{
+            this.initData();
+          })
         this.addDialog = false;
       },
+      //修改提交
       upDateSubmit(){
-        this.upDateMap();
+        this.updateOptions.data.tm_se_Image=this.ImageURL1.join(",");
+        this.$store.dispatch('upDateTicketMap',this.updateOptions)
+          .then(suc=>{
+            this.initData();
+          })
         this.updateDialog=false;
       },
       Update(obj){
-        this.updateOptions.data.tm_se_ID=obj.tm_se_ID;
-        this.updateOptions.data.tm_se_Name=obj.tm_se_Name;
-        this.updateOptions.data.tm_se_HandX=obj.tm_se_HandX;
-        this.updateOptions.data.tm_se_HandY=obj.tm_se_HandY;
-        this.updateOptions.data.tm_se_Intro=obj.tm_se_Intro;
-        this.updateOptions.data.tm_se_Remark=obj.tm_se_Remark;
-        this.updateOptions.data.tm_se_Image=obj.tm_se_Image;
-        this.updateOptions.data.tm_se_Sound=obj.tm_se_Sound;
-        this.updateOptions.data.tm_se_Vedio=obj.tm_se_Vedio;
+        this.uploaNode();
+        this.ImageURL = [];
+        this.ImageURL1 = [];
+        this.updateOptions.data=obj;
         this.updateDialog=true;
+        this.$store.commit('setTranstionFalse');
       },
       Delete(id){
         this.deleteMap(id);
