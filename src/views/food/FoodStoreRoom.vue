@@ -45,11 +45,18 @@
         align="center">
       </el-table-column>
 
-
       <el-table-column
         prop="fd_sfr_BookMoney"
         label="预定金额(元)"
         align="center">
+      </el-table-column>
+
+      <el-table-column
+        label="房间视频"
+        align="center">
+        <template slot-scope="scope">
+          <video :src="scope.row.fd_sfr_VedioURL" height="240" controls="controls"></video>
+        </template>
       </el-table-column>
 
       <el-table-column label="操作" align="center">
@@ -103,6 +110,18 @@
         <el-form-item label="预定价格(元)" :label-width="formLabelWidth" style="width: 55%">
           <el-input v-model="addOptions.fd_sfr_BookMoney" auto-complete="off"></el-input>
         </el-form-item>
+
+        <el-form-item label="上传视频:" :label-width="formLabelWidth">
+          <a href="javascript:;" class="file">上传视频
+            <input type="file" name="" ref="upload" multiple>
+          </a>
+          <video v-show="videoShow" id="addVideo" :src="addOptions.fd_sfr_VedioURL" width="320" height="240"
+                 controls="controls"></video>
+        </el-form-item>
+        <el-form-item size="large" :label-width="formLabelWidth">
+          <el-button type="primary" size="mini" @click="uploadFile">立即上传</el-button>
+          <strong v-show="isShow">正在上传视频文件...</strong>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -113,21 +132,22 @@
     <!--修改-->
     <el-dialog title="修改店面房间" :visible.sync="updateDialog">
       <el-form :model="updateObj">
-        <el-form-item label="店面名称" :label-width="formLabelWidth" style="width: 55%">
-          <el-select v-model="updateObj.fd_sfr_StoreFrontID" placeholder="请选择">
-            <el-option
-              v-for="item in foodStoreInformtionList"
-              :key="item.fd_sf_ID"
-              :label="item.fd_sf_ProductName"
-              :value="item.fd_sf_ID">
-            </el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="房间名称" :label-width="formLabelWidth" style="width: 55%">
           <el-input v-model="updateObj.fd_sfr_RoomName" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="预定价格(元)" :label-width="formLabelWidth" style="width: 55%">
           <el-input v-model="updateObj.fd_sfr_BookMoney" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="上传视频:" :label-width="formLabelWidth">
+          <a href="javascript:;" class="file">上传视频
+            <input type="file" name="" ref="upload2" multiple>
+          </a>
+          <video id="updateVideo" :src="updateObj.fd_sfr_VedioURL" width="320" height="240"
+                 controls="controls"></video>
+        </el-form-item>
+        <el-form-item size="large" :label-width="formLabelWidth">
+          <el-button type="primary" size="mini" @click="updateFile">立即上传</el-button>
+          <strong v-show="isShow">正在上传视频文件...</strong>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -140,6 +160,7 @@
 
 <script>
   import {mapGetters} from 'vuex'
+  import {getNewStr} from '@/assets/public'
 
   export default {
     computed: mapGetters([
@@ -151,15 +172,18 @@
         addOptions: {
           "fd_sfr_StoreFrontID": "",//店面编号
           "fd_sfr_RoomName": "",//房间名称
-          "fd_sfr_BookMoney": ""//预定价格
+          "fd_sfr_BookMoney": "",//预定价格
+          "fd_sfr_VedioURL": ""//视频链接
         },
         dialogFormVisible: false,
         formLabelWidth: '120px',
         storeId: '',
         total: 0,
         updateObj: {},
-        isLoading:false,
+        isLoading: false,
         updateDialog: false,
+        videoShow: false,
+        isShow:false,
       }
     },
     methods: {
@@ -186,7 +210,7 @@
           "fd_sfr_StoreFrontID": id,//店面编号
           "fd_sfr_RoomName": "",//房间名称
           "page": "1",
-          "rows": "10",
+          "rows": "5",
         };
         this.isLoading = true;
         this.$store.dispatch('initFoodStoreRoom', initStoreRoom).then(
@@ -209,8 +233,31 @@
       add() {
         this.dialogFormVisible = true;
         this.$store.commit('setTranstionFalse');
-      }
-      ,
+      },
+
+      //添加上传视频
+      uploadFile() {
+        this.isShow = true;
+        this.addOptions.fd_sfr_VedioURL = '';
+        var fd = new FormData();
+        if (this.$refs.upload.files[0]) {
+          fd.append("fileToUpload", this.$refs.upload.files[0]);
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200)
+            //给视频赋值
+              if (xhr.responseText) {
+                this.isShow = false;
+                this.videoShow = true;
+                this.addOptions.fd_sfr_VedioURL = JSON.parse(xhr.responseText).data;
+              }
+          };
+          xhr.open("POST", getNewStr + "/OSSFile/PostToOSS", true);
+          xhr.send(fd);
+        } else {
+          alert("请选择上传视频")
+        }
+      },
       //新增提交
       addSubmit() {
         let addStoreRoom = {
@@ -235,15 +282,37 @@
             });
           })
         this.dialogFormVisible = false;
-      }
-      ,
+      },
       //修改
       update(rowData) {
         this.updateObj = rowData;
         this.$store.commit('setTranstionFalse');
         this.updateDialog = true;
-      }
-      ,
+      },
+
+      //修改上传视频
+      updateFile() {
+        this.isShow = true;
+        this.updateObj.fd_sfr_VedioURL = '';
+        var fd = new FormData();
+        if (this.$refs.upload2.files[0]) {
+          fd.append("fileToUpload", this.$refs.upload2.files[0]);
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200)
+            //给视频赋值
+              if (xhr.responseText) {
+                this.isShow = false;
+                this.videoShow = true;
+                this.updateObj.fd_sfr_VedioURL = JSON.parse(xhr.responseText).data;
+              }
+          };
+          xhr.open("POST", getNewStr + "/OSSFile/PostToOSS", true);
+          xhr.send(fd);
+        } else {
+          alert("请选择上传视频")
+        }
+      },
       //修改提交
       updateSubmit() {
         let updateStoreFrontRoomInfo = {
@@ -268,8 +337,7 @@
             });
           })
         this.updateDialog = false;
-      }
-      ,
+      },
       //删除
       Delete(id) {
         let deleteStoreRoom = {

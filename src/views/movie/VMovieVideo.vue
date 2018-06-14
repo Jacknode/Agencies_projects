@@ -121,11 +121,11 @@
                       :disabled="isDisabled"></el-input>
           </el-form-item>
           <el-form-item label="电影类型筛选:" :label-width="formLabelWidth">
-  <el-select v-model="parentTypeId" multiple placeholder="请选择电影类型" @change="updateParentChange">
-    <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_ID"
-               v-for="item in VMovieTypeList"></el-option>
-  </el-select>
-</el-form-item>
+            <el-select v-model="parentTypeId" multiple placeholder="请选择电影类型" @change="updateParentChange">
+              <el-option :key="item.vf_te_ID" :label="item.vf_te_Name" :value="item.vf_te_ID"
+                         v-for="item in VMovieTypeList"></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item label="分类名称:" :label-width="formLabelWidth">
             <el-select v-model="categoriesName" multiple placeholder="请选择分类名称">
               <el-option

@@ -260,4 +260,4 @@ export const wxPath = val=>{
 // export const getNewStr = val=>{
 //   return 'http://192.168.3.4'
 // }
-export const getNewStr =  'http://192.168.3.4' //'http://hly.1000da.com.cn' //'http://192.168.3.50'
+export const getNewStr =  'http://192.168.3.4' //'http://hly.1000da.com.cn' // R  http://192.168.3.4 // Z 'http://192.168.3.50'
